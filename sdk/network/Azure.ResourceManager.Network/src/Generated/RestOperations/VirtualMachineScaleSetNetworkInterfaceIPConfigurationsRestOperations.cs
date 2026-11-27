@@ -60,10 +60,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(networkInterfaceName, true);
             uri.AppendPath("/ipConfigurations/", false);
             uri.AppendPath(ipConfigurationName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-10-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -92,10 +89,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/networkInterfaces/", false);
             uri.AppendPath(networkInterfaceName, true);
             uri.AppendPath("/ipConfigurations", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2018-10-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -120,10 +114,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2018-10-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

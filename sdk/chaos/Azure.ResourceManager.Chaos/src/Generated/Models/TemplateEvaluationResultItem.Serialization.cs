@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -79,12 +80,12 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 throw new FormatException($"The model {nameof(TemplateEvaluationResultItem)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(TemplateId))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("templateId"u8);
                 writer.WriteStringValue(TemplateId);
             }
-            if (Optional.IsDefined(TemplateName))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("templateName"u8);
                 writer.WriteStringValue(TemplateName);
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            string templateId = default;
+            ResourceIdentifier templateId = default;
             string templateName = default;
             RecommendationStatus evaluationResult = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 if (prop.NameEquals("templateId"u8))
                 {
-                    templateId = prop.Value.GetString();
+                    templateId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("templateName"u8))

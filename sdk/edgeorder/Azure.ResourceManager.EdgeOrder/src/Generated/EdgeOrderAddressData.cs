@@ -44,8 +44,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         public EdgeOrderAddressData(AzureLocation location, EdgeOrderAddressContactDetails contactDetails) : this(location)
         {
+            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
+
             ContactDetails = contactDetails;
         }
 

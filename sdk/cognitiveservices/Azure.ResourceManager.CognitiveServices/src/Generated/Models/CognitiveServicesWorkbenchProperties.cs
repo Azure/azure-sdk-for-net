@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="targetClusterId"> Resource ID of the Foundry Compute or virtual cluster that hosts this workbench. Changing the cluster requires the workbench to be stopped. </param>
         /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the workbench. Immutable after creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetClusterId"/> or <paramref name="imageLink"/> is null. </exception>
-        public CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink)
+        public CognitiveServicesWorkbenchProperties(ResourceIdentifier targetClusterId, string imageLink)
         {
             Argument.AssertNotNull(targetClusterId, nameof(targetClusterId));
             Argument.AssertNotNull(imageLink, nameof(imageLink));
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errors"> Error details for the workbench resource. </param>
         /// <param name="createdOn"> Creation time of the workbench resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink, string instanceType, int? gpuCount, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, WorkbenchProvisioningState? provisioningState, WorkbenchStatus? status, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesWorkbenchProperties(ResourceIdentifier targetClusterId, string imageLink, string instanceType, int? gpuCount, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, CognitiveServicesWorkbenchProvisioningState? provisioningState, CognitiveServicesWorkbenchStatus? status, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetClusterId = targetClusterId;
             ImageLink = imageLink;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Resource ID of the Foundry Compute or virtual cluster that hosts this workbench. Changing the cluster requires the workbench to be stopped. </summary>
         [WirePath("targetClusterId")]
-        public string TargetClusterId { get; set; }
+        public ResourceIdentifier TargetClusterId { get; set; }
 
         /// <summary> Container image URI (e.g., MCR or ACR image path) for the workbench. Immutable after creation. </summary>
         [WirePath("imageLink")]
@@ -103,11 +104,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Provisioning state of the workbench resource, independent of runtime lifecycle status. </summary>
         [WirePath("provisioningState")]
-        public WorkbenchProvisioningState? ProvisioningState { get; }
+        public CognitiveServicesWorkbenchProvisioningState? ProvisioningState { get; }
 
         /// <summary> Runtime lifecycle status of the workbench. Independent of resource provisioning; start, stop, restart, and runtime health changes do not change provisioningState. </summary>
         [WirePath("status")]
-        public WorkbenchStatus? Status { get; }
+        public CognitiveServicesWorkbenchStatus? Status { get; }
 
         /// <summary> Error details for the workbench resource. </summary>
         [WirePath("errors")]

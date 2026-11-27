@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        internal HttpMessage CreateGetBootstrapDataRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetBootstrapDataRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -305,9 +305,7 @@ namespace Azure.ResourceManager.ContainerService
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
-            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
             return message;
         }
 

@@ -17,7 +17,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.OperationTemplat
             var requests = new RequestRecorder();
             var monitor = GetClient(host, requests).GetMonitorResource(MonitorResource.CreateResourceIdentifier(SubscriptionId, ResourceGroupName, "monitor1"));
             var values = new List<MonitoredResource>();
-            await foreach (var value in monitor.PostActionPagingAsync(new LogStatusRequest { Filter = "status eq 'active'" }))
+            await foreach (var value in monitor.PostActionPagingAsync(new LogStatusContent { Filter = "status eq 'active'" }))
             {
                 values.Add(value);
             }

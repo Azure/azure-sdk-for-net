@@ -57,7 +57,7 @@ namespace Azure.Data.AI
 
         /// <summary> Converts a string to a <see cref="EmbeddingDelivery"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingDelivery?(string value) => value == null ? null : new EmbeddingDelivery(value);
+        public static implicit operator EmbeddingDelivery?(string value) => value == null ? (EmbeddingDelivery?)null : new EmbeddingDelivery(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

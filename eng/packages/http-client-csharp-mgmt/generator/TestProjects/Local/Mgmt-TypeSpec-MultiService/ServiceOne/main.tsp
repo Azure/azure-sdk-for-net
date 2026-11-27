@@ -38,8 +38,8 @@ interface Foos {
   delete is ArmResourceDeleteWithoutOkAsync<Foo>;
   list is ArmResourceListByParent<Foo>;
 
-  // These two array-response operations intentionally surface as overloads with the same
-  // client name to verify collection-result name collision handling and operation binding.
+  // These array-response operations exercise inferred list naming alongside an explicit
+  // client-name override on the filtered operation.
   @get
   @action("listProperties")
   listProperties is ArmResourceActionSync<

@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             return message;
         }
 
-        internal HttpMessage CreateGetFaultSimulationRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, RequestContext context)
+        internal HttpMessage CreateListFaultSimulationRequest(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             return message;
         }
 
-        internal HttpMessage CreateNextGetFaultSimulationRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, RequestContext context)
+        internal HttpMessage CreateNextListFaultSimulationRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

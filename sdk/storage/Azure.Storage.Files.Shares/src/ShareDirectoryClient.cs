@@ -3823,14 +3823,14 @@ namespace Azure.Storage.Files.Shares
             builder.ShareName ??= ShareName;
             builder.FilePath ??= Path;
 
-            if (!builder.ShareName.Equals(ShareName, StringComparison.InvariantCulture))
+            if (!builder.ShareName.Equals(ShareName, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.ShareName),
                     nameof(ShareSasBuilder),
                     nameof(ShareName));
             }
-            if (!builder.FilePath.Equals(Path, StringComparison.InvariantCulture))
+            if (!builder.FilePath.Equals(Path, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.FilePath),

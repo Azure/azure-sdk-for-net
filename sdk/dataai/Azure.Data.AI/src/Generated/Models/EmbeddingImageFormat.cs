@@ -61,7 +61,7 @@ namespace Azure.Data.AI
 
         /// <summary> Converts a string to a <see cref="EmbeddingImageFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingImageFormat?(string value) => value == null ? null : new EmbeddingImageFormat(value);
+        public static implicit operator EmbeddingImageFormat?(string value) => value == null ? (EmbeddingImageFormat?)null : new EmbeddingImageFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

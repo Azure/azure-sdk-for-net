@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string targetClusterId = default;
+            ResourceIdentifier targetClusterId = default;
             string imageLink = default;
             string idleTimeBeforeShutdown = default;
             CognitiveServicesComputeSshSettings sshSettings = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("targetClusterId"u8))
                 {
-                    targetClusterId = prop.Value.GetString();
+                    targetClusterId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("imageLink"u8))

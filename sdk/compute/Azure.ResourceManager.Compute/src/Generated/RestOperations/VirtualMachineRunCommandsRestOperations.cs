@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetByVirtualMachineRequest(string subscriptionId, string resourceGroupName, string vmName, string expand, RequestContext context)
+        internal HttpMessage CreateListByVirtualMachineRequest(string subscriptionId, string resourceGroupName, string vmName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateNextGetByVirtualMachineRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string vmName, string expand, RequestContext context)
+        internal HttpMessage CreateNextListByVirtualMachineRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string vmName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

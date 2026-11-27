@@ -21,16 +21,16 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationCandidateEvaluation"/>. </summary>
         /// <param name="score"> Average composite score across evaluated tasks. Omitted until scoring produces an aggregate score. </param>
         /// <param name="avgTokens"> Average total tokens consumed per task. Omitted when token usage was not measured. </param>
-        /// <param name="avgLatencyMs"> Average end-to-end latency per task, rounded to milliseconds. </param>
+        /// <param name="avgLatency"> Average end-to-end latency per task, rounded to milliseconds. </param>
         /// <param name="evalId"> Foundry evaluation identifier used to score this candidate. Omitted when unavailable. </param>
         /// <param name="evalRunId"> Foundry evaluation run identifier used to score this candidate. Omitted when unavailable. </param>
         /// <param name="completedOn"> Timestamp when full candidate evaluation completed, represented in Unix time. Omitted when unavailable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationCandidateEvaluation(double? score, double? avgTokens, TimeSpan? avgLatencyMs, string evalId, string evalRunId, DateTimeOffset? completedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationCandidateEvaluation(double? score, double? avgTokens, TimeSpan? avgLatency, string evalId, string evalRunId, DateTimeOffset? completedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Score = score;
             AvgTokens = avgTokens;
-            AvgLatencyMs = avgLatencyMs;
+            AvgLatency = avgLatency;
             EvalId = evalId;
             EvalRunId = evalRunId;
             CompletedOn = completedOn;
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects.Agents
         public double? AvgTokens { get; }
 
         /// <summary> Average end-to-end latency per task, rounded to milliseconds. </summary>
-        public TimeSpan? AvgLatencyMs { get; }
+        public TimeSpan? AvgLatency { get; }
 
         /// <summary> Foundry evaluation identifier used to score this candidate. Omitted when unavailable. </summary>
         public string EvalId { get; }

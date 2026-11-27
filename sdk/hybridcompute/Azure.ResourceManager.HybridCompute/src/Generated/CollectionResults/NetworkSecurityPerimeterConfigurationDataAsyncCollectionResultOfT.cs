@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByPrivateLinkScopeRequest(nextLink, _subscriptionId, _resourceGroupName, _scopeName, _context) : _client.CreateGetByPrivateLinkScopeRequest(_subscriptionId, _resourceGroupName, _scopeName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByPrivateLinkScopeRequest(nextLink, _subscriptionId, _resourceGroupName, _scopeName, _context) : _client.CreateListByPrivateLinkScopeRequest(_subscriptionId, _resourceGroupName, _scopeName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

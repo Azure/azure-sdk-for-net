@@ -210,7 +210,7 @@ Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgentSessions_Sync
-ProjectAgentSession session1 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session1 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
 {
     Thread.Sleep(500);
@@ -228,7 +228,7 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgentSessions_Async
-ProjectAgentSession session1 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session1 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
 {
     await Task.Delay(500);
@@ -252,7 +252,7 @@ projectClient.AgentAdministrationClient.DisableAgent(agentVersion.Name);
 // The new session cannot be created.
 try
 {
-    projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+    projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
     throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
 }
 catch (ClientResultException ex)
@@ -271,7 +271,7 @@ await projectClient.AgentAdministrationClient.DisableAgentAsync(agentVersion.Nam
 // The new session cannot be created.
 try
 {
-    await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+    await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
     throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
 }
 catch (ClientResultException ex)
@@ -289,7 +289,7 @@ catch (ClientResultException ex)
 Synchronous sample:
 ```C# Snippet:Sample_EnableTheAgent_HostedAgentSessions_Sync
 projectClient.AgentAdministrationClient.EnableAgent(agentVersion.Name);
-ProjectAgentSession session2 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session2 = projectClient.AgentAdministrationClient.CreateSession(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
 {
     Thread.Sleep(500);
@@ -307,7 +307,7 @@ Console.WriteLine(response.GetOutputText());
 Asynchronous sample:
 ```C# Snippet:Sample_EnableTheAgent_HostedAgentSessions_Async
 await projectClient.AgentAdministrationClient.EnableAgentAsync(agentVersion.Name);
-ProjectAgentSession session2 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+ProjectAgentSession session2 = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionReferenceIndicator(agentVersion.Version));
 while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
 {
     await Task.Delay(500);

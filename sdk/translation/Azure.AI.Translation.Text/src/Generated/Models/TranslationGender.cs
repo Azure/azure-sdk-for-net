@@ -56,7 +56,7 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Converts a string to a <see cref="TranslationGender"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TranslationGender?(string value) => value == null ? null : new TranslationGender(value);
+        public static implicit operator TranslationGender?(string value) => value == null ? (TranslationGender?)null : new TranslationGender(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByHostPoolRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetByHostPoolRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByHostPoolRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateListByHostPoolRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _pageSize, _isDescending, _initialSkip, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

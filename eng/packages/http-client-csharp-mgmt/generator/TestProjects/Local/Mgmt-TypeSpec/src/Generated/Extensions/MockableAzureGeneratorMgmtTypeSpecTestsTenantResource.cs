@@ -21,6 +21,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsTenantResource : ArmResource
     {
+        private ClientDiagnostics _mgmtTypeSpecClientClientDiagnostics;
+        private MgmtTypeSpecClient _mgmtTypeSpecClientRestClient;
         private ClientDiagnostics _networkProviderActionsClientDiagnostics;
         private NetworkProviderActions _networkProviderActionsRestClient;
 
@@ -35,6 +37,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         internal MockableAzureGeneratorMgmtTypeSpecTestsTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private MgmtTypeSpecClient MgmtTypeSpecClientRestClient => _mgmtTypeSpecClientRestClient ??= new MgmtTypeSpecClient(MgmtTypeSpecClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -106,6 +112,106 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         }
 
         /// <summary>
+        /// Checks whether a configuration name exists at tenant scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/configurationNames/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MgmtTypeSpec_CheckConfigurationName. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> CheckConfigurationNameAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.CheckConfigurationName");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreateCheckConfigurationNameRequest(name, context);
+                message.ResponseClassifier = new StatusCodeClassifier(stackalloc ushort[] { 204, 404 });
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                if (result.IsError)
+                {
+                    throw new RequestFailedException(result);
+                }
+                return Response.FromValue(result.Status != 404, result);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether a configuration name exists at tenant scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/configurationNames/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MgmtTypeSpec_CheckConfigurationName. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> CheckConfigurationName(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.CheckConfigurationName");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreateCheckConfigurationNameRequest(name, context);
+                message.ResponseClassifier = new StatusCodeClassifier(stackalloc ushort[] { 204, 404 });
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                if (result.IsError)
+                {
+                    throw new RequestFailedException(result);
+                }
+                return Response.FromValue(result.Status != 404, result);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Query network sibling set - a provider-level async action.
         /// This is a non-resource LRO operation that returns NetworkSiblingSet.
         /// <list type="bullet">
@@ -127,7 +233,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkSiblingSet>> QueryNetworkSiblingSetAsync(WaitUntil waitUntil, QueryNetworkSiblingSetRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkSiblingSet>> QueryNetworkSiblingSetAsync(WaitUntil waitUntil, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -139,7 +245,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
+                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),
@@ -184,7 +290,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NetworkSiblingSet> QueryNetworkSiblingSet(WaitUntil waitUntil, QueryNetworkSiblingSetRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkSiblingSet> QueryNetworkSiblingSet(WaitUntil waitUntil, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -196,7 +302,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
+                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),

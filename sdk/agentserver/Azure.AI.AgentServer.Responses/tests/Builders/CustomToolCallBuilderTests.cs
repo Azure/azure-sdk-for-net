@@ -46,10 +46,10 @@ public class CustomToolCallBuilderTests
         var stream = CreateStream();
         var builder = stream.AddOutputItemCustomToolCall("call_001", "my_tool");
         var evt = builder.EmitAdded();
-        var item = XAssert.IsType<OutputItemCustomToolCall>(evt.Item);
+        var item = XAssert.IsType<global::OpenAI.Responses.CustomToolCallItem>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
         Assert.That(item.CallId, Is.EqualTo("call_001"));
-        Assert.That(item.Name, Is.EqualTo("my_tool"));
+        Assert.That(item.ToolName, Is.EqualTo("my_tool"));
         Assert.That(item.Input, Is.EqualTo(""));
     }
 
@@ -95,10 +95,10 @@ public class CustomToolCallBuilderTests
         builder.EmitAdded();
         builder.EmitInputDone("{\"key\":\"value\"}");
         var evt = builder.EmitDone();
-        var item = XAssert.IsType<OutputItemCustomToolCall>(evt.Item);
+        var item = XAssert.IsType<global::OpenAI.Responses.CustomToolCallItem>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
         Assert.That(item.CallId, Is.EqualTo("call_001"));
-        Assert.That(item.Name, Is.EqualTo("my_tool"));
+        Assert.That(item.ToolName, Is.EqualTo("my_tool"));
         Assert.That(item.Input, Is.EqualTo("{\"key\":\"value\"}"));
     }
 

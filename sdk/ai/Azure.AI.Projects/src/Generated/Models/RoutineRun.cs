@@ -35,10 +35,10 @@ namespace Azure.AI.Projects
         /// <param name="agentEndpointId"> The legacy endpoint-scoped agent identifier recorded for the routine attempt. </param>
         /// <param name="conversationId"> The conversation identifier used by a responses API dispatch. </param>
         /// <param name="sessionId"> The hosted-agent session identifier used by an invocations API dispatch. </param>
-        /// <param name="triggeredOn"> The logical trigger time recorded for the routine attempt. </param>
-        /// <param name="scheduledFireOn"> The scheduled fire time recorded for timer and schedule deliveries. </param>
-        /// <param name="startedOn"> The time when the underlying run started. </param>
-        /// <param name="endedOn"> The time when the underlying run reached a terminal state. </param>
+        /// <param name="triggeredAt"> The logical trigger time recorded for the routine attempt. </param>
+        /// <param name="scheduledFireAt"> The scheduled fire time recorded for timer and schedule deliveries. </param>
+        /// <param name="startedAt"> The time when the underlying run started. </param>
+        /// <param name="endedAt"> The time when the underlying run reached a terminal state. </param>
         /// <param name="dispatchId"> The dispatch identifier associated with the routine attempt. </param>
         /// <param name="actionCorrelationId"> The downstream action correlation identifier, when available. </param>
         /// <param name="responseId"> The downstream response or invocation identifier, when available. </param>
@@ -47,7 +47,7 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutineRun(string id, BinaryData statusInternal, RoutineRunPhase? phase, RoutineTriggerKind? triggerType, string triggerName, IDictionary<string, BinaryData> triggerEventPayload, RoutineAttemptSource? attemptSource, RoutineActionKind? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredOn, DateTimeOffset? scheduledFireOn, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutineRun(string id, BinaryData statusInternal, RoutineRunPhase? phase, RoutineTriggerKind? triggerType, string triggerName, IDictionary<string, BinaryData> triggerEventPayload, RoutineAttemptSource? attemptSource, RoutineActionKind? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             StatusInternal = statusInternal;
@@ -61,10 +61,10 @@ namespace Azure.AI.Projects
             AgentEndpointId = agentEndpointId;
             ConversationId = conversationId;
             SessionId = sessionId;
-            TriggeredOn = triggeredOn;
-            ScheduledFireOn = scheduledFireOn;
-            StartedOn = startedOn;
-            EndedOn = endedOn;
+            TriggeredAt = triggeredAt;
+            ScheduledFireAt = scheduledFireAt;
+            StartedAt = startedAt;
+            EndedAt = endedAt;
             DispatchId = dispatchId;
             ActionCorrelationId = actionCorrelationId;
             ResponseId = responseId;
@@ -134,16 +134,16 @@ namespace Azure.AI.Projects
         public string SessionId { get; }
 
         /// <summary> The logical trigger time recorded for the routine attempt. </summary>
-        public DateTimeOffset? TriggeredOn { get; }
+        public DateTimeOffset? TriggeredAt { get; }
 
         /// <summary> The scheduled fire time recorded for timer and schedule deliveries. </summary>
-        public DateTimeOffset? ScheduledFireOn { get; }
+        public DateTimeOffset? ScheduledFireAt { get; }
 
         /// <summary> The time when the underlying run started. </summary>
-        public DateTimeOffset? StartedOn { get; }
+        public DateTimeOffset? StartedAt { get; }
 
         /// <summary> The time when the underlying run reached a terminal state. </summary>
-        public DateTimeOffset? EndedOn { get; }
+        public DateTimeOffset? EndedAt { get; }
 
         /// <summary> The dispatch identifier associated with the routine attempt. </summary>
         public string DispatchId { get; }

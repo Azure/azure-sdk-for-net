@@ -78,4 +78,30 @@ public class ApplicationInsightsSamplerTests
         var expectedDescription = "ApplicationInsightsSampler{0.5}";
         Assert.Equal(expectedDescription, new ApplicationInsightsSampler(samplingRatio: 0.5F).Description);
     }
+
+    [Fact]
+    public void SampledInSpanCarriesSampleRateWhenRatioIsBelowOne()
+    {
+        // hex string: 0f1f2f3f4f5f6f7f8f9fafbfcfdfefff, whose score is below 0.5
+        var traceId = ActivityTraceId.CreateFromString("0f1f2f3f4f5f6f7f8f9fafbfcfdfefff".AsSpan());
+        var parameters = new SamplingParameters(default, traceId, "TestActivity", ActivityKind.Internal);
+
+        var result = new ApplicationInsightsSampler(samplingRatio: 0.5F).ShouldSample(parameters);
+
+        Assert.Equal(SamplingDecision.RecordAndSample, result.Decision);
+        var attribute = Assert.Single(result.Attributes);
+        Assert.Equal(SemanticConventions.AttributeMicrosoftSampleRate, attribute.Key);
+        Assert.Equal(50.0, attribute.Value);
+    }
+
+    [Fact]
+    public void SampledInSpanCarriesNoSampleRateWhenRatioIsOne()
+    {
+        var parameters = new SamplingParameters(default, ActivityTraceId.CreateRandom(), "TestActivity", ActivityKind.Internal);
+
+        var result = new ApplicationInsightsSampler(samplingRatio: 1F).ShouldSample(parameters);
+
+        Assert.Equal(SamplingDecision.RecordAndSample, result.Decision);
+        Assert.Empty(result.Attributes);
+    }
 }

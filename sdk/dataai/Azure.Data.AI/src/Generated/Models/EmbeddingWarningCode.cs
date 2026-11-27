@@ -63,7 +63,7 @@ namespace Azure.Data.AI
 
         /// <summary> Converts a string to a <see cref="EmbeddingWarningCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingWarningCode?(string value) => value == null ? null : new EmbeddingWarningCode(value);
+        public static implicit operator EmbeddingWarningCode?(string value) => value == null ? (EmbeddingWarningCode?)null : new EmbeddingWarningCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

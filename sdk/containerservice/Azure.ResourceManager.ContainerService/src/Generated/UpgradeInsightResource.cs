@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string upgradeInsightApiVersion);
             _upgradeInsightsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _upgradeInsightsRestClient = new UpgradeInsights(_upgradeInsightsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, upgradeInsightApiVersion ?? "2026-08-02-preview");
+            _upgradeInsightsRestClient = new UpgradeInsights(_upgradeInsightsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, upgradeInsightApiVersion ?? "2026-09-02-preview");
             ValidateResourceId(id);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

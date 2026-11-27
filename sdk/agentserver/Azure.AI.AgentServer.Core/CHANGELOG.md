@@ -1,14 +1,46 @@
 # Release History
 
-## 1.0.0-beta.32 (Unreleased)
+## 1.0.0 (2026-11-24)
 
 ### Features Added
 
+- Added experimental (`AAAS005`) [original-subject attribution](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/ORIGINAL_SUBJECT.md) snapshots and an explicit per-call model header helper.
+- Added memory-snapshot activation for resilient tasks. When
+  `FOUNDRY_MEMORY_SNAPSHOT_ENABLED=true`, enabled task definitions remain registered
+  during capture without constructing task storage or recovery workers. Restore
+  prepares the session-bound runtime before the application callback, then starts
+  automatic recovery after the callback completes.
+
 ### Breaking Changes
+
+- `FoundryStateStore` and the `FoundryStorage*Exception` types are now experimental
+  (`AAAS004`), and `AgentRestoreContext` joins the experimental snapshot lifecycle
+  contract (`AAAS002`). Existing code that uses these types fails to compile until the
+  corresponding diagnostic is suppressed (for example, `#pragma warning disable AAAS004`
+  or `<NoWarn>$(NoWarn);AAAS004</NoWarn>`).
+- `ListRequestOrder` is now an extensible string-backed struct instead of an `enum`, so
+  callers can pass sort orders added by the service later. `FoundryStateStore.ListKeysAsync`
+  now takes `ListRequestOrder? order`, and `null` (the default) still sorts descending.
+  Code that uses `ListRequestOrder` values in `switch` case labels, as constants, or with
+  `Enum` APIs must be updated.
 
 ### Bugs Fixed
 
+- Fixed hosted startup failing with `MissingMethodException` when Agent365 trace export
+  was enabled and a stable `Microsoft.OpenTelemetry` distro was resolved.
+- Ensured snapshot rollback and host disposal join owned workers before releasing
+  stores, bound cleanup waits to the host shutdown timeout, and retained failed
+  cleanup for safe retry without blocking disposal of unrelated services.
+- Paused automatic recovery and external task admission before restored
+  configuration is published, while preserving protocol scope for nested task
+  calls made by already-running workers.
+- Resolved implicit file-replay storage roots after restoration and compared
+  effective task-provider bindings so equivalent hosted endpoints and irrelevant
+  local endpoint changes do not reject a restore.
+
 ### Other Changes
+
+- Updated the `Microsoft.OpenTelemetry` dependency from `1.0.0-beta.1` to `1.0.4`.
 
 ## 1.0.0-beta.31 (2026-11-04)
 

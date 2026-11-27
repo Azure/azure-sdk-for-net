@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AcsMessageChannelKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsMessageChannelKind?(string value) => value == null ? null : new AcsMessageChannelKind(value);
+        public static implicit operator AcsMessageChannelKind?(string value) => value == null ? (AcsMessageChannelKind?)null : new AcsMessageChannelKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -84,10 +84,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteObjectValue(Model, options);
             writer.WritePropertyName("extensionId"u8);
             writer.WriteStringValue(ExtensionId);
-            writer.WritePropertyName("runtime"u8);
-            writer.WriteStringValue(Runtime.ToString());
-            writer.WritePropertyName("compute"u8);
-            writer.WriteStringValue(Compute.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("runtime"u8);
+                writer.WriteStringValue(Runtime.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("compute"u8);
+                writer.WriteStringValue(Compute.ToString());
+            }
             if (Optional.IsDefined(DeploymentTemplate))
             {
                 writer.WritePropertyName("deploymentTemplate"u8);

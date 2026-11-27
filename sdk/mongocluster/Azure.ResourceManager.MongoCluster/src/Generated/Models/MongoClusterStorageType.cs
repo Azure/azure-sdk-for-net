@@ -11,13 +11,13 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The type of storage that a mongo cluster can be provisioned with. </summary>
+    /// <summary> The type of storage that a DocumentDB cluster can be provisioned with. </summary>
     public readonly partial struct MongoClusterStorageType : IEquatable<MongoClusterStorageType>
     {
         private readonly string _value;
-        /// <summary> Premium SSD for high performance workloads. </summary>
+        /// <summary> Premium SSD storage. Premium SSD v2 is recommended for better performance. </summary>
         private const string PremiumSSDValue = "PremiumSSD";
-        /// <summary> Premium SSD v2 for very IO-intensive workloads. This is a preview option and has additional limitations. </summary>
+        /// <summary> Premium SSD v2 storage. Recommended for better performance. </summary>
         private const string PremiumSSDv2Value = "PremiumSSDv2";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterStorageType"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             _value = value;
         }
 
-        /// <summary> Premium SSD for high performance workloads. </summary>
+        /// <summary> Premium SSD storage. Premium SSD v2 is recommended for better performance. </summary>
         public static MongoClusterStorageType PremiumSSD { get; } = new MongoClusterStorageType(PremiumSSDValue);
 
-        /// <summary> Premium SSD v2 for very IO-intensive workloads. This is a preview option and has additional limitations. </summary>
+        /// <summary> Premium SSD v2 storage. Recommended for better performance. </summary>
         public static MongoClusterStorageType PremiumSSDv2 { get; } = new MongoClusterStorageType(PremiumSSDv2Value);
 
         /// <summary> Determines if two <see cref="MongoClusterStorageType"/> values are the same. </summary>

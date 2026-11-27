@@ -46,7 +46,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Converts a string to a <see cref="NotificationScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationScopeType?(string value) => value == null ? null : new NotificationScopeType(value);
+        public static implicit operator NotificationScopeType?(string value) => value == null ? (NotificationScopeType?)null : new NotificationScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

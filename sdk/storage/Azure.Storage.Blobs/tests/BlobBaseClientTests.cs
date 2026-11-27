@@ -8461,6 +8461,40 @@ namespace Azure.Storage.Blobs.Test
                  new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobName does not match Name in the Client. BlobSasBuilder.BlobName must either be left empty or match the Name in the Client"));
         }
 
+        [Test]
+        public void GenerateSas_BuilderBlobNameWithIgnorableUnicode_IsRejected()
+        {
+            string containerName = "container";
+            string clientBlobName = "canary";
+            string spoofedBlobName = "can\u00ADary";
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 }));
+
+            Assert.IsTrue(string.Equals(clientBlobName, spoofedBlobName, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(clientBlobName, spoofedBlobName, StringComparison.Ordinal));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(new Uri("https://account.blob.core.windows.net"))
+            {
+                BlobContainerName = containerName,
+                BlobName = clientBlobName,
+            };
+
+            BlobBaseClient blobClient = InstrumentClient(new BlobBaseClient(
+                blobUriBuilder.ToUri(),
+                credential,
+                GetOptions()));
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                BlobContainerName = containerName,
+                BlobName = spoofedBlobName,
+                Resource = "b"
+            };
+
+            TestHelper.AssertExpectedException(
+                () => blobClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobName does not match Name in the Client. BlobSasBuilder.BlobName must either be left empty or match the Name in the Client"));
+        }
+
         [RecordedTest]
         public void GenerateSas_BuilderNullSnapshot()
         {
@@ -9029,6 +9063,52 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => blobClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey, out stringToSign),
                  new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobName does not match Name in the Client. BlobSasBuilder.BlobName must either be left empty or match the Name in the Client"));
+        }
+
+        [Test]
+        public void GenerateUserDelegationSas_BuilderBlobNameWithIgnorableUnicode_IsRejected()
+        {
+            string containerName = "container";
+            string clientBlobName = "canary";
+            string spoofedBlobName = "can\u00ADary";
+
+            Assert.IsTrue(string.Equals(clientBlobName, spoofedBlobName, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(clientBlobName, spoofedBlobName, StringComparison.Ordinal));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(new Uri("https://account.blob.core.windows.net"))
+            {
+                BlobContainerName = containerName,
+                BlobName = clientBlobName,
+            };
+
+            BlobBaseClient blobClient = InstrumentClient(new BlobBaseClient(
+                blobUriBuilder.ToUri(),
+                GetOptions()));
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                BlobContainerName = containerName,
+                BlobName = spoofedBlobName,
+                Resource = "b"
+            };
+
+            UserDelegationKey userDelegationKey = new UserDelegationKey
+            {
+                SignedObjectId = "oid",
+                SignedTenantId = "tid",
+                SignedStartsOn = DateTimeOffset.UtcNow.AddMinutes(-5),
+                SignedExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
+                SignedService = "b",
+                SignedVersion = "2020-10-02",
+                SignedDelegatedUserTenantId = "dtid",
+                Value = Convert.ToBase64String(new byte[] { 1, 2, 3, 4 })
+            };
+
+            string stringToSign = null;
+
+            TestHelper.AssertExpectedException(
+                () => blobClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey, out stringToSign),
+                new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobName does not match Name in the Client. BlobSasBuilder.BlobName must either be left empty or match the Name in the Client"));
         }
 
         [RecordedTest]

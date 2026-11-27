@@ -1427,7 +1427,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecuritySubAssessmentResource> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecuritySubAssessmentResource> ListAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1435,7 +1435,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SecuritySubAssessmentDataAsync0CollectionResultOfT(SubAssessmentsRestClient, scope.ToString(), context, "MockableSecurityCenterArmClient.GetAll"), data => new SecuritySubAssessmentResource(Client, data));
+            return new AsyncPageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SecuritySubAssessmentDataAsync0CollectionResultOfT(SubAssessmentsRestClient, scope.ToString(), context, "MockableSecurityCenterArmClient.ListAll"), data => new SecuritySubAssessmentResource(Client, data));
         }
 
         /// <summary>
@@ -1459,7 +1459,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecuritySubAssessmentResource> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecuritySubAssessmentResource> ListAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1467,7 +1467,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SecuritySubAssessmentData0CollectionResultOfT(SubAssessmentsRestClient, scope.ToString(), context, "MockableSecurityCenterArmClient.GetAll"), data => new SecuritySubAssessmentResource(Client, data));
+            return new PageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SecuritySubAssessmentData0CollectionResultOfT(SubAssessmentsRestClient, scope.ToString(), context, "MockableSecurityCenterArmClient.ListAll"), data => new SecuritySubAssessmentResource(Client, data));
         }
     }
 }

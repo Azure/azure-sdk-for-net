@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Network
     internal partial class FirewallPolicies
     {
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
-        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of FirewallPolicies for mocking. </summary>
         protected FirewallPolicies()
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
-        internal FirewallPolicies(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
+        /// <param name="apiVersion"></param>
+        internal FirewallPolicies(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _getApiVersion = getApiVersion;
+            _apiVersion = apiVersion;
             _userAgent = new TelemetryDetails(typeof(FirewallPolicies).Assembly, applicationId);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/firewallPolicies/", false);
             uri.AppendPath(firewallPolicyName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/firewallPolicies") ?? "2026-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/firewallPolicies/", false);
             uri.AppendPath(firewallPolicyName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/firewallPolicies") ?? "2026-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01", true);
             if (afcManagedSync != null)
             {
                 uri.AppendQuery("afcManagedSync", TypeFormatters.ConvertToString(afcManagedSync), true);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/firewallPolicies/", false);
             uri.AppendPath(firewallPolicyName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/firewallPolicies") ?? "2026-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/firewallPolicies/", false);
             uri.AppendPath(firewallPolicyName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/firewallPolicies") ?? "2026-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateListRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/firewallPolicies", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/firewallPolicies") ?? "2026-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateNextListRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/firewallPolicies") ?? "2026-03-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateListAllRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/firewallPolicies", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/firewallPolicies") ?? "2026-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextListAllRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/firewallPolicies") ?? "2026-03-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

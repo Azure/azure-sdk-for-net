@@ -1,14 +1,44 @@
 # Release History
 
-## 1.7.0-beta.2 (Unreleased)
+## 1.8.0-beta.1 (2026-11-25)
 
 ### Features Added
 
+- Upgraded API version to `2026-11-15-preview`.
+- Added management of attached AKS clusters through `CognitiveServicesAccountResource.GetAttachedAksClusters`, `AttachedAksClusterResource`, and related status and configuration models.
+- Added `CognitiveServicesProjectCostControlResource` for project-level cost controls and budget settings for cost or token usage, filters, grouping, notifications, and enforcement actions.
+- Added `CognitiveServicesProjectProperties.ToolControls` to configure the default tool access policy and explicitly allowed tools.
+- Added RAI ACS intervention points for agent startup and shutdown and before and after model calls, along with new policy targets.
+- Added `CognitiveServicesManagedComputeUsage.ScopeId`.
+- Added `ArcDeploymentModel.AssetId` and read-only `Version`, and a `force` option for deleting an Arc deployment when its extension is disconnected.
+
 ### Breaking Changes
+
+- Changed `TargetClusterId` from `string` to `ResourceIdentifier` in the preview compute and workbench models `ContainerInstanceComputeProperties`, `CognitiveServicesWorkbenchProperties`, and `CognitiveServicesWorkbenchPatchProperties`, including their constructors and model-factory parameters.
 
 ### Bugs Fixed
 
-### Other Changes
+- Aligned new AKS attachment status properties, Foundry agent hosting models, project tool-control models, workbench models, and the AKS attachment deletion disposition with .NET naming conventions.
+- Preserved partial positional model-factory calls supported in `1.7.0` for deployment properties and RAI policy properties.
+
+## 1.7.0 (2026-11-13)
+
+### Features Added
+
+- Upgraded API version to 2026-11-01.
+- Added `CognitiveServicesAccountProperties.TrustedCertificateSources` to trust private CA certificate bundles stored in Azure Key Vault.
+- Added RAI policy egress configuration through `RaiPolicyProperties.EgressPolicy`.
+- Added `GetCognitiveServicesManagedComputeCapacities` to list managed compute capacity for a subscription, with `deploymentId` typed as `Azure.Core.ResourceIdentifier` and `location` typed as `Azure.Core.AzureLocation?` for both synchronous and asynchronous calls.
+- Added the extensible `CognitiveServicesManagedComputeCapacityOfferScope` type for `CognitiveServicesManagedComputeCapacityProperties.OfferScope`, with known values `Global` and `DataZone` and support for unknown values.
+- Added `CognitiveServicesAccountDeploymentProperties.ContextCacheContainerId` typed as `Azure.Core.ResourceIdentifier`, `CognitiveServicesAccountProperties.IsA365LoggingEnabled`, and `ServiceAccountUsage.Id` and `Type`.
+
+### Breaking Changes
+
+- Compared to `1.6.0`, the `ArmCognitiveServicesModelFactory.CognitiveServicesAccountProperties` compatibility overload accepting `aiFoundryNetworkInjection` now requires all arguments to avoid ambiguity with other overloads.
+
+### Bugs Fixed
+
+- Preserved optional parameters on 13 `ArmCognitiveServicesModelFactory` compatibility overloads so parameterless and partial named-argument calls supported in `1.6.0` continue to work.
 
 ## 1.7.0-beta.1 (2026-10-26)
 

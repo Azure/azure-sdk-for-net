@@ -16,6 +16,7 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 internal sealed class TaskEngineAccessor
 {
     private static readonly AsyncLocal<RecoveryHandlerScope?> s_recoveryHandlerScope = new();
+    private static readonly AsyncLocal<InitializationHandlerScope?> s_initializationHandlerScope = new();
     private static readonly AsyncLocal<ProtocolScope?> s_protocolScope = new();
     private readonly ResilientTaskEnablementState _enablement;
     private TaskEngine? _engine;
@@ -53,10 +54,21 @@ internal sealed class TaskEngineAccessor
         }
     }
 
+    internal bool Unbind(TaskEngine engine)
+    {
+        ArgumentNullException.ThrowIfNull(engine);
+        return ReferenceEquals(
+            Interlocked.CompareExchange(ref _engine, null, engine),
+            engine);
+    }
+
     /// <summary>Returns the engine, or throws if it has not been populated yet.</summary>
     public TaskEngine Require()
     {
         ProtocolScope? scope = s_protocolScope.Value;
+        TaskEngine? engine = Volatile.Read(ref _engine);
+        bool initializationAllowed =
+            s_initializationHandlerScope.Value?.Allows(engine) == true;
         if (scope is not null
             && (!scope.Enabled || !ReferenceEquals(scope.Enablement, _enablement)))
         {
@@ -65,16 +77,19 @@ internal sealed class TaskEngineAccessor
                 "Resilient tasks are disabled for this protocol.");
         }
 
-        if (!_enablement.IsConfigured || (scope is null && !_enablement.IsExplicitlyEnabled))
+        if (!_enablement.IsConfigured
+            || (scope is null
+                && !_enablement.IsExplicitlyEnabled
+                && !initializationAllowed))
         {
             throw new ResilientTaskException(
                 ResilientTaskErrorCode.NotEnabled,
                 "Resilient tasks are disabled for this host. Call SetResilientTasksEnabled() before host startup.");
         }
 
-        TaskEngine? engine = Volatile.Read(ref _engine);
         if (!_enablement.IsReady
-            && s_recoveryHandlerScope.Value?.Allows(engine) != true)
+            && s_recoveryHandlerScope.Value?.Allows(engine) != true
+            && !initializationAllowed)
         {
             throw new InvalidOperationException(
                 "The resilient-task runtime is not ready. Task definitions can run only after " +
@@ -92,6 +107,18 @@ internal sealed class TaskEngineAccessor
         s_recoveryHandlerScope.Value = scope;
         return scope;
     }
+
+    internal static IDisposable EnterInitializationHandlerScope(TaskEngine engine)
+    {
+        var scope = new InitializationHandlerScope(
+            engine,
+            s_initializationHandlerScope.Value);
+        s_initializationHandlerScope.Value = scope;
+        return scope;
+    }
+
+    internal static bool IsInitializationHandler(TaskEngine engine)
+        => s_initializationHandlerScope.Value?.Allows(engine) == true;
 
     internal static IDisposable EnterProtocolScope(
         ResilientTaskEnablementState? enablement, string protocol, bool enabled)
@@ -141,6 +168,30 @@ internal sealed class TaskEngineAccessor
                 if (ReferenceEquals(s_recoveryHandlerScope.Value, this))
                 {
                     s_recoveryHandlerScope.Value = priorScope;
+                }
+            }
+        }
+    }
+
+    private sealed class InitializationHandlerScope(
+        TaskEngine engine,
+        InitializationHandlerScope? priorScope) : IDisposable
+    {
+        private int _active = 1;
+        private int _disposed;
+
+        public bool Allows(TaskEngine? candidate)
+            => Volatile.Read(ref _active) != 0
+                && ReferenceEquals(engine, candidate);
+
+        public void Dispose()
+        {
+            if (Interlocked.Exchange(ref _disposed, 1) == 0)
+            {
+                Volatile.Write(ref _active, 0);
+                if (ReferenceEquals(s_initializationHandlerScope.Value, this))
+                {
+                    s_initializationHandlerScope.Value = priorScope;
                 }
             }
         }

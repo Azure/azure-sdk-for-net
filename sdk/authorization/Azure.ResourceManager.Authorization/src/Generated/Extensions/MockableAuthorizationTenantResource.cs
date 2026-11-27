@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
     {
         private ClientDiagnostics _denyAssignmentsClientDiagnostics;
         private DenyAssignments _denyAssignmentsRestClient;
+        private ClientDiagnostics _privilegedResourcesClientDiagnostics;
+        private PrivilegedResources _privilegedResourcesRestClient;
         private ClientDiagnostics _roleAssignmentsClientDiagnostics;
         private RoleAssignments _roleAssignmentsRestClient;
         private ClientDiagnostics _roleDefinitionsClientDiagnostics;
@@ -53,6 +55,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
             Endpoint,
             "2024-07-01-preview",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+
+        private ClientDiagnostics PrivilegedResourcesClientDiagnostics => _privilegedResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PrivilegedResources PrivilegedResourcesRestClient => _privilegedResourcesRestClient ??= new PrivilegedResources(PrivilegedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01-preview");
 
         private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -207,6 +213,83 @@ namespace Azure.ResourceManager.Authorization.Mocking
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             return GetAccessReviewInstancesAssignedForMyApprovals(scheduleDefinitionId).Get(id, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PrivilegedResourceFavorites in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of PrivilegedResourceFavorites and their operations over a PrivilegedResourceFavoriteResource. </returns>
+        public virtual PrivilegedResourceFavoriteCollection GetPrivilegedResourceFavorites()
+        {
+            return GetCachedClient(client => new PrivilegedResourceFavoriteCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get one of the calling user's favorites by id.
+        /// Returns `404` if the calling user has not favorited this resource, even
+        /// if another user has.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/privilegedResourceFavorites/{favoriteId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivilegedResourceFavorites_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="favoriteId">
+        /// Favorite identifier — `base64url(lowercased Azure resource ID)`. Because
+        /// the derivation is deterministic, the client may compute it locally
+        /// from the resource id.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PrivilegedResourceFavoriteResource>> GetPrivilegedResourceFavoriteAsync(string favoriteId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+
+            return await GetPrivilegedResourceFavorites().GetAsync(favoriteId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get one of the calling user's favorites by id.
+        /// Returns `404` if the calling user has not favorited this resource, even
+        /// if another user has.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/privilegedResourceFavorites/{favoriteId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivilegedResourceFavorites_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="favoriteId">
+        /// Favorite identifier — `base64url(lowercased Azure resource ID)`. Because
+        /// the derivation is deterministic, the client may compute it locally
+        /// from the resource id.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PrivilegedResourceFavoriteResource> GetPrivilegedResourceFavorite(string favoriteId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+
+            return GetPrivilegedResourceFavorites().Get(favoriteId, cancellationToken);
         }
 
         /// <summary> Gets a collection of AuthorizationProviderOperationsMetadata in the <see cref="TenantResource"/>. </summary>
@@ -364,6 +447,326 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List the calling user's privileged Azure resources.
+        /// Returns the resources you have privileged access to, evaluated with your
+        /// own permissions — only resources you are authorized to see are included.
+        /// Pagination: server-driven via `maxpagesize` (advisory) + `nextLink`.
+        /// Clients follow `nextLink` verbatim — do not parse, mutate, or append
+        /// query parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/privilegedResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivilegedResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessScope">
+        /// Controls whether the response is scoped to subscriptions the caller has
+        /// PIM assignments on, or expanded to all readable subscriptions. Allowed
+        /// values today: `pimOnly` (default — only subscriptions with PIM
+        /// assignments) and `allAccessible` (any subscription the caller can read).
+        /// Modeled as an extensible string so future scope expansions can be
+        /// added without a breaking change; clients should tolerate unknown values.
+        /// </param>
+        /// <param name="maxpagesize">
+        /// Advisory maximum page-size hint. The server may return fewer items than
+        /// `maxpagesize` and still include a `nextLink`. Accepted range: 1 through
+        /// <list type="number"><item><description>Name follows the standard Azure pagination convention</description></item></list>
+        /// (`maxpagesize`) rather than the strict-maximum `$top` to signal the
+        /// advisory semantics.
+        /// </param>
+        /// <param name="filter">
+        /// OData `$filter` expression that selects resource rows. Flat, lowercase
+        /// `and` expression only — `or`, `not`, and grouping are rejected.
+        /// Supported predicates:
+        /// <list type="bullet"><item><description>`type` — `eq` or `in`, e.g.</description></item></list>
+        /// `type eq 'microsoft.compute/virtualmachines'` or
+        /// `type in ('microsoft.compute/virtualmachines','microsoft.desktopvirtualization/hostpools')`.
+        /// Every value must be a supported primary resource type.
+        /// <list type="bullet"><item><description>`scope` — `eq` or `in`, using exact, case-insensitive ARM-ID</description></item></list>
+        /// membership.
+        /// <list type="bullet"><item><description>`subscriptionId` — `eq`, `ne`, or `in`. It is an exact resource GUID,</description></item></list>
+        /// so `contains` / `startswith` are rejected.
+        /// <list type="bullet"><item><description>`subscriptionName` — `eq`, `ne`, `contains`, or `startswith`. The</description></item></list>
+        /// human-readable subscription display name (distinct from the
+        /// `subscriptionId` GUID).
+        /// <list type="bullet"><item><description>`resourceGroup` — `eq`, `ne`, `contains`, `startswith`, or `in`.</description></item></list>
+        /// Matches by name across every subscription the caller can see; because
+        /// resource-group names are not globally unique, combine it with
+        /// `subscriptionId` to disambiguate.
+        /// <list type="bullet"><item><description>`tags.&lt;key&gt;` (dynamic) — `eq`, `ne`, `contains`, or `startswith`.</description></item></list>
+        /// A tag predicate addresses a single key with dotted syntax
+        /// (e.g. `tags.environment eq 'prod'`); the whole remainder after
+        /// `tags.` is the key, matched case-insensitively. An empty key
+        /// (`tags.`) is rejected.
+        /// <list type="bullet"><item><description>`displayName` and `location` — `eq`, `ne`, and function-form</description></item></list>
+        /// `startswith(field,'value')` / `contains(field,'value')`.
+        /// <list type="bullet"><item><description>Role assignment status:</description></item></list>
+        /// `roles/any(r: r/assignmentStatus eq 'active'|'eligible')`.
+        /// Favorite-state predicates that reference `isFavorite` are not supported
+        /// in this API version and return `400 InvalidFilterField` until favorite
+        /// filtering is implemented.
+        /// The `in` membership operator is limited to `type`, `scope`,
+        /// `subscriptionId`, and `resourceGroup`; all other fields accept only the
+        /// infix (`eq` / `ne`) and function (`contains` / `startswith`) forms.
+        /// `endswith` is not supported. Values inside one `in` clause are
+        /// OR-composed and matched case-insensitively; separate clauses remain
+        /// AND-composed.
+        /// The decoded expression cannot exceed 4096 characters, and each decoded
+        /// string literal cannot exceed 1024 characters. The combined resource-type,
+        /// scope, and predicate input count cannot exceed 50.
+        /// A role assignment status predicate selects resource rows that have at
+        /// least one matching role; it does not filter the contents of `roles`.
+        /// Every matching resource returns its complete roles collection.
+        /// </param>
+        /// <param name="orderby">
+        /// Sort expression. Supported values: `displayName`, `displayName asc`, or
+        /// `displayName desc`. Ordering is applied to the complete filtered set
+        /// before pagination, with `scope` as the deterministic tie-breaker.
+        /// Invalid expressions return `400 InvalidOrderBy`.
+        /// </param>
+        /// <param name="count">
+        /// When `true`, the response includes the full post-filter row count in the
+        /// optional `count` field — the cardinality of the complete filtered set
+        /// before the page slice. Absent or `false` omits `count`. Any other value
+        /// returns `400 InvalidCount`.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivilegedResourceProjection> GetPrivilegedResourcesAsync(PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PrivilegedResourceProjectionAsyncCollectionResultOfT(
+                PrivilegedResourcesRestClient,
+                accessScope?.ToString(),
+                maxpagesize,
+                filter,
+                @orderby,
+                count,
+                context,
+                "MockableAuthorizationTenantResource.GetPrivilegedResources");
+        }
+
+        /// <summary>
+        /// List the calling user's privileged Azure resources.
+        /// Returns the resources you have privileged access to, evaluated with your
+        /// own permissions — only resources you are authorized to see are included.
+        /// Pagination: server-driven via `maxpagesize` (advisory) + `nextLink`.
+        /// Clients follow `nextLink` verbatim — do not parse, mutate, or append
+        /// query parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/privilegedResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivilegedResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessScope">
+        /// Controls whether the response is scoped to subscriptions the caller has
+        /// PIM assignments on, or expanded to all readable subscriptions. Allowed
+        /// values today: `pimOnly` (default — only subscriptions with PIM
+        /// assignments) and `allAccessible` (any subscription the caller can read).
+        /// Modeled as an extensible string so future scope expansions can be
+        /// added without a breaking change; clients should tolerate unknown values.
+        /// </param>
+        /// <param name="maxpagesize">
+        /// Advisory maximum page-size hint. The server may return fewer items than
+        /// `maxpagesize` and still include a `nextLink`. Accepted range: 1 through
+        /// <list type="number"><item><description>Name follows the standard Azure pagination convention</description></item></list>
+        /// (`maxpagesize`) rather than the strict-maximum `$top` to signal the
+        /// advisory semantics.
+        /// </param>
+        /// <param name="filter">
+        /// OData `$filter` expression that selects resource rows. Flat, lowercase
+        /// `and` expression only — `or`, `not`, and grouping are rejected.
+        /// Supported predicates:
+        /// <list type="bullet"><item><description>`type` — `eq` or `in`, e.g.</description></item></list>
+        /// `type eq 'microsoft.compute/virtualmachines'` or
+        /// `type in ('microsoft.compute/virtualmachines','microsoft.desktopvirtualization/hostpools')`.
+        /// Every value must be a supported primary resource type.
+        /// <list type="bullet"><item><description>`scope` — `eq` or `in`, using exact, case-insensitive ARM-ID</description></item></list>
+        /// membership.
+        /// <list type="bullet"><item><description>`subscriptionId` — `eq`, `ne`, or `in`. It is an exact resource GUID,</description></item></list>
+        /// so `contains` / `startswith` are rejected.
+        /// <list type="bullet"><item><description>`subscriptionName` — `eq`, `ne`, `contains`, or `startswith`. The</description></item></list>
+        /// human-readable subscription display name (distinct from the
+        /// `subscriptionId` GUID).
+        /// <list type="bullet"><item><description>`resourceGroup` — `eq`, `ne`, `contains`, `startswith`, or `in`.</description></item></list>
+        /// Matches by name across every subscription the caller can see; because
+        /// resource-group names are not globally unique, combine it with
+        /// `subscriptionId` to disambiguate.
+        /// <list type="bullet"><item><description>`tags.&lt;key&gt;` (dynamic) — `eq`, `ne`, `contains`, or `startswith`.</description></item></list>
+        /// A tag predicate addresses a single key with dotted syntax
+        /// (e.g. `tags.environment eq 'prod'`); the whole remainder after
+        /// `tags.` is the key, matched case-insensitively. An empty key
+        /// (`tags.`) is rejected.
+        /// <list type="bullet"><item><description>`displayName` and `location` — `eq`, `ne`, and function-form</description></item></list>
+        /// `startswith(field,'value')` / `contains(field,'value')`.
+        /// <list type="bullet"><item><description>Role assignment status:</description></item></list>
+        /// `roles/any(r: r/assignmentStatus eq 'active'|'eligible')`.
+        /// Favorite-state predicates that reference `isFavorite` are not supported
+        /// in this API version and return `400 InvalidFilterField` until favorite
+        /// filtering is implemented.
+        /// The `in` membership operator is limited to `type`, `scope`,
+        /// `subscriptionId`, and `resourceGroup`; all other fields accept only the
+        /// infix (`eq` / `ne`) and function (`contains` / `startswith`) forms.
+        /// `endswith` is not supported. Values inside one `in` clause are
+        /// OR-composed and matched case-insensitively; separate clauses remain
+        /// AND-composed.
+        /// The decoded expression cannot exceed 4096 characters, and each decoded
+        /// string literal cannot exceed 1024 characters. The combined resource-type,
+        /// scope, and predicate input count cannot exceed 50.
+        /// A role assignment status predicate selects resource rows that have at
+        /// least one matching role; it does not filter the contents of `roles`.
+        /// Every matching resource returns its complete roles collection.
+        /// </param>
+        /// <param name="orderby">
+        /// Sort expression. Supported values: `displayName`, `displayName asc`, or
+        /// `displayName desc`. Ordering is applied to the complete filtered set
+        /// before pagination, with `scope` as the deterministic tie-breaker.
+        /// Invalid expressions return `400 InvalidOrderBy`.
+        /// </param>
+        /// <param name="count">
+        /// When `true`, the response includes the full post-filter row count in the
+        /// optional `count` field — the cardinality of the complete filtered set
+        /// before the page slice. Absent or `false` omits `count`. Any other value
+        /// returns `400 InvalidCount`.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivilegedResourceProjection> GetPrivilegedResources(PrivilegedResourceAccessScopeFilter? accessScope = default, int? maxpagesize = default, string filter = default, string @orderby = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PrivilegedResourceProjectionCollectionResultOfT(
+                PrivilegedResourcesRestClient,
+                accessScope?.ToString(),
+                maxpagesize,
+                filter,
+                @orderby,
+                count,
+                context,
+                "MockableAuthorizationTenantResource.GetPrivilegedResources");
+        }
+
+        /// <summary>
+        /// List the connect-enablement related resources for a privileged resource.
+        /// Returns the resources you must additionally access to connect to the
+        /// privileged resource identified by `{privilegedResourceId}` — for example,
+        /// for a virtual machine: the NIC, NSG, public IP, and Bastion host.
+        /// Each entry is itself a projection (`RelatedResourceProjection`): the related
+        /// resource's own `projectionId` and `scope`, plus the `roles` you hold
+        /// (active or eligible) on that related resource. Clients drive activation
+        /// against those roles to enable connect. Resource properties themselves are
+        /// NOT returned — read them directly from the Azure Resource Manager REST APIs
+        /// at Connect time.
+        /// Returns an empty page when the privileged resource has no connect-enablement
+        /// dependencies.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/privilegedResources/{privilegedResourceId}/relatedResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivilegedResources_ListRelatedResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privilegedResourceId">
+        /// Opaque projection identifier of the parent privileged resource — the
+        /// `projectionId` returned by the `privilegedResources` list operation.
+        /// Clients MUST treat this as opaque — do not parse.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privilegedResourceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privilegedResourceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="RelatedPrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RelatedPrivilegedResourceProjection> GetRelatedResourcesAsync(string privilegedResourceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privilegedResourceId, nameof(privilegedResourceId));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new RelatedPrivilegedResourceProjectionAsyncCollectionResultOfT(PrivilegedResourcesRestClient, privilegedResourceId, context, "MockableAuthorizationTenantResource.GetRelatedResources");
+        }
+
+        /// <summary>
+        /// List the connect-enablement related resources for a privileged resource.
+        /// Returns the resources you must additionally access to connect to the
+        /// privileged resource identified by `{privilegedResourceId}` — for example,
+        /// for a virtual machine: the NIC, NSG, public IP, and Bastion host.
+        /// Each entry is itself a projection (`RelatedResourceProjection`): the related
+        /// resource's own `projectionId` and `scope`, plus the `roles` you hold
+        /// (active or eligible) on that related resource. Clients drive activation
+        /// against those roles to enable connect. Resource properties themselves are
+        /// NOT returned — read them directly from the Azure Resource Manager REST APIs
+        /// at Connect time.
+        /// Returns an empty page when the privileged resource has no connect-enablement
+        /// dependencies.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/privilegedResources/{privilegedResourceId}/relatedResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivilegedResources_ListRelatedResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privilegedResourceId">
+        /// Opaque projection identifier of the parent privileged resource — the
+        /// `projectionId` returned by the `privilegedResources` list operation.
+        /// Clients MUST treat this as opaque — do not parse.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privilegedResourceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privilegedResourceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="RelatedPrivilegedResourceProjection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RelatedPrivilegedResourceProjection> GetRelatedResources(string privilegedResourceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privilegedResourceId, nameof(privilegedResourceId));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new RelatedPrivilegedResourceProjectionCollectionResultOfT(PrivilegedResourcesRestClient, privilegedResourceId, context, "MockableAuthorizationTenantResource.GetRelatedResources");
         }
 
         /// <summary>
@@ -752,13 +1155,13 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="filter"> The filter to apply on the operation. One custom filter option is supported : 'assignedToMeToReview()'. When specified $filter=assignedToMeToReview(), only items that are assigned to the calling user to review are returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccessReviewScheduleDefinitionData> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AccessReviewScheduleDefinitionData> GetAccessReviewScheduleDefinitionsAssignedForMyApprovalAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewScheduleDefinitionDataAsync1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
+            return new AccessReviewScheduleDefinitionDataAsync1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAccessReviewScheduleDefinitionsAssignedForMyApproval");
         }
 
         /// <summary>
@@ -781,13 +1184,13 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="filter"> The filter to apply on the operation. One custom filter option is supported : 'assignedToMeToReview()'. When specified $filter=assignedToMeToReview(), only items that are assigned to the calling user to review are returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccessReviewScheduleDefinitionData> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<AccessReviewScheduleDefinitionData> GetAccessReviewScheduleDefinitionsAssignedForMyApproval(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewScheduleDefinitionData1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
+            return new AccessReviewScheduleDefinitionData1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAccessReviewScheduleDefinitionsAssignedForMyApproval");
         }
 
         /// <summary>

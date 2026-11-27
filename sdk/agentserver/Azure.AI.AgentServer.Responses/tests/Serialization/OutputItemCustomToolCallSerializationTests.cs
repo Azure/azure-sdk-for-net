@@ -3,9 +3,14 @@
 
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.Extensions.OpenAI;
-using CallStatus = Azure.AI.AgentServer.Responses.Models.FunctionCallStatus;
+using OpenAI.Responses;
+using CallStatus = OpenAI.Responses.CustomToolCallStatus;
+using OutputStatus = OpenAI.Responses.CustomToolCallOutputStatus;
+
+#pragma warning disable SCME0001
 
 namespace Azure.AI.AgentServer.Responses.Tests.Serialization;
 
@@ -63,7 +68,7 @@ public class OutputItemCustomToolCallSerializationTests
     ];
 
     // ========================================
-    // OutputItemCustomToolCall
+    // CustomToolCallItem
     // ========================================
 
     [Test]
@@ -96,7 +101,7 @@ public class OutputItemCustomToolCallSerializationTests
     [Test]
     public void CustomToolCall_Write_WithoutOptionalFields_OmitsThem()
     {
-        var item = new OutputItemCustomToolCall("call_123", "run_script", "print('hi')", CallStatus.Completed);
+        var item = new CustomToolCallItem("call_123", "print('hi')", "run_script") { Status = CallStatus.Completed };
 
         using var document = Write(item);
 
@@ -107,10 +112,7 @@ public class OutputItemCustomToolCallSerializationTests
     [Test]
     public void CustomToolCall_Read_PopulatesEveryProperty()
     {
-        var item = ModelReaderWriter.Read<OutputItemCustomToolCall>(
-            BinaryData.FromString(CustomToolCallJson),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var item = ModelJson.Read<CustomToolCallItem>(BinaryData.FromString(CustomToolCallJson))!;
 
         Assert.Multiple(() =>
         {
@@ -119,7 +121,7 @@ public class OutputItemCustomToolCallSerializationTests
             Assert.That(item.Caller, Is.InstanceOf<ProgramToolCallCaller>());
             Assert.That(((ProgramToolCallCaller)item.Caller).CallerId, Is.EqualTo("prog_1"));
             Assert.That(item.Namespace, Is.EqualTo("tools"));
-            Assert.That(item.Name, Is.EqualTo("run_script"));
+            Assert.That(item.ToolName, Is.EqualTo("run_script"));
             Assert.That(item.Input, Is.EqualTo("print('hi')"));
             Assert.That(item.Async, Is.True);
             Assert.That(item.Status, Is.EqualTo(CallStatus.InProgress));
@@ -133,19 +135,13 @@ public class OutputItemCustomToolCallSerializationTests
     [Test]
     public void CustomToolCall_RoundTrip_PreservesEveryProperty()
     {
-        var item = ModelReaderWriter.Read<OutputItemCustomToolCall>(
-            BinaryData.FromString(CustomToolCallJson),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var item = ModelJson.Read<CustomToolCallItem>(BinaryData.FromString(CustomToolCallJson))!;
 
         using var first = Write(item);
         AssertEachPropertyWrittenOnce(first.RootElement, CustomToolCallProperties);
         AssertSameJson(CustomToolCallJson, first.RootElement);
 
-        var reread = ModelReaderWriter.Read<OutputItemCustomToolCall>(
-            BinaryData.FromString(first.RootElement.GetRawText()),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var reread = ModelJson.Read<CustomToolCallItem>(BinaryData.FromString(first.RootElement.GetRawText()))!;
         using var second = Write(reread);
 
         AssertSameJson(first.RootElement.GetRawText(), second.RootElement);
@@ -155,10 +151,7 @@ public class OutputItemCustomToolCallSerializationTests
     public void CustomToolCall_RoundTrip_PreservesUnknownProperties()
     {
         var json = CustomToolCallJson.Replace("\"type\": \"custom_tool_call\",", "\"type\": \"custom_tool_call\", \"x_unknown\": { \"a\": 1 },");
-        var item = ModelReaderWriter.Read<OutputItemCustomToolCall>(
-            BinaryData.FromString(json),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var item = ModelJson.Read<CustomToolCallItem>(BinaryData.FromString(json))!;
 
         using var document = Write(item);
 
@@ -167,20 +160,18 @@ public class OutputItemCustomToolCallSerializationTests
     }
 
     [Test]
-    public void CustomToolCall_Read_NullAgentReference_LeavesItUnset()
+    public void CustomToolCall_Read_NullAgentReference_RoundTripsAsNull()
     {
         var json = CustomToolCallJson.Replace(
             "\"agent_reference\": { \"type\": \"agent_reference\", \"name\": \"my-agent\", \"version\": \"3\" },",
             "\"agent_reference\": null,");
 
-        var item = ModelReaderWriter.Read<OutputItemCustomToolCall>(
-            BinaryData.FromString(json),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var item = ModelJson.Read<CustomToolCallItem>(BinaryData.FromString(json))!;
 
         Assert.That(item.AgentReference, Is.Null);
         using var document = Write(item);
-        Assert.That(document.RootElement.EnumerateObject().Select(p => p.Name), Does.Not.Contain("agent_reference"));
+        // OpenAI items keep unmodeled properties on their patch, so an explicit null round-trips as null.
+        Assert.That(document.RootElement.GetProperty("agent_reference").ValueKind, Is.EqualTo(JsonValueKind.Null));
     }
 
     [Test]
@@ -189,7 +180,7 @@ public class OutputItemCustomToolCallSerializationTests
         var options = new JsonSerializerOptions();
         options.Converters.Add(new TypeSpecModelConverterFactory());
 
-        var item = JsonSerializer.Deserialize<OutputItemCustomToolCall>(CustomToolCallJson, options)!;
+        var item = JsonSerializer.Deserialize<CustomToolCallItem>(CustomToolCallJson, options)!;
         var json = JsonSerializer.Serialize(item, options);
 
         using var document = JsonDocument.Parse(json);
@@ -198,7 +189,7 @@ public class OutputItemCustomToolCallSerializationTests
     }
 
     // ========================================
-    // OutputItemCustomToolCallOutput
+    // CustomToolCallOutputItem
     // ========================================
 
     [Test]
@@ -228,7 +219,7 @@ public class OutputItemCustomToolCallSerializationTests
     [Test]
     public void CustomToolCallOutput_Write_WithoutOptionalFields_OmitsThem()
     {
-        var item = new OutputItemCustomToolCallOutput("call_123", BinaryData.FromString("\"done\""), FunctionCallOutputStatusEnum.Incomplete);
+        var item = NewCustomToolCallOutput(OutputStatus.Incomplete);
 
         using var document = Write(item);
 
@@ -237,20 +228,37 @@ public class OutputItemCustomToolCallSerializationTests
     }
 
     [Test]
+    public void CustomToolCall_UnknownStatus_RoundTrips()
+    {
+        var item = ModelJson.Read<CustomToolCallItem>(BinaryData.FromString("""{"type":"custom_tool_call","call_id":"call_123","name":"run_script","input":"x","status":"queued"}"""))!;
+
+        Assert.That(item.Status.ToString(), Is.EqualTo("queued"));
+        using var document = Write(item);
+        Assert.That(document.RootElement.GetProperty("status").GetString(), Is.EqualTo("queued"));
+    }
+
+    [Test]
+    public void CustomToolCallOutput_UnknownStatus_RoundTrips()
+    {
+        var item = ModelJson.Read<CustomToolCallOutputItem>(BinaryData.FromString("""{"type":"custom_tool_call_output","call_id":"call_123","output":"done","status":"queued"}"""))!;
+
+        Assert.That(item.Status.ToString(), Is.EqualTo("queued"));
+        using var document = Write(item);
+        Assert.That(document.RootElement.GetProperty("status").GetString(), Is.EqualTo("queued"));
+    }
+
+    [Test]
     public void CustomToolCallOutput_Read_PopulatesEveryProperty()
     {
-        var item = ModelReaderWriter.Read<OutputItemCustomToolCallOutput>(
-            BinaryData.FromString(CustomToolCallOutputJson),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var item = ModelJson.Read<CustomToolCallOutputItem>(BinaryData.FromString(CustomToolCallOutputJson))!;
 
         Assert.Multiple(() =>
         {
             Assert.That(item.Id, Is.EqualTo("ctco_123"));
             Assert.That(item.CallId, Is.EqualTo("call_123"));
-            Assert.That(item.Caller, Is.InstanceOf<DirectToolCallCallerParam>());
-            Assert.That(item.Output.ToString(), Is.EqualTo("\"done\""));
-            Assert.That(item.Status, Is.EqualTo(FunctionCallOutputStatusEnum.Completed));
+            Assert.That(item.Caller, Is.InstanceOf<DirectToolCallCaller>());
+            Assert.That(item.Output.Single().Text, Is.EqualTo("done"));
+            Assert.That(item.Status, Is.EqualTo(OutputStatus.Completed));
             Assert.That(item.ResponseId, Is.EqualTo("resp_1"));
             Assert.That(item.AgentReference?.Name, Is.EqualTo("my-agent"));
             Assert.That(item.AgentReference?.Version, Is.EqualTo("3"));
@@ -259,21 +267,27 @@ public class OutputItemCustomToolCallSerializationTests
     }
 
     [Test]
+    public void CustomToolCallOutput_RoundTrip_PreservesArrayOutput()
+    {
+        var item = ModelJson.Read<CustomToolCallOutputItem>(BinaryData.FromString(
+            """{"type":"custom_tool_call_output","call_id":"call_123","output":[{"type":"input_text","text":"done"}]}"""))!;
+
+        using var document = Write(item);
+        var output = document.RootElement.GetProperty("output");
+        Assert.That(output.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        Assert.That(output[0].GetProperty("text").GetString(), Is.EqualTo("done"));
+    }
+
+    [Test]
     public void CustomToolCallOutput_RoundTrip_PreservesEveryProperty()
     {
-        var item = ModelReaderWriter.Read<OutputItemCustomToolCallOutput>(
-            BinaryData.FromString(CustomToolCallOutputJson),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var item = ModelJson.Read<CustomToolCallOutputItem>(BinaryData.FromString(CustomToolCallOutputJson))!;
 
         using var first = Write(item);
         AssertEachPropertyWrittenOnce(first.RootElement, CustomToolCallOutputProperties);
         AssertSameJson(CustomToolCallOutputJson, first.RootElement);
 
-        var reread = ModelReaderWriter.Read<OutputItemCustomToolCallOutput>(
-            BinaryData.FromString(first.RootElement.GetRawText()),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var reread = ModelJson.Read<CustomToolCallOutputItem>(BinaryData.FromString(first.RootElement.GetRawText()))!;
         using var second = Write(reread);
 
         AssertSameJson(first.RootElement.GetRawText(), second.RootElement);
@@ -283,10 +297,7 @@ public class OutputItemCustomToolCallSerializationTests
     public void CustomToolCallOutput_RoundTrip_PreservesUnknownProperties()
     {
         var json = CustomToolCallOutputJson.Replace("\"type\": \"custom_tool_call_output\",", "\"type\": \"custom_tool_call_output\", \"x_unknown\": { \"a\": 1 },");
-        var item = ModelReaderWriter.Read<OutputItemCustomToolCallOutput>(
-            BinaryData.FromString(json),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var item = ModelJson.Read<CustomToolCallOutputItem>(BinaryData.FromString(json))!;
 
         using var document = Write(item);
 
@@ -295,20 +306,18 @@ public class OutputItemCustomToolCallSerializationTests
     }
 
     [Test]
-    public void CustomToolCallOutput_Read_NullAgentReference_LeavesItUnset()
+    public void CustomToolCallOutput_Read_NullAgentReference_RoundTripsAsNull()
     {
         var json = CustomToolCallOutputJson.Replace(
             "\"agent_reference\": { \"type\": \"agent_reference\", \"name\": \"my-agent\", \"version\": \"3\" },",
             "\"agent_reference\": null,");
 
-        var item = ModelReaderWriter.Read<OutputItemCustomToolCallOutput>(
-            BinaryData.FromString(json),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+        var item = ModelJson.Read<CustomToolCallOutputItem>(BinaryData.FromString(json))!;
 
         Assert.That(item.AgentReference, Is.Null);
         using var document = Write(item);
-        Assert.That(document.RootElement.EnumerateObject().Select(p => p.Name), Does.Not.Contain("agent_reference"));
+        // OpenAI items keep unmodeled properties on their patch, so an explicit null round-trips as null.
+        Assert.That(document.RootElement.GetProperty("agent_reference").ValueKind, Is.EqualTo(JsonValueKind.Null));
     }
 
     [Test]
@@ -317,7 +326,7 @@ public class OutputItemCustomToolCallSerializationTests
         var options = new JsonSerializerOptions();
         options.Converters.Add(new TypeSpecModelConverterFactory());
 
-        var item = JsonSerializer.Deserialize<OutputItemCustomToolCallOutput>(CustomToolCallOutputJson, options)!;
+        var item = JsonSerializer.Deserialize<CustomToolCallOutputItem>(CustomToolCallOutputJson, options)!;
         var json = JsonSerializer.Serialize(item, options);
 
         using var document = JsonDocument.Parse(json);
@@ -339,7 +348,7 @@ public class OutputItemCustomToolCallSerializationTests
     public void StoredCustomToolCallOutput_WithObjectCreatedBy_ReadsBack()
         => AssertStoredItemReadsBack(CreateCustomToolCallOutput(), "ctco_123");
 
-    private static void AssertStoredItemReadsBack(OutputItem item, string expectedId)
+    private static void AssertStoredItemReadsBack(ResponseItem item, string expectedId)
     {
         var stored = "[" + ModelJson.Write(item) + "]";
 
@@ -362,10 +371,11 @@ public class OutputItemCustomToolCallSerializationTests
     // Helpers
     // ========================================
 
-    private static OutputItemCustomToolCall CreateCustomToolCall()
+    private static CustomToolCallItem CreateCustomToolCall()
     {
-        var item = new OutputItemCustomToolCall("call_123", "run_script", "print('hi')", CallStatus.InProgress)
+        var item = new CustomToolCallItem("call_123", "print('hi')", "run_script")
         {
+            Status = CallStatus.InProgress,
             Id = "ctc_123",
             Caller = new ProgramToolCallCaller("prog_1"),
             Namespace = "tools",
@@ -377,21 +387,27 @@ public class OutputItemCustomToolCallSerializationTests
         return item;
     }
 
-    private static OutputItemCustomToolCallOutput CreateCustomToolCallOutput()
+    private static CustomToolCallOutputItem CreateCustomToolCallOutput()
     {
-        var item = new OutputItemCustomToolCallOutput("call_123", BinaryData.FromString("\"done\""), FunctionCallOutputStatusEnum.Completed)
-        {
-            Id = "ctco_123",
-            Caller = new DirectToolCallCallerParam(),
-        };
+        var item = NewCustomToolCallOutput(OutputStatus.Completed);
+        item.Id = "ctco_123";
+        item.Caller = new DirectToolCallCaller();
         item.ResponseId = "resp_1";
         item.AgentReference = new AgentReference("my-agent", "3");
         item.CreatedBy = BinaryData.FromString(CreatedByJson);
         return item;
     }
 
+    // Mirrors ResponseEventStream.OutputItemCustomToolCallOutput: the string output is kept on the patch.
+    private static CustomToolCallOutputItem NewCustomToolCallOutput(OutputStatus status)
+    {
+        var item = new CustomToolCallOutputItem("call_123", []) { Status = status };
+        item.Patch.Set("$.output"u8, "\"done\""u8);
+        return item;
+    }
+
     private static JsonDocument Write<T>(T model) where T : class, IJsonModel<T>
-        => JsonDocument.Parse(ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default));
+        => JsonDocument.Parse(ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, global::OpenAI.OpenAIContext.Default));
 
     // Comparing the written names as a multiset fails on both duplicated and unexpected properties.
     private static void AssertEachPropertyWrittenOnce(JsonElement root, params string[] expected)

@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-06-15-preview",
+            "2026-09-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
-        /// List all the mongo clusters in a given subscription.
+        /// List all the DocumentDB clusters in a given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-15-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// List all the mongo clusters in a given subscription.
+        /// List all the DocumentDB clusters in a given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-15-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// Check if mongo cluster name is available for use.
+        /// Check if DocumentDB cluster name is available for use.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-15-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// Check if mongo cluster name is available for use.
+        /// Check if DocumentDB cluster name is available for use.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-15-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>

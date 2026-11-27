@@ -134,14 +134,44 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             Assert.AreEqual("ns", converted.Namespace);
         }
 
-        [TestCase]
-        public void RemoveSocketFromRoom_Valid()
+        [TestCase("room", "Room")]
+        [TestCase("namespace", "Namespace")]
+        [TestCase("socketId", "SocketId")]
+        public void AddSocketToRoom_RejectsReplacedSurrogate(string propertyName, string parameterName)
+        {
+            var input = JObject.Parse(@"{ actionName: ""addSocketToRoom"", socketId: ""sid"", room: ""rm1"" }");
+            input[propertyName] = JToken.Parse(@"""\ud800""");
+            Assert.AreEqual("\uFFFD", (string)input[propertyName]);
+
+            var exception = Assert.Throws<ArgumentException>(() => WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(input));
+
+            Assert.AreEqual(parameterName, exception.ParamName);
+        }
+
+        [Test]
+        public void AddSocketToRoomArray_RejectsInvalidSecondAction()
+        {
+            var input = JArray.Parse(@"[
+                { actionName: ""addSocketToRoom"", socketId: ""sid"", room: ""rm1"" },
+                { actionName: ""addSocketToRoom"", socketId: ""sid"", room: ""\ud800"" }
+            ]");
+
+            var exception = Assert.Throws<ArgumentException>(() => WebPubSubForSocketIOConfigProvider.ConvertToSocketIOActionArray(input));
+
+            Assert.AreEqual("Room", exception.ParamName);
+        }
+
+        [TestCase("rm1")]
+        [TestCase("\uFFFD")]
+        public void RemoveSocketFromRoom_Valid(string room)
         {
             var input = @"{ actionName : ""removeSocketFromRoom"", socketId: ""sid"", room: ""rm1"", namespace: ""ns""}";
-            var converted = (RemoveSocketFromRoomAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(JObject.Parse(input));
+            var jObject = JObject.Parse(input);
+            jObject["room"] = room;
+            var converted = (RemoveSocketFromRoomAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(jObject);
 
             Assert.AreEqual("sid", converted.SocketId);
-            Assert.AreEqual("rm1", converted.Room);
+            Assert.AreEqual(room, converted.Room);
             Assert.AreEqual("ns", converted.Namespace);
         }
 

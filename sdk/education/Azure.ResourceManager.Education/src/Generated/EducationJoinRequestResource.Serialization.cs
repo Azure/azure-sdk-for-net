@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Education
 {
     /// <summary></summary>
-    public partial class EducationJoinRequestResource : IJsonModel<EducationJoinRequestData>
+    public partial class EducationJoinRequestResource : IJsonModel<EducationJoinContentData>
     {
-        private static IJsonModel<EducationJoinRequestData> s_dataDeserializationInstance;
+        private static IJsonModel<EducationJoinContentData> s_dataDeserializationInstance;
 
-        private static IJsonModel<EducationJoinRequestData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EducationJoinRequestData();
+        private static IJsonModel<EducationJoinContentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EducationJoinContentData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EducationJoinRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EducationJoinRequestData>)Data).Write(writer, options);
+        void IJsonModel<EducationJoinContentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EducationJoinContentData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EducationJoinRequestData IJsonModel<EducationJoinRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        EducationJoinContentData IJsonModel<EducationJoinContentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EducationJoinRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EducationJoinRequestData>(Data, options, AzureResourceManagerEducationContext.Default);
+        BinaryData IPersistableModel<EducationJoinContentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EducationJoinContentData>(Data, options, AzureResourceManagerEducationContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EducationJoinRequestData IPersistableModel<EducationJoinRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EducationJoinRequestData>(data, options, AzureResourceManagerEducationContext.Default);
+        EducationJoinContentData IPersistableModel<EducationJoinContentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EducationJoinContentData>(data, options, AzureResourceManagerEducationContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EducationJoinRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<EducationJoinContentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

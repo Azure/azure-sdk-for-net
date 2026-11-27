@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Azure.AI.AgentServer.Core.Internal;
+using Microsoft.Agents.A365.Observability.Runtime.Tracing.Exporters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -123,6 +124,44 @@ public class OpenTelemetryExtensionsTests
         var appInsights = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
         Assert.That(otlp, Is.Not.Null);
         Assert.That(appInsights, Is.Not.Null);
+    }
+
+    [Test]
+    public void HostedAgent365Telemetry_RegistersS2SAndTokenResolver()
+    {
+        var variables = new Dictionary<string, string?>
+        {
+            ["FOUNDRY_HOSTING_ENVIRONMENT"] = "production",
+            ["FOUNDRY_AGENT365_TRACING_ENABLED"] = "true",
+            ["FOUNDRY_AGENT_INSTANCE_CLIENT_ID"] = "00000000-0000-0000-0000-000000000001",
+            ["OTEL_EXPORTER_OTLP_ENDPOINT"] = null,
+            ["APPLICATIONINSIGHTS_CONNECTION_STRING"] = null,
+        };
+        var previous = variables.Keys.ToDictionary(name => name, Environment.GetEnvironmentVariable);
+        try
+        {
+            foreach (var variable in variables)
+            {
+                Environment.SetEnvironmentVariable(variable.Key, variable.Value);
+            }
+
+            FoundryEnvironment.Reload();
+
+            using var provider = BuildServiceProvider();
+            Assert.That(provider.GetRequiredService<TracerProvider>(), Is.Not.Null);
+            var options = provider.GetRequiredService<Agent365ExporterOptions>();
+            Assert.That(options.UseS2SEndpoint, Is.True);
+            Assert.That(options.TokenResolver, Is.Not.Null);
+        }
+        finally
+        {
+            foreach (var variable in previous)
+            {
+                Environment.SetEnvironmentVariable(variable.Key, variable.Value);
+            }
+
+            FoundryEnvironment.Reload();
+        }
     }
 
     [Test]

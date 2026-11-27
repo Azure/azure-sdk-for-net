@@ -22,11 +22,14 @@ namespace BasicTypeSpec
         {
             10
         };
+        private readonly bool _writeRawData;
 
         /// <param name="values"></param>
-        public JsonLinesBinaryContent(IAsyncEnumerable<T> values)
+        /// <param name="writeRawData"></param>
+        public JsonLinesBinaryContent(IAsyncEnumerable<T> values, bool writeRawData = false)
         {
             _values = values;
+            _writeRawData = writeRawData;
         }
 
         /// <param name="stream"></param>
@@ -42,7 +45,21 @@ namespace BasicTypeSpec
                 }
                 using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
                 {
-                    writer.WriteObjectValue(value, ModelSerializationExtensions.WireOptions);
+                    if (_writeRawData && value is BinaryData data)
+                    {
+#if NET6_0_OR_GREATER
+                        writer.WriteRawValue(data);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(data))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
+                    }
+                    else
+                    {
+                        writer.WriteObjectValue(value, ModelSerializationExtensions.WireOptions);
+                    }
                     await writer.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
                 first = false;

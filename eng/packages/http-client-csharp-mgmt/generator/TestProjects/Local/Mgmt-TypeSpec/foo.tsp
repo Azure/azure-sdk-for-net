@@ -13,7 +13,7 @@ using LiftrBase;
 
 namespace MgmtTypeSpec;
 
-@TypeSpec.HttpClient.CSharp.dynamicModel
+@dynamicModel("csharp")
 @resource("foos")
 model Foo is TrackedResource<FooProperties, false> {
   ...ResourceNameParameter<Foo, SegmentName = "foos">;
@@ -161,6 +161,16 @@ interface Foos {
     Foo,
     void,
     ArmResponse<FooProvisioningState>
+  >;
+
+  /** Check whether the named configuration exists. */
+  @head
+  @action("checkConfiguration")
+  @responseAsBool("csharp")
+  checkConfiguration is ArmResourceActionSync<
+    Foo,
+    void,
+    OkResponse | NotFoundResponse
   >;
 
   /** Get raw metadata (Record<unknown>) for a Foo resource. */

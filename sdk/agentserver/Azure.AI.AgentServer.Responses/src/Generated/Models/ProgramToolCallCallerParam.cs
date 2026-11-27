@@ -6,20 +6,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The ProgramToolCallCallerParam. </summary>
-    public partial class ProgramToolCallCallerParam : ToolCallCallerParam
+    internal partial class ProgramToolCallCallerParam : ToolCallCallerParam
     {
         /// <summary> Initializes a new instance of <see cref="ProgramToolCallCallerParam"/>. </summary>
         /// <param name="callerId"> The call ID of the program item that produced this tool call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callerId"/> is null. </exception>
-        public ProgramToolCallCallerParam(string callerId) : base(ToolCallCallerParamType.Program)
+        internal ProgramToolCallCallerParam(string callerId) : base("program")
         {
-            Argument.AssertNotNull(callerId, nameof(callerId));
-
             CallerId = callerId;
         }
 
@@ -33,6 +29,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The call ID of the program item that produced this tool call. </summary>
-        public string CallerId { get; set; }
+        public string CallerId { get; }
     }
 }

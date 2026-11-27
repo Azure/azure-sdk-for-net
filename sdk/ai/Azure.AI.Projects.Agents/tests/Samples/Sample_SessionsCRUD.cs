@@ -41,13 +41,13 @@ public class Sample_SessionsCRUD : SamplesBase
         ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId1,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
         ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId2,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
@@ -109,13 +109,13 @@ public class Sample_SessionsCRUD : SamplesBase
         ProjectAgentSession session1 = agentsClient.CreateSession(
             agentName: agentVersion.Name,
             agentSessionId: sessionId1,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
         ProjectAgentSession session2 = agentsClient.CreateSession(
             agentName: agentVersion.Name,
             agentSessionId: sessionId2,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionReferenceIndicator(agentVersion.Version)
         );
         Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
 

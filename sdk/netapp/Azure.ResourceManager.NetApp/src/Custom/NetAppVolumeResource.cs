@@ -28,6 +28,45 @@ namespace Azure.ResourceManager.NetApp
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("ReplicationStatusAsync", typeof(CancellationToken))]
     public partial class NetAppVolumeResource
     {
+        /// <summary> Gets the subvolumes in this volume. </summary>
+        /// <returns> An object representing collection of NetAppSubvolumeInfos and their operations over a NetAppSubvolumeInfoResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
+        public virtual NetAppSubvolumeInfoCollection GetNetAppSubvolumeInfos()
+        {
+            return GetCachedClient(client => new NetAppSubvolumeInfoCollection(client, Id));
+        }
+
+        /// <summary> Returns the path associated with the subvolumeName provided. </summary>
+        /// <param name="subvolumeName"> The name of the subvolume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
+        public virtual async Task<Response<NetAppSubvolumeInfoResource>> GetNetAppSubvolumeInfoAsync(string subvolumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
+
+            return await GetNetAppSubvolumeInfos().GetAsync(subvolumeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns the path associated with the subvolumeName provided. </summary>
+        /// <param name="subvolumeName"> The name of the subvolume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
+        public virtual Response<NetAppSubvolumeInfoResource> GetNetAppSubvolumeInfo(string subvolumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
+
+            return GetNetAppSubvolumeInfos().Get(subvolumeName, cancellationToken);
+        }
+
         /// <summary> Get the status of the backup for a volume. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppVolumeBackupStatus> GetBackupStatus(CancellationToken cancellationToken = default)

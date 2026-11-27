@@ -269,6 +269,26 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return message;
         }
 
+        internal HttpMessage CreateCheckConfigurationRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
+            uri.AppendPath(fooName, true);
+            uri.AppendPath("/checkConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Head;
+            _userAgent.Apply(message);
+            return message;
+        }
+
         internal HttpMessage CreateGetMetadataRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

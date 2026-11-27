@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 489
-- Management Plane (MPG): 273
+- Total libraries: 493
+- Management Plane (MPG): 277
   - Autorest/Swagger: 39
-  - New Emitter (TypeSpec): 234
+  - New Emitter (TypeSpec): 238
   - Old TypeSpec: 0
 - Data Plane (DPG): 130
   - Autorest/Swagger: 28
@@ -141,7 +141,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 28
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 234 / 234 (100%)
+**Migration Status**: 238 / 238 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -168,6 +168,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | authorization | Azure.ResourceManager.Authorization | ✅ |
 | automation | Azure.ResourceManager.Automation | ✅ |
 | avs | Azure.ResourceManager.Avs | ✅ |
+| azurearcdata | Azure.ResourceManager.ArcData | ✅ |
 | azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
 | azureresiliencemanagement | Azure.ResourceManager.ResilienceManagement | ✅ |
 | azurestackhci | Azure.ResourceManager.Hci | ✅ |
@@ -237,6 +238,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
+| edgeoperator | Azure.ResourceManager.EdgeOperator | ✅ |
 | edgeorder | Azure.ResourceManager.EdgeOrder | ✅ |
 | edgezones | Azure.ResourceManager.EdgeZones | ✅ |
 | education | Azure.ResourceManager.Education | ✅ |
@@ -270,6 +272,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | iothub | Azure.ResourceManager.IotHub | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations | ✅ |
 | keyvault | Azure.ResourceManager.KeyVault | ✅ |
+| koreaiartemis | Azure.ResourceManager.KoreAIArtemis | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.Extensions | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations | ✅ |
@@ -358,6 +361,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | signalr | Azure.ResourceManager.SignalR | ✅ |
 | sitemanager | Azure.ResourceManager.SiteManager | ✅ |
+| sovereign | Azure.ResourceManager.Sovereign | ✅ |
 | sphere | Azure.ResourceManager.Sphere | ✅ |
 | sqlmanagement | Azure.ResourceManager.Sql | ✅ |
 | sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine | ✅ |

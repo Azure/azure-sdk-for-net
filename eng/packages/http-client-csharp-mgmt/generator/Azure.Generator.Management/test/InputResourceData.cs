@@ -10,10 +10,9 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null, bool? resourceNameIsExplicit = null, string? singletonResourceName = null)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null, bool? resourceNameIsExplicit = null, string? singletonResourceName = null, bool includeCheckExistenceQueryParameter = false, bool headResourceGroupIsGuid = false, bool headResourceGroupSkipEncoding = false, bool headNameSkipEncoding = false, bool headIsInternal = false, string resourceModelName = "ResponseType")
         {
             const string TestClientName = "TestClient";
-            const string ResourceModelName = "ResponseType";
             List<InputModelProperty> properties =
             [
                 InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
@@ -36,7 +35,7 @@ namespace Azure.Generator.Management.Tests.Common
                 usage |= InputModelTypeUsage.Input;
             }
 
-            var responseModel = InputFactory.Model(ResourceModelName,
+            var responseModel = InputFactory.Model(resourceModelName,
                         usage: usage,
                         properties: properties,
                         baseModel: baseModel,
@@ -60,7 +59,19 @@ namespace Azure.Generator.Management.Tests.Common
             var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [.. getOperationParameters], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PUT");
             var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PATCH");
-            var checkExistenceOperation = InputFactory.Operation(name: "checkExistence", responses: [noContentResponseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "HEAD");
+            var headQueryOpParameter = InputFactory.QueryParameter("headToken", InputPrimitiveType.String, isRequired: true);
+            var headResourceGroupOpParameter = headResourceGroupIsGuid || headResourceGroupSkipEncoding
+                ? InputFactory.PathParameter("resourceGroupName", headResourceGroupIsGuid ? uuidType : InputPrimitiveType.String, isRequired: true, skipUrlEncoding: headResourceGroupSkipEncoding)
+                : rgOpParameter;
+            var headNameOpParameter = headNameSkipEncoding
+                ? InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true, skipUrlEncoding: true)
+                : testNameOpParameter;
+            List<InputParameter> headOperationParameters = [subsIdOpParameter, headResourceGroupOpParameter, headNameOpParameter];
+            if (includeCheckExistenceQueryParameter)
+            {
+                headOperationParameters.Add(headQueryOpParameter);
+            }
+            var checkExistenceOperation = InputFactory.Operation(name: "checkExistence", responses: [noContentResponseType], parameters: [.. headOperationParameters], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "HEAD");
             // the method parameters
             var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
             var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
@@ -75,7 +86,13 @@ namespace Azure.Generator.Management.Tests.Common
             var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [.. getMethodParameters], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
-            var checkExistenceMethod = InputFactory.BasicServiceMethod("checkExistence", checkExistenceOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var headResourceGroupParameter = headResourceGroupIsGuid ? InputFactory.MethodParameter("resourceGroupName", uuidType, location: InputRequestLocation.Path) : resourceGroupParameter;
+            List<InputMethodParameter> headMethodParameters = [testNameParameter, subscriptionIdParameter, headResourceGroupParameter];
+            if (includeCheckExistenceQueryParameter)
+            {
+                headMethodParameters.Add(InputFactory.MethodParameter("headToken", InputPrimitiveType.String, location: InputRequestLocation.Query, isRequired: true));
+            }
+            var checkExistenceMethod = InputFactory.BasicServiceMethod("checkExistence", checkExistenceOperation, access: headIsInternal ? "internal" : "public", parameters: [.. headMethodParameters], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var resourceMethods = new List<ResourceMethod>

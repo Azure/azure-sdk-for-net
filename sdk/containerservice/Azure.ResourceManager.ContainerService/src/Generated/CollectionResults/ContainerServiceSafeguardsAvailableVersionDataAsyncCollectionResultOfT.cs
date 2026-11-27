@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSafeguardsVersionsRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetSafeguardsVersionsRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListSafeguardsVersionsRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateListSafeguardsVersionsRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

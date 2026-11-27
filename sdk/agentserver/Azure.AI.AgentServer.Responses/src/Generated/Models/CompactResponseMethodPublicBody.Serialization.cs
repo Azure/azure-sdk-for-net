@@ -153,7 +153,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (PromptCacheRetention != null)
                 {
                     writer.WritePropertyName("prompt_cache_retention"u8);
-                    writer.WriteStringValue(PromptCacheRetention.Value.ToSerialString());
+                    writer.WriteObjectValue<object>(PromptCacheRetention, options);
                 }
                 else
                 {
@@ -165,7 +165,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (PromptCacheOptions != null)
                 {
                     writer.WritePropertyName("prompt_cache_options"u8);
-                    writer.WriteObjectValue(PromptCacheOptions, options);
+                    writer.WriteObjectValue<object>(PromptCacheOptions, options);
                 }
                 else
                 {
@@ -177,7 +177,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (ServiceTier != null)
                 {
                     writer.WritePropertyName("service_tier"u8);
-                    writer.WriteStringValue(ServiceTier.Value.ToSerialString());
+                    writer.WriteObjectValue<object>(ServiceTier, options);
                 }
                 else
                 {
@@ -237,11 +237,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             bool promptCacheKeyIsDefined = false;
             string promptCacheKey = default;
             bool promptCacheRetentionIsDefined = false;
-            PromptCacheRetentionEnum? promptCacheRetention = default;
+            object promptCacheRetention = default;
             bool promptCacheOptionsIsDefined = false;
-            PromptCacheOptionsParam promptCacheOptions = default;
+            object promptCacheOptions = default;
             bool serviceTierIsDefined = false;
-            ServiceTierEnum? serviceTier = default;
+            object serviceTier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -302,7 +302,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         promptCacheRetention = null;
                         continue;
                     }
-                    promptCacheRetention = prop.Value.GetString().ToPromptCacheRetentionEnum();
+                    promptCacheRetention = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("prompt_cache_options"u8))
@@ -313,7 +313,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         promptCacheOptions = null;
                         continue;
                     }
-                    promptCacheOptions = PromptCacheOptionsParam.DeserializePromptCacheOptionsParam(prop.Value, options);
+                    promptCacheOptions = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("service_tier"u8))
@@ -324,7 +324,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         serviceTier = null;
                         continue;
                     }
-                    serviceTier = prop.Value.GetString().ToServiceTierEnum();
+                    serviceTier = prop.Value.GetObject();
                     continue;
                 }
                 if (options.Format != "W")

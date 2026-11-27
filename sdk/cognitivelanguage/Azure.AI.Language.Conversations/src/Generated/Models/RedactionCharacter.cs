@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="RedactionCharacter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedactionCharacter?(string value) => value == null ? null : new RedactionCharacter(value);
+        public static implicit operator RedactionCharacter?(string value) => value == null ? (RedactionCharacter?)null : new RedactionCharacter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

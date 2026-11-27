@@ -252,9 +252,6 @@ internal static class IdGenerator
             MessageResponseItem => NewMessageItemId(partitionKeyHint),
             ItemFunctionToolCall => NewFunctionCallItemId(partitionKeyHint),
             FunctionCallOutputItemParam => NewFunctionCallOutputItemId(partitionKeyHint),
-            Models.OutputItemCustomToolCall => NewCustomToolCallItemId(partitionKeyHint),
-            Models.OutputItemCustomToolCallOutput => NewCustomToolCallOutputItemId(partitionKeyHint),
-            // Request items read as OpenAI's own custom tool types, not the response-side models above.
             OpenAI.Responses.CustomToolCallItem => NewCustomToolCallItemId(partitionKeyHint),
             OpenAI.Responses.CustomToolCallOutputItem => NewCustomToolCallOutputItemId(partitionKeyHint),
             ItemComputerToolCall => NewComputerCallItemId(partitionKeyHint),

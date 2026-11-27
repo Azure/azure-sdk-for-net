@@ -38,6 +38,24 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="FilteredExistenceTestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsArmClient.GetFilteredExistenceTestResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FilteredExistenceTestResource"/> object. </returns>
+        public static FilteredExistenceTestResource GetFilteredExistenceTestResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsArmClient(client).GetFilteredExistenceTestResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="EscapedWireVersionTestResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -89,6 +107,63 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsArmClient(client).GetOrdinaryWireVersionTestResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of FilteredExistenceTests in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource.GetFilteredExistenceTests()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of FilteredExistenceTests and their operations over a FilteredExistenceTestResource. </returns>
+        public static FilteredExistenceTestCollection GetFilteredExistenceTests(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource(resourceGroupResource).GetFilteredExistenceTests();
+        }
+
+        /// <summary>
+        /// Get a FilteredExistenceTest
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource.GetFilteredExistenceTestAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="filteredExistenceTestName"> The name of the FilteredExistenceTest. </param>
+        /// <param name="expand"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<FilteredExistenceTestResource>> GetFilteredExistenceTestAsync(this ResourceGroupResource resourceGroupResource, string filteredExistenceTestName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource(resourceGroupResource).GetFilteredExistenceTestAsync(filteredExistenceTestName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a FilteredExistenceTest
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource.GetFilteredExistenceTest(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="filteredExistenceTestName"> The name of the FilteredExistenceTest. </param>
+        /// <param name="expand"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<FilteredExistenceTestResource> GetFilteredExistenceTest(this ResourceGroupResource resourceGroupResource, string filteredExistenceTestName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource(resourceGroupResource).GetFilteredExistenceTest(filteredExistenceTestName, expand, cancellationToken);
         }
 
         /// <summary>

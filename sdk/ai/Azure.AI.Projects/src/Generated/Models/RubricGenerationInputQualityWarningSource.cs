@@ -58,7 +58,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="RubricGenerationInputQualityWarningSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RubricGenerationInputQualityWarningSource?(string value) => value == null ? null : new RubricGenerationInputQualityWarningSource(value);
+        public static implicit operator RubricGenerationInputQualityWarningSource?(string value) => value == null ? (RubricGenerationInputQualityWarningSource?)null : new RubricGenerationInputQualityWarningSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

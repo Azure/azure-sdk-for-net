@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
+using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -19,6 +20,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         ParameterContextRegistry parameterMappings,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
+        ResourceOperationKind operationKind,
         bool isAsync
         )
         : ResourceOperationMethodProvider(
@@ -26,7 +28,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             parameterMappings,
             restClientInfo,
             method,
-            ResourceOperationKind.CheckExistence,
+            operationKind,
             isAsync,
             methodName: isAsync ? "ExistsAsync" : "Exists",
             description: $"Checks to see if the resource exists in azure.")
@@ -41,6 +43,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
         {
+            if (_resourceOperationKind == ResourceOperationKind.CheckExistence)
+            {
+                return [Return(ResponseSnippets.FromValue(responseVariable.Property(nameof(Response.Status)).NotEqual(Literal(404)), responseVariable))];
+            }
+
             // For Exists methods, we check if Value is not null and return a boolean
             var returnValueExpression = responseVariable.Value().NotEqual(Null);
 
@@ -59,7 +66,33 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            return BuildExistsOperationPipelineProcessing(messageVariable, contextVariable, out responseVariable);
+            if (_resourceOperationKind != ResourceOperationKind.CheckExistence)
+            {
+                return BuildExistsOperationPipelineProcessing(messageVariable, contextVariable, out responseVariable);
+            }
+
+            var sendArguments = new ValueExpression[] { messageVariable, contextVariable.Property(nameof(RequestContext.CancellationToken)) };
+            var send = _isAsync
+                ? This.Property("Pipeline").Invoke("SendAsync", sendArguments, null, true).Terminate()
+                : This.Property("Pipeline").Invoke("Send", sendArguments).Terminate();
+            var declaration = Declare("response", typeof(Response), messageVariable.Property("Response"), out var response);
+            responseVariable = response.As<Response>();
+            var status = response.Property(nameof(Response.Status));
+            var isNotSuccess = new BinaryOperatorExpression("<", status, Literal(200)).As<bool>()
+                .Or(new BinaryOperatorExpression(">=", status, Literal(300)));
+            var isFailure = isNotSuccess.And(status.NotEqual(Literal(404)));
+            if (_serviceMethod.Operation.Responses.Any(response => !response.IsErrorResponse && response.StatusCodes.Contains(304)))
+            {
+                isFailure = isFailure.And(status.NotEqual(Literal(304)));
+            }
+            return [
+                send,
+                declaration,
+                new IfStatement(isFailure)
+                {
+                    Throw(New.Instance(typeof(RequestFailedException), response))
+                }
+            ];
         }
     }
 }
