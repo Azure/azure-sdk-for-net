@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(Format))
+            {
+                writer.WritePropertyName("format"u8);
+                writer.WriteObjectValue(Format, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string @default = default;
             bool? isRequired = default;
             string description = default;
+            ScenarioParameterFormat format = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,6 +183,15 @@ namespace Azure.ResourceManager.Chaos.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("format"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    format = ScenarioParameterFormat.DeserializeScenarioParameterFormat(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -188,6 +203,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 @default,
                 isRequired,
                 description,
+                format,
                 additionalBinaryDataProperties);
         }
     }

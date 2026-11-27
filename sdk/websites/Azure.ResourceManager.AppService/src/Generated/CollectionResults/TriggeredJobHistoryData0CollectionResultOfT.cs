@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTriggeredWebJobHistoryRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _webJobName, _context) : _client.CreateGetTriggeredWebJobHistoryRequest(_subscriptionId, _resourceGroupName, _name, _webJobName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListTriggeredWebJobHistoryRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _webJobName, _context) : _client.CreateListTriggeredWebJobHistoryRequest(_subscriptionId, _resourceGroupName, _name, _webJobName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

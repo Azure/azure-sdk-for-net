@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Recovery point tier type. </summary>
-        public RecoveryPointTierType? TierType { get; set; }
+        public virtual RecoveryPointTierType? TierType { get; set; }
 
         /// <summary> Recovery point tier status. </summary>
         public RecoveryPointTierStatus? Status { get; set; }

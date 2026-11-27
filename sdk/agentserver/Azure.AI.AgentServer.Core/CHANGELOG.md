@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2026-11-24)
 
 ### Features Added
 
@@ -18,6 +18,11 @@
   contract (`AAAS002`). Existing code that uses these types fails to compile until the
   corresponding diagnostic is suppressed (for example, `#pragma warning disable AAAS004`
   or `<NoWarn>$(NoWarn);AAAS004</NoWarn>`).
+- `ListRequestOrder` is now an extensible string-backed struct instead of an `enum`, so
+  callers can pass sort orders added by the service later. `FoundryStateStore.ListKeysAsync`
+  now takes `ListRequestOrder? order`, and `null` (the default) still sorts descending.
+  Code that uses `ListRequestOrder` values in `switch` case labels, as constants, or with
+  `Enum` APIs must be updated.
 
 ### Bugs Fixed
 

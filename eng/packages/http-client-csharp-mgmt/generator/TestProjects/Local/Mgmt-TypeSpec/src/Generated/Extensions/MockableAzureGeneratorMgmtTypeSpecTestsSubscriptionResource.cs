@@ -617,7 +617,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SAPAvailabilityZoneDetailsResult>> GetAvailabilityZoneDetailsAsync(AzureLocation location, SAPAvailabilityZoneDetailsRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SAPAvailabilityZoneDetailsResult>> GetAvailabilityZoneDetailsAsync(AzureLocation location, SAPAvailabilityZoneDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -629,7 +629,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SAPVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsRequest(Guid.Parse(Id.SubscriptionId), location, SAPAvailabilityZoneDetailsRequest.ToRequestContent(content), context);
+                HttpMessage message = SAPVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsRequest(Guid.Parse(Id.SubscriptionId), location, SAPAvailabilityZoneDetailsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SAPAvailabilityZoneDetailsResult> response = Response.FromValue(SAPAvailabilityZoneDetailsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -666,7 +666,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SAPAvailabilityZoneDetailsResult> GetAvailabilityZoneDetails(AzureLocation location, SAPAvailabilityZoneDetailsRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<SAPAvailabilityZoneDetailsResult> GetAvailabilityZoneDetails(AzureLocation location, SAPAvailabilityZoneDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -678,7 +678,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SAPVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsRequest(Guid.Parse(Id.SubscriptionId), location, SAPAvailabilityZoneDetailsRequest.ToRequestContent(content), context);
+                HttpMessage message = SAPVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsRequest(Guid.Parse(Id.SubscriptionId), location, SAPAvailabilityZoneDetailsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SAPAvailabilityZoneDetailsResult> response = Response.FromValue(SAPAvailabilityZoneDetailsResult.FromResponse(result), result);
                 if (response.Value == null)

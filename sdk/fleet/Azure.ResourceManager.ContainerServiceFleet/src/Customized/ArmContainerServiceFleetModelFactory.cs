@@ -3,13 +3,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [CodeGenSuppress("ContainerServiceFleetUpdateGroup", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<ContainerServiceFleetGateConfiguration>), typeof(IEnumerable<ContainerServiceFleetGateConfiguration>))]
+    [CodeGenSuppress("ContainerServiceFleetUpdateStage", typeof(string), typeof(IEnumerable<ContainerServiceFleetUpdateGroup>), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(IEnumerable<ContainerServiceFleetGateConfiguration>), typeof(IEnumerable<ContainerServiceFleetGateConfiguration>))]
+    [CodeGenSuppress("ContainerServiceFleetUpdateGroupStatus", typeof(ContainerServiceFleetUpdateStatus), typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<MemberUpdateStatus>), typeof(IEnumerable<ContainerServiceFleetUpdateRunGateStatus>), typeof(IEnumerable<ContainerServiceFleetUpdateRunGateStatus>))]
+    [CodeGenSuppress("ContainerServiceFleetUpdateStageStatus", typeof(ContainerServiceFleetUpdateStatus), typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<ContainerServiceFleetUpdateGroupStatus>), typeof(IEnumerable<ContainerServiceFleetUpdateRunGateStatus>), typeof(IEnumerable<ContainerServiceFleetUpdateRunGateStatus>), typeof(ContainerServiceFleetWaitStatus))]
     public static partial class ArmContainerServiceFleetModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ContainerServiceFleet.AutoUpgradeProfileData" />. </summary>
@@ -34,6 +42,102 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static AutoUpgradeProfileData AutoUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = default, AutoUpgradeProfileProvisioningState? provisioningState = default, ResourceIdentifier updateStrategyId = null, ContainerServiceFleetUpgradeChannel? channel = default, AutoUpgradeNodeImageSelectionType? selectionType = default, bool? disabled = default, AutoUpgradeProfileStatus autoUpgradeProfileStatus = null)
         {
             return new AutoUpgradeProfileData(id, name, resourceType, systemData, new AutoUpgradeProfileProperties(provisioningState, updateStrategyId, channel, nodeImageSelection: default, disabled, autoUpgradeProfileStatus, targetKubernetesVersion: default, isLongTermSupport: default, additionalBinaryDataProperties: default), eTag, additionalBinaryDataProperties: null);
+        }
+
+        // Keep new optional parameters after the released 1.3.0 parameters so positional calls retain their meaning.
+
+        /// <summary> A group to be updated. </summary>
+        /// <param name="name"> Name of the group. </param>
+        /// <param name="maxConcurrency"> The max number of upgrades that can run concurrently in this specific group. </param>
+        /// <param name="memberSelectorByLabel"> Kubernetes-style label selector for selecting Fleet members. </param>
+        /// <param name="beforeGates"> A list of Gates that will be created before this Group is executed. </param>
+        /// <param name="afterGates"> A list of Gates that will be created after this Group is executed. </param>
+        /// <param name="maxAllowedFailures"> The maximum number or percentage of failures allowed in the group. </param>
+        /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateGroup"/> instance for mocking. </returns>
+        public static ContainerServiceFleetUpdateGroup ContainerServiceFleetUpdateGroup(string name = default, string maxConcurrency = default, string memberSelectorByLabel = default, IEnumerable<ContainerServiceFleetGateConfiguration> beforeGates = default, IEnumerable<ContainerServiceFleetGateConfiguration> afterGates = default, string maxAllowedFailures = default)
+        {
+            return new ContainerServiceFleetUpdateGroup(
+                name,
+                maxAllowedFailures,
+                maxConcurrency,
+                memberSelectorByLabel is null ? default : new MemberSelector(memberSelectorByLabel, default),
+                (beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>()).ToList(),
+                (afterGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>()).ToList(),
+                default);
+        }
+
+        /// <summary> A stage within an update run. </summary>
+        /// <param name="name"> The name of the stage. </param>
+        /// <param name="groups"> A list of group names that compose the stage. </param>
+        /// <param name="memberSelectorByLabel"> Kubernetes-style label selector for selecting Fleet members. </param>
+        /// <param name="afterStageWaitInSeconds"> The time in seconds to wait at the end of this stage before starting the next one. </param>
+        /// <param name="maxConcurrency"> The max number of upgrades that can run concurrently across all groups in this stage. </param>
+        /// <param name="beforeGates"> A list of Gates that will be created before this Stage is executed. </param>
+        /// <param name="afterGates"> A list of Gates that will be created after this Stage is executed. </param>
+        /// <param name="maxAllowedFailures"> The maximum number or percentage of failures allowed in the stage. </param>
+        /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateStage"/> instance for mocking. </returns>
+        public static ContainerServiceFleetUpdateStage ContainerServiceFleetUpdateStage(string name = default, IEnumerable<ContainerServiceFleetUpdateGroup> groups = default, string memberSelectorByLabel = default, int? afterStageWaitInSeconds = default, string maxConcurrency = default, IEnumerable<ContainerServiceFleetGateConfiguration> beforeGates = default, IEnumerable<ContainerServiceFleetGateConfiguration> afterGates = default, string maxAllowedFailures = default)
+        {
+            return new ContainerServiceFleetUpdateStage(
+                name,
+                (groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroup>()).ToList(),
+                memberSelectorByLabel is null ? default : new MemberSelector(memberSelectorByLabel, default),
+                afterStageWaitInSeconds,
+                maxAllowedFailures,
+                maxConcurrency,
+                (beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>()).ToList(),
+                (afterGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>()).ToList(),
+                default);
+        }
+
+        /// <summary> The status of a UpdateStage. </summary>
+        /// <param name="status"> The status of the UpdateStage. </param>
+        /// <param name="name"> The name of the UpdateStage. </param>
+        /// <param name="maxConcurrency"> The max number of upgrades that can run concurrently across all groups in this stage. </param>
+        /// <param name="groups"> The list of groups to be updated as part of this UpdateStage. </param>
+        /// <param name="beforeGates"> The list of Gates that will run before this UpdateStage. </param>
+        /// <param name="afterGates"> The list of Gates that will run after this UpdateStage. </param>
+        /// <param name="afterStageWaitStatus"> The status of the wait period configured on the UpdateStage. </param>
+        /// <param name="failureCount"> The number of failed members in the stage. </param>
+        /// <param name="maxAllowedFailures"> The resolved maximum number of failures allowed in the stage. </param>
+        /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateStageStatus"/> instance for mocking. </returns>
+        public static ContainerServiceFleetUpdateStageStatus ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status = default, string name = default, int? maxConcurrency = default, IEnumerable<ContainerServiceFleetUpdateGroupStatus> groups = default, IEnumerable<ContainerServiceFleetUpdateRunGateStatus> beforeGates = default, IEnumerable<ContainerServiceFleetUpdateRunGateStatus> afterGates = default, ContainerServiceFleetWaitStatus afterStageWaitStatus = default, int? failureCount = default, int? maxAllowedFailures = default)
+        {
+            return new ContainerServiceFleetUpdateStageStatus(
+                status,
+                name,
+                failureCount,
+                maxAllowedFailures,
+                maxConcurrency,
+                (groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>()).ToList(),
+                (beforeGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>()).ToList(),
+                (afterGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>()).ToList(),
+                afterStageWaitStatus,
+                default);
+        }
+
+        /// <summary> The status of a UpdateGroup. </summary>
+        /// <param name="status"> The status of the UpdateGroup. </param>
+        /// <param name="name"> The name of the UpdateGroup. </param>
+        /// <param name="maxConcurrency"> The max number of upgrades that can run concurrently in this group. </param>
+        /// <param name="members"> The list of member this UpdateGroup updates. </param>
+        /// <param name="beforeGates"> The list of Gates that will run before this UpdateGroup. </param>
+        /// <param name="afterGates"> The list of Gates that will run after this UpdateGroup. </param>
+        /// <param name="failureCount"> The number of failed members in the group. </param>
+        /// <param name="maxAllowedFailures"> The resolved maximum number of failures allowed in the group. </param>
+        /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateGroupStatus"/> instance for mocking. </returns>
+        public static ContainerServiceFleetUpdateGroupStatus ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status = default, string name = default, int? maxConcurrency = default, IEnumerable<MemberUpdateStatus> members = default, IEnumerable<ContainerServiceFleetUpdateRunGateStatus> beforeGates = default, IEnumerable<ContainerServiceFleetUpdateRunGateStatus> afterGates = default, int? failureCount = default, int? maxAllowedFailures = default)
+        {
+            return new ContainerServiceFleetUpdateGroupStatus(
+                status,
+                name,
+                failureCount,
+                maxAllowedFailures,
+                maxConcurrency,
+                (members ?? new ChangeTrackingList<MemberUpdateStatus>()).ToList(),
+                (beforeGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>()).ToList(),
+                (afterGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>()).ToList(),
+                default);
         }
     }
 }

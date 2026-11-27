@@ -57,15 +57,15 @@ function Set-PackageReleased([string] $PackageName, [string] $PackageVersion, [s
     $formattedArguments = @($arguments | ForEach-Object { Format-CommandArgument $_ })
     Write-Host "Command: azsdk $($formattedArguments -join ' ')"
 
-    $commandResult = Invoke-AzSdkCliCommand $AzSdkExePath $arguments
+    $commandResult = Invoke-AzSdkCliCommand $AzSdkExePath $arguments -ParseJsonResponse
     $exitCode = $commandResult.ExitCode
-
-    try {
-        $response = $commandResult.Output | ConvertFrom-Json -ErrorAction Stop
-    }
-    catch {
+    $response = $commandResult.ParsedResponse
+    if ($null -eq $response) {
         $capturedOutput = "stdout:`n$($commandResult.Stdout)`nstderr:`n$($commandResult.Stderr)"
-        throw "Mark released returned malformed JSON for $PackageName $PackageVersion (azsdk exit code $exitCode). Captured output:`n$capturedOutput"
+        if ($exitCode -ne 0) {
+            throw "Mark released failed for $PackageName $PackageVersion (azsdk exit code $exitCode): $($commandResult.ParseError) Captured output:`n$capturedOutput"
+        }
+        throw "Mark released returned malformed JSON for $PackageName $PackageVersion (azsdk exit code $exitCode): $($commandResult.ParseError) Captured output:`n$capturedOutput"
     }
 
     $hasReviewHubResult = $response.PSObject.Properties["api_review_hub"] -and $null -ne $response.api_review_hub

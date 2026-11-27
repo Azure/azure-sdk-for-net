@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAppServiceCertificateOrderDetectorResponseRequest(nextLink, _subscriptionId, _resourceGroupName, _certificateOrderName, _context) : _client.CreateGetAppServiceCertificateOrderDetectorResponseRequest(_subscriptionId, _resourceGroupName, _certificateOrderName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListAppServiceCertificateOrderDetectorResponseRequest(nextLink, _subscriptionId, _resourceGroupName, _certificateOrderName, _context) : _client.CreateListAppServiceCertificateOrderDetectorResponseRequest(_subscriptionId, _resourceGroupName, _certificateOrderName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

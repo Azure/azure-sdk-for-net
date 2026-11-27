@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetTriggeredWebJobHistorySlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, string webJobName, RequestContext context)
+        internal HttpMessage CreateListTriggeredWebJobHistorySlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, string webJobName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetTriggeredWebJobHistorySlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, string webJobName, RequestContext context)
+        internal HttpMessage CreateNextListTriggeredWebJobHistorySlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, string webJobName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -82,6 +82,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("nvaSku"u8);
                 writer.WriteObjectValue(NvaSku, options);
             }
+            if (Optional.IsDefined(LoadBalancerConfiguration))
+            {
+                writer.WritePropertyName("loadBalancerConfiguration"u8);
+                writer.WriteObjectValue(LoadBalancerConfiguration, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
@@ -325,6 +330,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             VirtualApplianceSkuProperties nvaSku = default;
+            NetworkVirtualApplianceLoadBalancerConfiguration loadBalancerConfiguration = default;
             string addressPrefix = default;
             string addressPrefixV6 = default;
             IList<string> bootStrapConfigurationBlobs = default;
@@ -359,6 +365,15 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     nvaSku = VirtualApplianceSkuProperties.DeserializeVirtualApplianceSkuProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("loadBalancerConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loadBalancerConfiguration = NetworkVirtualApplianceLoadBalancerConfiguration.DeserializeNetworkVirtualApplianceLoadBalancerConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("addressPrefix"u8))
@@ -652,6 +667,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new NetworkVirtualAppliancePropertiesFormat(
                 nvaSku,
+                loadBalancerConfiguration,
                 addressPrefix,
                 addressPrefixV6,
                 bootStrapConfigurationBlobs ?? new ChangeTrackingList<string>(),

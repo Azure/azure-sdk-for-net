@@ -127,7 +127,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkSiblingSet>> QueryNetworkSiblingSetAsync(WaitUntil waitUntil, QueryNetworkSiblingSetRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkSiblingSet>> QueryNetworkSiblingSetAsync(WaitUntil waitUntil, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -139,7 +139,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
+                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),
@@ -184,7 +184,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NetworkSiblingSet> QueryNetworkSiblingSet(WaitUntil waitUntil, QueryNetworkSiblingSetRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkSiblingSet> QueryNetworkSiblingSet(WaitUntil waitUntil, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -196,7 +196,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
+                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),

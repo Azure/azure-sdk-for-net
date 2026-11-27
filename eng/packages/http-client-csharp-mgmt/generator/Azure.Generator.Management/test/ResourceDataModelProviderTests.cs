@@ -33,7 +33,22 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void ResourceDataPropertiesResolveLastContractAfterNamespaceVisitor()
+        public void NewResourceDataRequestNamesRetainSuffixNormalization()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(
+                resourceName: "WidgetRequest",
+                resourceModelName: "WidgetRequest");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+
+            var provider = plugin.Object.TypeFactory.CreateModel(models.Single());
+
+            Assert.That(provider, Is.TypeOf<ResourceDataModelProvider>());
+            Assert.That(provider!.Name, Is.EqualTo("WidgetContentData"));
+            Assert.That(provider.LastContractView, Is.Null);
+        }
+
+        [TestCase("ResponseType")]
+        public void ResourceDataPropertiesResolveLastContractAfterNamespaceVisitor(string resourceName)
         {
             var dateTime = new InputDateTimeType(
                 DateTimeKnownEncoding.Rfc3339,
@@ -46,13 +61,14 @@ namespace Azure.Generator.Mgmt.Tests
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
                 properties: []);
             var (client, models) = InputResourceData.ClientWithResource(
-                resourceName: "ResponseType",
+                resourceName: resourceName,
                 additionalProperties:
                 [
                     InputFactory.Property("startTime", dateTime, isReadOnly: true),
                     InputFactory.Property("endTime", dateTime, isReadOnly: true)
                 ],
-                baseModel: baseModel);
+                baseModel: baseModel,
+                resourceModelName: resourceName);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => models,
                 clients: () => [client],
@@ -60,10 +76,10 @@ namespace Azure.Generator.Mgmt.Tests
                 configurationJson: "{ \"package-name\": \"sample-library\", \"model-namespace\": true }",
                 lastContractCompilation: () => Helpers.BuildCompilation(
                 [
-                    ("LastContract.cs", """
+                    ("LastContract.cs", $$"""
                         namespace Azure.ResourceManager.Test
                         {
-                            public class ResponseTypeData
+                            public class {{resourceName}}Data
                             {
                                 public System.DateTimeOffset? StartOn { get; }
                                 public System.DateTimeOffset? EndOn { get; }
@@ -72,10 +88,11 @@ namespace Azure.Generator.Mgmt.Tests
                         """)
                 ]));
 
-            var provider = plugin.Object.TypeFactory.CreateModel(models.Single(m => m.Name == "ResponseType"));
+            var provider = plugin.Object.TypeFactory.CreateModel(models.Single(m => m.Name == resourceName));
 
             Assert.That(provider, Is.TypeOf<ResourceDataModelProvider>());
-            Assert.That(provider!.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test"));
+            Assert.That(provider!.Name, Is.EqualTo($"{resourceName}Data"));
+            Assert.That(provider.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test"));
             Assert.That(provider.LastContractView, Is.Not.Null);
             Assert.That(provider.Properties.Select(p => p.Name), Does.Contain("StartOn"));
             Assert.That(provider.Properties.Select(p => p.Name), Does.Contain("EndOn"));
@@ -112,8 +129,11 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(modelProvider.BaseType?.AreNamesEqual(new CSharpType(typeof(TrackedResourceData))), Is.True);
         }
 
-        [Test]
-        public void ResourceDataModelWithTrackedResourceBaseFiltersInheritedPropertiesAndOverridesSerialization()
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public void ResourceDataModelWithTrackedResourceBaseFiltersInheritedPropertiesAndOverridesSerialization(bool isReadOnly, bool renamedOriginalName)
         {
             var trackedResourceModel = InputFactory.Model(
                 "TrackedResource",
@@ -131,11 +151,16 @@ namespace Azure.Generator.Mgmt.Tests
                 .GetSetMethod(true)!
                 .Invoke(trackedResourceModel, ["Azure.ResourceManager.CommonTypes.TrackedResource"]);
 
+            var nameAlias = InputFactory.Property("name0", InputPrimitiveType.String, isReadOnly: isReadOnly, wireName: "name", serializedName: "name");
+            if (renamedOriginalName)
+            {
+                nameAlias.Update(originalName: "name");
+            }
             var resourceModel = InputFactory.Model(
                 "PrivateCloud",
                 properties:
                 [
-                    InputFactory.Property("name0", InputPrimitiveType.String, wireName: "name", serializedName: "name"),
+                    nameAlias,
                     InputFactory.Property("properties", InputPrimitiveType.String),
                 ],
                 baseModel: trackedResourceModel,
@@ -143,7 +168,7 @@ namespace Azure.Generator.Mgmt.Tests
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [trackedResourceModel, resourceModel]);
             var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceType] =
-                new SystemObjectModelProvider(trackedResourceType, trackedResourceModel);
+                ManagementClientGenerator.Instance.TypeFactory.CreateModel(trackedResourceModel)!;
 
             var resourceDataModel = new ResourceDataModelProvider(resourceModel);
             // Reproduce the real generation ordering where constructors and serialization can be
@@ -163,7 +188,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames, Does.Not.Contain("SystemData"));
             Assert.That(propertyNames, Does.Not.Contain("Tags"));
             Assert.That(propertyNames, Does.Not.Contain("Location"));
-            Assert.That(propertyNames, Does.Contain("Name0"));
+            Assert.That(propertyNames.Contains("Name0"), Is.EqualTo(!renamedOriginalName));
             Assert.That(propertyNames, Does.Contain("Properties"));
 
             var serialization = result.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
@@ -171,11 +196,24 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(jsonModelWriteCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override), Is.True);
 
             var modelContent = new TypeProviderWriter(result).Write().Content;
-            Assert.That(modelContent, Does.Contain("Name0"));
+            if (renamedOriginalName)
+            {
+                Assert.That(modelContent, Does.Not.Contain("Name0"));
+            }
+            else
+            {
+                Assert.That(modelContent, Does.Contain("Name0"));
+            }
 
             var serializationContent = new TypeProviderWriter(serialization).Write().Content;
             Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
             Assert.That(serializationContent, Does.Contain("base.JsonModelWriteCore(writer, options);"));
+            if (renamedOriginalName)
+            {
+                Assert.That(serializationContent, Does.Not.Contain("Name0"));
+                Assert.That(result.Constructors.SelectMany(constructor => constructor.Signature.Parameters).Select(parameter => parameter.Name),
+                    Does.Not.Contain("name0"));
+            }
         }
 
         [Test]

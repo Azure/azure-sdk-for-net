@@ -31,24 +31,36 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceProperties"/>. </summary>
         /// <param name="provisioningState"> Most recent provisioning state for the given Workspace resource. </param>
-        /// <param name="communicationEndpoint"> The communication endpoint used to connect and communicate with the workspace for fault-injection orchestration. </param>
         /// <param name="scopes"> The intended workspace-level resource scope to be used by child scenarios. </param>
+        /// <param name="encryption">
+        /// The requested customer key and service observations. Accepted creation fixes
+        /// whether customerManagedKeyEncryption is present. On PUT, omission of
+        /// encryption or its CMK object, or an empty encryption object, is valid for
+        /// Microsoft-managed Workspaces but rejected for CMK-created Workspaces.
+        /// Null is not a valid PUT value. A CMK-created Workspace can replace its key.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(ChaosProvisioningState? provisioningState, string communicationEndpoint, IList<ResourceIdentifier> scopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(ChaosProvisioningState? provisioningState, IList<ResourceIdentifier> scopes, WorkspaceEncryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            CommunicationEndpoint = communicationEndpoint;
             Scopes = scopes;
+            Encryption = encryption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Most recent provisioning state for the given Workspace resource. </summary>
         public ChaosProvisioningState? ProvisioningState { get; }
 
-        /// <summary> The communication endpoint used to connect and communicate with the workspace for fault-injection orchestration. </summary>
-        public string CommunicationEndpoint { get; }
-
         /// <summary> The intended workspace-level resource scope to be used by child scenarios. </summary>
         public IList<ResourceIdentifier> Scopes { get; }
+
+        /// <summary>
+        /// The requested customer key and service observations. Accepted creation fixes
+        /// whether customerManagedKeyEncryption is present. On PUT, omission of
+        /// encryption or its CMK object, or an empty encryption object, is valid for
+        /// Microsoft-managed Workspaces but rejected for CMK-created Workspaces.
+        /// Null is not a valid PUT value. A CMK-created Workspace can replace its key.
+        /// </summary>
+        public WorkspaceEncryption Encryption { get; set; }
     }
 }

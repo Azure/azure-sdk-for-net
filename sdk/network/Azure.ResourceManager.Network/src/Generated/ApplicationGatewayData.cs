@@ -76,6 +76,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Deployment tier of the application gateway resource. Only valid on Standard_v2 and WAF_v2 SKUs. </summary>
+        [WirePath("properties.deploymentTier")]
+        public ApplicationGatewayDeploymentTier? DeploymentTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentTier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.DeploymentTier = value;
+            }
+        }
+
         /// <summary> SSL policy of the application gateway resource. </summary>
         [WirePath("properties.sslPolicy")]
         public ApplicationGatewaySslPolicy SslPolicy
@@ -449,6 +467,24 @@ namespace Azure.ResourceManager.Network
                     Properties = new ApplicationGatewayPropertiesFormat();
                 }
                 Properties.EnableFips = value;
+            }
+        }
+
+        /// <summary> Whether Confidential Compute is enabled on the application gateway resource. </summary>
+        [WirePath("properties.enableConfidentialCompute")]
+        public bool? EnableConfidentialCompute
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableConfidentialCompute;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.EnableConfidentialCompute = value;
             }
         }
 

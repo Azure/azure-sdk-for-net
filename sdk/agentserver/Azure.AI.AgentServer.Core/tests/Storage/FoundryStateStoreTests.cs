@@ -516,6 +516,34 @@ public class FoundryStateStoreTests
     }
 
     [Test]
+    public async Task ListKeys_WithCallIdAndNullOrder_DefaultsToDescendingOrder()
+    {
+        var transport = new MockTransport(Json(200, """{"object":"list","data":[],"has_more":false}"""));
+        FoundryStateStore store = MakeStore(transport, name: "checkpoints");
+
+        await store.ListKeysAsync(
+            tags: null,
+            limit: null,
+            after: null,
+            before: null,
+            order: null,
+            callId: "explicit-call");
+
+        Assert.That(transport.SingleRequest.Uri.ToString(), Does.EndWith("&order=desc"));
+    }
+
+    [Test]
+    public async Task ListKeys_ForwardsCustomOrderValue()
+    {
+        var transport = new MockTransport(Json(200, """{"object":"list","data":[],"has_more":false}"""));
+        FoundryStateStore store = MakeStore(transport, name: "checkpoints");
+
+        await store.ListKeysAsync(order: new ListRequestOrder("updated_desc"));
+
+        Assert.That(transport.SingleRequest.Uri.ToString(), Does.EndWith("&order=updated_desc"));
+    }
+
+    [Test]
     public void ListKeys_AfterAndBefore_AreMutuallyExclusive()
     {
         FoundryStateStore store = MakeStore(new MockTransport(Json(200, "{}")), name: "checkpoints");

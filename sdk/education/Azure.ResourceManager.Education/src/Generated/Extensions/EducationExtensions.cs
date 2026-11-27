@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Education
         /// Get a list of grants that Microsoft has provided.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationTenantResource.GetAllAsync(bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationTenantResource.ListAllAsync(bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -405,18 +405,18 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="GrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GrantDetailsResource> GetAllAsync(this TenantResource tenantResource, bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GrantDetailsResource> ListAllAsync(this TenantResource tenantResource, bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableEducationTenantResource(tenantResource).GetAllAsync(includeAllocatedBudget, cancellationToken);
+            return GetMockableEducationTenantResource(tenantResource).ListAllAsync(includeAllocatedBudget, cancellationToken);
         }
 
         /// <summary>
         /// Get a list of grants that Microsoft has provided.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationTenantResource.GetAll(bool?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationTenantResource.ListAll(bool?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -424,11 +424,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="GrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GrantDetailsResource> GetAll(this TenantResource tenantResource, bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
+        public static Pageable<GrantDetailsResource> ListAll(this TenantResource tenantResource, bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableEducationTenantResource(tenantResource).GetAll(includeAllocatedBudget, cancellationToken);
+            return GetMockableEducationTenantResource(tenantResource).ListAll(includeAllocatedBudget, cancellationToken);
         }
     }
 }

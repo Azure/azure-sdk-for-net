@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudClusterData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudClusterData AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState = default, int? clusterId = default, IEnumerable<string> hosts = default, string vsanDatastoreName = default, AvsSku sku = default)
+        public static AvsPrivateCloudClusterData AvsPrivateCloudClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? clusterSize = default, AvsPrivateCloudClusterProvisioningState? provisioningState = default, int? clusterId = default, IEnumerable<string> hosts = default, string vsanDatastoreName = default, AvsSku sku = default)
         {
             return new AvsPrivateCloudClusterData(
                 id,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="netAppVolumeId"> Azure resource ID of the NetApp volume. </param>
         /// <param name="elasticSanVolumeTargetId"> Azure resource ID of the Elastic SAN Volume. </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, DiskPoolVolume diskPoolVolume, AvsPureStorageVolume pureStorageVolume, DatastoreStatus? status, ResourceIdentifier netAppVolumeId, ResourceIdentifier elasticSanVolumeTargetId)
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvsPrivateCloudDatastoreProvisioningState? provisioningState = default, DiskPoolVolume diskPoolVolume = default, AvsPureStorageVolume pureStorageVolume = default, DatastoreStatus? status = default, ResourceIdentifier netAppVolumeId = default, ResourceIdentifier elasticSanVolumeTargetId = default)
         {
             return new AvsPrivateCloudDatastoreData(
                 id,
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="faultDomain"></param>
         /// <param name="licenses"> The licenses assigned to the host. </param>
         /// <returns> A new <see cref="Models.GeneralAvsHostProperties"/> instance for mocking. </returns>
-        public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IEnumerable<HostLicense> licenses)
+        public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default, IEnumerable<HostLicense> licenses = default)
         {
             licenses ??= new ChangeTrackingList<HostLicense>();
 
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="faultDomain"></param>
         /// <param name="licenses"> The licenses assigned to the host. </param>
         /// <returns> A new <see cref="Models.SpecializedAvsHostProperties"/> instance for mocking. </returns>
-        public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IEnumerable<HostLicense> licenses)
+        public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default, IEnumerable<HostLicense> licenses = default)
         {
             licenses ??= new ChangeTrackingList<HostLicense>();
 
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="operations"> Operations on  maintenance. </param>
         /// <param name="maintenanceReadiness"> Indicates whether the maintenance is ready to proceed. </param>
         /// <returns> A new <see cref="Models.AvsMaintenanceProperties"/> instance for mocking. </returns>
-        public static AvsMaintenanceProperties AvsMaintenanceProperties(AvsMaintenanceType? component, string displayName, int? clusterId, IEnumerable<MaintenanceActivity> activities, MaintenanceGroup @group, MaintenanceRelationships relationships, string infoLink, string impact, bool? isScheduledByMicrosoft, AvsMaintenanceState state, DateTimeOffset? scheduledStartOn, long? estimatedDurationInMinutes, AvsMaintenanceProvisioningState? provisioningState, IEnumerable<AvsMaintenanceManagementOperation> operations = default, AvsMaintenanceReadiness maintenanceReadiness = default)
+        public static AvsMaintenanceProperties AvsMaintenanceProperties(AvsMaintenanceType? component = default, string displayName = default, int? clusterId = default, IEnumerable<MaintenanceActivity> activities = default, MaintenanceGroup @group = default, MaintenanceRelationships relationships = default, string infoLink = default, string impact = default, bool? isScheduledByMicrosoft = default, AvsMaintenanceState state = default, DateTimeOffset? scheduledStartOn = default, long? estimatedDurationInMinutes = default, AvsMaintenanceProvisioningState? provisioningState = default, IEnumerable<AvsMaintenanceManagementOperation> operations = default, AvsMaintenanceReadiness maintenanceReadiness = default)
         {
             activities ??= new ChangeTrackingList<MaintenanceActivity>();
             operations ??= new ChangeTrackingList<AvsMaintenanceManagementOperation>();
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="constraints"> Constraints for scheduling maintenance. </param>
         /// <param name="recommendationMaintenanceWindows"> List of recommended maintenance windows. </param>
         /// <returns> A new <see cref="Models.AvsScheduleOperation"/> instance for mocking. </returns>
-        public static AvsScheduleOperation AvsScheduleOperation(bool? isDisabled, string disabledReason, IEnumerable<AvsScheduleOperationConstraint> constraints, IEnumerable<MaintenanceWindowRecommendation> recommendationMaintenanceWindows)
+        public static AvsScheduleOperation AvsScheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsScheduleOperationConstraint> constraints = default, IEnumerable<MaintenanceWindowRecommendation> recommendationMaintenanceWindows = default)
         {
             constraints ??= new ChangeTrackingList<AvsScheduleOperationConstraint>();
 
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="constraints"> Constraints for rescheduling maintenance. </param>
         /// <param name="recommendationMaintenanceWindows"> List of recommended maintenance windows. </param>
         /// <returns> A new <see cref="Models.AvsRescheduleOperation"/> instance for mocking. </returns>
-        public static AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled, string disabledReason, IEnumerable<AvsRescheduleOperationConstraint> constraints, IEnumerable<MaintenanceWindowRecommendation> recommendationMaintenanceWindows)
+        public static AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsRescheduleOperationConstraint> constraints = default, IEnumerable<MaintenanceWindowRecommendation> recommendationMaintenanceWindows = default)
         {
             constraints ??= new ChangeTrackingList<AvsRescheduleOperationConstraint>();
 

@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.NetApp.Models
         public MultiAdStatus? MultiAdStatus => throw new NotSupportedException("MultiAdStatus is no longer available on NetAppAccountPatch. Read it from NetAppAccountData instead.");
 
         /// <summary> Entra ID configuration. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version.")]
         public EntraIdConfigPatch EntraIdConfig
         {
-            get => Properties?.EntraIdConfig;
+            get => (EntraIdConfigPatch)Properties?.EntraIdConfig;
             set
             {
                 if (Properties is null)
