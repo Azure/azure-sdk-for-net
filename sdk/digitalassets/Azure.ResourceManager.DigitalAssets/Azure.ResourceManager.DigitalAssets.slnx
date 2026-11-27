@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.DigitalAssets.csproj" />
+  <Project Path="tests/Azure.ResourceManager.DigitalAssets.Tests.csproj" />
+</Solution>
