@@ -75,42 +75,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryArchiveResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryArchiveResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerRegistryArchiveResource"/> object. </returns>
-        public static ContainerRegistryArchiveResource GetContainerRegistryArchiveResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryArchiveResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryArchiveVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryArchiveVersionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerRegistryArchiveVersionResource"/> object. </returns>
-        public static ContainerRegistryArchiveVersionResource GetContainerRegistryArchiveVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryArchiveVersionResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryCacheRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -234,60 +198,6 @@ namespace Azure.ResourceManager.ContainerRegistry
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerRegistryArmClient(client).GetContainerRegistryTokenResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryExportPipelineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryExportPipelineResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerRegistryExportPipelineResource"/> object. </returns>
-        public static ContainerRegistryExportPipelineResource GetContainerRegistryExportPipelineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryExportPipelineResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryImportPipelineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryImportPipelineResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerRegistryImportPipelineResource"/> object. </returns>
-        public static ContainerRegistryImportPipelineResource GetContainerRegistryImportPipelineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryImportPipelineResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryPipelineRunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryPipelineRunResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerRegistryPipelineRunResource"/> object. </returns>
-        public static ContainerRegistryPipelineRunResource GetContainerRegistryPipelineRunResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryPipelineRunResource(id);
         }
 
         /// <summary>

@@ -223,31 +223,5 @@ namespace Azure.ResourceManager.ContainerRegistry
             _userAgent.Apply(message);
             return message;
         }
-
-        internal HttpMessage CreateResyncRequest(Guid subscriptionId, string resourceGroupName, string registryName, string connectedRegistryName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
-            uri.AppendPath(registryName, true);
-            uri.AppendPath("/connectedRegistries/", false);
-            uri.AppendPath(connectedRegistryName, true);
-            uri.AppendPath("/resync", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
     }
 }

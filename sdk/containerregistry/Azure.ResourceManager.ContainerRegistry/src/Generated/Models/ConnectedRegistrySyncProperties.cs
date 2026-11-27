@@ -32,9 +32,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
         /// <param name="lastSyncOn"> The last time a sync occurred between the connected registry and its parent. </param>
         /// <param name="gatewayEndpoint"> The gateway endpoint used by the connected registry to communicate with its parent. </param>
-        /// <param name="authType"> The authentication type used for the connected registry to sync with its parent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, string schedule, TimeSpan? syncWindow, TimeSpan messageTtl, DateTimeOffset? lastSyncOn, string gatewayEndpoint, ContainerRegistryAuthType? authType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, string schedule, TimeSpan? syncWindow, TimeSpan messageTtl, DateTimeOffset? lastSyncOn, string gatewayEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TokenId = tokenId;
             Schedule = schedule;
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             MessageTtl = messageTtl;
             LastSyncOn = lastSyncOn;
             GatewayEndpoint = gatewayEndpoint;
-            AuthType = authType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -80,9 +78,5 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The gateway endpoint used by the connected registry to communicate with its parent. </summary>
         [WirePath("gatewayEndpoint")]
         public string GatewayEndpoint { get; }
-
-        /// <summary> The authentication type used for the connected registry to sync with its parent. </summary>
-        [WirePath("authType")]
-        public ContainerRegistryAuthType? AuthType { get; set; }
     }
 }

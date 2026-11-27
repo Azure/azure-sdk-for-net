@@ -99,16 +99,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalGib))
-            {
-                writer.WritePropertyName("totalGib"u8);
-                writer.WriteNumberValue(TotalGib.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AvailableGib))
-            {
-                writer.WritePropertyName("availableGib"u8);
-                writer.WriteNumberValue(AvailableGib.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -156,8 +146,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string description = default;
             DateTimeOffset? timestamp = default;
             Guid? correlationId = default;
-            double? totalGib = default;
-            double? availableGib = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,24 +182,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     correlationId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("totalGib"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    totalGib = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("availableGib"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    availableGib = prop.Value.GetDouble();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -223,8 +193,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 description,
                 timestamp,
                 correlationId,
-                totalGib,
-                availableGib,
                 additionalBinaryDataProperties);
         }
     }

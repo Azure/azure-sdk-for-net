@@ -34,11 +34,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
         /// <param name="isNetworkRuleBypassAllowedForTasks"> Whether to allow ACR Tasks service to access a network restricted registry. </param>
         /// <param name="isAnonymousPullEnabled"> Enables registry-wide pull from unauthenticated clients. </param>
-        /// <param name="metadataSearch"> Determines whether registry artifacts are indexed for metadata search. </param>
-        /// <param name="writableCacheRepos"> Whether to allow cache operations that write to repositories in this registry. </param>
         /// <param name="roleAssignmentMode"> Determines registry role assignment mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryPropertiesUpdateParameters(bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryRegionalEndpointStatus? regionalEndpoints, ContainerRegistryEndpointProtocol? endpointProtocol, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isNetworkRuleBypassAllowedForTasks, bool? isAnonymousPullEnabled, ContainerRegistryMetadataSearch? metadataSearch, ContainerRegistryWritableCacheRepositories? writableCacheRepos, ContainerRegistryRoleAssignmentMode? roleAssignmentMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegistryPropertiesUpdateParameters(bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryRegionalEndpointStatus? regionalEndpoints, ContainerRegistryEndpointProtocol? endpointProtocol, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isNetworkRuleBypassAllowedForTasks, bool? isAnonymousPullEnabled, ContainerRegistryRoleAssignmentMode? roleAssignmentMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAdminUserEnabled = isAdminUserEnabled;
             NetworkRuleSet = networkRuleSet;
@@ -51,8 +49,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             NetworkRuleBypassOptions = networkRuleBypassOptions;
             IsNetworkRuleBypassAllowedForTasks = isNetworkRuleBypassAllowedForTasks;
             IsAnonymousPullEnabled = isAnonymousPullEnabled;
-            MetadataSearch = metadataSearch;
-            WritableCacheRepos = writableCacheRepos;
             RoleAssignmentMode = roleAssignmentMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -100,14 +96,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Enables registry-wide pull from unauthenticated clients. </summary>
         [WirePath("anonymousPullEnabled")]
         public bool? IsAnonymousPullEnabled { get; set; }
-
-        /// <summary> Determines whether registry artifacts are indexed for metadata search. </summary>
-        [WirePath("metadataSearch")]
-        public ContainerRegistryMetadataSearch? MetadataSearch { get; set; }
-
-        /// <summary> Whether to allow cache operations that write to repositories in this registry. </summary>
-        [WirePath("writableCacheRepos")]
-        public ContainerRegistryWritableCacheRepositories? WritableCacheRepos { get; set; }
 
         /// <summary> Determines registry role assignment mode. </summary>
         [WirePath("roleAssignmentMode")]

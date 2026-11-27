@@ -28,16 +28,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="retentionPolicy"> The retention policy for a container registry. </param>
         /// <param name="exportPolicy"> The export policy for a container registry. </param>
         /// <param name="azureADAuthenticationAsArmPolicy"> The policy for using Azure Resource Manager audience token for a container registry. </param>
-        /// <param name="softDeletePolicy"> The soft delete policy for a container registry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPolicies(QuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ExportPolicy exportPolicy, AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy, ContainerRegistrySoftDeletePolicy softDeletePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryPolicies(QuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ExportPolicy exportPolicy, AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuarantinePolicy = quarantinePolicy;
             TrustPolicy = trustPolicy;
             RetentionPolicy = retentionPolicy;
             ExportPolicy = exportPolicy;
             AzureADAuthenticationAsArmPolicy = azureADAuthenticationAsArmPolicy;
-            SoftDeletePolicy = softDeletePolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,10 +58,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The policy for using Azure Resource Manager audience token for a container registry. </summary>
         [WirePath("azureADAuthenticationAsArmPolicy")]
         internal AzureADAuthenticationAsArmPolicy AzureADAuthenticationAsArmPolicy { get; set; }
-
-        /// <summary> The soft delete policy for a container registry. </summary>
-        [WirePath("softDeletePolicy")]
-        public ContainerRegistrySoftDeletePolicy SoftDeletePolicy { get; set; }
 
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
         [WirePath("quarantinePolicy.status")]

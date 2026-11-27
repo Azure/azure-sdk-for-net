@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("messageTtl"u8);
                 writer.WriteStringValue(MessageTtl.Value, "P");
             }
-            if (Optional.IsDefined(AuthType))
-            {
-                writer.WritePropertyName("authType"u8);
-                writer.WriteStringValue(AuthType.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,7 +134,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string schedule = default;
             TimeSpan? syncWindow = default;
             TimeSpan? messageTtl = default;
-            ContainerRegistryAuthType? authType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,21 +160,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     messageTtl = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (prop.NameEquals("authType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authType = new ContainerRegistryAuthType(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectedRegistrySyncUpdateProperties(schedule, syncWindow, messageTtl, authType, additionalBinaryDataProperties);
+            return new ConnectedRegistrySyncUpdateProperties(schedule, syncWindow, messageTtl, additionalBinaryDataProperties);
         }
     }
 }

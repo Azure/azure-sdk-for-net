@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,22 +25,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryCacheRulePatch"/>. </summary>
         /// <param name="properties"> The properties of the cache rule update parameters. </param>
-        /// <param name="identity"> The identity of the cache rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryCacheRulePatch(CacheRuleUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryCacheRulePatch(CacheRuleUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the cache rule update parameters. </summary>
         [WirePath("properties")]
         internal CacheRuleUpdateProperties Properties { get; set; }
-
-        /// <summary> The identity of the cache rule. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The ARM resource ID of the credential store which is associated with the Cache rule. </summary>
         [WirePath("properties.credentialSetResourceId")]
@@ -58,24 +51,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     Properties = new CacheRuleUpdateProperties();
                 }
                 Properties.CredentialSetResourceId = value;
-            }
-        }
-
-        /// <summary> Authentication configuration used by the cache rule to access the upstream source repository. </summary>
-        [WirePath("properties.additionalAuthenticationProperties")]
-        public ContainerRegistryCacheAuthentication AdditionalAuthenticationProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AdditionalAuthenticationProperties;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CacheRuleUpdateProperties();
-                }
-                Properties.AdditionalAuthenticationProperties = value;
             }
         }
     }
