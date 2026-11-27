@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Search.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServicePublicNetworkAccess value.")
         };
 
-        public static SearchServicePublicNetworkAccess ToSearchServicePublicNetworkAccess(this string value)
+        public static SearchServicePublicNetworkAccess? ToSearchServicePublicNetworkAccess(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "enabled"))
                 return SearchServicePublicNetworkAccess.Enabled;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "disabled"))
                 return SearchServicePublicNetworkAccess.Disabled;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServicePublicNetworkAccess value.");
+            return null;
         }
     }
 }
