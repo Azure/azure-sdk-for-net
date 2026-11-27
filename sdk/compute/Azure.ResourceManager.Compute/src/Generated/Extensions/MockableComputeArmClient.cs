@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetResource"/> object. </returns>
         public virtual VirtualMachineScaleSetResource GetVirtualMachineScaleSetResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> object. </returns>
         public virtual VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgradeResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetRollingUpgradeResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetRollingUpgradeResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetExtensionResource"/> object. </returns>
         public virtual VirtualMachineScaleSetExtensionResource GetVirtualMachineScaleSetExtensionResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetExtensionResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetExtensionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/> object. </returns>
         public virtual VirtualMachineScaleSetLifecycleHookEventResource GetVirtualMachineScaleSetLifecycleHookEventResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetLifecycleHookEventResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetLifecycleHookEventResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmResource"/> object. </returns>
         public virtual VirtualMachineScaleSetVmResource GetVirtualMachineScaleSetVmResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetVmResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetVmResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmExtensionResource"/> object. </returns>
         public virtual VirtualMachineScaleSetVmExtensionResource GetVirtualMachineScaleSetVmExtensionResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetVmExtensionResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetVmExtensionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineResource"/> object. </returns>
         public virtual VirtualMachineResource GetVirtualMachineResource(ResourceIdentifier id)
         {
-            VirtualMachineResource.ValidateResourceId(id);
             return new VirtualMachineResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineExtensionResource"/> object. </returns>
         public virtual VirtualMachineExtensionResource GetVirtualMachineExtensionResource(ResourceIdentifier id)
         {
-            VirtualMachineExtensionResource.ValidateResourceId(id);
             return new VirtualMachineExtensionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineExtensionImageResource"/> object. </returns>
         public virtual VirtualMachineExtensionImageResource GetVirtualMachineExtensionImageResource(ResourceIdentifier id)
         {
-            VirtualMachineExtensionImageResource.ValidateResourceId(id);
             return new VirtualMachineExtensionImageResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="AvailabilitySetResource"/> object. </returns>
         public virtual AvailabilitySetResource GetAvailabilitySetResource(ResourceIdentifier id)
         {
-            AvailabilitySetResource.ValidateResourceId(id);
             return new AvailabilitySetResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="ProximityPlacementGroupResource"/> object. </returns>
         public virtual ProximityPlacementGroupResource GetProximityPlacementGroupResource(ResourceIdentifier id)
         {
-            ProximityPlacementGroupResource.ValidateResourceId(id);
             return new ProximityPlacementGroupResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="DedicatedHostGroupResource"/> object. </returns>
         public virtual DedicatedHostGroupResource GetDedicatedHostGroupResource(ResourceIdentifier id)
         {
-            DedicatedHostGroupResource.ValidateResourceId(id);
             return new DedicatedHostGroupResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="DedicatedHostResource"/> object. </returns>
         public virtual DedicatedHostResource GetDedicatedHostResource(ResourceIdentifier id)
         {
-            DedicatedHostResource.ValidateResourceId(id);
             return new DedicatedHostResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="SshPublicKeyResource"/> object. </returns>
         public virtual SshPublicKeyResource GetSshPublicKeyResource(ResourceIdentifier id)
         {
-            SshPublicKeyResource.ValidateResourceId(id);
             return new SshPublicKeyResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="DiskImageResource"/> object. </returns>
         public virtual DiskImageResource GetDiskImageResource(ResourceIdentifier id)
         {
-            DiskImageResource.ValidateResourceId(id);
             return new DiskImageResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="RestorePointGroupResource"/> object. </returns>
         public virtual RestorePointGroupResource GetRestorePointGroupResource(ResourceIdentifier id)
         {
-            RestorePointGroupResource.ValidateResourceId(id);
             return new RestorePointGroupResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="RestorePointResource"/> object. </returns>
         public virtual RestorePointResource GetRestorePointResource(ResourceIdentifier id)
         {
-            RestorePointResource.ValidateResourceId(id);
             return new RestorePointResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="CapacityReservationGroupResource"/> object. </returns>
         public virtual CapacityReservationGroupResource GetCapacityReservationGroupResource(ResourceIdentifier id)
         {
-            CapacityReservationGroupResource.ValidateResourceId(id);
             return new CapacityReservationGroupResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="CapacityReservationResource"/> object. </returns>
         public virtual CapacityReservationResource GetCapacityReservationResource(ResourceIdentifier id)
         {
-            CapacityReservationResource.ValidateResourceId(id);
             return new CapacityReservationResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="InterconnectBlockResource"/> object. </returns>
         public virtual InterconnectBlockResource GetInterconnectBlockResource(ResourceIdentifier id)
         {
-            InterconnectBlockResource.ValidateResourceId(id);
             return new InterconnectBlockResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineRunCommandResource"/> object. </returns>
         public virtual VirtualMachineRunCommandResource GetVirtualMachineRunCommandResource(ResourceIdentifier id)
         {
-            VirtualMachineRunCommandResource.ValidateResourceId(id);
             return new VirtualMachineRunCommandResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmRunCommandResource"/> object. </returns>
         public virtual VirtualMachineScaleSetVmRunCommandResource GetVirtualMachineScaleSetVmRunCommandResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetVmRunCommandResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetVmRunCommandResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineDiagnosticRunCommandResource"/> object. </returns>
         public virtual VirtualMachineDiagnosticRunCommandResource GetVirtualMachineDiagnosticRunCommandResource(ResourceIdentifier id)
         {
-            VirtualMachineDiagnosticRunCommandResource.ValidateResourceId(id);
             return new VirtualMachineDiagnosticRunCommandResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVMDiagnosticRunCommandResource"/> object. </returns>
         public virtual VirtualMachineScaleSetVMDiagnosticRunCommandResource GetVirtualMachineScaleSetVMDiagnosticRunCommandResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetVMDiagnosticRunCommandResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetVMDiagnosticRunCommandResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="ManagedDiskResource"/> object. </returns>
         public virtual ManagedDiskResource GetManagedDiskResource(ResourceIdentifier id)
         {
-            ManagedDiskResource.ValidateResourceId(id);
             return new ManagedDiskResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="DiskAccessResource"/> object. </returns>
         public virtual DiskAccessResource GetDiskAccessResource(ResourceIdentifier id)
         {
-            DiskAccessResource.ValidateResourceId(id);
             return new DiskAccessResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="ComputePrivateEndpointConnectionResource"/> object. </returns>
         public virtual ComputePrivateEndpointConnectionResource GetComputePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ComputePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ComputePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="DiskEncryptionSetResource"/> object. </returns>
         public virtual DiskEncryptionSetResource GetDiskEncryptionSetResource(ResourceIdentifier id)
         {
-            DiskEncryptionSetResource.ValidateResourceId(id);
             return new DiskEncryptionSetResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="DiskRestorePointResource"/> object. </returns>
         public virtual DiskRestorePointResource GetDiskRestorePointResource(ResourceIdentifier id)
         {
-            DiskRestorePointResource.ValidateResourceId(id);
             return new DiskRestorePointResource(Client, id);
         }
 
@@ -292,7 +263,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="SnapshotResource"/> object. </returns>
         public virtual SnapshotResource GetSnapshotResource(ResourceIdentifier id)
         {
-            SnapshotResource.ValidateResourceId(id);
             return new SnapshotResource(Client, id);
         }
 
@@ -301,7 +271,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="GalleryResource"/> object. </returns>
         public virtual GalleryResource GetGalleryResource(ResourceIdentifier id)
         {
-            GalleryResource.ValidateResourceId(id);
             return new GalleryResource(Client, id);
         }
 
@@ -310,7 +279,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="GalleryImageResource"/> object. </returns>
         public virtual GalleryImageResource GetGalleryImageResource(ResourceIdentifier id)
         {
-            GalleryImageResource.ValidateResourceId(id);
             return new GalleryImageResource(Client, id);
         }
 
@@ -319,7 +287,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="GalleryImageVersionResource"/> object. </returns>
         public virtual GalleryImageVersionResource GetGalleryImageVersionResource(ResourceIdentifier id)
         {
-            GalleryImageVersionResource.ValidateResourceId(id);
             return new GalleryImageVersionResource(Client, id);
         }
 
@@ -328,7 +295,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="GalleryApplicationResource"/> object. </returns>
         public virtual GalleryApplicationResource GetGalleryApplicationResource(ResourceIdentifier id)
         {
-            GalleryApplicationResource.ValidateResourceId(id);
             return new GalleryApplicationResource(Client, id);
         }
 
@@ -337,7 +303,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="GalleryApplicationVersionResource"/> object. </returns>
         public virtual GalleryApplicationVersionResource GetGalleryApplicationVersionResource(ResourceIdentifier id)
         {
-            GalleryApplicationVersionResource.ValidateResourceId(id);
             return new GalleryApplicationVersionResource(Client, id);
         }
 
@@ -346,7 +311,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="GalleryScriptResource"/> object. </returns>
         public virtual GalleryScriptResource GetGalleryScriptResource(ResourceIdentifier id)
         {
-            GalleryScriptResource.ValidateResourceId(id);
             return new GalleryScriptResource(Client, id);
         }
 
@@ -355,7 +319,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="GalleryScriptVersionResource"/> object. </returns>
         public virtual GalleryScriptVersionResource GetGalleryScriptVersionResource(ResourceIdentifier id)
         {
-            GalleryScriptVersionResource.ValidateResourceId(id);
             return new GalleryScriptVersionResource(Client, id);
         }
 
@@ -364,7 +327,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="GalleryInVmAccessControlProfileResource"/> object. </returns>
         public virtual GalleryInVmAccessControlProfileResource GetGalleryInVmAccessControlProfileResource(ResourceIdentifier id)
         {
-            GalleryInVmAccessControlProfileResource.ValidateResourceId(id);
             return new GalleryInVmAccessControlProfileResource(Client, id);
         }
 
@@ -373,7 +335,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="GalleryInVmAccessControlProfileVersionResource"/> object. </returns>
         public virtual GalleryInVmAccessControlProfileVersionResource GetGalleryInVmAccessControlProfileVersionResource(ResourceIdentifier id)
         {
-            GalleryInVmAccessControlProfileVersionResource.ValidateResourceId(id);
             return new GalleryInVmAccessControlProfileVersionResource(Client, id);
         }
     }

@@ -122,7 +122,6 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> Returns a <see cref="PriceSheetResource"/> object. </returns>
         public virtual PriceSheetResource GetPriceSheetResource(ResourceIdentifier id)
         {
-            PriceSheetResource.ValidateResourceId(id);
             return new PriceSheetResource(Client, id);
         }
 
@@ -139,7 +138,6 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> Returns a <see cref="PriceSheetResultResource"/> object. </returns>
         public virtual PriceSheetResultResource GetPriceSheetResultResource(ResourceIdentifier id)
         {
-            PriceSheetResultResource.ValidateResourceId(id);
             return new PriceSheetResultResource(Client, id);
         }
 
@@ -148,7 +146,6 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> Returns a <see cref="ConsumptionBudgetResource"/> object. </returns>
         public virtual ConsumptionBudgetResource GetConsumptionBudgetResource(ResourceIdentifier id)
         {
-            ConsumptionBudgetResource.ValidateResourceId(id);
             return new ConsumptionBudgetResource(Client, id);
         }
 
@@ -193,7 +190,6 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> Returns a <see cref="ConsumptionCreditSummaryResource"/> object. </returns>
         public virtual ConsumptionCreditSummaryResource GetConsumptionCreditSummaryResource(ResourceIdentifier id)
         {
-            ConsumptionCreditSummaryResource.ValidateResourceId(id);
             return new ConsumptionCreditSummaryResource(Client, id);
         }
 

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <returns> Returns a <see cref="CommunicationServiceResource"/> object. </returns>
         public virtual CommunicationServiceResource GetCommunicationServiceResource(ResourceIdentifier id)
         {
-            CommunicationServiceResource.ValidateResourceId(id);
             return new CommunicationServiceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <returns> Returns a <see cref="CommunicationDomainResource"/> object. </returns>
         public virtual CommunicationDomainResource GetCommunicationDomainResource(ResourceIdentifier id)
         {
-            CommunicationDomainResource.ValidateResourceId(id);
             return new CommunicationDomainResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <returns> Returns a <see cref="EmailServiceResource"/> object. </returns>
         public virtual EmailServiceResource GetEmailServiceResource(ResourceIdentifier id)
         {
-            EmailServiceResource.ValidateResourceId(id);
             return new EmailServiceResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <returns> Returns a <see cref="SenderUsernameResource"/> object. </returns>
         public virtual SenderUsernameResource GetSenderUsernameResource(ResourceIdentifier id)
         {
-            SenderUsernameResource.ValidateResourceId(id);
             return new SenderUsernameResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <returns> Returns a <see cref="CommunicationSmtpUsernameResource"/> object. </returns>
         public virtual CommunicationSmtpUsernameResource GetCommunicationSmtpUsernameResource(ResourceIdentifier id)
         {
-            CommunicationSmtpUsernameResource.ValidateResourceId(id);
             return new CommunicationSmtpUsernameResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <returns> Returns a <see cref="EmailSuppressionListResource"/> object. </returns>
         public virtual EmailSuppressionListResource GetEmailSuppressionListResource(ResourceIdentifier id)
         {
-            EmailSuppressionListResource.ValidateResourceId(id);
             return new EmailSuppressionListResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <returns> Returns a <see cref="EmailSuppressionListAddressResource"/> object. </returns>
         public virtual EmailSuppressionListAddressResource GetEmailSuppressionListAddressResource(ResourceIdentifier id)
         {
-            EmailSuppressionListAddressResource.ValidateResourceId(id);
             return new EmailSuppressionListAddressResource(Client, id);
         }
     }

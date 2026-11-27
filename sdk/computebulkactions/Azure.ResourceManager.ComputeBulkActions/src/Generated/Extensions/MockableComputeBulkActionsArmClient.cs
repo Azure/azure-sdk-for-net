@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
         /// <returns> Returns a <see cref="BulkActionResource"/> object. </returns>
         public virtual BulkActionResource GetBulkActionResource(ResourceIdentifier id)
         {
-            BulkActionResource.ValidateResourceId(id);
             return new BulkActionResource(Client, id);
         }
     }

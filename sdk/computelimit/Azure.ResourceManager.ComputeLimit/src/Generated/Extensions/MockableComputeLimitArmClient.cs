@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> Returns a <see cref="ComputeLimitGuestSubscriptionResource"/> object. </returns>
         public virtual ComputeLimitGuestSubscriptionResource GetComputeLimitGuestSubscriptionResource(ResourceIdentifier id)
         {
-            ComputeLimitGuestSubscriptionResource.ValidateResourceId(id);
             return new ComputeLimitGuestSubscriptionResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> Returns a <see cref="TrustedHostSubscriptionResource"/> object. </returns>
         public virtual TrustedHostSubscriptionResource GetTrustedHostSubscriptionResource(ResourceIdentifier id)
         {
-            TrustedHostSubscriptionResource.ValidateResourceId(id);
             return new TrustedHostSubscriptionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> Returns a <see cref="ComputeLimitSharedLimitResource"/> object. </returns>
         public virtual ComputeLimitSharedLimitResource GetComputeLimitSharedLimitResource(ResourceIdentifier id)
         {
-            ComputeLimitSharedLimitResource.ValidateResourceId(id);
             return new ComputeLimitSharedLimitResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> Returns a <see cref="ComputeLimitFeatureResource"/> object. </returns>
         public virtual ComputeLimitFeatureResource GetComputeLimitFeatureResource(ResourceIdentifier id)
         {
-            ComputeLimitFeatureResource.ValidateResourceId(id);
             return new ComputeLimitFeatureResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> Returns a <see cref="ComputeLimitVmFamilyResource"/> object. </returns>
         public virtual ComputeLimitVmFamilyResource GetComputeLimitVmFamilyResource(ResourceIdentifier id)
         {
-            ComputeLimitVmFamilyResource.ValidateResourceId(id);
             return new ComputeLimitVmFamilyResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> Returns a <see cref="SharedLimitCapResource"/> object. </returns>
         public virtual SharedLimitCapResource GetSharedLimitCapResource(ResourceIdentifier id)
         {
-            SharedLimitCapResource.ValidateResourceId(id);
             return new SharedLimitCapResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> Returns a <see cref="MemberCapOverrideResource"/> object. </returns>
         public virtual MemberCapOverrideResource GetMemberCapOverrideResource(ResourceIdentifier id)
         {
-            MemberCapOverrideResource.ValidateResourceId(id);
             return new MemberCapOverrideResource(Client, id);
         }
     }

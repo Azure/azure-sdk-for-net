@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <returns> Returns a <see cref="ConfidentialLedgerResource"/> object. </returns>
         public virtual ConfidentialLedgerResource GetConfidentialLedgerResource(ResourceIdentifier id)
         {
-            ConfidentialLedgerResource.ValidateResourceId(id);
             return new ConfidentialLedgerResource(Client, id);
         }
     }

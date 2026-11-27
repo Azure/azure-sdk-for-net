@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <returns> Returns a <see cref="CloudAccountResource"/> object. </returns>
         public virtual CloudAccountResource GetCloudAccountResource(ResourceIdentifier id)
         {
-            CloudAccountResource.ValidateResourceId(id);
             return new CloudAccountResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <returns> Returns a <see cref="CommvaultStorageResource"/> object. </returns>
         public virtual CommvaultStorageResource GetCommvaultStorageResource(ResourceIdentifier id)
         {
-            CommvaultStorageResource.ValidateResourceId(id);
             return new CommvaultStorageResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <returns> Returns a <see cref="CommvaultPlanResource"/> object. </returns>
         public virtual CommvaultPlanResource GetCommvaultPlanResource(ResourceIdentifier id)
         {
-            CommvaultPlanResource.ValidateResourceId(id);
             return new CommvaultPlanResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <returns> Returns a <see cref="ProtectionGroupResource"/> object. </returns>
         public virtual ProtectionGroupResource GetProtectionGroupResource(ResourceIdentifier id)
         {
-            ProtectionGroupResource.ValidateResourceId(id);
             return new ProtectionGroupResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <returns> Returns a <see cref="ProtectedItemResource"/> object. </returns>
         public virtual ProtectedItemResource GetProtectedItemResource(ResourceIdentifier id)
         {
-            ProtectedItemResource.ValidateResourceId(id);
             return new ProtectedItemResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <returns> Returns a <see cref="RoleMappingResource"/> object. </returns>
         public virtual RoleMappingResource GetRoleMappingResource(ResourceIdentifier id)
         {
-            RoleMappingResource.ValidateResourceId(id);
             return new RoleMappingResource(Client, id);
         }
     }

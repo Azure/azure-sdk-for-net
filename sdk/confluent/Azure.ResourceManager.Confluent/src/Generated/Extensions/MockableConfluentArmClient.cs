@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <returns> Returns a <see cref="ConfluentOrganizationResource"/> object. </returns>
         public virtual ConfluentOrganizationResource GetConfluentOrganizationResource(ResourceIdentifier id)
         {
-            ConfluentOrganizationResource.ValidateResourceId(id);
             return new ConfluentOrganizationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <returns> Returns a <see cref="SCEnvironmentRecordResource"/> object. </returns>
         public virtual SCEnvironmentRecordResource GetSCEnvironmentRecordResource(ResourceIdentifier id)
         {
-            SCEnvironmentRecordResource.ValidateResourceId(id);
             return new SCEnvironmentRecordResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <returns> Returns a <see cref="SCClusterRecordResource"/> object. </returns>
         public virtual SCClusterRecordResource GetSCClusterRecordResource(ResourceIdentifier id)
         {
-            SCClusterRecordResource.ValidateResourceId(id);
             return new SCClusterRecordResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <returns> Returns a <see cref="ConfluentConnectorResource"/> object. </returns>
         public virtual ConfluentConnectorResource GetConfluentConnectorResource(ResourceIdentifier id)
         {
-            ConfluentConnectorResource.ValidateResourceId(id);
             return new ConfluentConnectorResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <returns> Returns a <see cref="TopicRecordResource"/> object. </returns>
         public virtual TopicRecordResource GetTopicRecordResource(ResourceIdentifier id)
         {
-            TopicRecordResource.ValidateResourceId(id);
             return new TopicRecordResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <returns> Returns a <see cref="ConfluentNetworkGatewayResource"/> object. </returns>
         public virtual ConfluentNetworkGatewayResource GetConfluentNetworkGatewayResource(ResourceIdentifier id)
         {
-            ConfluentNetworkGatewayResource.ValidateResourceId(id);
             return new ConfluentNetworkGatewayResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <returns> Returns a <see cref="ConfluentAccessPointResource"/> object. </returns>
         public virtual ConfluentAccessPointResource GetConfluentAccessPointResource(ResourceIdentifier id)
         {
-            ConfluentAccessPointResource.ValidateResourceId(id);
             return new ConfluentAccessPointResource(Client, id);
         }
     }

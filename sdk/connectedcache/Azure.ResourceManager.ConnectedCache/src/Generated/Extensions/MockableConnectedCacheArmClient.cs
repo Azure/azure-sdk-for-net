@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// <returns> Returns a <see cref="IspCustomerResource"/> object. </returns>
         public virtual IspCustomerResource GetIspCustomerResource(ResourceIdentifier id)
         {
-            IspCustomerResource.ValidateResourceId(id);
             return new IspCustomerResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// <returns> Returns a <see cref="IspCacheNodeResource"/> object. </returns>
         public virtual IspCacheNodeResource GetIspCacheNodeResource(ResourceIdentifier id)
         {
-            IspCacheNodeResource.ValidateResourceId(id);
             return new IspCacheNodeResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// <returns> Returns a <see cref="EnterpriseMccCustomerResource"/> object. </returns>
         public virtual EnterpriseMccCustomerResource GetEnterpriseMccCustomerResource(ResourceIdentifier id)
         {
-            EnterpriseMccCustomerResource.ValidateResourceId(id);
             return new EnterpriseMccCustomerResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// <returns> Returns a <see cref="EnterpriseMccCacheNodeResource"/> object. </returns>
         public virtual EnterpriseMccCacheNodeResource GetEnterpriseMccCacheNodeResource(ResourceIdentifier id)
         {
-            EnterpriseMccCacheNodeResource.ValidateResourceId(id);
             return new EnterpriseMccCacheNodeResource(Client, id);
         }
     }

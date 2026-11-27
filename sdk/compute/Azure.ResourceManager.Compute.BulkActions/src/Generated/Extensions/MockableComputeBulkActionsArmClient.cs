@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <returns> Returns a <see cref="LocationBasedBulkCreateCustomResource"/> object. </returns>
         public virtual LocationBasedBulkCreateCustomResource GetLocationBasedBulkCreateCustomResource(ResourceIdentifier id)
         {
-            LocationBasedBulkCreateCustomResource.ValidateResourceId(id);
             return new LocationBasedBulkCreateCustomResource(Client, id);
         }
 
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <returns> Returns a <see cref="LocationBasedBulkCreateResource"/> object. </returns>
         public virtual LocationBasedBulkCreateResource GetLocationBasedBulkCreateResource(ResourceIdentifier id)
         {
-            LocationBasedBulkCreateResource.ValidateResourceId(id);
             return new LocationBasedBulkCreateResource(Client, id);
         }
 
@@ -67,7 +65,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
         public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
         {
-            ScheduledActionResource.ValidateResourceId(id);
             return new ScheduledActionResource(Client, id);
         }
 
@@ -76,7 +73,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <returns> Returns a <see cref="ScheduledActionOccurrenceResource"/> object. </returns>
         public virtual ScheduledActionOccurrenceResource GetScheduledActionOccurrenceResource(ResourceIdentifier id)
         {
-            ScheduledActionOccurrenceResource.ValidateResourceId(id);
             return new ScheduledActionOccurrenceResource(Client, id);
         }
 

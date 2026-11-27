@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="SessionPoolResource"/> object. </returns>
         public virtual SessionPoolResource GetSessionPoolResource(ResourceIdentifier id)
         {
-            SessionPoolResource.ValidateResourceId(id);
             return new SessionPoolResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="SandboxGroupResource"/> object. </returns>
         public virtual SandboxGroupResource GetSandboxGroupResource(ResourceIdentifier id)
         {
-            SandboxGroupResource.ValidateResourceId(id);
             return new SandboxGroupResource(Client, id);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="SandboxGroupVnetConnectionResource"/> object. </returns>
         public virtual SandboxGroupVnetConnectionResource GetSandboxGroupVnetConnectionResource(ResourceIdentifier id)
         {
-            SandboxGroupVnetConnectionResource.ValidateResourceId(id);
             return new SandboxGroupVnetConnectionResource(Client, id);
         }
 
@@ -62,7 +59,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppSourceControlResource"/> object. </returns>
         public virtual ContainerAppSourceControlResource GetContainerAppSourceControlResource(ResourceIdentifier id)
         {
-            ContainerAppSourceControlResource.ValidateResourceId(id);
             return new ContainerAppSourceControlResource(Client, id);
         }
 
@@ -71,7 +67,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppResource"/> object. </returns>
         public virtual ContainerAppResource GetContainerAppResource(ResourceIdentifier id)
         {
-            ContainerAppResource.ValidateResourceId(id);
             return new ContainerAppResource(Client, id);
         }
 
@@ -80,7 +75,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppsFunctionResource"/> object. </returns>
         public virtual ContainerAppsFunctionResource GetContainerAppsFunctionResource(ResourceIdentifier id)
         {
-            ContainerAppsFunctionResource.ValidateResourceId(id);
             return new ContainerAppsFunctionResource(Client, id);
         }
 
@@ -89,7 +83,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
         public virtual ContainerAppRevisionResource GetContainerAppRevisionResource(ResourceIdentifier id)
         {
-            ContainerAppRevisionResource.ValidateResourceId(id);
             return new ContainerAppRevisionResource(Client, id);
         }
 
@@ -98,7 +91,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppLabelHistoryResource"/> object. </returns>
         public virtual ContainerAppLabelHistoryResource GetContainerAppLabelHistoryResource(ResourceIdentifier id)
         {
-            ContainerAppLabelHistoryResource.ValidateResourceId(id);
             return new ContainerAppLabelHistoryResource(Client, id);
         }
 
@@ -107,7 +99,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppReplicaResource"/> object. </returns>
         public virtual ContainerAppReplicaResource GetContainerAppReplicaResource(ResourceIdentifier id)
         {
-            ContainerAppReplicaResource.ValidateResourceId(id);
             return new ContainerAppReplicaResource(Client, id);
         }
 
@@ -116,7 +107,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="DotNetComponentResource"/> object. </returns>
         public virtual DotNetComponentResource GetDotNetComponentResource(ResourceIdentifier id)
         {
-            DotNetComponentResource.ValidateResourceId(id);
             return new DotNetComponentResource(Client, id);
         }
 
@@ -125,7 +115,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="JavaComponentResource"/> object. </returns>
         public virtual JavaComponentResource GetJavaComponentResource(ResourceIdentifier id)
         {
-            JavaComponentResource.ValidateResourceId(id);
             return new JavaComponentResource(Client, id);
         }
 
@@ -134,7 +123,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="LogicAppResource"/> object. </returns>
         public virtual LogicAppResource GetLogicAppResource(ResourceIdentifier id)
         {
-            LogicAppResource.ValidateResourceId(id);
             return new LogicAppResource(Client, id);
         }
 
@@ -179,7 +167,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="LogicAppWorkflowEnvelopeResource"/> object. </returns>
         public virtual LogicAppWorkflowEnvelopeResource GetLogicAppWorkflowEnvelopeResource(ResourceIdentifier id)
         {
-            LogicAppWorkflowEnvelopeResource.ValidateResourceId(id);
             return new LogicAppWorkflowEnvelopeResource(Client, id);
         }
 
@@ -224,7 +211,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppAuthConfigResource"/> object. </returns>
         public virtual ContainerAppAuthConfigResource GetContainerAppAuthConfigResource(ResourceIdentifier id)
         {
-            ContainerAppAuthConfigResource.ValidateResourceId(id);
             return new ContainerAppAuthConfigResource(Client, id);
         }
 
@@ -233,7 +219,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentResource"/> object. </returns>
         public virtual ContainerAppConnectedEnvironmentResource GetContainerAppConnectedEnvironmentResource(ResourceIdentifier id)
         {
-            ContainerAppConnectedEnvironmentResource.ValidateResourceId(id);
             return new ContainerAppConnectedEnvironmentResource(Client, id);
         }
 
@@ -242,7 +227,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentCertificateResource"/> object. </returns>
         public virtual ContainerAppManagedEnvironmentCertificateResource GetContainerAppManagedEnvironmentCertificateResource(ResourceIdentifier id)
         {
-            ContainerAppManagedEnvironmentCertificateResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentCertificateResource(Client, id);
         }
 
@@ -251,7 +235,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentResource"/> object. </returns>
         public virtual ContainerAppManagedEnvironmentResource GetContainerAppManagedEnvironmentResource(ResourceIdentifier id)
         {
-            ContainerAppManagedEnvironmentResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentResource(Client, id);
         }
 
@@ -260,7 +243,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
         public virtual ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier id)
         {
-            ContainerAppConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
             return new ContainerAppConnectedEnvironmentDaprComponentResource(Client, id);
         }
 
@@ -269,7 +251,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
         public virtual ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier id)
         {
-            ContainerAppManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentDaprComponentResource(Client, id);
         }
 
@@ -278,7 +259,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> object. </returns>
         public virtual ContainerAppConnectedEnvironmentStorageResource GetContainerAppConnectedEnvironmentStorageResource(ResourceIdentifier id)
         {
-            ContainerAppConnectedEnvironmentStorageResource.ValidateResourceId(id);
             return new ContainerAppConnectedEnvironmentStorageResource(Client, id);
         }
 
@@ -287,7 +267,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppManagedCertificateResource"/> object. </returns>
         public virtual ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(ResourceIdentifier id)
         {
-            ContainerAppManagedCertificateResource.ValidateResourceId(id);
             return new ContainerAppManagedCertificateResource(Client, id);
         }
 
@@ -296,7 +275,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppContainerPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ContainerAppContainerPrivateEndpointConnectionResource GetContainerAppContainerPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ContainerAppContainerPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ContainerAppContainerPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -305,7 +283,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="DaprComponentResiliencyPolicyResource"/> object. </returns>
         public virtual DaprComponentResiliencyPolicyResource GetDaprComponentResiliencyPolicyResource(ResourceIdentifier id)
         {
-            DaprComponentResiliencyPolicyResource.ValidateResourceId(id);
             return new DaprComponentResiliencyPolicyResource(Client, id);
         }
 
@@ -314,7 +291,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppMaintenanceConfigurationResource"/> object. </returns>
         public virtual ContainerAppMaintenanceConfigurationResource GetContainerAppMaintenanceConfigurationResource(ResourceIdentifier id)
         {
-            ContainerAppMaintenanceConfigurationResource.ValidateResourceId(id);
             return new ContainerAppMaintenanceConfigurationResource(Client, id);
         }
 
@@ -323,7 +299,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentStorageResource"/> object. </returns>
         public virtual ContainerAppManagedEnvironmentStorageResource GetContainerAppManagedEnvironmentStorageResource(ResourceIdentifier id)
         {
-            ContainerAppManagedEnvironmentStorageResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentStorageResource(Client, id);
         }
 
@@ -332,7 +307,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppJobResource"/> object. </returns>
         public virtual ContainerAppJobResource GetContainerAppJobResource(ResourceIdentifier id)
         {
-            ContainerAppJobResource.ValidateResourceId(id);
             return new ContainerAppJobResource(Client, id);
         }
 
@@ -341,7 +315,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppJobExecutionResource"/> object. </returns>
         public virtual ContainerAppJobExecutionResource GetContainerAppJobExecutionResource(ResourceIdentifier id)
         {
-            ContainerAppJobExecutionResource.ValidateResourceId(id);
             return new ContainerAppJobExecutionResource(Client, id);
         }
 
@@ -350,7 +323,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppJobDetectorPropertyResource"/> object. </returns>
         public virtual ContainerAppJobDetectorPropertyResource GetContainerAppJobDetectorPropertyResource(ResourceIdentifier id)
         {
-            ContainerAppJobDetectorPropertyResource.ValidateResourceId(id);
             return new ContainerAppJobDetectorPropertyResource(Client, id);
         }
 
@@ -359,7 +331,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppJobDetectorResource"/> object. </returns>
         public virtual ContainerAppJobDetectorResource GetContainerAppJobDetectorResource(ResourceIdentifier id)
         {
-            ContainerAppJobDetectorResource.ValidateResourceId(id);
             return new ContainerAppJobDetectorResource(Client, id);
         }
 
@@ -368,7 +339,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyRevisionResource"/> object. </returns>
         public virtual ContainerAppDetectorPropertyRevisionResource GetContainerAppDetectorPropertyRevisionResource(ResourceIdentifier id)
         {
-            ContainerAppDetectorPropertyRevisionResource.ValidateResourceId(id);
             return new ContainerAppDetectorPropertyRevisionResource(Client, id);
         }
 
@@ -377,7 +347,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
         public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(ResourceIdentifier id)
         {
-            ContainerAppDetectorPropertyResource.ValidateResourceId(id);
             return new ContainerAppDetectorPropertyResource(Client, id);
         }
 
@@ -386,7 +355,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppDetectorResource"/> object. </returns>
         public virtual ContainerAppDetectorResource GetContainerAppDetectorResource(ResourceIdentifier id)
         {
-            ContainerAppDetectorResource.ValidateResourceId(id);
             return new ContainerAppDetectorResource(Client, id);
         }
 
@@ -395,7 +363,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> object. </returns>
         public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(ResourceIdentifier id)
         {
-            ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, id);
         }
 
@@ -404,7 +371,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppsRevisionFunctionResource"/> object. </returns>
         public virtual ContainerAppsRevisionFunctionResource GetContainerAppsRevisionFunctionResource(ResourceIdentifier id)
         {
-            ContainerAppsRevisionFunctionResource.ValidateResourceId(id);
             return new ContainerAppsRevisionFunctionResource(Client, id);
         }
 
@@ -413,7 +379,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> object. </returns>
         public virtual ContainerAppConnectedEnvironmentCertificateResource GetContainerAppConnectedEnvironmentCertificateResource(ResourceIdentifier id)
         {
-            ContainerAppConnectedEnvironmentCertificateResource.ValidateResourceId(id);
             return new ContainerAppConnectedEnvironmentCertificateResource(Client, id);
         }
 
@@ -422,7 +387,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ContainerAppPrivateEndpointConnectionResource GetContainerAppPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ContainerAppPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ContainerAppPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -431,7 +395,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppHttpRouteConfigResource"/> object. </returns>
         public virtual ContainerAppHttpRouteConfigResource GetContainerAppHttpRouteConfigResource(ResourceIdentifier id)
         {
-            ContainerAppHttpRouteConfigResource.ValidateResourceId(id);
             return new ContainerAppHttpRouteConfigResource(Client, id);
         }
 
@@ -440,7 +403,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResource"/> object. </returns>
         public virtual ContainerAppManagedEnvironmentDetectorResource GetContainerAppManagedEnvironmentDetectorResource(ResourceIdentifier id)
         {
-            ContainerAppManagedEnvironmentDetectorResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentDetectorResource(Client, id);
         }
     }
