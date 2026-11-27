@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ZonalUpdateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ZonalUpdateMode?(string value) => value == null ? null : new ZonalUpdateMode(value);
+        public static implicit operator ZonalUpdateMode?(string value) => value == null ? (ZonalUpdateMode?)null : new ZonalUpdateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

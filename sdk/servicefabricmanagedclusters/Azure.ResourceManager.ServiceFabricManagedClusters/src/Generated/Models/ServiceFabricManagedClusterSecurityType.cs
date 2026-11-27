@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricManagedClusterSecurityType?(string value) => value == null ? null : new ServiceFabricManagedClusterSecurityType(value);
+        public static implicit operator ServiceFabricManagedClusterSecurityType?(string value) => value == null ? (ServiceFabricManagedClusterSecurityType?)null : new ServiceFabricManagedClusterSecurityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

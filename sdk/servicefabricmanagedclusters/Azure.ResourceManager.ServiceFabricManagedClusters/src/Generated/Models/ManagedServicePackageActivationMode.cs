@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedServicePackageActivationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedServicePackageActivationMode?(string value) => value == null ? null : new ManagedServicePackageActivationMode(value);
+        public static implicit operator ManagedServicePackageActivationMode?(string value) => value == null ? (ManagedServicePackageActivationMode?)null : new ManagedServicePackageActivationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

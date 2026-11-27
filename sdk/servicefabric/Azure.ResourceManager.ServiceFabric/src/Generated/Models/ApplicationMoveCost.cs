@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationMoveCost"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationMoveCost?(string value) => value == null ? null : new ApplicationMoveCost(value);
+        public static implicit operator ApplicationMoveCost?(string value) => value == null ? (ApplicationMoveCost?)null : new ApplicationMoveCost(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayForContainersSecurityPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayForContainersSecurityPolicyType?(string value) => value == null ? null : new ApplicationGatewayForContainersSecurityPolicyType(value);
+        public static implicit operator ApplicationGatewayForContainersSecurityPolicyType?(string value) => value == null ? (ApplicationGatewayForContainersSecurityPolicyType?)null : new ApplicationGatewayForContainersSecurityPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

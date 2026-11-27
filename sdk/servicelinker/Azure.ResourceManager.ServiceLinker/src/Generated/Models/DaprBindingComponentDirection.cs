@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="DaprBindingComponentDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DaprBindingComponentDirection?(string value) => value == null ? null : new DaprBindingComponentDirection(value);
+        public static implicit operator DaprBindingComponentDirection?(string value) => value == null ? (DaprBindingComponentDirection?)null : new DaprBindingComponentDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

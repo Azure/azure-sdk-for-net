@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? null : new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(value);
+        public static implicit operator ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? (ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState?)null : new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

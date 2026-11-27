@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="DryrunActionName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DryrunActionName?(string value) => value == null ? null : new DryrunActionName(value);
+        public static implicit operator DryrunActionName?(string value) => value == null ? (DryrunActionName?)null : new DryrunActionName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

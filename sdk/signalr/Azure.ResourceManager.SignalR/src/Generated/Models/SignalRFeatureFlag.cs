@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="SignalRFeatureFlag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRFeatureFlag?(string value) => value == null ? null : new SignalRFeatureFlag(value);
+        public static implicit operator SignalRFeatureFlag?(string value) => value == null ? (SignalRFeatureFlag?)null : new SignalRFeatureFlag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

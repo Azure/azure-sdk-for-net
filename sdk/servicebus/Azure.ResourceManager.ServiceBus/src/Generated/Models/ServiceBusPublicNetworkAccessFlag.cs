@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusPublicNetworkAccessFlag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusPublicNetworkAccessFlag?(string value) => value == null ? null : new ServiceBusPublicNetworkAccessFlag(value);
+        public static implicit operator ServiceBusPublicNetworkAccessFlag?(string value) => value == null ? (ServiceBusPublicNetworkAccessFlag?)null : new ServiceBusPublicNetworkAccessFlag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

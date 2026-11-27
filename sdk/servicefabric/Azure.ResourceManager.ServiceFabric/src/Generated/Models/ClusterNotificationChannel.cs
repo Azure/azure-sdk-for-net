@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ClusterNotificationChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterNotificationChannel?(string value) => value == null ? null : new ClusterNotificationChannel(value);
+        public static implicit operator ClusterNotificationChannel?(string value) => value == null ? (ClusterNotificationChannel?)null : new ClusterNotificationChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

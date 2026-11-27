@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="LinkerDeleteOrUpdateBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkerDeleteOrUpdateBehavior?(string value) => value == null ? null : new LinkerDeleteOrUpdateBehavior(value);
+        public static implicit operator LinkerDeleteOrUpdateBehavior?(string value) => value == null ? (LinkerDeleteOrUpdateBehavior?)null : new LinkerDeleteOrUpdateBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

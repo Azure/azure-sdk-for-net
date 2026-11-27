@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="LinkerClientType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkerClientType?(string value) => value == null ? null : new LinkerClientType(value);
+        public static implicit operator LinkerClientType?(string value) => value == null ? (LinkerClientType?)null : new LinkerClientType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

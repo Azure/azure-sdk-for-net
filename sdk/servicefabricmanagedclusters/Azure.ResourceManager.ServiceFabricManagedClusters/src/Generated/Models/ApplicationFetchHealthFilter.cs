@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationFetchHealthFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationFetchHealthFilter?(string value) => value == null ? null : new ApplicationFetchHealthFilter(value);
+        public static implicit operator ApplicationFetchHealthFilter?(string value) => value == null ? (ApplicationFetchHealthFilter?)null : new ApplicationFetchHealthFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

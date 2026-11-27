@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterVersionEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterVersionEnvironment?(string value) => value == null ? null : new ManagedClusterVersionEnvironment(value);
+        public static implicit operator ManagedClusterVersionEnvironment?(string value) => value == null ? (ManagedClusterVersionEnvironment?)null : new ManagedClusterVersionEnvironment(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

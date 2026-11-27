@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="NodeTypeSkuScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NodeTypeSkuScaleType?(string value) => value == null ? null : new NodeTypeSkuScaleType(value);
+        public static implicit operator NodeTypeSkuScaleType?(string value) => value == null ? (NodeTypeSkuScaleType?)null : new NodeTypeSkuScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

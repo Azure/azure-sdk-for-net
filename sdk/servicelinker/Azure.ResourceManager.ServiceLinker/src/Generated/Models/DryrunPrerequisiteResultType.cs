@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="DryrunPrerequisiteResultType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DryrunPrerequisiteResultType?(string value) => value == null ? null : new DryrunPrerequisiteResultType(value);
+        public static implicit operator DryrunPrerequisiteResultType?(string value) => value == null ? (DryrunPrerequisiteResultType?)null : new DryrunPrerequisiteResultType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

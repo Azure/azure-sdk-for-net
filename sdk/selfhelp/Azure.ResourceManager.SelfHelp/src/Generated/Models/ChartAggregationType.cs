@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="ChartAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChartAggregationType?(string value) => value == null ? null : new ChartAggregationType(value);
+        public static implicit operator ChartAggregationType?(string value) => value == null ? (ChartAggregationType?)null : new ChartAggregationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

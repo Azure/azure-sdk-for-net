@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Converts a string to a <see cref="SignalRProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SignalRProvisioningState?(string value) => value == null ? null : new SignalRProvisioningState(value);
+        public static implicit operator SignalRProvisioningState?(string value) => value == null ? (SignalRProvisioningState?)null : new SignalRProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

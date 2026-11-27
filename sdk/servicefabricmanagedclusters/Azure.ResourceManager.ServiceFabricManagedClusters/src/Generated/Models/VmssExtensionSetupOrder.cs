@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="VmssExtensionSetupOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmssExtensionSetupOrder?(string value) => value == null ? null : new VmssExtensionSetupOrder(value);
+        public static implicit operator VmssExtensionSetupOrder?(string value) => value == null ? (VmssExtensionSetupOrder?)null : new VmssExtensionSetupOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

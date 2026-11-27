@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ClusterNotificationCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterNotificationCategory?(string value) => value == null ? null : new ClusterNotificationCategory(value);
+        public static implicit operator ClusterNotificationCategory?(string value) => value == null ? (ClusterNotificationCategory?)null : new ClusterNotificationCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

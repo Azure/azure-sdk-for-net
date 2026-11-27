@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ClusterDurabilityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterDurabilityLevel?(string value) => value == null ? null : new ClusterDurabilityLevel(value);
+        public static implicit operator ClusterDurabilityLevel?(string value) => value == null ? (ClusterDurabilityLevel?)null : new ClusterDurabilityLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

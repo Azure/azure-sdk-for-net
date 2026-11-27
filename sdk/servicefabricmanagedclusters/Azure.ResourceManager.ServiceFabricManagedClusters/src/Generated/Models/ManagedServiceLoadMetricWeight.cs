@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedServiceLoadMetricWeight"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedServiceLoadMetricWeight?(string value) => value == null ? null : new ManagedServiceLoadMetricWeight(value);
+        public static implicit operator ManagedServiceLoadMetricWeight?(string value) => value == null ? (ManagedServiceLoadMetricWeight?)null : new ManagedServiceLoadMetricWeight(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

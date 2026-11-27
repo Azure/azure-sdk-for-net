@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="LinkerValidationResultStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkerValidationResultStatus?(string value) => value == null ? null : new LinkerValidationResultStatus(value);
+        public static implicit operator LinkerValidationResultStatus?(string value) => value == null ? (LinkerValidationResultStatus?)null : new LinkerValidationResultStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

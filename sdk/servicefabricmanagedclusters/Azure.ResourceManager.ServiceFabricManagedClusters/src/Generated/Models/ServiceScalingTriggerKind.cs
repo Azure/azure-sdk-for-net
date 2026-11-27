@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceScalingTriggerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceScalingTriggerKind?(string value) => value == null ? null : new ServiceScalingTriggerKind(value);
+        public static implicit operator ServiceScalingTriggerKind?(string value) => value == null ? (ServiceScalingTriggerKind?)null : new ServiceScalingTriggerKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

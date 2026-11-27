@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ArmServicePackageActivationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArmServicePackageActivationMode?(string value) => value == null ? null : new ArmServicePackageActivationMode(value);
+        public static implicit operator ArmServicePackageActivationMode?(string value) => value == null ? (ArmServicePackageActivationMode?)null : new ArmServicePackageActivationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="NodeTypeSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NodeTypeSecurityEncryptionType?(string value) => value == null ? null : new NodeTypeSecurityEncryptionType(value);
+        public static implicit operator NodeTypeSecurityEncryptionType?(string value) => value == null ? (NodeTypeSecurityEncryptionType?)null : new NodeTypeSecurityEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

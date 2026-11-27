@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricManagedDataDiskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricManagedDataDiskType?(string value) => value == null ? null : new ServiceFabricManagedDataDiskType(value);
+        public static implicit operator ServiceFabricManagedDataDiskType?(string value) => value == null ? (ServiceFabricManagedDataDiskType?)null : new ServiceFabricManagedDataDiskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

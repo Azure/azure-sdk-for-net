@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="TroubleshooterQuestionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TroubleshooterQuestionType?(string value) => value == null ? null : new TroubleshooterQuestionType(value);
+        public static implicit operator TroubleshooterQuestionType?(string value) => value == null ? (TroubleshooterQuestionType?)null : new TroubleshooterQuestionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

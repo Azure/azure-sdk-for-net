@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="LinkerAllowType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkerAllowType?(string value) => value == null ? null : new LinkerAllowType(value);
+        public static implicit operator LinkerAllowType?(string value) => value == null ? (LinkerAllowType?)null : new LinkerAllowType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

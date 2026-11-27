@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceKind?(string value) => value == null ? null : new ServiceKind(value);
+        public static implicit operator ServiceKind?(string value) => value == null ? (ServiceKind?)null : new ServiceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

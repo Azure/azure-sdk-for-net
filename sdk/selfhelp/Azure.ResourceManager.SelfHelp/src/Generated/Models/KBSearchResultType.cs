@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="KBSearchResultType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KBSearchResultType?(string value) => value == null ? null : new KBSearchResultType(value);
+        public static implicit operator KBSearchResultType?(string value) => value == null ? (KBSearchResultType?)null : new KBSearchResultType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

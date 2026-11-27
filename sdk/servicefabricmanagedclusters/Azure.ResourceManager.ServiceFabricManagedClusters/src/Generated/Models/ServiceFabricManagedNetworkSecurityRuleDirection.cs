@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricManagedNetworkSecurityRuleDirection?(string value) => value == null ? null : new ServiceFabricManagedNetworkSecurityRuleDirection(value);
+        public static implicit operator ServiceFabricManagedNetworkSecurityRuleDirection?(string value) => value == null ? (ServiceFabricManagedNetworkSecurityRuleDirection?)null : new ServiceFabricManagedNetworkSecurityRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

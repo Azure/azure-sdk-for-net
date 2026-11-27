@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterAddOnFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterAddOnFeature?(string value) => value == null ? null : new ManagedClusterAddOnFeature(value);
+        public static implicit operator ManagedClusterAddOnFeature?(string value) => value == null ? (ManagedClusterAddOnFeature?)null : new ManagedClusterAddOnFeature(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

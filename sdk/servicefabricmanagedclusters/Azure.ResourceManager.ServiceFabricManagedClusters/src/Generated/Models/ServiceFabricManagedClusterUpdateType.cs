@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterUpdateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricManagedClusterUpdateType?(string value) => value == null ? null : new ServiceFabricManagedClusterUpdateType(value);
+        public static implicit operator ServiceFabricManagedClusterUpdateType?(string value) => value == null ? (ServiceFabricManagedClusterUpdateType?)null : new ServiceFabricManagedClusterUpdateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

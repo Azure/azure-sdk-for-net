@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusEncryptionKeySource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusEncryptionKeySource?(string value) => value == null ? null : new ServiceBusEncryptionKeySource(value);
+        public static implicit operator ServiceBusEncryptionKeySource?(string value) => value == null ? (ServiceBusEncryptionKeySource?)null : new ServiceBusEncryptionKeySource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

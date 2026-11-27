@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="SolutionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SolutionProvisioningState?(string value) => value == null ? null : new SolutionProvisioningState(value);
+        public static implicit operator SolutionProvisioningState?(string value) => value == null ? (SolutionProvisioningState?)null : new SolutionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

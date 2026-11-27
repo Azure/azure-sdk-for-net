@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationPartitionScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationPartitionScheme?(string value) => value == null ? null : new ApplicationPartitionScheme(value);
+        public static implicit operator ApplicationPartitionScheme?(string value) => value == null ? (ApplicationPartitionScheme?)null : new ApplicationPartitionScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

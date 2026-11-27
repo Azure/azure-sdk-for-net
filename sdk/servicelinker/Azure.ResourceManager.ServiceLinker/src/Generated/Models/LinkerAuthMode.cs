@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="LinkerAuthMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkerAuthMode?(string value) => value == null ? null : new LinkerAuthMode(value);
+        public static implicit operator LinkerAuthMode?(string value) => value == null ? (LinkerAuthMode?)null : new LinkerAuthMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

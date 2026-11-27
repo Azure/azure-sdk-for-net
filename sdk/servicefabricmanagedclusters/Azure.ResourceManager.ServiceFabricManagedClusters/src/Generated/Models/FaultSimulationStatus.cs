@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="FaultSimulationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FaultSimulationStatus?(string value) => value == null ? null : new FaultSimulationStatus(value);
+        public static implicit operator FaultSimulationStatus?(string value) => value == null ? (FaultSimulationStatus?)null : new FaultSimulationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

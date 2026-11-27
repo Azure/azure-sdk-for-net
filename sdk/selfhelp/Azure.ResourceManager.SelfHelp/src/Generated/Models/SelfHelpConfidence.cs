@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="SelfHelpConfidence"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SelfHelpConfidence?(string value) => value == null ? null : new SelfHelpConfidence(value);
+        public static implicit operator SelfHelpConfidence?(string value) => value == null ? (SelfHelpConfidence?)null : new SelfHelpConfidence(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

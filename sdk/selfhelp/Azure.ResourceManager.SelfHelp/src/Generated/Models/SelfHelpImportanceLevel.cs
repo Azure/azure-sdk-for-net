@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Converts a string to a <see cref="SelfHelpImportanceLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SelfHelpImportanceLevel?(string value) => value == null ? null : new SelfHelpImportanceLevel(value);
+        public static implicit operator SelfHelpImportanceLevel?(string value) => value == null ? (SelfHelpImportanceLevel?)null : new SelfHelpImportanceLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

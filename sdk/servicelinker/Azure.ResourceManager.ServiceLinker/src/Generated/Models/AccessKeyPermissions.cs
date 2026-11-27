@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="AccessKeyPermissions"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessKeyPermissions?(string value) => value == null ? null : new AccessKeyPermissions(value);
+        public static implicit operator AccessKeyPermissions?(string value) => value == null ? (AccessKeyPermissions?)null : new AccessKeyPermissions(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

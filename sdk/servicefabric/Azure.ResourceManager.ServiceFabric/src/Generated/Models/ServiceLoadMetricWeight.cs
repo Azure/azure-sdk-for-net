@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ServiceLoadMetricWeight"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceLoadMetricWeight?(string value) => value == null ? null : new ServiceLoadMetricWeight(value);
+        public static implicit operator ServiceLoadMetricWeight?(string value) => value == null ? (ServiceLoadMetricWeight?)null : new ServiceLoadMetricWeight(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ClusterCertificateStoreName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterCertificateStoreName?(string value) => value == null ? null : new ClusterCertificateStoreName(value);
+        public static implicit operator ClusterCertificateStoreName?(string value) => value == null ? (ClusterCertificateStoreName?)null : new ClusterCertificateStoreName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

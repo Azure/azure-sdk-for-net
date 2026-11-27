@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Converts a string to a <see cref="ServiceBusIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusIPAddressType?(string value) => value == null ? null : new ServiceBusIPAddressType(value);
+        public static implicit operator ServiceBusIPAddressType?(string value) => value == null ? (ServiceBusIPAddressType?)null : new ServiceBusIPAddressType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

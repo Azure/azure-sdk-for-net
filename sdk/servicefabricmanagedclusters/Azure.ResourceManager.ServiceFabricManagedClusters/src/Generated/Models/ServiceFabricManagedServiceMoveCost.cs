@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ServiceFabricManagedServiceMoveCost"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceFabricManagedServiceMoveCost?(string value) => value == null ? null : new ServiceFabricManagedServiceMoveCost(value);
+        public static implicit operator ServiceFabricManagedServiceMoveCost?(string value) => value == null ? (ServiceFabricManagedServiceMoveCost?)null : new ServiceFabricManagedServiceMoveCost(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

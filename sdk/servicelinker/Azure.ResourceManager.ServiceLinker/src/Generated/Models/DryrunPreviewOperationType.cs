@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="DryrunPreviewOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DryrunPreviewOperationType?(string value) => value == null ? null : new DryrunPreviewOperationType(value);
+        public static implicit operator DryrunPreviewOperationType?(string value) => value == null ? (DryrunPreviewOperationType?)null : new DryrunPreviewOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

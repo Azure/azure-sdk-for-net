@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Converts a string to a <see cref="ClusterUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterUpgradeMode?(string value) => value == null ? null : new ClusterUpgradeMode(value);
+        public static implicit operator ClusterUpgradeMode?(string value) => value == null ? (ClusterUpgradeMode?)null : new ClusterUpgradeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

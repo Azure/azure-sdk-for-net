@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Converts a string to a <see cref="TargetServiceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TargetServiceType?(string value) => value == null ? null : new TargetServiceType(value);
+        public static implicit operator TargetServiceType?(string value) => value == null ? (TargetServiceType?)null : new TargetServiceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

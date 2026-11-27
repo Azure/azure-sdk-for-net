@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedClusterLoadBalancingRuleTransportProtocol?(string value) => value == null ? null : new ManagedClusterLoadBalancingRuleTransportProtocol(value);
+        public static implicit operator ManagedClusterLoadBalancingRuleTransportProtocol?(string value) => value == null ? (ManagedClusterLoadBalancingRuleTransportProtocol?)null : new ManagedClusterLoadBalancingRuleTransportProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

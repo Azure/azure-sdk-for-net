@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Converts a string to a <see cref="FaultKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FaultKind?(string value) => value == null ? null : new FaultKind(value);
+        public static implicit operator FaultKind?(string value) => value == null ? (FaultKind?)null : new FaultKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
