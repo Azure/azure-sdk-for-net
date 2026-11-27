@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <returns> Returns a <see cref="StorageCacheRebalanceJobResource"/> object. </returns>
         public virtual StorageCacheRebalanceJobResource GetStorageCacheRebalanceJobResource(ResourceIdentifier id)
         {
-            StorageCacheRebalanceJobResource.ValidateResourceId(id);
             return new StorageCacheRebalanceJobResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <returns> Returns a <see cref="StorageCacheResource"/> object. </returns>
         public virtual StorageCacheResource GetStorageCacheResource(ResourceIdentifier id)
         {
-            StorageCacheResource.ValidateResourceId(id);
             return new StorageCacheResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <returns> Returns a <see cref="StorageTargetResource"/> object. </returns>
         public virtual StorageTargetResource GetStorageTargetResource(ResourceIdentifier id)
         {
-            StorageTargetResource.ValidateResourceId(id);
             return new StorageTargetResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <returns> Returns a <see cref="AmlFileSystemResource"/> object. </returns>
         public virtual AmlFileSystemResource GetAmlFileSystemResource(ResourceIdentifier id)
         {
-            AmlFileSystemResource.ValidateResourceId(id);
             return new AmlFileSystemResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <returns> Returns a <see cref="AutoExportJobResource"/> object. </returns>
         public virtual AutoExportJobResource GetAutoExportJobResource(ResourceIdentifier id)
         {
-            AutoExportJobResource.ValidateResourceId(id);
             return new AutoExportJobResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <returns> Returns a <see cref="StorageCacheImportJobResource"/> object. </returns>
         public virtual StorageCacheImportJobResource GetStorageCacheImportJobResource(ResourceIdentifier id)
         {
-            StorageCacheImportJobResource.ValidateResourceId(id);
             return new StorageCacheImportJobResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <returns> Returns a <see cref="AutoImportJobResource"/> object. </returns>
         public virtual AutoImportJobResource GetAutoImportJobResource(ResourceIdentifier id)
         {
-            AutoImportJobResource.ValidateResourceId(id);
             return new AutoImportJobResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <returns> Returns a <see cref="AmlFileSystemExpansionJobResource"/> object. </returns>
         public virtual AmlFileSystemExpansionJobResource GetAmlFileSystemExpansionJobResource(ResourceIdentifier id)
         {
-            AmlFileSystemExpansionJobResource.ValidateResourceId(id);
             return new AmlFileSystemExpansionJobResource(Client, id);
         }
     }

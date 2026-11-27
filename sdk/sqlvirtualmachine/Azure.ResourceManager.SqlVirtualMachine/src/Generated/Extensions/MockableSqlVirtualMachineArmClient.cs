@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <returns> Returns a <see cref="AvailabilityGroupListenerResource"/> object. </returns>
         public virtual AvailabilityGroupListenerResource GetAvailabilityGroupListenerResource(ResourceIdentifier id)
         {
-            AvailabilityGroupListenerResource.ValidateResourceId(id);
             return new AvailabilityGroupListenerResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <returns> Returns a <see cref="SqlVmResource"/> object. </returns>
         public virtual SqlVmResource GetSqlVmResource(ResourceIdentifier id)
         {
-            SqlVmResource.ValidateResourceId(id);
             return new SqlVmResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <returns> Returns a <see cref="SqlVmGroupResource"/> object. </returns>
         public virtual SqlVmGroupResource GetSqlVmGroupResource(ResourceIdentifier id)
         {
-            SqlVmGroupResource.ValidateResourceId(id);
             return new SqlVmGroupResource(Client, id);
         }
     }

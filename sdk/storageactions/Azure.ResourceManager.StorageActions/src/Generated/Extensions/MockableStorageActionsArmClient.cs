@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.StorageActions.Mocking
         /// <returns> Returns a <see cref="StorageTaskResource"/> object. </returns>
         public virtual StorageTaskResource GetStorageTaskResource(ResourceIdentifier id)
         {
-            StorageTaskResource.ValidateResourceId(id);
             return new StorageTaskResource(Client, id);
         }
     }

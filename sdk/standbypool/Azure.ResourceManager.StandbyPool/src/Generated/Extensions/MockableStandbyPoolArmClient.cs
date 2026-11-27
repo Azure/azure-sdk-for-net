@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// <returns> Returns a <see cref="StandbyVirtualMachinePoolResource"/> object. </returns>
         public virtual StandbyVirtualMachinePoolResource GetStandbyVirtualMachinePoolResource(ResourceIdentifier id)
         {
-            StandbyVirtualMachinePoolResource.ValidateResourceId(id);
             return new StandbyVirtualMachinePoolResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// <returns> Returns a <see cref="StandbyVirtualMachineResource"/> object. </returns>
         public virtual StandbyVirtualMachineResource GetStandbyVirtualMachineResource(ResourceIdentifier id)
         {
-            StandbyVirtualMachineResource.ValidateResourceId(id);
             return new StandbyVirtualMachineResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// <returns> Returns a <see cref="StandbyVirtualMachinePoolRuntimeViewResource"/> object. </returns>
         public virtual StandbyVirtualMachinePoolRuntimeViewResource GetStandbyVirtualMachinePoolRuntimeViewResource(ResourceIdentifier id)
         {
-            StandbyVirtualMachinePoolRuntimeViewResource.ValidateResourceId(id);
             return new StandbyVirtualMachinePoolRuntimeViewResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// <returns> Returns a <see cref="StandbyContainerGroupPoolResource"/> object. </returns>
         public virtual StandbyContainerGroupPoolResource GetStandbyContainerGroupPoolResource(ResourceIdentifier id)
         {
-            StandbyContainerGroupPoolResource.ValidateResourceId(id);
             return new StandbyContainerGroupPoolResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// <returns> Returns a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> object. </returns>
         public virtual StandbyContainerGroupPoolRuntimeViewResource GetStandbyContainerGroupPoolRuntimeViewResource(ResourceIdentifier id)
         {
-            StandbyContainerGroupPoolRuntimeViewResource.ValidateResourceId(id);
             return new StandbyContainerGroupPoolRuntimeViewResource(Client, id);
         }
     }

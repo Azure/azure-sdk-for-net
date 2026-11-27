@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <returns> Returns a <see cref="SovereignViewResource"/> object. </returns>
         public virtual SovereignViewResource GetSovereignViewResource(ResourceIdentifier id)
         {
-            SovereignViewResource.ValidateResourceId(id);
             return new SovereignViewResource(Client, id);
         }
     }

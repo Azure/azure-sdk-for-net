@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
         /// <returns> Returns a <see cref="SreAgentResource"/> object. </returns>
         public virtual SreAgentResource GetSreAgentResource(ResourceIdentifier id)
         {
-            SreAgentResource.ValidateResourceId(id);
             return new SreAgentResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
         /// <returns> Returns a <see cref="AgentConnectorResource"/> object. </returns>
         public virtual AgentConnectorResource GetAgentConnectorResource(ResourceIdentifier id)
         {
-            AgentConnectorResource.ValidateResourceId(id);
             return new AgentConnectorResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
         /// <returns> Returns a <see cref="AgentSpaceResource"/> object. </returns>
         public virtual AgentSpaceResource GetAgentSpaceResource(ResourceIdentifier id)
         {
-            AgentSpaceResource.ValidateResourceId(id);
             return new AgentSpaceResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
         /// <returns> Returns a <see cref="AgentSpaceConnectorResource"/> object. </returns>
         public virtual AgentSpaceConnectorResource GetAgentSpaceConnectorResource(ResourceIdentifier id)
         {
-            AgentSpaceConnectorResource.ValidateResourceId(id);
             return new AgentSpaceConnectorResource(Client, id);
         }
     }

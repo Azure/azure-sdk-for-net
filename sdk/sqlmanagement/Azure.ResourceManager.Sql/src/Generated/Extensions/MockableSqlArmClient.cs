@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="BackupShortTermRetentionPolicyResource"/> object. </returns>
         public virtual BackupShortTermRetentionPolicyResource GetBackupShortTermRetentionPolicyResource(ResourceIdentifier id)
         {
-            BackupShortTermRetentionPolicyResource.ValidateResourceId(id);
             return new BackupShortTermRetentionPolicyResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseColumnResource"/> object. </returns>
         public virtual SqlDatabaseColumnResource GetSqlDatabaseColumnResource(ResourceIdentifier id)
         {
-            SqlDatabaseColumnResource.ValidateResourceId(id);
             return new SqlDatabaseColumnResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerDatabaseRestorePointResource"/> object. </returns>
         public virtual SqlServerDatabaseRestorePointResource GetSqlServerDatabaseRestorePointResource(ResourceIdentifier id)
         {
-            SqlServerDatabaseRestorePointResource.ValidateResourceId(id);
             return new SqlServerDatabaseRestorePointResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseSensitivityLabelResource"/> object. </returns>
         public virtual SqlDatabaseSensitivityLabelResource GetSqlDatabaseSensitivityLabelResource(ResourceIdentifier id)
         {
-            SqlDatabaseSensitivityLabelResource.ValidateResourceId(id);
             return new SqlDatabaseSensitivityLabelResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseResource"/> object. </returns>
         public virtual SqlDatabaseResource GetSqlDatabaseResource(ResourceIdentifier id)
         {
-            SqlDatabaseResource.ValidateResourceId(id);
             return new SqlDatabaseResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlFirewallRuleResource"/> object. </returns>
         public virtual SqlFirewallRuleResource GetSqlFirewallRuleResource(ResourceIdentifier id)
         {
-            SqlFirewallRuleResource.ValidateResourceId(id);
             return new SqlFirewallRuleResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource"/> object. </returns>
         public virtual SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(ResourceIdentifier id)
         {
-            SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
             return new SqlServerDatabaseReplicationLinkResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerResource"/> object. </returns>
         public virtual SqlServerResource GetSqlServerResource(ResourceIdentifier id)
         {
-            SqlServerResource.ValidateResourceId(id);
             return new SqlServerResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerBlobAuditingPolicyResource"/> object. </returns>
         public virtual SqlServerBlobAuditingPolicyResource GetSqlServerBlobAuditingPolicyResource(ResourceIdentifier id)
         {
-            SqlServerBlobAuditingPolicyResource.ValidateResourceId(id);
             return new SqlServerBlobAuditingPolicyResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseBlobAuditingPolicyResource"/> object. </returns>
         public virtual SqlDatabaseBlobAuditingPolicyResource GetSqlDatabaseBlobAuditingPolicyResource(ResourceIdentifier id)
         {
-            SqlDatabaseBlobAuditingPolicyResource.ValidateResourceId(id);
             return new SqlDatabaseBlobAuditingPolicyResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/> object. </returns>
         public virtual ExtendedDatabaseBlobAuditingPolicyResource GetExtendedDatabaseBlobAuditingPolicyResource(ResourceIdentifier id)
         {
-            ExtendedDatabaseBlobAuditingPolicyResource.ValidateResourceId(id);
             return new ExtendedDatabaseBlobAuditingPolicyResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicyResource"/> object. </returns>
         public virtual ExtendedServerBlobAuditingPolicyResource GetExtendedServerBlobAuditingPolicyResource(ResourceIdentifier id)
         {
-            ExtendedServerBlobAuditingPolicyResource.ValidateResourceId(id);
             return new ExtendedServerBlobAuditingPolicyResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerAdvisorResource"/> object. </returns>
         public virtual SqlServerAdvisorResource GetSqlServerAdvisorResource(ResourceIdentifier id)
         {
-            SqlServerAdvisorResource.ValidateResourceId(id);
             return new SqlServerAdvisorResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseColumnResource"/> object. </returns>
         public virtual ManagedDatabaseColumnResource GetManagedDatabaseColumnResource(ResourceIdentifier id)
         {
-            ManagedDatabaseColumnResource.ValidateResourceId(id);
             return new ManagedDatabaseColumnResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseTableResource"/> object. </returns>
         public virtual SqlDatabaseTableResource GetSqlDatabaseTableResource(ResourceIdentifier id)
         {
-            SqlDatabaseTableResource.ValidateResourceId(id);
             return new SqlDatabaseTableResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseTableResource"/> object. </returns>
         public virtual ManagedDatabaseTableResource GetManagedDatabaseTableResource(ResourceIdentifier id)
         {
-            ManagedDatabaseTableResource.ValidateResourceId(id);
             return new ManagedDatabaseTableResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseSchemaResource"/> object. </returns>
         public virtual SqlDatabaseSchemaResource GetSqlDatabaseSchemaResource(ResourceIdentifier id)
         {
-            SqlDatabaseSchemaResource.ValidateResourceId(id);
             return new SqlDatabaseSchemaResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseSchemaResource"/> object. </returns>
         public virtual ManagedDatabaseSchemaResource GetManagedDatabaseSchemaResource(ResourceIdentifier id)
         {
-            ManagedDatabaseSchemaResource.ValidateResourceId(id);
             return new ManagedDatabaseSchemaResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseSecurityAlertPolicyResource"/> object. </returns>
         public virtual SqlDatabaseSecurityAlertPolicyResource GetSqlDatabaseSecurityAlertPolicyResource(ResourceIdentifier id)
         {
-            SqlDatabaseSecurityAlertPolicyResource.ValidateResourceId(id);
             return new SqlDatabaseSecurityAlertPolicyResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource"/> object. </returns>
         public virtual SqlServerSqlVulnerabilityAssessmentBaselineResource GetSqlServerSqlVulnerabilityAssessmentBaselineResource(ResourceIdentifier id)
         {
-            SqlServerSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
             return new SqlServerSqlVulnerabilityAssessmentBaselineResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentResource"/> object. </returns>
         public virtual SqlServerSqlVulnerabilityAssessmentResource GetSqlServerSqlVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
-            SqlServerSqlVulnerabilityAssessmentResource.ValidateResourceId(id);
             return new SqlServerSqlVulnerabilityAssessmentResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
         public virtual SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(ResourceIdentifier id)
         {
-            SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
             return new SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
         public virtual SqlServerSqlVulnerabilityAssessmentBaselineRuleResource GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(ResourceIdentifier id)
         {
-            SqlServerSqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
             return new SqlServerSqlVulnerabilityAssessmentBaselineRuleResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource"/> object. </returns>
         public virtual SqlDatabaseSqlVulnerabilityAssessmentScanResultResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(ResourceIdentifier id)
         {
-            SqlDatabaseSqlVulnerabilityAssessmentScanResultResource.ValidateResourceId(id);
             return new SqlDatabaseSqlVulnerabilityAssessmentScanResultResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource"/> object. </returns>
         public virtual SqlServerSqlVulnerabilityAssessmentScanResultResource GetSqlServerSqlVulnerabilityAssessmentScanResultResource(ResourceIdentifier id)
         {
-            SqlServerSqlVulnerabilityAssessmentScanResultResource.ValidateResourceId(id);
             return new SqlServerSqlVulnerabilityAssessmentScanResultResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource"/> object. </returns>
         public virtual SqlServerSqlVulnerabilityAssessmentScanResource GetSqlServerSqlVulnerabilityAssessmentScanResource(ResourceIdentifier id)
         {
-            SqlServerSqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
             return new SqlServerSqlVulnerabilityAssessmentScanResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
         public virtual SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier id)
         {
-            SqlDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
             return new SqlDatabaseVulnerabilityAssessmentRuleBaselineResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
         public virtual ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier id)
         {
-            ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
             return new ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentResource"/> object. </returns>
         public virtual SqlDatabaseVulnerabilityAssessmentResource GetSqlDatabaseVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
-            SqlDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
             return new SqlDatabaseVulnerabilityAssessmentResource(Client, id);
         }
 
@@ -292,7 +263,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentResource"/> object. </returns>
         public virtual ManagedDatabaseVulnerabilityAssessmentResource GetManagedDatabaseVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
-            ManagedDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
             return new ManagedDatabaseVulnerabilityAssessmentResource(Client, id);
         }
 
@@ -301,7 +271,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentScanResource"/> object. </returns>
         public virtual ManagedDatabaseVulnerabilityAssessmentScanResource GetManagedDatabaseVulnerabilityAssessmentScanResource(ResourceIdentifier id)
         {
-            ManagedDatabaseVulnerabilityAssessmentScanResource.ValidateResourceId(id);
             return new ManagedDatabaseVulnerabilityAssessmentScanResource(Client, id);
         }
 
@@ -310,7 +279,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="DataMaskingPolicyResource"/> object. </returns>
         public virtual DataMaskingPolicyResource GetDataMaskingPolicyResource(ResourceIdentifier id)
         {
-            DataMaskingPolicyResource.ValidateResourceId(id);
             return new DataMaskingPolicyResource(Client, id);
         }
 
@@ -319,7 +287,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="DeletedServerResource"/> object. </returns>
         public virtual DeletedServerResource GetDeletedServerResource(ResourceIdentifier id)
         {
-            DeletedServerResource.ValidateResourceId(id);
             return new DeletedServerResource(Client, id);
         }
 
@@ -328,7 +295,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDistributedAvailabilityGroupResource"/> object. </returns>
         public virtual SqlDistributedAvailabilityGroupResource GetSqlDistributedAvailabilityGroupResource(ResourceIdentifier id)
         {
-            SqlDistributedAvailabilityGroupResource.ValidateResourceId(id);
             return new SqlDistributedAvailabilityGroupResource(Client, id);
         }
 
@@ -337,7 +303,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseResource"/> object. </returns>
         public virtual ManagedDatabaseResource GetManagedDatabaseResource(ResourceIdentifier id)
         {
-            ManagedDatabaseResource.ValidateResourceId(id);
             return new ManagedDatabaseResource(Client, id);
         }
 
@@ -346,7 +311,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerTrustGroupResource"/> object. </returns>
         public virtual SqlServerTrustGroupResource GetSqlServerTrustGroupResource(ResourceIdentifier id)
         {
-            SqlServerTrustGroupResource.ValidateResourceId(id);
             return new SqlServerTrustGroupResource(Client, id);
         }
 
@@ -355,7 +319,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceResource"/> object. </returns>
         public virtual ManagedInstanceResource GetManagedInstanceResource(ResourceIdentifier id)
         {
-            ManagedInstanceResource.ValidateResourceId(id);
             return new ManagedInstanceResource(Client, id);
         }
 
@@ -364,7 +327,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ElasticPoolResource"/> object. </returns>
         public virtual ElasticPoolResource GetElasticPoolResource(ResourceIdentifier id)
         {
-            ElasticPoolResource.ValidateResourceId(id);
             return new ElasticPoolResource(Client, id);
         }
 
@@ -373,7 +335,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="EncryptionProtectorResource"/> object. </returns>
         public virtual EncryptionProtectorResource GetEncryptionProtectorResource(ResourceIdentifier id)
         {
-            EncryptionProtectorResource.ValidateResourceId(id);
             return new EncryptionProtectorResource(Client, id);
         }
 
@@ -382,7 +343,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="EndpointCertificateResource"/> object. </returns>
         public virtual EndpointCertificateResource GetEndpointCertificateResource(ResourceIdentifier id)
         {
-            EndpointCertificateResource.ValidateResourceId(id);
             return new EndpointCertificateResource(Client, id);
         }
 
@@ -391,7 +351,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="FailoverGroupResource"/> object. </returns>
         public virtual FailoverGroupResource GetFailoverGroupResource(ResourceIdentifier id)
         {
-            FailoverGroupResource.ValidateResourceId(id);
             return new FailoverGroupResource(Client, id);
         }
 
@@ -400,7 +359,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="GeoBackupPolicyResource"/> object. </returns>
         public virtual GeoBackupPolicyResource GetGeoBackupPolicyResource(ResourceIdentifier id)
         {
-            GeoBackupPolicyResource.ValidateResourceId(id);
             return new GeoBackupPolicyResource(Client, id);
         }
 
@@ -409,7 +367,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="InstanceFailoverGroupResource"/> object. </returns>
         public virtual InstanceFailoverGroupResource GetInstanceFailoverGroupResource(ResourceIdentifier id)
         {
-            InstanceFailoverGroupResource.ValidateResourceId(id);
             return new InstanceFailoverGroupResource(Client, id);
         }
 
@@ -418,7 +375,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlInstancePoolOperationResource"/> object. </returns>
         public virtual SqlInstancePoolOperationResource GetSqlInstancePoolOperationResource(ResourceIdentifier id)
         {
-            SqlInstancePoolOperationResource.ValidateResourceId(id);
             return new SqlInstancePoolOperationResource(Client, id);
         }
 
@@ -427,7 +383,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="InstancePoolResource"/> object. </returns>
         public virtual InstancePoolResource GetInstancePoolResource(ResourceIdentifier id)
         {
-            InstancePoolResource.ValidateResourceId(id);
             return new InstancePoolResource(Client, id);
         }
 
@@ -436,7 +391,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="IPv6FirewallRuleResource"/> object. </returns>
         public virtual IPv6FirewallRuleResource GetIPv6FirewallRuleResource(ResourceIdentifier id)
         {
-            IPv6FirewallRuleResource.ValidateResourceId(id);
             return new IPv6FirewallRuleResource(Client, id);
         }
 
@@ -445,7 +399,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobExecutionResource"/> object. </returns>
         public virtual SqlServerJobExecutionResource GetSqlServerJobExecutionResource(ResourceIdentifier id)
         {
-            SqlServerJobExecutionResource.ValidateResourceId(id);
             return new SqlServerJobExecutionResource(Client, id);
         }
 
@@ -454,7 +407,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobAgentResource"/> object. </returns>
         public virtual SqlServerJobAgentResource GetSqlServerJobAgentResource(ResourceIdentifier id)
         {
-            SqlServerJobAgentResource.ValidateResourceId(id);
             return new SqlServerJobAgentResource(Client, id);
         }
 
@@ -463,7 +415,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobCredentialResource"/> object. </returns>
         public virtual SqlServerJobCredentialResource GetSqlServerJobCredentialResource(ResourceIdentifier id)
         {
-            SqlServerJobCredentialResource.ValidateResourceId(id);
             return new SqlServerJobCredentialResource(Client, id);
         }
 
@@ -472,7 +423,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobExecutionStepResource"/> object. </returns>
         public virtual SqlServerJobExecutionStepResource GetSqlServerJobExecutionStepResource(ResourceIdentifier id)
         {
-            SqlServerJobExecutionStepResource.ValidateResourceId(id);
             return new SqlServerJobExecutionStepResource(Client, id);
         }
 
@@ -481,7 +431,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobExecutionStepTargetResource"/> object. </returns>
         public virtual SqlServerJobExecutionStepTargetResource GetSqlServerJobExecutionStepTargetResource(ResourceIdentifier id)
         {
-            SqlServerJobExecutionStepTargetResource.ValidateResourceId(id);
             return new SqlServerJobExecutionStepTargetResource(Client, id);
         }
 
@@ -490,7 +439,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobResource"/> object. </returns>
         public virtual SqlServerJobResource GetSqlServerJobResource(ResourceIdentifier id)
         {
-            SqlServerJobResource.ValidateResourceId(id);
             return new SqlServerJobResource(Client, id);
         }
 
@@ -499,7 +447,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobStepResource"/> object. </returns>
         public virtual SqlServerJobStepResource GetSqlServerJobStepResource(ResourceIdentifier id)
         {
-            SqlServerJobStepResource.ValidateResourceId(id);
             return new SqlServerJobStepResource(Client, id);
         }
 
@@ -508,7 +455,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobVersionStepResource"/> object. </returns>
         public virtual SqlServerJobVersionStepResource GetSqlServerJobVersionStepResource(ResourceIdentifier id)
         {
-            SqlServerJobVersionStepResource.ValidateResourceId(id);
             return new SqlServerJobVersionStepResource(Client, id);
         }
 
@@ -517,7 +463,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobTargetGroupResource"/> object. </returns>
         public virtual SqlServerJobTargetGroupResource GetSqlServerJobTargetGroupResource(ResourceIdentifier id)
         {
-            SqlServerJobTargetGroupResource.ValidateResourceId(id);
             return new SqlServerJobTargetGroupResource(Client, id);
         }
 
@@ -526,7 +471,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerJobVersionResource"/> object. </returns>
         public virtual SqlServerJobVersionResource GetSqlServerJobVersionResource(ResourceIdentifier id)
         {
-            SqlServerJobVersionResource.ValidateResourceId(id);
             return new SqlServerJobVersionResource(Client, id);
         }
 
@@ -535,7 +479,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupResource"/> object. </returns>
         public virtual SubscriptionLongTermRetentionBackupResource GetSubscriptionLongTermRetentionBackupResource(ResourceIdentifier id)
         {
-            SubscriptionLongTermRetentionBackupResource.ValidateResourceId(id);
             return new SubscriptionLongTermRetentionBackupResource(Client, id);
         }
 
@@ -544,7 +487,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupResource"/> object. </returns>
         public virtual ResourceGroupLongTermRetentionBackupResource GetResourceGroupLongTermRetentionBackupResource(ResourceIdentifier id)
         {
-            ResourceGroupLongTermRetentionBackupResource.ValidateResourceId(id);
             return new ResourceGroupLongTermRetentionBackupResource(Client, id);
         }
 
@@ -553,7 +495,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/> object. </returns>
         public virtual ResourceGroupLongTermRetentionManagedInstanceBackupResource GetResourceGroupLongTermRetentionManagedInstanceBackupResource(ResourceIdentifier id)
         {
-            ResourceGroupLongTermRetentionManagedInstanceBackupResource.ValidateResourceId(id);
             return new ResourceGroupLongTermRetentionManagedInstanceBackupResource(Client, id);
         }
 
@@ -562,7 +503,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> object. </returns>
         public virtual SubscriptionLongTermRetentionManagedInstanceBackupResource GetSubscriptionLongTermRetentionManagedInstanceBackupResource(ResourceIdentifier id)
         {
-            SubscriptionLongTermRetentionManagedInstanceBackupResource.ValidateResourceId(id);
             return new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, id);
         }
 
@@ -571,7 +511,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="LongTermRetentionPolicyResource"/> object. </returns>
         public virtual LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(ResourceIdentifier id)
         {
-            LongTermRetentionPolicyResource.ValidateResourceId(id);
             return new LongTermRetentionPolicyResource(Client, id);
         }
 
@@ -580,7 +519,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedBackupShortTermRetentionPolicyResource"/> object. </returns>
         public virtual ManagedBackupShortTermRetentionPolicyResource GetManagedBackupShortTermRetentionPolicyResource(ResourceIdentifier id)
         {
-            ManagedBackupShortTermRetentionPolicyResource.ValidateResourceId(id);
             return new ManagedBackupShortTermRetentionPolicyResource(Client, id);
         }
 
@@ -589,7 +527,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource"/> object. </returns>
         public virtual ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(ResourceIdentifier id)
         {
-            ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource.ValidateResourceId(id);
             return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(Client, id);
         }
 
@@ -598,7 +535,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseSecurityAlertPolicyResource"/> object. </returns>
         public virtual ManagedDatabaseSecurityAlertPolicyResource GetManagedDatabaseSecurityAlertPolicyResource(ResourceIdentifier id)
         {
-            ManagedDatabaseSecurityAlertPolicyResource.ValidateResourceId(id);
             return new ManagedDatabaseSecurityAlertPolicyResource(Client, id);
         }
 
@@ -607,7 +543,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceAdministratorResource"/> object. </returns>
         public virtual ManagedInstanceAdministratorResource GetManagedInstanceAdministratorResource(ResourceIdentifier id)
         {
-            ManagedInstanceAdministratorResource.ValidateResourceId(id);
             return new ManagedInstanceAdministratorResource(Client, id);
         }
 
@@ -616,7 +551,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceAzureADOnlyAuthenticationResource"/> object. </returns>
         public virtual ManagedInstanceAzureADOnlyAuthenticationResource GetManagedInstanceAzureADOnlyAuthenticationResource(ResourceIdentifier id)
         {
-            ManagedInstanceAzureADOnlyAuthenticationResource.ValidateResourceId(id);
             return new ManagedInstanceAzureADOnlyAuthenticationResource(Client, id);
         }
 
@@ -625,7 +559,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceDtcResource"/> object. </returns>
         public virtual ManagedInstanceDtcResource GetManagedInstanceDtcResource(ResourceIdentifier id)
         {
-            ManagedInstanceDtcResource.ValidateResourceId(id);
             return new ManagedInstanceDtcResource(Client, id);
         }
 
@@ -634,7 +567,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceEncryptionProtectorResource"/> object. </returns>
         public virtual ManagedInstanceEncryptionProtectorResource GetManagedInstanceEncryptionProtectorResource(ResourceIdentifier id)
         {
-            ManagedInstanceEncryptionProtectorResource.ValidateResourceId(id);
             return new ManagedInstanceEncryptionProtectorResource(Client, id);
         }
 
@@ -643,7 +575,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceKeyResource"/> object. </returns>
         public virtual ManagedInstanceKeyResource GetManagedInstanceKeyResource(ResourceIdentifier id)
         {
-            ManagedInstanceKeyResource.ValidateResourceId(id);
             return new ManagedInstanceKeyResource(Client, id);
         }
 
@@ -652,7 +583,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceLongTermRetentionPolicyResource"/> object. </returns>
         public virtual ManagedInstanceLongTermRetentionPolicyResource GetManagedInstanceLongTermRetentionPolicyResource(ResourceIdentifier id)
         {
-            ManagedInstanceLongTermRetentionPolicyResource.ValidateResourceId(id);
             return new ManagedInstanceLongTermRetentionPolicyResource(Client, id);
         }
 
@@ -661,7 +591,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceOperationResource"/> object. </returns>
         public virtual ManagedInstanceOperationResource GetManagedInstanceOperationResource(ResourceIdentifier id)
         {
-            ManagedInstanceOperationResource.ValidateResourceId(id);
             return new ManagedInstanceOperationResource(Client, id);
         }
 
@@ -670,7 +599,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstancePrivateEndpointConnectionResource"/> object. </returns>
         public virtual ManagedInstancePrivateEndpointConnectionResource GetManagedInstancePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ManagedInstancePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ManagedInstancePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -679,7 +607,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceVulnerabilityAssessmentResource"/> object. </returns>
         public virtual ManagedInstanceVulnerabilityAssessmentResource GetManagedInstanceVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
-            ManagedInstanceVulnerabilityAssessmentResource.ValidateResourceId(id);
             return new ManagedInstanceVulnerabilityAssessmentResource(Client, id);
         }
 
@@ -688,7 +615,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedServerDnsAliasResource"/> object. </returns>
         public virtual ManagedServerDnsAliasResource GetManagedServerDnsAliasResource(ResourceIdentifier id)
         {
-            ManagedServerDnsAliasResource.ValidateResourceId(id);
             return new ManagedServerDnsAliasResource(Client, id);
         }
 
@@ -697,7 +623,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedServerSecurityAlertPolicyResource"/> object. </returns>
         public virtual ManagedServerSecurityAlertPolicyResource GetManagedServerSecurityAlertPolicyResource(ResourceIdentifier id)
         {
-            ManagedServerSecurityAlertPolicyResource.ValidateResourceId(id);
             return new ManagedServerSecurityAlertPolicyResource(Client, id);
         }
 
@@ -706,7 +631,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual SqlNetworkSecurityPerimeterConfigurationResource GetSqlNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            SqlNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new SqlNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -715,7 +639,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="OutboundFirewallRuleResource"/> object. </returns>
         public virtual OutboundFirewallRuleResource GetOutboundFirewallRuleResource(ResourceIdentifier id)
         {
-            OutboundFirewallRuleResource.ValidateResourceId(id);
             return new OutboundFirewallRuleResource(Client, id);
         }
 
@@ -724,7 +647,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlPrivateEndpointConnectionResource"/> object. </returns>
         public virtual SqlPrivateEndpointConnectionResource GetSqlPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            SqlPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new SqlPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -733,7 +655,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlPrivateLinkResource"/> object. </returns>
         public virtual SqlPrivateLinkResource GetSqlPrivateLinkResource(ResourceIdentifier id)
         {
-            SqlPrivateLinkResource.ValidateResourceId(id);
             return new SqlPrivateLinkResource(Client, id);
         }
 
@@ -742,7 +663,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="RecoverableDatabaseResource"/> object. </returns>
         public virtual RecoverableDatabaseResource GetRecoverableDatabaseResource(ResourceIdentifier id)
         {
-            RecoverableDatabaseResource.ValidateResourceId(id);
             return new RecoverableDatabaseResource(Client, id);
         }
 
@@ -751,7 +671,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="RecoverableManagedDatabaseResource"/> object. </returns>
         public virtual RecoverableManagedDatabaseResource GetRecoverableManagedDatabaseResource(ResourceIdentifier id)
         {
-            RecoverableManagedDatabaseResource.ValidateResourceId(id);
             return new RecoverableManagedDatabaseResource(Client, id);
         }
 
@@ -760,7 +679,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="RestorableDroppedDatabaseResource"/> object. </returns>
         public virtual RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(ResourceIdentifier id)
         {
-            RestorableDroppedDatabaseResource.ValidateResourceId(id);
             return new RestorableDroppedDatabaseResource(Client, id);
         }
 
@@ -769,7 +687,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="RestorableDroppedManagedDatabaseResource"/> object. </returns>
         public virtual RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(ResourceIdentifier id)
         {
-            RestorableDroppedManagedDatabaseResource.ValidateResourceId(id);
             return new RestorableDroppedManagedDatabaseResource(Client, id);
         }
 
@@ -778,7 +695,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerAzureADAdministratorResource"/> object. </returns>
         public virtual SqlServerAzureADAdministratorResource GetSqlServerAzureADAdministratorResource(ResourceIdentifier id)
         {
-            SqlServerAzureADAdministratorResource.ValidateResourceId(id);
             return new SqlServerAzureADAdministratorResource(Client, id);
         }
 
@@ -787,7 +703,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerAzureADOnlyAuthenticationResource"/> object. </returns>
         public virtual SqlServerAzureADOnlyAuthenticationResource GetSqlServerAzureADOnlyAuthenticationResource(ResourceIdentifier id)
         {
-            SqlServerAzureADOnlyAuthenticationResource.ValidateResourceId(id);
             return new SqlServerAzureADOnlyAuthenticationResource(Client, id);
         }
 
@@ -796,7 +711,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceServerConfigurationOptionResource"/> object. </returns>
         public virtual ManagedInstanceServerConfigurationOptionResource GetManagedInstanceServerConfigurationOptionResource(ResourceIdentifier id)
         {
-            ManagedInstanceServerConfigurationOptionResource.ValidateResourceId(id);
             return new ManagedInstanceServerConfigurationOptionResource(Client, id);
         }
 
@@ -805,7 +719,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerConnectionPolicyResource"/> object. </returns>
         public virtual SqlServerConnectionPolicyResource GetSqlServerConnectionPolicyResource(ResourceIdentifier id)
         {
-            SqlServerConnectionPolicyResource.ValidateResourceId(id);
             return new SqlServerConnectionPolicyResource(Client, id);
         }
 
@@ -814,7 +727,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerDevOpsAuditingSettingResource"/> object. </returns>
         public virtual SqlServerDevOpsAuditingSettingResource GetSqlServerDevOpsAuditingSettingResource(ResourceIdentifier id)
         {
-            SqlServerDevOpsAuditingSettingResource.ValidateResourceId(id);
             return new SqlServerDevOpsAuditingSettingResource(Client, id);
         }
 
@@ -823,7 +735,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerDnsAliasResource"/> object. </returns>
         public virtual SqlServerDnsAliasResource GetSqlServerDnsAliasResource(ResourceIdentifier id)
         {
-            SqlServerDnsAliasResource.ValidateResourceId(id);
             return new SqlServerDnsAliasResource(Client, id);
         }
 
@@ -832,7 +743,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerKeyResource"/> object. </returns>
         public virtual SqlServerKeyResource GetSqlServerKeyResource(ResourceIdentifier id)
         {
-            SqlServerKeyResource.ValidateResourceId(id);
             return new SqlServerKeyResource(Client, id);
         }
 
@@ -841,7 +751,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerSecurityAlertPolicyResource"/> object. </returns>
         public virtual SqlServerSecurityAlertPolicyResource GetSqlServerSecurityAlertPolicyResource(ResourceIdentifier id)
         {
-            SqlServerSecurityAlertPolicyResource.ValidateResourceId(id);
             return new SqlServerSecurityAlertPolicyResource(Client, id);
         }
 
@@ -850,7 +759,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceServerTrustCertificateResource"/> object. </returns>
         public virtual ManagedInstanceServerTrustCertificateResource GetManagedInstanceServerTrustCertificateResource(ResourceIdentifier id)
         {
-            ManagedInstanceServerTrustCertificateResource.ValidateResourceId(id);
             return new ManagedInstanceServerTrustCertificateResource(Client, id);
         }
 
@@ -859,7 +767,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerVulnerabilityAssessmentResource"/> object. </returns>
         public virtual SqlServerVulnerabilityAssessmentResource GetSqlServerVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
-            SqlServerVulnerabilityAssessmentResource.ValidateResourceId(id);
             return new SqlServerVulnerabilityAssessmentResource(Client, id);
         }
 
@@ -868,7 +775,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceStartStopScheduleResource"/> object. </returns>
         public virtual ManagedInstanceStartStopScheduleResource GetManagedInstanceStartStopScheduleResource(ResourceIdentifier id)
         {
-            ManagedInstanceStartStopScheduleResource.ValidateResourceId(id);
             return new ManagedInstanceStartStopScheduleResource(Client, id);
         }
 
@@ -877,7 +783,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SubscriptionUsageResource"/> object. </returns>
         public virtual SubscriptionUsageResource GetSubscriptionUsageResource(ResourceIdentifier id)
         {
-            SubscriptionUsageResource.ValidateResourceId(id);
             return new SubscriptionUsageResource(Client, id);
         }
 
@@ -886,7 +791,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SyncAgentResource"/> object. </returns>
         public virtual SyncAgentResource GetSyncAgentResource(ResourceIdentifier id)
         {
-            SyncAgentResource.ValidateResourceId(id);
             return new SyncAgentResource(Client, id);
         }
 
@@ -895,7 +799,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SyncGroupResource"/> object. </returns>
         public virtual SyncGroupResource GetSyncGroupResource(ResourceIdentifier id)
         {
-            SyncGroupResource.ValidateResourceId(id);
             return new SyncGroupResource(Client, id);
         }
 
@@ -904,7 +807,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SyncMemberResource"/> object. </returns>
         public virtual SyncMemberResource GetSyncMemberResource(ResourceIdentifier id)
         {
-            SyncMemberResource.ValidateResourceId(id);
             return new SyncMemberResource(Client, id);
         }
 
@@ -913,7 +815,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlTimeZoneResource"/> object. </returns>
         public virtual SqlTimeZoneResource GetSqlTimeZoneResource(ResourceIdentifier id)
         {
-            SqlTimeZoneResource.ValidateResourceId(id);
             return new SqlTimeZoneResource(Client, id);
         }
 
@@ -922,7 +823,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="VirtualClusterResource"/> object. </returns>
         public virtual VirtualClusterResource GetVirtualClusterResource(ResourceIdentifier id)
         {
-            VirtualClusterResource.ValidateResourceId(id);
             return new VirtualClusterResource(Client, id);
         }
 
@@ -931,7 +831,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerVirtualNetworkRuleResource"/> object. </returns>
         public virtual SqlServerVirtualNetworkRuleResource GetSqlServerVirtualNetworkRuleResource(ResourceIdentifier id)
         {
-            SqlServerVirtualNetworkRuleResource.ValidateResourceId(id);
             return new SqlServerVirtualNetworkRuleResource(Client, id);
         }
 
@@ -940,7 +839,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="WorkloadClassifierResource"/> object. </returns>
         public virtual WorkloadClassifierResource GetWorkloadClassifierResource(ResourceIdentifier id)
         {
-            WorkloadClassifierResource.ValidateResourceId(id);
             return new WorkloadClassifierResource(Client, id);
         }
 
@@ -949,7 +847,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="WorkloadGroupResource"/> object. </returns>
         public virtual WorkloadGroupResource GetWorkloadGroupResource(ResourceIdentifier id)
         {
-            WorkloadGroupResource.ValidateResourceId(id);
             return new WorkloadGroupResource(Client, id);
         }
 
@@ -958,7 +855,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseSensitivityLabelResource"/> object. </returns>
         public virtual ManagedDatabaseSensitivityLabelResource GetManagedDatabaseSensitivityLabelResource(ResourceIdentifier id)
         {
-            ManagedDatabaseSensitivityLabelResource.ValidateResourceId(id);
             return new ManagedDatabaseSensitivityLabelResource(Client, id);
         }
 
@@ -967,7 +863,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="DatabaseAdvancedThreatProtectionResource"/> object. </returns>
         public virtual DatabaseAdvancedThreatProtectionResource GetDatabaseAdvancedThreatProtectionResource(ResourceIdentifier id)
         {
-            DatabaseAdvancedThreatProtectionResource.ValidateResourceId(id);
             return new DatabaseAdvancedThreatProtectionResource(Client, id);
         }
 
@@ -976,7 +871,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseAdvisorResource"/> object. </returns>
         public virtual SqlDatabaseAdvisorResource GetSqlDatabaseAdvisorResource(ResourceIdentifier id)
         {
-            SqlDatabaseAdvisorResource.ValidateResourceId(id);
             return new SqlDatabaseAdvisorResource(Client, id);
         }
 
@@ -985,7 +879,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseAutomaticTuningResource"/> object. </returns>
         public virtual SqlDatabaseAutomaticTuningResource GetSqlDatabaseAutomaticTuningResource(ResourceIdentifier id)
         {
-            SqlDatabaseAutomaticTuningResource.ValidateResourceId(id);
             return new SqlDatabaseAutomaticTuningResource(Client, id);
         }
 
@@ -994,7 +887,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="RecommendedActionResource"/> object. </returns>
         public virtual RecommendedActionResource GetRecommendedActionResource(ResourceIdentifier id)
         {
-            RecommendedActionResource.ValidateResourceId(id);
             return new RecommendedActionResource(Client, id);
         }
 
@@ -1003,7 +895,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource"/> object. </returns>
         public virtual SqlDatabaseSqlVulnerabilityAssessmentBaselineResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineResource(ResourceIdentifier id)
         {
-            SqlDatabaseSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
             return new SqlDatabaseSqlVulnerabilityAssessmentBaselineResource(Client, id);
         }
 
@@ -1012,7 +903,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource"/> object. </returns>
         public virtual SqlDatabaseSqlVulnerabilityAssessmentResource GetSqlDatabaseSqlVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
-            SqlDatabaseSqlVulnerabilityAssessmentResource.ValidateResourceId(id);
             return new SqlDatabaseSqlVulnerabilityAssessmentResource(Client, id);
         }
 
@@ -1021,7 +911,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource"/> object. </returns>
         public virtual SqlDatabaseSqlVulnerabilityAssessmentScanResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(ResourceIdentifier id)
         {
-            SqlDatabaseSqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
             return new SqlDatabaseSqlVulnerabilityAssessmentScanResource(Client, id);
         }
 
@@ -1030,7 +919,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentScanResource"/> object. </returns>
         public virtual SqlDatabaseVulnerabilityAssessmentScanResource GetSqlDatabaseVulnerabilityAssessmentScanResource(ResourceIdentifier id)
         {
-            SqlDatabaseVulnerabilityAssessmentScanResource.ValidateResourceId(id);
             return new SqlDatabaseVulnerabilityAssessmentScanResource(Client, id);
         }
 
@@ -1039,7 +927,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="DataWarehouseUserActivityResource"/> object. </returns>
         public virtual DataWarehouseUserActivityResource GetDataWarehouseUserActivityResource(ResourceIdentifier id)
         {
-            DataWarehouseUserActivityResource.ValidateResourceId(id);
             return new DataWarehouseUserActivityResource(Client, id);
         }
 
@@ -1048,7 +935,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="LedgerDigestUploadResource"/> object. </returns>
         public virtual LedgerDigestUploadResource GetLedgerDigestUploadResource(ResourceIdentifier id)
         {
-            LedgerDigestUploadResource.ValidateResourceId(id);
             return new LedgerDigestUploadResource(Client, id);
         }
 
@@ -1057,7 +943,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="MaintenanceWindowOptionResource"/> object. </returns>
         public virtual MaintenanceWindowOptionResource GetMaintenanceWindowOptionResource(ResourceIdentifier id)
         {
-            MaintenanceWindowOptionResource.ValidateResourceId(id);
             return new MaintenanceWindowOptionResource(Client, id);
         }
 
@@ -1066,7 +951,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="MaintenanceWindowsResource"/> object. </returns>
         public virtual MaintenanceWindowsResource GetMaintenanceWindowsResource(ResourceIdentifier id)
         {
-            MaintenanceWindowsResource.ValidateResourceId(id);
             return new MaintenanceWindowsResource(Client, id);
         }
 
@@ -1075,7 +959,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseAdvancedThreatProtectionResource"/> object. </returns>
         public virtual ManagedDatabaseAdvancedThreatProtectionResource GetManagedDatabaseAdvancedThreatProtectionResource(ResourceIdentifier id)
         {
-            ManagedDatabaseAdvancedThreatProtectionResource.ValidateResourceId(id);
             return new ManagedDatabaseAdvancedThreatProtectionResource(Client, id);
         }
 
@@ -1084,7 +967,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceQueryResource"/> object. </returns>
         public virtual ManagedInstanceQueryResource GetManagedInstanceQueryResource(ResourceIdentifier id)
         {
-            ManagedInstanceQueryResource.ValidateResourceId(id);
             return new ManagedInstanceQueryResource(Client, id);
         }
 
@@ -1093,7 +975,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailResource"/> object. </returns>
         public virtual ManagedDatabaseRestoreDetailResource GetManagedDatabaseRestoreDetailResource(ResourceIdentifier id)
         {
-            ManagedDatabaseRestoreDetailResource.ValidateResourceId(id);
             return new ManagedDatabaseRestoreDetailResource(Client, id);
         }
 
@@ -1102,7 +983,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedTransparentDataEncryptionResource"/> object. </returns>
         public virtual ManagedTransparentDataEncryptionResource GetManagedTransparentDataEncryptionResource(ResourceIdentifier id)
         {
-            ManagedTransparentDataEncryptionResource.ValidateResourceId(id);
             return new ManagedTransparentDataEncryptionResource(Client, id);
         }
 
@@ -1111,7 +991,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstanceAdvancedThreatProtectionResource"/> object. </returns>
         public virtual ManagedInstanceAdvancedThreatProtectionResource GetManagedInstanceAdvancedThreatProtectionResource(ResourceIdentifier id)
         {
-            ManagedInstanceAdvancedThreatProtectionResource.ValidateResourceId(id);
             return new ManagedInstanceAdvancedThreatProtectionResource(Client, id);
         }
 
@@ -1120,7 +999,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedInstancePrivateLinkResource"/> object. </returns>
         public virtual ManagedInstancePrivateLinkResource GetManagedInstancePrivateLinkResource(ResourceIdentifier id)
         {
-            ManagedInstancePrivateLinkResource.ValidateResourceId(id);
             return new ManagedInstancePrivateLinkResource(Client, id);
         }
 
@@ -1129,7 +1007,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ManagedLedgerDigestUploadResource"/> object. </returns>
         public virtual ManagedLedgerDigestUploadResource GetManagedLedgerDigestUploadResource(ResourceIdentifier id)
         {
-            ManagedLedgerDigestUploadResource.ValidateResourceId(id);
             return new ManagedLedgerDigestUploadResource(Client, id);
         }
 
@@ -1138,7 +1015,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="ServerAdvancedThreatProtectionResource"/> object. </returns>
         public virtual ServerAdvancedThreatProtectionResource GetServerAdvancedThreatProtectionResource(ResourceIdentifier id)
         {
-            ServerAdvancedThreatProtectionResource.ValidateResourceId(id);
             return new ServerAdvancedThreatProtectionResource(Client, id);
         }
 
@@ -1147,7 +1023,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerAutomaticTuningResource"/> object. </returns>
         public virtual SqlServerAutomaticTuningResource GetSqlServerAutomaticTuningResource(ResourceIdentifier id)
         {
-            SqlServerAutomaticTuningResource.ValidateResourceId(id);
             return new SqlServerAutomaticTuningResource(Client, id);
         }
 
@@ -1156,7 +1031,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlAgentConfigurationResource"/> object. </returns>
         public virtual SqlAgentConfigurationResource GetSqlAgentConfigurationResource(ResourceIdentifier id)
         {
-            SqlAgentConfigurationResource.ValidateResourceId(id);
             return new SqlAgentConfigurationResource(Client, id);
         }
 
@@ -1165,7 +1039,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> object. </returns>
         public virtual LogicalDatabaseTransparentDataEncryptionResource GetLogicalDatabaseTransparentDataEncryptionResource(ResourceIdentifier id)
         {
-            LogicalDatabaseTransparentDataEncryptionResource.ValidateResourceId(id);
             return new LogicalDatabaseTransparentDataEncryptionResource(Client, id);
         }
     }

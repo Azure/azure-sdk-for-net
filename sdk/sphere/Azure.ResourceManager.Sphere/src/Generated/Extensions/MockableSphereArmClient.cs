@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <returns> Returns a <see cref="SphereCatalogResource"/> object. </returns>
         public virtual SphereCatalogResource GetSphereCatalogResource(ResourceIdentifier id)
         {
-            SphereCatalogResource.ValidateResourceId(id);
             return new SphereCatalogResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <returns> Returns a <see cref="SphereCertificateResource"/> object. </returns>
         public virtual SphereCertificateResource GetSphereCertificateResource(ResourceIdentifier id)
         {
-            SphereCertificateResource.ValidateResourceId(id);
             return new SphereCertificateResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <returns> Returns a <see cref="SphereImageResource"/> object. </returns>
         public virtual SphereImageResource GetSphereImageResource(ResourceIdentifier id)
         {
-            SphereImageResource.ValidateResourceId(id);
             return new SphereImageResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <returns> Returns a <see cref="SphereProductResource"/> object. </returns>
         public virtual SphereProductResource GetSphereProductResource(ResourceIdentifier id)
         {
-            SphereProductResource.ValidateResourceId(id);
             return new SphereProductResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <returns> Returns a <see cref="SphereDeviceGroupResource"/> object. </returns>
         public virtual SphereDeviceGroupResource GetSphereDeviceGroupResource(ResourceIdentifier id)
         {
-            SphereDeviceGroupResource.ValidateResourceId(id);
             return new SphereDeviceGroupResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <returns> Returns a <see cref="SphereDeploymentResource"/> object. </returns>
         public virtual SphereDeploymentResource GetSphereDeploymentResource(ResourceIdentifier id)
         {
-            SphereDeploymentResource.ValidateResourceId(id);
             return new SphereDeploymentResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <returns> Returns a <see cref="SphereDeviceResource"/> object. </returns>
         public virtual SphereDeviceResource GetSphereDeviceResource(ResourceIdentifier id)
         {
-            SphereDeviceResource.ValidateResourceId(id);
             return new SphereDeviceResource(Client, id);
         }
     }
