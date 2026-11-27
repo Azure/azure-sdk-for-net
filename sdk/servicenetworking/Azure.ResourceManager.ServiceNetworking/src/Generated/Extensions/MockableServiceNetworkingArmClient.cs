@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// <returns> Returns a <see cref="TrafficControllerAssociationResource"/> object. </returns>
         public virtual TrafficControllerAssociationResource GetTrafficControllerAssociationResource(ResourceIdentifier id)
         {
-            TrafficControllerAssociationResource.ValidateResourceId(id);
             return new TrafficControllerAssociationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// <returns> Returns a <see cref="TrafficControllerFrontendResource"/> object. </returns>
         public virtual TrafficControllerFrontendResource GetTrafficControllerFrontendResource(ResourceIdentifier id)
         {
-            TrafficControllerFrontendResource.ValidateResourceId(id);
             return new TrafficControllerFrontendResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// <returns> Returns a <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> object. </returns>
         public virtual ApplicationGatewayForContainersSecurityPolicyResource GetApplicationGatewayForContainersSecurityPolicyResource(ResourceIdentifier id)
         {
-            ApplicationGatewayForContainersSecurityPolicyResource.ValidateResourceId(id);
             return new ApplicationGatewayForContainersSecurityPolicyResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// <returns> Returns a <see cref="TrafficControllerResource"/> object. </returns>
         public virtual TrafficControllerResource GetTrafficControllerResource(ResourceIdentifier id)
         {
-            TrafficControllerResource.ValidateResourceId(id);
             return new TrafficControllerResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// <returns> Returns a <see cref="ServiceNetworkingPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ServiceNetworkingPrivateEndpointConnectionResource GetServiceNetworkingPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ServiceNetworkingPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ServiceNetworkingPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// <returns> Returns a <see cref="ServiceNetworkingPrivateLinkResource"/> object. </returns>
         public virtual ServiceNetworkingPrivateLinkResource GetServiceNetworkingPrivateLinkResource(ResourceIdentifier id)
         {
-            ServiceNetworkingPrivateLinkResource.ValidateResourceId(id);
             return new ServiceNetworkingPrivateLinkResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ServiceGroups.Mocking
         /// <returns> Returns a <see cref="ServiceGroupResource"/> object. </returns>
         public virtual ServiceGroupResource GetServiceGroupResource(ResourceIdentifier id)
         {
-            ServiceGroupResource.ValidateResourceId(id);
             return new ServiceGroupResource(Client, id);
         }
     }

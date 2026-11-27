@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <returns> Returns a <see cref="ServiceFabricManagedApplicationResource"/> object. </returns>
         public virtual ServiceFabricManagedApplicationResource GetServiceFabricManagedApplicationResource(ResourceIdentifier id)
         {
-            ServiceFabricManagedApplicationResource.ValidateResourceId(id);
             return new ServiceFabricManagedApplicationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeResource"/> object. </returns>
         public virtual ServiceFabricManagedApplicationTypeResource GetServiceFabricManagedApplicationTypeResource(ResourceIdentifier id)
         {
-            ServiceFabricManagedApplicationTypeResource.ValidateResourceId(id);
             return new ServiceFabricManagedApplicationTypeResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeVersionResource"/> object. </returns>
         public virtual ServiceFabricManagedApplicationTypeVersionResource GetServiceFabricManagedApplicationTypeVersionResource(ResourceIdentifier id)
         {
-            ServiceFabricManagedApplicationTypeVersionResource.ValidateResourceId(id);
             return new ServiceFabricManagedApplicationTypeVersionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <returns> Returns a <see cref="ServiceFabricManagedServiceResource"/> object. </returns>
         public virtual ServiceFabricManagedServiceResource GetServiceFabricManagedServiceResource(ResourceIdentifier id)
         {
-            ServiceFabricManagedServiceResource.ValidateResourceId(id);
             return new ServiceFabricManagedServiceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource"/> object. </returns>
         public virtual ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(ResourceIdentifier id)
         {
-            ServiceFabricManagedClusterResource.ValidateResourceId(id);
             return new ServiceFabricManagedClusterResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource"/> object. </returns>
         public virtual ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(ResourceIdentifier id)
         {
-            ServiceFabricManagedNodeTypeResource.ValidateResourceId(id);
             return new ServiceFabricManagedNodeTypeResource(Client, id);
         }
     }

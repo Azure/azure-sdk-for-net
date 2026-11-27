@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> Returns a <see cref="ServiceFabricClusterResource"/> object. </returns>
         public virtual ServiceFabricClusterResource GetServiceFabricClusterResource(ResourceIdentifier id)
         {
-            ServiceFabricClusterResource.ValidateResourceId(id);
             return new ServiceFabricClusterResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> Returns a <see cref="ServiceFabricVmSizeResource"/> object. </returns>
         public virtual ServiceFabricVmSizeResource GetServiceFabricVmSizeResource(ResourceIdentifier id)
         {
-            ServiceFabricVmSizeResource.ValidateResourceId(id);
             return new ServiceFabricVmSizeResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> Returns a <see cref="ServiceFabricApplicationTypeResource"/> object. </returns>
         public virtual ServiceFabricApplicationTypeResource GetServiceFabricApplicationTypeResource(ResourceIdentifier id)
         {
-            ServiceFabricApplicationTypeResource.ValidateResourceId(id);
             return new ServiceFabricApplicationTypeResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> Returns a <see cref="ServiceFabricApplicationTypeVersionResource"/> object. </returns>
         public virtual ServiceFabricApplicationTypeVersionResource GetServiceFabricApplicationTypeVersionResource(ResourceIdentifier id)
         {
-            ServiceFabricApplicationTypeVersionResource.ValidateResourceId(id);
             return new ServiceFabricApplicationTypeVersionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> Returns a <see cref="ServiceFabricApplicationResource"/> object. </returns>
         public virtual ServiceFabricApplicationResource GetServiceFabricApplicationResource(ResourceIdentifier id)
         {
-            ServiceFabricApplicationResource.ValidateResourceId(id);
             return new ServiceFabricApplicationResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> Returns a <see cref="ServiceFabricServiceResource"/> object. </returns>
         public virtual ServiceFabricServiceResource GetServiceFabricServiceResource(ResourceIdentifier id)
         {
-            ServiceFabricServiceResource.ValidateResourceId(id);
             return new ServiceFabricServiceResource(Client, id);
         }
     }

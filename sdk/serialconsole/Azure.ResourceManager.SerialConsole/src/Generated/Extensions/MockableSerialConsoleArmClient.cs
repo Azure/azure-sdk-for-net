@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
         /// <returns> Returns a <see cref="SerialPortResource"/> object. </returns>
         public virtual SerialPortResource GetSerialPortResource(ResourceIdentifier id)
         {
-            SerialPortResource.ValidateResourceId(id);
             return new SerialPortResource(Client, id);
         }
 

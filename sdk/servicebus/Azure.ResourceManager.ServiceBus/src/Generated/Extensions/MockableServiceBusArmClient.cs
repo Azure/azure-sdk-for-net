@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
         public virtual ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier id)
         {
-            ServiceBusDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
             return new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryResource"/> object. </returns>
         public virtual ServiceBusDisasterRecoveryResource GetServiceBusDisasterRecoveryResource(ResourceIdentifier id)
         {
-            ServiceBusDisasterRecoveryResource.ValidateResourceId(id);
             return new ServiceBusDisasterRecoveryResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> object. </returns>
         public virtual ServiceBusNamespaceAuthorizationRuleResource GetServiceBusNamespaceAuthorizationRuleResource(ResourceIdentifier id)
         {
-            ServiceBusNamespaceAuthorizationRuleResource.ValidateResourceId(id);
             return new ServiceBusNamespaceAuthorizationRuleResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusQueueAuthorizationRuleResource"/> object. </returns>
         public virtual ServiceBusQueueAuthorizationRuleResource GetServiceBusQueueAuthorizationRuleResource(ResourceIdentifier id)
         {
-            ServiceBusQueueAuthorizationRuleResource.ValidateResourceId(id);
             return new ServiceBusQueueAuthorizationRuleResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusQueueResource"/> object. </returns>
         public virtual ServiceBusQueueResource GetServiceBusQueueResource(ResourceIdentifier id)
         {
-            ServiceBusQueueResource.ValidateResourceId(id);
             return new ServiceBusQueueResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusTopicAuthorizationRuleResource"/> object. </returns>
         public virtual ServiceBusTopicAuthorizationRuleResource GetServiceBusTopicAuthorizationRuleResource(ResourceIdentifier id)
         {
-            ServiceBusTopicAuthorizationRuleResource.ValidateResourceId(id);
             return new ServiceBusTopicAuthorizationRuleResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusTopicResource"/> object. </returns>
         public virtual ServiceBusTopicResource GetServiceBusTopicResource(ResourceIdentifier id)
         {
-            ServiceBusTopicResource.ValidateResourceId(id);
             return new ServiceBusTopicResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ServiceBusPrivateEndpointConnectionResource GetServiceBusPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ServiceBusPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ServiceBusPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual ServiceBusNetworkSecurityPerimeterConfigurationResource GetServiceBusNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            ServiceBusNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new ServiceBusNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="MigrationConfigurationResource"/> object. </returns>
         public virtual MigrationConfigurationResource GetMigrationConfigurationResource(ResourceIdentifier id)
         {
-            MigrationConfigurationResource.ValidateResourceId(id);
             return new MigrationConfigurationResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusRuleResource"/> object. </returns>
         public virtual ServiceBusRuleResource GetServiceBusRuleResource(ResourceIdentifier id)
         {
-            ServiceBusRuleResource.ValidateResourceId(id);
             return new ServiceBusRuleResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusNamespaceResource"/> object. </returns>
         public virtual ServiceBusNamespaceResource GetServiceBusNamespaceResource(ResourceIdentifier id)
         {
-            ServiceBusNamespaceResource.ValidateResourceId(id);
             return new ServiceBusNamespaceResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusNetworkRuleSetResource"/> object. </returns>
         public virtual ServiceBusNetworkRuleSetResource GetServiceBusNetworkRuleSetResource(ResourceIdentifier id)
         {
-            ServiceBusNetworkRuleSetResource.ValidateResourceId(id);
             return new ServiceBusNetworkRuleSetResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <returns> Returns a <see cref="ServiceBusSubscriptionResource"/> object. </returns>
         public virtual ServiceBusSubscriptionResource GetServiceBusSubscriptionResource(ResourceIdentifier id)
         {
-            ServiceBusSubscriptionResource.ValidateResourceId(id);
             return new ServiceBusSubscriptionResource(Client, id);
         }
     }
