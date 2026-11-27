@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
         /// <returns> Returns a <see cref="CloudValidationResource"/> object. </returns>
         public virtual CloudValidationResource GetCloudValidationResource(ResourceIdentifier id)
         {
-            CloudValidationResource.ValidateResourceId(id);
             return new CloudValidationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
         /// <returns> Returns a <see cref="ValidationExecutionPlanResource"/> object. </returns>
         public virtual ValidationExecutionPlanResource GetValidationExecutionPlanResource(ResourceIdentifier id)
         {
-            ValidationExecutionPlanResource.ValidateResourceId(id);
             return new ValidationExecutionPlanResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
         /// <returns> Returns a <see cref="ExecutionPlanRunResource"/> object. </returns>
         public virtual ExecutionPlanRunResource GetExecutionPlanRunResource(ResourceIdentifier id)
         {
-            ExecutionPlanRunResource.ValidateResourceId(id);
             return new ExecutionPlanRunResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
         /// <returns> Returns a <see cref="ValidationTestRunResource"/> object. </returns>
         public virtual ValidationTestRunResource GetValidationTestRunResource(ResourceIdentifier id)
         {
-            ValidationTestRunResource.ValidateResourceId(id);
             return new ValidationTestRunResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
         /// <returns> Returns a <see cref="ValidationTestResource"/> object. </returns>
         public virtual ValidationTestResource GetValidationTestResource(ResourceIdentifier id)
         {
-            ValidationTestResource.ValidateResourceId(id);
             return new ValidationTestResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
         /// <returns> Returns a <see cref="ValidationTestVersionResource"/> object. </returns>
         public virtual ValidationTestVersionResource GetValidationTestVersionResource(ResourceIdentifier id)
         {
-            ValidationTestVersionResource.ValidateResourceId(id);
             return new ValidationTestVersionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
         /// <returns> Returns a <see cref="ValidationTestCategoryResource"/> object. </returns>
         public virtual ValidationTestCategoryResource GetValidationTestCategoryResource(ResourceIdentifier id)
         {
-            ValidationTestCategoryResource.ValidateResourceId(id);
             return new ValidationTestCategoryResource(Client, id);
         }
     }

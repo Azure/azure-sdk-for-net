@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// <returns> Returns a <see cref="QumuloFileSystemResource"/> object. </returns>
         public virtual QumuloFileSystemResource GetQumuloFileSystemResource(ResourceIdentifier id)
         {
-            QumuloFileSystemResource.ValidateResourceId(id);
             return new QumuloFileSystemResource(Client, id);
         }
     }

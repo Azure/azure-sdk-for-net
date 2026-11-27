@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
         /// <returns> Returns a <see cref="ArizeAIObservabilityEvalOrganizationResource"/> object. </returns>
         public virtual ArizeAIObservabilityEvalOrganizationResource GetArizeAIObservabilityEvalOrganizationResource(ResourceIdentifier id)
         {
-            ArizeAIObservabilityEvalOrganizationResource.ValidateResourceId(id);
             return new ArizeAIObservabilityEvalOrganizationResource(Client, id);
         }
     }

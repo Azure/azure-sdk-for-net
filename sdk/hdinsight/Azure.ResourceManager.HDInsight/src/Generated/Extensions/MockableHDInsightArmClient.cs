@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <returns> Returns a <see cref="HDInsightApplicationResource"/> object. </returns>
         public virtual HDInsightApplicationResource GetHDInsightApplicationResource(ResourceIdentifier id)
         {
-            HDInsightApplicationResource.ValidateResourceId(id);
             return new HDInsightApplicationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <returns> Returns a <see cref="HDInsightClusterResource"/> object. </returns>
         public virtual HDInsightClusterResource GetHDInsightClusterResource(ResourceIdentifier id)
         {
-            HDInsightClusterResource.ValidateResourceId(id);
             return new HDInsightClusterResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <returns> Returns a <see cref="HDInsightPrivateEndpointConnectionResource"/> object. </returns>
         public virtual HDInsightPrivateEndpointConnectionResource GetHDInsightPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HDInsightPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HDInsightPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <returns> Returns a <see cref="HDInsightPrivateLinkResource"/> object. </returns>
         public virtual HDInsightPrivateLinkResource GetHDInsightPrivateLinkResource(ResourceIdentifier id)
         {
-            HDInsightPrivateLinkResource.ValidateResourceId(id);
             return new HDInsightPrivateLinkResource(Client, id);
         }
     }

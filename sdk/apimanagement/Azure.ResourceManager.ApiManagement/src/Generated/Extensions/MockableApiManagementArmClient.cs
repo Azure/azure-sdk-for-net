@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceApiResource"/> object. </returns>
         public virtual ServiceWorkspaceApiResource GetServiceWorkspaceApiResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceApiResource.ValidateResourceId(id);
             return new ServiceWorkspaceApiResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceApiReleaseResource"/> object. </returns>
         public virtual ServiceWorkspaceApiReleaseResource GetServiceWorkspaceApiReleaseResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceApiReleaseResource.ValidateResourceId(id);
             return new ServiceWorkspaceApiReleaseResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceApiOperationResource"/> object. </returns>
         public virtual ServiceWorkspaceApiOperationResource GetServiceWorkspaceApiOperationResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceApiOperationResource.ValidateResourceId(id);
             return new ServiceWorkspaceApiOperationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceApiResolverPolicyResource"/> object. </returns>
         public virtual ServiceApiResolverPolicyResource GetServiceApiResolverPolicyResource(ResourceIdentifier id)
         {
-            ServiceApiResolverPolicyResource.ValidateResourceId(id);
             return new ServiceApiResolverPolicyResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiPolicyResource"/> object. </returns>
         public virtual ApiPolicyResource GetApiPolicyResource(ResourceIdentifier id)
         {
-            ApiPolicyResource.ValidateResourceId(id);
             return new ApiPolicyResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPolicyResource"/> object. </returns>
         public virtual ApiManagementPolicyResource GetApiManagementPolicyResource(ResourceIdentifier id)
         {
-            ApiManagementPolicyResource.ValidateResourceId(id);
             return new ApiManagementPolicyResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementProductPolicyResource"/> object. </returns>
         public virtual ApiManagementProductPolicyResource GetApiManagementProductPolicyResource(ResourceIdentifier id)
         {
-            ApiManagementProductPolicyResource.ValidateResourceId(id);
             return new ApiManagementProductPolicyResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspacePolicyResource"/> object. </returns>
         public virtual ServiceWorkspacePolicyResource GetServiceWorkspacePolicyResource(ResourceIdentifier id)
         {
-            ServiceWorkspacePolicyResource.ValidateResourceId(id);
             return new ServiceWorkspacePolicyResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceApiOperationPolicyResource"/> object. </returns>
         public virtual ServiceWorkspaceApiOperationPolicyResource GetServiceWorkspaceApiOperationPolicyResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceApiOperationPolicyResource.ValidateResourceId(id);
             return new ServiceWorkspaceApiOperationPolicyResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceApiPolicyResource"/> object. </returns>
         public virtual ServiceWorkspaceApiPolicyResource GetServiceWorkspaceApiPolicyResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceApiPolicyResource.ValidateResourceId(id);
             return new ServiceWorkspaceApiPolicyResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceProductPolicyResource"/> object. </returns>
         public virtual ServiceWorkspaceProductPolicyResource GetServiceWorkspaceProductPolicyResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceProductPolicyResource.ValidateResourceId(id);
             return new ServiceWorkspaceProductPolicyResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiTagResource"/> object. </returns>
         public virtual ApiTagResource GetApiTagResource(ResourceIdentifier id)
         {
-            ApiTagResource.ValidateResourceId(id);
             return new ApiTagResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiOperationTagResource"/> object. </returns>
         public virtual ApiOperationTagResource GetApiOperationTagResource(ResourceIdentifier id)
         {
-            ApiOperationTagResource.ValidateResourceId(id);
             return new ApiOperationTagResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementProductTagResource"/> object. </returns>
         public virtual ApiManagementProductTagResource GetApiManagementProductTagResource(ResourceIdentifier id)
         {
-            ApiManagementProductTagResource.ValidateResourceId(id);
             return new ApiManagementProductTagResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementTagResource"/> object. </returns>
         public virtual ApiManagementTagResource GetApiManagementTagResource(ResourceIdentifier id)
         {
-            ApiManagementTagResource.ValidateResourceId(id);
             return new ApiManagementTagResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceTagResource"/> object. </returns>
         public virtual ServiceWorkspaceTagResource GetServiceWorkspaceTagResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceTagResource.ValidateResourceId(id);
             return new ServiceWorkspaceTagResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceApiSchemaResource"/> object. </returns>
         public virtual ServiceWorkspaceApiSchemaResource GetServiceWorkspaceApiSchemaResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceApiSchemaResource.ValidateResourceId(id);
             return new ServiceWorkspaceApiSchemaResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementDiagnosticResource"/> object. </returns>
         public virtual ApiManagementDiagnosticResource GetApiManagementDiagnosticResource(ResourceIdentifier id)
         {
-            ApiManagementDiagnosticResource.ValidateResourceId(id);
             return new ApiManagementDiagnosticResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceDiagnosticResource"/> object. </returns>
         public virtual ServiceWorkspaceDiagnosticResource GetServiceWorkspaceDiagnosticResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceDiagnosticResource.ValidateResourceId(id);
             return new ServiceWorkspaceDiagnosticResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceApiDiagnosticResource"/> object. </returns>
         public virtual ServiceWorkspaceApiDiagnosticResource GetServiceWorkspaceApiDiagnosticResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceApiDiagnosticResource.ValidateResourceId(id);
             return new ServiceWorkspaceApiDiagnosticResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementIssueResource"/> object. </returns>
         public virtual ApiManagementIssueResource GetApiManagementIssueResource(ResourceIdentifier id)
         {
-            ApiManagementIssueResource.ValidateResourceId(id);
             return new ApiManagementIssueResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceProductWikiResource"/> object. </returns>
         public virtual ServiceProductWikiResource GetServiceProductWikiResource(ResourceIdentifier id)
         {
-            ServiceProductWikiResource.ValidateResourceId(id);
             return new ServiceProductWikiResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceApiVersionSetResource"/> object. </returns>
         public virtual ServiceWorkspaceApiVersionSetResource GetServiceWorkspaceApiVersionSetResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceApiVersionSetResource.ValidateResourceId(id);
             return new ServiceWorkspaceApiVersionSetResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceBackendResource"/> object. </returns>
         public virtual ServiceWorkspaceBackendResource GetServiceWorkspaceBackendResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceBackendResource.ValidateResourceId(id);
             return new ServiceWorkspaceBackendResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceCertificateResource"/> object. </returns>
         public virtual ServiceWorkspaceCertificateResource GetServiceWorkspaceCertificateResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceCertificateResource.ValidateResourceId(id);
             return new ServiceWorkspaceCertificateResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceGroupResource"/> object. </returns>
         public virtual ServiceWorkspaceGroupResource GetServiceWorkspaceGroupResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceGroupResource.ValidateResourceId(id);
             return new ServiceWorkspaceGroupResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceLoggerResource"/> object. </returns>
         public virtual ServiceWorkspaceLoggerResource GetServiceWorkspaceLoggerResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceLoggerResource.ValidateResourceId(id);
             return new ServiceWorkspaceLoggerResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceNamedValueResource"/> object. </returns>
         public virtual ServiceWorkspaceNamedValueResource GetServiceWorkspaceNamedValueResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceNamedValueResource.ValidateResourceId(id);
             return new ServiceWorkspaceNamedValueResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceNotificationResource"/> object. </returns>
         public virtual ServiceWorkspaceNotificationResource GetServiceWorkspaceNotificationResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceNotificationResource.ValidateResourceId(id);
             return new ServiceWorkspaceNotificationResource(Client, id);
         }
 
@@ -292,7 +263,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspacePolicyFragmentResource"/> object. </returns>
         public virtual ServiceWorkspacePolicyFragmentResource GetServiceWorkspacePolicyFragmentResource(ResourceIdentifier id)
         {
-            ServiceWorkspacePolicyFragmentResource.ValidateResourceId(id);
             return new ServiceWorkspacePolicyFragmentResource(Client, id);
         }
 
@@ -301,7 +271,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(ResourceIdentifier id)
         {
-            ApiManagementPortalSignInSettingResource.ValidateResourceId(id);
             return new ApiManagementPortalSignInSettingResource(Client, id);
         }
 
@@ -310,7 +279,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(ResourceIdentifier id)
         {
-            ApiManagementPortalSignUpSettingResource.ValidateResourceId(id);
             return new ApiManagementPortalSignUpSettingResource(Client, id);
         }
 
@@ -319,7 +287,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
         public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(ResourceIdentifier id)
         {
-            ApiManagementPortalDelegationSettingResource.ValidateResourceId(id);
             return new ApiManagementPortalDelegationSettingResource(Client, id);
         }
 
@@ -328,7 +295,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceProductResource"/> object. </returns>
         public virtual ServiceWorkspaceProductResource GetServiceWorkspaceProductResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceProductResource.ValidateResourceId(id);
             return new ServiceWorkspaceProductResource(Client, id);
         }
 
@@ -337,7 +303,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceProductApiLinkResource"/> object. </returns>
         public virtual ServiceWorkspaceProductApiLinkResource GetServiceWorkspaceProductApiLinkResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceProductApiLinkResource.ValidateResourceId(id);
             return new ServiceWorkspaceProductApiLinkResource(Client, id);
         }
 
@@ -346,7 +311,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceProductGroupLinkResource"/> object. </returns>
         public virtual ServiceWorkspaceProductGroupLinkResource GetServiceWorkspaceProductGroupLinkResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceProductGroupLinkResource.ValidateResourceId(id);
             return new ServiceWorkspaceProductGroupLinkResource(Client, id);
         }
 
@@ -355,7 +319,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceSchemaResource"/> object. </returns>
         public virtual ServiceWorkspaceSchemaResource GetServiceWorkspaceSchemaResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceSchemaResource.ValidateResourceId(id);
             return new ServiceWorkspaceSchemaResource(Client, id);
         }
 
@@ -364,7 +327,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementUserSubscriptionResource"/> object. </returns>
         public virtual ApiManagementUserSubscriptionResource GetApiManagementUserSubscriptionResource(ResourceIdentifier id)
         {
-            ApiManagementUserSubscriptionResource.ValidateResourceId(id);
             return new ApiManagementUserSubscriptionResource(Client, id);
         }
 
@@ -373,7 +335,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceSubscriptionResource"/> object. </returns>
         public virtual ServiceWorkspaceSubscriptionResource GetServiceWorkspaceSubscriptionResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceSubscriptionResource.ValidateResourceId(id);
             return new ServiceWorkspaceSubscriptionResource(Client, id);
         }
 
@@ -382,7 +343,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceTagApiLinkResource"/> object. </returns>
         public virtual ServiceWorkspaceTagApiLinkResource GetServiceWorkspaceTagApiLinkResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceTagApiLinkResource.ValidateResourceId(id);
             return new ServiceWorkspaceTagApiLinkResource(Client, id);
         }
 
@@ -391,7 +351,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceTagOperationLinkResource"/> object. </returns>
         public virtual ServiceWorkspaceTagOperationLinkResource GetServiceWorkspaceTagOperationLinkResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceTagOperationLinkResource.ValidateResourceId(id);
             return new ServiceWorkspaceTagOperationLinkResource(Client, id);
         }
 
@@ -400,7 +359,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceWorkspaceTagProductLinkResource"/> object. </returns>
         public virtual ServiceWorkspaceTagProductLinkResource GetServiceWorkspaceTagProductLinkResource(ResourceIdentifier id)
         {
-            ServiceWorkspaceTagProductLinkResource.ValidateResourceId(id);
             return new ServiceWorkspaceTagProductLinkResource(Client, id);
         }
 
@@ -409,7 +367,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiGatewayResource"/> object. </returns>
         public virtual ApiGatewayResource GetApiGatewayResource(ResourceIdentifier id)
         {
-            ApiGatewayResource.ValidateResourceId(id);
             return new ApiGatewayResource(Client, id);
         }
 
@@ -418,7 +375,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiResource"/> object. </returns>
         public virtual ApiResource GetApiResource(ResourceIdentifier id)
         {
-            ApiResource.ValidateResourceId(id);
             return new ApiResource(Client, id);
         }
 
@@ -427,7 +383,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementServiceResource"/> object. </returns>
         public virtual ApiManagementServiceResource GetApiManagementServiceResource(ResourceIdentifier id)
         {
-            ApiManagementServiceResource.ValidateResourceId(id);
             return new ApiManagementServiceResource(Client, id);
         }
 
@@ -436,7 +391,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementProductResource"/> object. </returns>
         public virtual ApiManagementProductResource GetApiManagementProductResource(ResourceIdentifier id)
         {
-            ApiManagementProductResource.ValidateResourceId(id);
             return new ApiManagementProductResource(Client, id);
         }
 
@@ -445,7 +399,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiReleaseResource"/> object. </returns>
         public virtual ApiReleaseResource GetApiReleaseResource(ResourceIdentifier id)
         {
-            ApiReleaseResource.ValidateResourceId(id);
             return new ApiReleaseResource(Client, id);
         }
 
@@ -454,7 +407,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiOperationResource"/> object. </returns>
         public virtual ApiOperationResource GetApiOperationResource(ResourceIdentifier id)
         {
-            ApiOperationResource.ValidateResourceId(id);
             return new ApiOperationResource(Client, id);
         }
 
@@ -463,7 +415,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiOperationPolicyResource"/> object. </returns>
         public virtual ApiOperationPolicyResource GetApiOperationPolicyResource(ResourceIdentifier id)
         {
-            ApiOperationPolicyResource.ValidateResourceId(id);
             return new ApiOperationPolicyResource(Client, id);
         }
 
@@ -472,7 +423,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ResolverContractResource"/> object. </returns>
         public virtual ResolverContractResource GetResolverContractResource(ResourceIdentifier id)
         {
-            ResolverContractResource.ValidateResourceId(id);
             return new ResolverContractResource(Client, id);
         }
 
@@ -481,7 +431,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiSchemaResource"/> object. </returns>
         public virtual ApiSchemaResource GetApiSchemaResource(ResourceIdentifier id)
         {
-            ApiSchemaResource.ValidateResourceId(id);
             return new ApiSchemaResource(Client, id);
         }
 
@@ -490,7 +439,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiDiagnosticResource"/> object. </returns>
         public virtual ApiDiagnosticResource GetApiDiagnosticResource(ResourceIdentifier id)
         {
-            ApiDiagnosticResource.ValidateResourceId(id);
             return new ApiDiagnosticResource(Client, id);
         }
 
@@ -499,7 +447,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiIssueResource"/> object. </returns>
         public virtual ApiIssueResource GetApiIssueResource(ResourceIdentifier id)
         {
-            ApiIssueResource.ValidateResourceId(id);
             return new ApiIssueResource(Client, id);
         }
 
@@ -508,7 +455,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiIssueCommentResource"/> object. </returns>
         public virtual ApiIssueCommentResource GetApiIssueCommentResource(ResourceIdentifier id)
         {
-            ApiIssueCommentResource.ValidateResourceId(id);
             return new ApiIssueCommentResource(Client, id);
         }
 
@@ -517,7 +463,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiIssueAttachmentResource"/> object. </returns>
         public virtual ApiIssueAttachmentResource GetApiIssueAttachmentResource(ResourceIdentifier id)
         {
-            ApiIssueAttachmentResource.ValidateResourceId(id);
             return new ApiIssueAttachmentResource(Client, id);
         }
 
@@ -526,7 +471,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiTagDescriptionResource"/> object. </returns>
         public virtual ApiTagDescriptionResource GetApiTagDescriptionResource(ResourceIdentifier id)
         {
-            ApiTagDescriptionResource.ValidateResourceId(id);
             return new ApiTagDescriptionResource(Client, id);
         }
 
@@ -535,7 +479,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceApiWikiResource"/> object. </returns>
         public virtual ServiceApiWikiResource GetServiceApiWikiResource(ResourceIdentifier id)
         {
-            ServiceApiWikiResource.ValidateResourceId(id);
             return new ServiceApiWikiResource(Client, id);
         }
 
@@ -544,7 +487,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ToolContractResource"/> object. </returns>
         public virtual ToolContractResource GetToolContractResource(ResourceIdentifier id)
         {
-            ToolContractResource.ValidateResourceId(id);
             return new ToolContractResource(Client, id);
         }
 
@@ -553,7 +495,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiVersionSetResource"/> object. </returns>
         public virtual ApiVersionSetResource GetApiVersionSetResource(ResourceIdentifier id)
         {
-            ApiVersionSetResource.ValidateResourceId(id);
             return new ApiVersionSetResource(Client, id);
         }
 
@@ -562,7 +503,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="AuthorizationProviderContractResource"/> object. </returns>
         public virtual AuthorizationProviderContractResource GetAuthorizationProviderContractResource(ResourceIdentifier id)
         {
-            AuthorizationProviderContractResource.ValidateResourceId(id);
             return new AuthorizationProviderContractResource(Client, id);
         }
 
@@ -571,7 +511,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="AuthorizationContractResource"/> object. </returns>
         public virtual AuthorizationContractResource GetAuthorizationContractResource(ResourceIdentifier id)
         {
-            AuthorizationContractResource.ValidateResourceId(id);
             return new AuthorizationContractResource(Client, id);
         }
 
@@ -580,7 +519,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="AuthorizationAccessPolicyContractResource"/> object. </returns>
         public virtual AuthorizationAccessPolicyContractResource GetAuthorizationAccessPolicyContractResource(ResourceIdentifier id)
         {
-            AuthorizationAccessPolicyContractResource.ValidateResourceId(id);
             return new AuthorizationAccessPolicyContractResource(Client, id);
         }
 
@@ -589,7 +527,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementAuthorizationServerResource"/> object. </returns>
         public virtual ApiManagementAuthorizationServerResource GetApiManagementAuthorizationServerResource(ResourceIdentifier id)
         {
-            ApiManagementAuthorizationServerResource.ValidateResourceId(id);
             return new ApiManagementAuthorizationServerResource(Client, id);
         }
 
@@ -598,7 +535,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementBackendResource"/> object. </returns>
         public virtual ApiManagementBackendResource GetApiManagementBackendResource(ResourceIdentifier id)
         {
-            ApiManagementBackendResource.ValidateResourceId(id);
             return new ApiManagementBackendResource(Client, id);
         }
 
@@ -607,7 +543,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementCacheResource"/> object. </returns>
         public virtual ApiManagementCacheResource GetApiManagementCacheResource(ResourceIdentifier id)
         {
-            ApiManagementCacheResource.ValidateResourceId(id);
             return new ApiManagementCacheResource(Client, id);
         }
 
@@ -616,7 +551,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementCertificateResource"/> object. </returns>
         public virtual ApiManagementCertificateResource GetApiManagementCertificateResource(ResourceIdentifier id)
         {
-            ApiManagementCertificateResource.ValidateResourceId(id);
             return new ApiManagementCertificateResource(Client, id);
         }
 
@@ -625,7 +559,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementContentTypeResource"/> object. </returns>
         public virtual ApiManagementContentTypeResource GetApiManagementContentTypeResource(ResourceIdentifier id)
         {
-            ApiManagementContentTypeResource.ValidateResourceId(id);
             return new ApiManagementContentTypeResource(Client, id);
         }
 
@@ -634,7 +567,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementContentItemResource"/> object. </returns>
         public virtual ApiManagementContentItemResource GetApiManagementContentItemResource(ResourceIdentifier id)
         {
-            ApiManagementContentItemResource.ValidateResourceId(id);
             return new ApiManagementContentItemResource(Client, id);
         }
 
@@ -643,7 +575,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource"/> object. </returns>
         public virtual ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(ResourceIdentifier id)
         {
-            ApiManagementDeletedServiceResource.ValidateResourceId(id);
             return new ApiManagementDeletedServiceResource(Client, id);
         }
 
@@ -652,7 +583,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="DocumentationContractResource"/> object. </returns>
         public virtual DocumentationContractResource GetDocumentationContractResource(ResourceIdentifier id)
         {
-            DocumentationContractResource.ValidateResourceId(id);
             return new DocumentationContractResource(Client, id);
         }
 
@@ -661,7 +591,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementEmailTemplateResource"/> object. </returns>
         public virtual ApiManagementEmailTemplateResource GetApiManagementEmailTemplateResource(ResourceIdentifier id)
         {
-            ApiManagementEmailTemplateResource.ValidateResourceId(id);
             return new ApiManagementEmailTemplateResource(Client, id);
         }
 
@@ -670,7 +599,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiGatewayConfigConnectionResource"/> object. </returns>
         public virtual ApiGatewayConfigConnectionResource GetApiGatewayConfigConnectionResource(ResourceIdentifier id)
         {
-            ApiGatewayConfigConnectionResource.ValidateResourceId(id);
             return new ApiGatewayConfigConnectionResource(Client, id);
         }
 
@@ -679,7 +607,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="GatewayHostnameBindingResource"/> object. </returns>
         public virtual GatewayHostnameBindingResource GetGatewayHostnameBindingResource(ResourceIdentifier id)
         {
-            GatewayHostnameBindingResource.ValidateResourceId(id);
             return new GatewayHostnameBindingResource(Client, id);
         }
 
@@ -688,7 +615,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementGatewayResource"/> object. </returns>
         public virtual ApiManagementGatewayResource GetApiManagementGatewayResource(ResourceIdentifier id)
         {
-            ApiManagementGatewayResource.ValidateResourceId(id);
             return new ApiManagementGatewayResource(Client, id);
         }
 
@@ -697,7 +623,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementGatewayHostnameConfigurationResource"/> object. </returns>
         public virtual ApiManagementGatewayHostnameConfigurationResource GetApiManagementGatewayHostnameConfigurationResource(ResourceIdentifier id)
         {
-            ApiManagementGatewayHostnameConfigurationResource.ValidateResourceId(id);
             return new ApiManagementGatewayHostnameConfigurationResource(Client, id);
         }
 
@@ -706,7 +631,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementGatewayCertificateAuthorityResource"/> object. </returns>
         public virtual ApiManagementGatewayCertificateAuthorityResource GetApiManagementGatewayCertificateAuthorityResource(ResourceIdentifier id)
         {
-            ApiManagementGatewayCertificateAuthorityResource.ValidateResourceId(id);
             return new ApiManagementGatewayCertificateAuthorityResource(Client, id);
         }
 
@@ -715,7 +639,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementGroupResource"/> object. </returns>
         public virtual ApiManagementGroupResource GetApiManagementGroupResource(ResourceIdentifier id)
         {
-            ApiManagementGroupResource.ValidateResourceId(id);
             return new ApiManagementGroupResource(Client, id);
         }
 
@@ -724,7 +647,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementIdentityProviderResource"/> object. </returns>
         public virtual ApiManagementIdentityProviderResource GetApiManagementIdentityProviderResource(ResourceIdentifier id)
         {
-            ApiManagementIdentityProviderResource.ValidateResourceId(id);
             return new ApiManagementIdentityProviderResource(Client, id);
         }
 
@@ -733,7 +655,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementLoggerResource"/> object. </returns>
         public virtual ApiManagementLoggerResource GetApiManagementLoggerResource(ResourceIdentifier id)
         {
-            ApiManagementLoggerResource.ValidateResourceId(id);
             return new ApiManagementLoggerResource(Client, id);
         }
 
@@ -742,7 +663,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementNamedValueResource"/> object. </returns>
         public virtual ApiManagementNamedValueResource GetApiManagementNamedValueResource(ResourceIdentifier id)
         {
-            ApiManagementNamedValueResource.ValidateResourceId(id);
             return new ApiManagementNamedValueResource(Client, id);
         }
 
@@ -751,7 +671,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementNotificationResource"/> object. </returns>
         public virtual ApiManagementNotificationResource GetApiManagementNotificationResource(ResourceIdentifier id)
         {
-            ApiManagementNotificationResource.ValidateResourceId(id);
             return new ApiManagementNotificationResource(Client, id);
         }
 
@@ -760,7 +679,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementOpenIdConnectProviderResource"/> object. </returns>
         public virtual ApiManagementOpenIdConnectProviderResource GetApiManagementOpenIdConnectProviderResource(ResourceIdentifier id)
         {
-            ApiManagementOpenIdConnectProviderResource.ValidateResourceId(id);
             return new ApiManagementOpenIdConnectProviderResource(Client, id);
         }
 
@@ -769,7 +687,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="PolicyFragmentContractResource"/> object. </returns>
         public virtual PolicyFragmentContractResource GetPolicyFragmentContractResource(ResourceIdentifier id)
         {
-            PolicyFragmentContractResource.ValidateResourceId(id);
             return new PolicyFragmentContractResource(Client, id);
         }
 
@@ -778,7 +695,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="PolicyRestrictionContractResource"/> object. </returns>
         public virtual PolicyRestrictionContractResource GetPolicyRestrictionContractResource(ResourceIdentifier id)
         {
-            PolicyRestrictionContractResource.ValidateResourceId(id);
             return new PolicyRestrictionContractResource(Client, id);
         }
 
@@ -787,7 +703,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="PortalConfigContractResource"/> object. </returns>
         public virtual PortalConfigContractResource GetPortalConfigContractResource(ResourceIdentifier id)
         {
-            PortalConfigContractResource.ValidateResourceId(id);
             return new PortalConfigContractResource(Client, id);
         }
 
@@ -796,7 +711,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ClientApplicationContractResource"/> object. </returns>
         public virtual ClientApplicationContractResource GetClientApplicationContractResource(ResourceIdentifier id)
         {
-            ClientApplicationContractResource.ValidateResourceId(id);
             return new ClientApplicationContractResource(Client, id);
         }
 
@@ -805,7 +719,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ClientApplicationProductLinkContractResource"/> object. </returns>
         public virtual ClientApplicationProductLinkContractResource GetClientApplicationProductLinkContractResource(ResourceIdentifier id)
         {
-            ClientApplicationProductLinkContractResource.ValidateResourceId(id);
             return new ClientApplicationProductLinkContractResource(Client, id);
         }
 
@@ -814,7 +727,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalRevisionResource"/> object. </returns>
         public virtual ApiManagementPortalRevisionResource GetApiManagementPortalRevisionResource(ResourceIdentifier id)
         {
-            ApiManagementPortalRevisionResource.ValidateResourceId(id);
             return new ApiManagementPortalRevisionResource(Client, id);
         }
 
@@ -823,7 +735,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ApiManagementPrivateEndpointConnectionResource GetApiManagementPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ApiManagementPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ApiManagementPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -832,7 +743,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource"/> object. </returns>
         public virtual ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(ResourceIdentifier id)
         {
-            ApiManagementPrivateLinkResource.ValidateResourceId(id);
             return new ApiManagementPrivateLinkResource(Client, id);
         }
 
@@ -841,7 +751,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceProductApiLinkResource"/> object. </returns>
         public virtual ServiceProductApiLinkResource GetServiceProductApiLinkResource(ResourceIdentifier id)
         {
-            ServiceProductApiLinkResource.ValidateResourceId(id);
             return new ServiceProductApiLinkResource(Client, id);
         }
 
@@ -850,7 +759,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceProductGroupLinkResource"/> object. </returns>
         public virtual ServiceProductGroupLinkResource GetServiceProductGroupLinkResource(ResourceIdentifier id)
         {
-            ServiceProductGroupLinkResource.ValidateResourceId(id);
             return new ServiceProductGroupLinkResource(Client, id);
         }
 
@@ -859,7 +767,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementGlobalSchemaResource"/> object. </returns>
         public virtual ApiManagementGlobalSchemaResource GetApiManagementGlobalSchemaResource(ResourceIdentifier id)
         {
-            ApiManagementGlobalSchemaResource.ValidateResourceId(id);
             return new ApiManagementGlobalSchemaResource(Client, id);
         }
 
@@ -868,7 +775,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementTenantSettingResource"/> object. </returns>
         public virtual ApiManagementTenantSettingResource GetApiManagementTenantSettingResource(ResourceIdentifier id)
         {
-            ApiManagementTenantSettingResource.ValidateResourceId(id);
             return new ApiManagementTenantSettingResource(Client, id);
         }
 
@@ -877,7 +783,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementSubscriptionResource"/> object. </returns>
         public virtual ApiManagementSubscriptionResource GetApiManagementSubscriptionResource(ResourceIdentifier id)
         {
-            ApiManagementSubscriptionResource.ValidateResourceId(id);
             return new ApiManagementSubscriptionResource(Client, id);
         }
 
@@ -886,7 +791,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceTagApiLinkResource"/> object. </returns>
         public virtual ServiceTagApiLinkResource GetServiceTagApiLinkResource(ResourceIdentifier id)
         {
-            ServiceTagApiLinkResource.ValidateResourceId(id);
             return new ServiceTagApiLinkResource(Client, id);
         }
 
@@ -895,7 +799,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceTagOperationLinkResource"/> object. </returns>
         public virtual ServiceTagOperationLinkResource GetServiceTagOperationLinkResource(ResourceIdentifier id)
         {
-            ServiceTagOperationLinkResource.ValidateResourceId(id);
             return new ServiceTagOperationLinkResource(Client, id);
         }
 
@@ -904,7 +807,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceTagProductLinkResource"/> object. </returns>
         public virtual ServiceTagProductLinkResource GetServiceTagProductLinkResource(ResourceIdentifier id)
         {
-            ServiceTagProductLinkResource.ValidateResourceId(id);
             return new ServiceTagProductLinkResource(Client, id);
         }
 
@@ -913,7 +815,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="TenantAccessInfoResource"/> object. </returns>
         public virtual TenantAccessInfoResource GetTenantAccessInfoResource(ResourceIdentifier id)
         {
-            TenantAccessInfoResource.ValidateResourceId(id);
             return new TenantAccessInfoResource(Client, id);
         }
 
@@ -922,7 +823,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementUserResource"/> object. </returns>
         public virtual ApiManagementUserResource GetApiManagementUserResource(ResourceIdentifier id)
         {
-            ApiManagementUserResource.ValidateResourceId(id);
             return new ApiManagementUserResource(Client, id);
         }
 
@@ -931,7 +831,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementWorkspaceLinksResource"/> object. </returns>
         public virtual ApiManagementWorkspaceLinksResource GetApiManagementWorkspaceLinksResource(ResourceIdentifier id)
         {
-            ApiManagementWorkspaceLinksResource.ValidateResourceId(id);
             return new ApiManagementWorkspaceLinksResource(Client, id);
         }
 
@@ -940,7 +839,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="WorkspaceContractResource"/> object. </returns>
         public virtual WorkspaceContractResource GetWorkspaceContractResource(ResourceIdentifier id)
         {
-            WorkspaceContractResource.ValidateResourceId(id);
             return new WorkspaceContractResource(Client, id);
         }
     }

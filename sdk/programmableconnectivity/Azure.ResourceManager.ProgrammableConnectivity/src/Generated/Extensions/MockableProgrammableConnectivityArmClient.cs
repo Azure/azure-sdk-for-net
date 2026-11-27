@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Mocking
         /// <returns> Returns a <see cref="ProgrammableConnectivityGatewayResource"/> object. </returns>
         public virtual ProgrammableConnectivityGatewayResource GetProgrammableConnectivityGatewayResource(ResourceIdentifier id)
         {
-            ProgrammableConnectivityGatewayResource.ValidateResourceId(id);
             return new ProgrammableConnectivityGatewayResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Mocking
         /// <returns> Returns a <see cref="OperatorApiConnectionResource"/> object. </returns>
         public virtual OperatorApiConnectionResource GetOperatorApiConnectionResource(ResourceIdentifier id)
         {
-            OperatorApiConnectionResource.ValidateResourceId(id);
             return new OperatorApiConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Mocking
         /// <returns> Returns a <see cref="OperatorApiPlanResource"/> object. </returns>
         public virtual OperatorApiPlanResource GetOperatorApiPlanResource(ResourceIdentifier id)
         {
-            OperatorApiPlanResource.ValidateResourceId(id);
             return new OperatorApiPlanResource(Client, id);
         }
     }

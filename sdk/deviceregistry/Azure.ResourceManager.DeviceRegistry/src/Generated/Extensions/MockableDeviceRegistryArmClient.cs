@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistryAssetResource"/> object. </returns>
         public virtual DeviceRegistryAssetResource GetDeviceRegistryAssetResource(ResourceIdentifier id)
         {
-            DeviceRegistryAssetResource.ValidateResourceId(id);
             return new DeviceRegistryAssetResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistryAssetEndpointProfileResource"/> object. </returns>
         public virtual DeviceRegistryAssetEndpointProfileResource GetDeviceRegistryAssetEndpointProfileResource(ResourceIdentifier id)
         {
-            DeviceRegistryAssetEndpointProfileResource.ValidateResourceId(id);
             return new DeviceRegistryAssetEndpointProfileResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistryBillingContainerResource"/> object. </returns>
         public virtual DeviceRegistryBillingContainerResource GetDeviceRegistryBillingContainerResource(ResourceIdentifier id)
         {
-            DeviceRegistryBillingContainerResource.ValidateResourceId(id);
             return new DeviceRegistryBillingContainerResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceResource GetDeviceRegistryNamespaceResource(ResourceIdentifier id)
         {
-            DeviceRegistryNamespaceResource.ValidateResourceId(id);
             return new DeviceRegistryNamespaceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="CredentialResource"/> object. </returns>
         public virtual CredentialResource GetCredentialResource(ResourceIdentifier id)
         {
-            CredentialResource.ValidateResourceId(id);
             return new CredentialResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="PolicyResource"/> object. </returns>
         public virtual PolicyResource GetPolicyResource(ResourceIdentifier id)
         {
-            PolicyResource.ValidateResourceId(id);
             return new PolicyResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceAssetResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceAssetResource GetDeviceRegistryNamespaceAssetResource(ResourceIdentifier id)
         {
-            DeviceRegistryNamespaceAssetResource.ValidateResourceId(id);
             return new DeviceRegistryNamespaceAssetResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceDeviceResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceDeviceResource GetDeviceRegistryNamespaceDeviceResource(ResourceIdentifier id)
         {
-            DeviceRegistryNamespaceDeviceResource.ValidateResourceId(id);
             return new DeviceRegistryNamespaceDeviceResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceDiscoveredAssetResource GetDeviceRegistryNamespaceDiscoveredAssetResource(ResourceIdentifier id)
         {
-            DeviceRegistryNamespaceDiscoveredAssetResource.ValidateResourceId(id);
             return new DeviceRegistryNamespaceDiscoveredAssetResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceDiscoveredDeviceResource GetDeviceRegistryNamespaceDiscoveredDeviceResource(ResourceIdentifier id)
         {
-            DeviceRegistryNamespaceDiscoveredDeviceResource.ValidateResourceId(id);
             return new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistrySchemaRegistryResource"/> object. </returns>
         public virtual DeviceRegistrySchemaRegistryResource GetDeviceRegistrySchemaRegistryResource(ResourceIdentifier id)
         {
-            DeviceRegistrySchemaRegistryResource.ValidateResourceId(id);
             return new DeviceRegistrySchemaRegistryResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistrySchemaResource"/> object. </returns>
         public virtual DeviceRegistrySchemaResource GetDeviceRegistrySchemaResource(ResourceIdentifier id)
         {
-            DeviceRegistrySchemaResource.ValidateResourceId(id);
             return new DeviceRegistrySchemaResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="DeviceRegistrySchemaVersionResource"/> object. </returns>
         public virtual DeviceRegistrySchemaVersionResource GetDeviceRegistrySchemaVersionResource(ResourceIdentifier id)
         {
-            DeviceRegistrySchemaVersionResource.ValidateResourceId(id);
             return new DeviceRegistrySchemaVersionResource(Client, id);
         }
     }

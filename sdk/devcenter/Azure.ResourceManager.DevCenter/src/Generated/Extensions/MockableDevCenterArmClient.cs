@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterImageResource"/> object. </returns>
         public virtual DevCenterImageResource GetDevCenterImageResource(ResourceIdentifier id)
         {
-            DevCenterImageResource.ValidateResourceId(id);
             return new DevCenterImageResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterResource"/> object. </returns>
         public virtual DevCenterResource GetDevCenterResource(ResourceIdentifier id)
         {
-            DevCenterResource.ValidateResourceId(id);
             return new DevCenterResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterProjectPolicyResource"/> object. </returns>
         public virtual DevCenterProjectPolicyResource GetDevCenterProjectPolicyResource(ResourceIdentifier id)
         {
-            DevCenterProjectPolicyResource.ValidateResourceId(id);
             return new DevCenterProjectPolicyResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterProjectResource"/> object. </returns>
         public virtual DevCenterProjectResource GetDevCenterProjectResource(ResourceIdentifier id)
         {
-            DevCenterProjectResource.ValidateResourceId(id);
             return new DevCenterProjectResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="AttachedNetworkConnectionResource"/> object. </returns>
         public virtual AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(ResourceIdentifier id)
         {
-            AttachedNetworkConnectionResource.ValidateResourceId(id);
             return new AttachedNetworkConnectionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource"/> object. </returns>
         public virtual ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(ResourceIdentifier id)
         {
-            ProjectAttachedNetworkConnectionResource.ValidateResourceId(id);
             return new ProjectAttachedNetworkConnectionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterCatalogResource"/> object. </returns>
         public virtual DevCenterCatalogResource GetDevCenterCatalogResource(ResourceIdentifier id)
         {
-            DevCenterCatalogResource.ValidateResourceId(id);
             return new DevCenterCatalogResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> object. </returns>
         public virtual ProjectCatalogEnvironmentDefinitionResource GetProjectCatalogEnvironmentDefinitionResource(ResourceIdentifier id)
         {
-            ProjectCatalogEnvironmentDefinitionResource.ValidateResourceId(id);
             return new ProjectCatalogEnvironmentDefinitionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> object. </returns>
         public virtual DevCenterCatalogEnvironmentDefinitionResource GetDevCenterCatalogEnvironmentDefinitionResource(ResourceIdentifier id)
         {
-            DevCenterCatalogEnvironmentDefinitionResource.ValidateResourceId(id);
             return new DevCenterCatalogEnvironmentDefinitionResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterGalleryResource"/> object. </returns>
         public virtual DevCenterGalleryResource GetDevCenterGalleryResource(ResourceIdentifier id)
         {
-            DevCenterGalleryResource.ValidateResourceId(id);
             return new DevCenterGalleryResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="ProjectImageResource"/> object. </returns>
         public virtual ProjectImageResource GetProjectImageResource(ResourceIdentifier id)
         {
-            ProjectImageResource.ValidateResourceId(id);
             return new ProjectImageResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="ImageVersionResource"/> object. </returns>
         public virtual ImageVersionResource GetImageVersionResource(ResourceIdentifier id)
         {
-            ImageVersionResource.ValidateResourceId(id);
             return new ImageVersionResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="ProjectImageVersionResource"/> object. </returns>
         public virtual ProjectImageVersionResource GetProjectImageVersionResource(ResourceIdentifier id)
         {
-            ProjectImageVersionResource.ValidateResourceId(id);
             return new ProjectImageVersionResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterEnvironmentTypeResource"/> object. </returns>
         public virtual DevCenterEnvironmentTypeResource GetDevCenterEnvironmentTypeResource(ResourceIdentifier id)
         {
-            DevCenterEnvironmentTypeResource.ValidateResourceId(id);
             return new DevCenterEnvironmentTypeResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterProjectEnvironmentResource"/> object. </returns>
         public virtual DevCenterProjectEnvironmentResource GetDevCenterProjectEnvironmentResource(ResourceIdentifier id)
         {
-            DevCenterProjectEnvironmentResource.ValidateResourceId(id);
             return new DevCenterProjectEnvironmentResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevBoxDefinitionResource"/> object. </returns>
         public virtual DevBoxDefinitionResource GetDevBoxDefinitionResource(ResourceIdentifier id)
         {
-            DevBoxDefinitionResource.ValidateResourceId(id);
             return new DevBoxDefinitionResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource"/> object. </returns>
         public virtual ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(ResourceIdentifier id)
         {
-            ProjectDevBoxDefinitionResource.ValidateResourceId(id);
             return new ProjectDevBoxDefinitionResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterCatalogTaskResource"/> object. </returns>
         public virtual DevCenterCatalogTaskResource GetDevCenterCatalogTaskResource(ResourceIdentifier id)
         {
-            DevCenterCatalogTaskResource.ValidateResourceId(id);
             return new DevCenterCatalogTaskResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="ProjectCatalogImageDefinitionResource"/> object. </returns>
         public virtual ProjectCatalogImageDefinitionResource GetProjectCatalogImageDefinitionResource(ResourceIdentifier id)
         {
-            ProjectCatalogImageDefinitionResource.ValidateResourceId(id);
             return new ProjectCatalogImageDefinitionResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="ProjectCatalogImageDefinitionBuildResource"/> object. </returns>
         public virtual ProjectCatalogImageDefinitionBuildResource GetProjectCatalogImageDefinitionBuildResource(ResourceIdentifier id)
         {
-            ProjectCatalogImageDefinitionBuildResource.ValidateResourceId(id);
             return new ProjectCatalogImageDefinitionBuildResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterPoolResource"/> object. </returns>
         public virtual DevCenterPoolResource GetDevCenterPoolResource(ResourceIdentifier id)
         {
-            DevCenterPoolResource.ValidateResourceId(id);
             return new DevCenterPoolResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterScheduleResource"/> object. </returns>
         public virtual DevCenterScheduleResource GetDevCenterScheduleResource(ResourceIdentifier id)
         {
-            DevCenterScheduleResource.ValidateResourceId(id);
             return new DevCenterScheduleResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterNetworkConnectionResource"/> object. </returns>
         public virtual DevCenterNetworkConnectionResource GetDevCenterNetworkConnectionResource(ResourceIdentifier id)
         {
-            DevCenterNetworkConnectionResource.ValidateResourceId(id);
             return new DevCenterNetworkConnectionResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="HealthCheckStatusDetailResource"/> object. </returns>
         public virtual HealthCheckStatusDetailResource GetHealthCheckStatusDetailResource(ResourceIdentifier id)
         {
-            HealthCheckStatusDetailResource.ValidateResourceId(id);
             return new HealthCheckStatusDetailResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterEncryptionSetResource"/> object. </returns>
         public virtual DevCenterEncryptionSetResource GetDevCenterEncryptionSetResource(ResourceIdentifier id)
         {
-            DevCenterEncryptionSetResource.ValidateResourceId(id);
             return new DevCenterEncryptionSetResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="ProjectCatalogResource"/> object. </returns>
         public virtual ProjectCatalogResource GetProjectCatalogResource(ResourceIdentifier id)
         {
-            ProjectCatalogResource.ValidateResourceId(id);
             return new ProjectCatalogResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="AllowedEnvironmentTypeResource"/> object. </returns>
         public virtual AllowedEnvironmentTypeResource GetAllowedEnvironmentTypeResource(ResourceIdentifier id)
         {
-            AllowedEnvironmentTypeResource.ValidateResourceId(id);
             return new AllowedEnvironmentTypeResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterCatalogImageDefinitionResource"/> object. </returns>
         public virtual DevCenterCatalogImageDefinitionResource GetDevCenterCatalogImageDefinitionResource(ResourceIdentifier id)
         {
-            DevCenterCatalogImageDefinitionResource.ValidateResourceId(id);
             return new DevCenterCatalogImageDefinitionResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <returns> Returns a <see cref="DevCenterCatalogImageDefinitionBuildResource"/> object. </returns>
         public virtual DevCenterCatalogImageDefinitionBuildResource GetDevCenterCatalogImageDefinitionBuildResource(ResourceIdentifier id)
         {
-            DevCenterCatalogImageDefinitionBuildResource.ValidateResourceId(id);
             return new DevCenterCatalogImageDefinitionBuildResource(Client, id);
         }
     }

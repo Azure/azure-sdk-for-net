@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SubscriptionSecurityAlertResource"/> object. </returns>
         public virtual SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(ResourceIdentifier id)
         {
-            SubscriptionSecurityAlertResource.ValidateResourceId(id);
             return new SubscriptionSecurityAlertResource(Client, id);
         }
 
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="ResourceGroupSecurityAlertResource"/> object. </returns>
         public virtual ResourceGroupSecurityAlertResource GetResourceGroupSecurityAlertResource(ResourceIdentifier id)
         {
-            ResourceGroupSecurityAlertResource.ValidateResourceId(id);
             return new ResourceGroupSecurityAlertResource(Client, id);
         }
 
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityAlertsSuppressionRuleResource"/> object. </returns>
         public virtual SecurityAlertsSuppressionRuleResource GetSecurityAlertsSuppressionRuleResource(ResourceIdentifier id)
         {
-            SecurityAlertsSuppressionRuleResource.ValidateResourceId(id);
             return new SecurityAlertsSuppressionRuleResource(Client, id);
         }
 
@@ -77,7 +74,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityConnectorApplicationResource"/> object. </returns>
         public virtual SecurityConnectorApplicationResource GetSecurityConnectorApplicationResource(ResourceIdentifier id)
         {
-            SecurityConnectorApplicationResource.ValidateResourceId(id);
             return new SecurityConnectorApplicationResource(Client, id);
         }
 
@@ -122,7 +118,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SubscriptionAssessmentMetadataResource"/> object. </returns>
         public virtual SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(ResourceIdentifier id)
         {
-            SubscriptionAssessmentMetadataResource.ValidateResourceId(id);
             return new SubscriptionAssessmentMetadataResource(Client, id);
         }
 
@@ -131,7 +126,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="TenantAssessmentMetadataResource"/> object. </returns>
         public virtual TenantAssessmentMetadataResource GetTenantAssessmentMetadataResource(ResourceIdentifier id)
         {
-            TenantAssessmentMetadataResource.ValidateResourceId(id);
             return new TenantAssessmentMetadataResource(Client, id);
         }
 
@@ -140,7 +134,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityAutomationResource"/> object. </returns>
         public virtual SecurityAutomationResource GetSecurityAutomationResource(ResourceIdentifier id)
         {
-            SecurityAutomationResource.ValidateResourceId(id);
             return new SecurityAutomationResource(Client, id);
         }
 
@@ -149,7 +142,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityContactResource"/> object. </returns>
         public virtual SecurityContactResource GetSecurityContactResource(ResourceIdentifier id)
         {
-            SecurityContactResource.ValidateResourceId(id);
             return new SecurityContactResource(Client, id);
         }
 
@@ -158,7 +150,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="ComplianceResultResource"/> object. </returns>
         public virtual ComplianceResultResource GetComplianceResultResource(ResourceIdentifier id)
         {
-            ComplianceResultResource.ValidateResourceId(id);
             return new ComplianceResultResource(Client, id);
         }
 
@@ -203,7 +194,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="GovernanceAssignmentResource"/> object. </returns>
         public virtual GovernanceAssignmentResource GetGovernanceAssignmentResource(ResourceIdentifier id)
         {
-            GovernanceAssignmentResource.ValidateResourceId(id);
             return new GovernanceAssignmentResource(Client, id);
         }
 
@@ -248,7 +238,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="GovernanceRuleResource"/> object. </returns>
         public virtual GovernanceRuleResource GetGovernanceRuleResource(ResourceIdentifier id)
         {
-            GovernanceRuleResource.ValidateResourceId(id);
             return new GovernanceRuleResource(Client, id);
         }
 
@@ -293,7 +282,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="HealthReportResource"/> object. </returns>
         public virtual HealthReportResource GetHealthReportResource(ResourceIdentifier id)
         {
-            HealthReportResource.ValidateResourceId(id);
             return new HealthReportResource(Client, id);
         }
 
@@ -338,7 +326,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="DeviceSecurityGroupResource"/> object. </returns>
         public virtual DeviceSecurityGroupResource GetDeviceSecurityGroupResource(ResourceIdentifier id)
         {
-            DeviceSecurityGroupResource.ValidateResourceId(id);
             return new DeviceSecurityGroupResource(Client, id);
         }
 
@@ -383,7 +370,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="AutoProvisioningSettingResource"/> object. </returns>
         public virtual AutoProvisioningSettingResource GetAutoProvisioningSettingResource(ResourceIdentifier id)
         {
-            AutoProvisioningSettingResource.ValidateResourceId(id);
             return new AutoProvisioningSettingResource(Client, id);
         }
 
@@ -392,7 +378,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityComplianceResource"/> object. </returns>
         public virtual SecurityComplianceResource GetSecurityComplianceResource(ResourceIdentifier id)
         {
-            SecurityComplianceResource.ValidateResourceId(id);
             return new SecurityComplianceResource(Client, id);
         }
 
@@ -437,7 +422,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="InformationProtectionPolicyResource"/> object. </returns>
         public virtual InformationProtectionPolicyResource GetInformationProtectionPolicyResource(ResourceIdentifier id)
         {
-            InformationProtectionPolicyResource.ValidateResourceId(id);
             return new InformationProtectionPolicyResource(Client, id);
         }
 
@@ -474,7 +458,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityWorkspaceSettingResource"/> object. </returns>
         public virtual SecurityWorkspaceSettingResource GetSecurityWorkspaceSettingResource(ResourceIdentifier id)
         {
-            SecurityWorkspaceSettingResource.ValidateResourceId(id);
             return new SecurityWorkspaceSettingResource(Client, id);
         }
 
@@ -483,7 +466,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="MdeOnboardingDataResource"/> object. </returns>
         public virtual MdeOnboardingDataResource GetMdeOnboardingDataResource(ResourceIdentifier id)
         {
-            MdeOnboardingDataResource.ValidateResourceId(id);
             return new MdeOnboardingDataResource(Client, id);
         }
 
@@ -492,7 +474,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityCenterPricingResource"/> object. </returns>
         public virtual SecurityCenterPricingResource GetSecurityCenterPricingResource(ResourceIdentifier id)
         {
-            SecurityCenterPricingResource.ValidateResourceId(id);
             return new SecurityCenterPricingResource(Client, id);
         }
 
@@ -537,7 +518,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="PrivateLinkGroupResource"/> object. </returns>
         public virtual PrivateLinkGroupResource GetPrivateLinkGroupResource(ResourceIdentifier id)
         {
-            PrivateLinkGroupResource.ValidateResourceId(id);
             return new PrivateLinkGroupResource(Client, id);
         }
 
@@ -546,7 +526,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
         public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
             return new PrivateEndpointConnectionResource(Client, id);
         }
 
@@ -555,7 +534,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="RegulatoryComplianceStandardResource"/> object. </returns>
         public virtual RegulatoryComplianceStandardResource GetRegulatoryComplianceStandardResource(ResourceIdentifier id)
         {
-            RegulatoryComplianceStandardResource.ValidateResourceId(id);
             return new RegulatoryComplianceStandardResource(Client, id);
         }
 
@@ -564,7 +542,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="RegulatoryComplianceControlResource"/> object. </returns>
         public virtual RegulatoryComplianceControlResource GetRegulatoryComplianceControlResource(ResourceIdentifier id)
         {
-            RegulatoryComplianceControlResource.ValidateResourceId(id);
             return new RegulatoryComplianceControlResource(Client, id);
         }
 
@@ -573,7 +550,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="RegulatoryComplianceAssessmentResource"/> object. </returns>
         public virtual RegulatoryComplianceAssessmentResource GetRegulatoryComplianceAssessmentResource(ResourceIdentifier id)
         {
-            RegulatoryComplianceAssessmentResource.ValidateResourceId(id);
             return new RegulatoryComplianceAssessmentResource(Client, id);
         }
 
@@ -582,7 +558,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityConnectorResource"/> object. </returns>
         public virtual SecurityConnectorResource GetSecurityConnectorResource(ResourceIdentifier id)
         {
-            SecurityConnectorResource.ValidateResourceId(id);
             return new SecurityConnectorResource(Client, id);
         }
 
@@ -591,7 +566,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="AzureDevOpsOrgResource"/> object. </returns>
         public virtual AzureDevOpsOrgResource GetAzureDevOpsOrgResource(ResourceIdentifier id)
         {
-            AzureDevOpsOrgResource.ValidateResourceId(id);
             return new AzureDevOpsOrgResource(Client, id);
         }
 
@@ -600,7 +574,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="GitHubOwnerResource"/> object. </returns>
         public virtual GitHubOwnerResource GetGitHubOwnerResource(ResourceIdentifier id)
         {
-            GitHubOwnerResource.ValidateResourceId(id);
             return new GitHubOwnerResource(Client, id);
         }
 
@@ -609,7 +582,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="GitLabGroupResource"/> object. </returns>
         public virtual GitLabGroupResource GetGitLabGroupResource(ResourceIdentifier id)
         {
-            GitLabGroupResource.ValidateResourceId(id);
             return new GitLabGroupResource(Client, id);
         }
 
@@ -618,7 +590,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="DevOpsConfigurationResource"/> object. </returns>
         public virtual DevOpsConfigurationResource GetDevOpsConfigurationResource(ResourceIdentifier id)
         {
-            DevOpsConfigurationResource.ValidateResourceId(id);
             return new DevOpsConfigurationResource(Client, id);
         }
 
@@ -627,7 +598,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="AzureDevOpsProjectResource"/> object. </returns>
         public virtual AzureDevOpsProjectResource GetAzureDevOpsProjectResource(ResourceIdentifier id)
         {
-            AzureDevOpsProjectResource.ValidateResourceId(id);
             return new AzureDevOpsProjectResource(Client, id);
         }
 
@@ -636,7 +606,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="GitLabProjectResource"/> object. </returns>
         public virtual GitLabProjectResource GetGitLabProjectResource(ResourceIdentifier id)
         {
-            GitLabProjectResource.ValidateResourceId(id);
             return new GitLabProjectResource(Client, id);
         }
 
@@ -645,7 +614,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityOperatorResource"/> object. </returns>
         public virtual SecurityOperatorResource GetSecurityOperatorResource(ResourceIdentifier id)
         {
-            SecurityOperatorResource.ValidateResourceId(id);
             return new SecurityOperatorResource(Client, id);
         }
 
@@ -654,7 +622,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="DiscoveredSecuritySolutionResource"/> object. </returns>
         public virtual DiscoveredSecuritySolutionResource GetDiscoveredSecuritySolutionResource(ResourceIdentifier id)
         {
-            DiscoveredSecuritySolutionResource.ValidateResourceId(id);
             return new DiscoveredSecuritySolutionResource(Client, id);
         }
 
@@ -663,7 +630,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="JitNetworkAccessPolicyResource"/> object. </returns>
         public virtual JitNetworkAccessPolicyResource GetJitNetworkAccessPolicyResource(ResourceIdentifier id)
         {
-            JitNetworkAccessPolicyResource.ValidateResourceId(id);
             return new JitNetworkAccessPolicyResource(Client, id);
         }
 
@@ -672,7 +638,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecuritySolutionResource"/> object. </returns>
         public virtual SecuritySolutionResource GetSecuritySolutionResource(ResourceIdentifier id)
         {
-            SecuritySolutionResource.ValidateResourceId(id);
             return new SecuritySolutionResource(Client, id);
         }
 
@@ -681,7 +646,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityTopologyResource"/> object. </returns>
         public virtual SecurityTopologyResource GetSecurityTopologyResource(ResourceIdentifier id)
         {
-            SecurityTopologyResource.ValidateResourceId(id);
             return new SecurityTopologyResource(Client, id);
         }
 
@@ -690,7 +654,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityStandardResource"/> object. </returns>
         public virtual SecurityStandardResource GetSecurityStandardResource(ResourceIdentifier id)
         {
-            SecurityStandardResource.ValidateResourceId(id);
             return new SecurityStandardResource(Client, id);
         }
 
@@ -735,7 +698,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="StandardAssignmentResource"/> object. </returns>
         public virtual StandardAssignmentResource GetStandardAssignmentResource(ResourceIdentifier id)
         {
-            StandardAssignmentResource.ValidateResourceId(id);
             return new StandardAssignmentResource(Client, id);
         }
 
@@ -780,7 +742,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="CustomRecommendationResource"/> object. </returns>
         public virtual CustomRecommendationResource GetCustomRecommendationResource(ResourceIdentifier id)
         {
-            CustomRecommendationResource.ValidateResourceId(id);
             return new CustomRecommendationResource(Client, id);
         }
 
@@ -825,7 +786,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentsSettingResource"/> object. </returns>
         public virtual ServerVulnerabilityAssessmentsSettingResource GetServerVulnerabilityAssessmentsSettingResource(ResourceIdentifier id)
         {
-            ServerVulnerabilityAssessmentsSettingResource.ValidateResourceId(id);
             return new ServerVulnerabilityAssessmentsSettingResource(Client, id);
         }
 
@@ -834,7 +794,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecuritySettingResource"/> object. </returns>
         public virtual SecuritySettingResource GetSecuritySettingResource(ResourceIdentifier id)
         {
-            SecuritySettingResource.ValidateResourceId(id);
             return new SecuritySettingResource(Client, id);
         }
 
@@ -843,7 +802,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
         public virtual SqlVulnerabilityAssessmentBaselineRuleResource GetSqlVulnerabilityAssessmentBaselineRuleResource(ResourceIdentifier id)
         {
-            SqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
             return new SqlVulnerabilityAssessmentBaselineRuleResource(Client, id);
         }
 
@@ -890,7 +848,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResultResource"/> object. </returns>
         public virtual SqlVulnerabilityAssessmentScanResultResource GetSqlVulnerabilityAssessmentScanResultResource(ResourceIdentifier id)
         {
-            SqlVulnerabilityAssessmentScanResultResource.ValidateResourceId(id);
             return new SqlVulnerabilityAssessmentScanResultResource(Client, id);
         }
 
@@ -929,7 +886,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityCenterStandardResource"/> object. </returns>
         public virtual SecurityCenterStandardResource GetSecurityCenterStandardResource(ResourceIdentifier id)
         {
-            SecurityCenterStandardResource.ValidateResourceId(id);
             return new SecurityCenterStandardResource(Client, id);
         }
 
@@ -938,7 +894,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityCenterAssignmentResource"/> object. </returns>
         public virtual SecurityCenterAssignmentResource GetSecurityCenterAssignmentResource(ResourceIdentifier id)
         {
-            SecurityCenterAssignmentResource.ValidateResourceId(id);
             return new SecurityCenterAssignmentResource(Client, id);
         }
 
@@ -947,7 +902,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="ResourceGroupSecurityTaskResource"/> object. </returns>
         public virtual ResourceGroupSecurityTaskResource GetResourceGroupSecurityTaskResource(ResourceIdentifier id)
         {
-            ResourceGroupSecurityTaskResource.ValidateResourceId(id);
             return new ResourceGroupSecurityTaskResource(Client, id);
         }
 
@@ -956,7 +910,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SubscriptionSecurityTaskResource"/> object. </returns>
         public virtual SubscriptionSecurityTaskResource GetSubscriptionSecurityTaskResource(ResourceIdentifier id)
         {
-            SubscriptionSecurityTaskResource.ValidateResourceId(id);
             return new SubscriptionSecurityTaskResource(Client, id);
         }
 
@@ -965,7 +918,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="ApiCollectionResource"/> object. </returns>
         public virtual ApiCollectionResource GetApiCollectionResource(ResourceIdentifier id)
         {
-            ApiCollectionResource.ValidateResourceId(id);
             return new ApiCollectionResource(Client, id);
         }
 
@@ -1010,7 +962,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SubscriptionSecurityApplicationResource"/> object. </returns>
         public virtual SubscriptionSecurityApplicationResource GetSubscriptionSecurityApplicationResource(ResourceIdentifier id)
         {
-            SubscriptionSecurityApplicationResource.ValidateResourceId(id);
             return new SubscriptionSecurityApplicationResource(Client, id);
         }
 
@@ -1019,7 +970,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityAssessmentResource"/> object. </returns>
         public virtual SecurityAssessmentResource GetSecurityAssessmentResource(ResourceIdentifier id)
         {
-            SecurityAssessmentResource.ValidateResourceId(id);
             return new SecurityAssessmentResource(Client, id);
         }
 
@@ -1036,7 +986,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
         public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSettingResource(ResourceIdentifier id)
         {
-            AdvancedThreatProtectionSettingResource.ValidateResourceId(id);
             return new AdvancedThreatProtectionSettingResource(Client, id);
         }
 
@@ -1053,7 +1002,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="DefenderForStorageSettingResource"/> object. </returns>
         public virtual DefenderForStorageSettingResource GetDefenderForStorageSettingResource(ResourceIdentifier id)
         {
-            DefenderForStorageSettingResource.ValidateResourceId(id);
             return new DefenderForStorageSettingResource(Client, id);
         }
 
@@ -1090,7 +1038,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource"/> object. </returns>
         public virtual IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModelResource(ResourceIdentifier id)
         {
-            IotSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
             return new IotSecuritySolutionAnalyticsModelResource(Client, id);
         }
 
@@ -1099,7 +1046,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="IotSecuritySolutionResource"/> object. </returns>
         public virtual IotSecuritySolutionResource GetIotSecuritySolutionResource(ResourceIdentifier id)
         {
-            IotSecuritySolutionResource.ValidateResourceId(id);
             return new IotSecuritySolutionResource(Client, id);
         }
 
@@ -1108,7 +1054,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="IotSecurityAggregatedAlertResource"/> object. </returns>
         public virtual IotSecurityAggregatedAlertResource GetIotSecurityAggregatedAlertResource(ResourceIdentifier id)
         {
-            IotSecurityAggregatedAlertResource.ValidateResourceId(id);
             return new IotSecurityAggregatedAlertResource(Client, id);
         }
 
@@ -1117,7 +1062,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="IotSecurityAggregatedRecommendationResource"/> object. </returns>
         public virtual IotSecurityAggregatedRecommendationResource GetIotSecurityAggregatedRecommendationResource(ResourceIdentifier id)
         {
-            IotSecurityAggregatedRecommendationResource.ValidateResourceId(id);
             return new IotSecurityAggregatedRecommendationResource(Client, id);
         }
 
@@ -1126,7 +1070,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityCenterLocationResource"/> object. </returns>
         public virtual SecurityCenterLocationResource GetSecurityCenterLocationResource(ResourceIdentifier id)
         {
-            SecurityCenterLocationResource.ValidateResourceId(id);
             return new SecurityCenterLocationResource(Client, id);
         }
 
@@ -1135,7 +1078,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
         public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
             return new PrivateLinkResource(Client, id);
         }
 
@@ -1144,7 +1086,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecureScoreResource"/> object. </returns>
         public virtual SecureScoreResource GetSecureScoreResource(ResourceIdentifier id)
         {
-            SecureScoreResource.ValidateResourceId(id);
             return new SecureScoreResource(Client, id);
         }
 
@@ -1153,7 +1094,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="AzureDevOpsRepositoryResource"/> object. </returns>
         public virtual AzureDevOpsRepositoryResource GetAzureDevOpsRepositoryResource(ResourceIdentifier id)
         {
-            AzureDevOpsRepositoryResource.ValidateResourceId(id);
             return new AzureDevOpsRepositoryResource(Client, id);
         }
 
@@ -1162,7 +1102,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="GitHubRepositoryResource"/> object. </returns>
         public virtual GitHubRepositoryResource GetGitHubRepositoryResource(ResourceIdentifier id)
         {
-            GitHubRepositoryResource.ValidateResourceId(id);
             return new GitHubRepositoryResource(Client, id);
         }
 
@@ -1171,7 +1110,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecurityCenterAllowedConnectionResource"/> object. </returns>
         public virtual SecurityCenterAllowedConnectionResource GetSecurityCenterAllowedConnectionResource(ResourceIdentifier id)
         {
-            SecurityCenterAllowedConnectionResource.ValidateResourceId(id);
             return new SecurityCenterAllowedConnectionResource(Client, id);
         }
 
@@ -1180,7 +1118,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
         public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
-            ServerVulnerabilityAssessmentResource.ValidateResourceId(id);
             return new ServerVulnerabilityAssessmentResource(Client, id);
         }
 
@@ -1197,7 +1134,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SensitivitySettingResource"/> object. </returns>
         public virtual SensitivitySettingResource GetSensitivitySettingResource(ResourceIdentifier id)
         {
-            SensitivitySettingResource.ValidateResourceId(id);
             return new SensitivitySettingResource(Client, id);
         }
 
@@ -1206,7 +1142,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> object. </returns>
         public virtual SqlVulnerabilityAssessmentSettingsResource GetSqlVulnerabilityAssessmentSettingsResource(ResourceIdentifier id)
         {
-            SqlVulnerabilityAssessmentSettingsResource.ValidateResourceId(id);
             return new SqlVulnerabilityAssessmentSettingsResource(Client, id);
         }
 
@@ -1223,7 +1158,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource"/> object. </returns>
         public virtual SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScanResource(ResourceIdentifier id)
         {
-            SqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
             return new SqlVulnerabilityAssessmentScanResource(Client, id);
         }
 
@@ -1270,7 +1204,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> Returns a <see cref="SecuritySubAssessmentResource"/> object. </returns>
         public virtual SecuritySubAssessmentResource GetSecuritySubAssessmentResource(ResourceIdentifier id)
         {
-            SecuritySubAssessmentResource.ValidateResourceId(id);
             return new SecuritySubAssessmentResource(Client, id);
         }
 

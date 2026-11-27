@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> Returns a <see cref="TenantResourceHealthEventImpactedResource"/> object. </returns>
         public virtual TenantResourceHealthEventImpactedResource GetTenantResourceHealthEventImpactedResource(ResourceIdentifier id)
         {
-            TenantResourceHealthEventImpactedResource.ValidateResourceId(id);
             return new TenantResourceHealthEventImpactedResource(Client, id);
         }
 
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> Returns a <see cref="ResourceHealthEventImpactedResource"/> object. </returns>
         public virtual ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(ResourceIdentifier id)
         {
-            ResourceHealthEventImpactedResource.ValidateResourceId(id);
             return new ResourceHealthEventImpactedResource(Client, id);
         }
 
@@ -80,7 +78,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> Returns a <see cref="ResourceHealthMetadataEntityResource"/> object. </returns>
         public virtual ResourceHealthMetadataEntityResource GetResourceHealthMetadataEntityResource(ResourceIdentifier id)
         {
-            ResourceHealthMetadataEntityResource.ValidateResourceId(id);
             return new ResourceHealthMetadataEntityResource(Client, id);
         }
 
@@ -89,7 +86,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> Returns a <see cref="ResourceHealthEventResource"/> object. </returns>
         public virtual ResourceHealthEventResource GetResourceHealthEventResource(ResourceIdentifier id)
         {
-            ResourceHealthEventResource.ValidateResourceId(id);
             return new ResourceHealthEventResource(Client, id);
         }
 
@@ -98,7 +94,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> Returns a <see cref="TenantResourceHealthEventResource"/> object. </returns>
         public virtual TenantResourceHealthEventResource GetTenantResourceHealthEventResource(ResourceIdentifier id)
         {
-            TenantResourceHealthEventResource.ValidateResourceId(id);
             return new TenantResourceHealthEventResource(Client, id);
         }
 
@@ -107,7 +102,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> Returns a <see cref="ServiceEmergingIssueResource"/> object. </returns>
         public virtual ServiceEmergingIssueResource GetServiceEmergingIssueResource(ResourceIdentifier id)
         {
-            ServiceEmergingIssueResource.ValidateResourceId(id);
             return new ServiceEmergingIssueResource(Client, id);
         }
 

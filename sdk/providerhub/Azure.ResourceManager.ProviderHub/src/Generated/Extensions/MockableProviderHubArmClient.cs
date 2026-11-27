@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="OperationsPutContentResource"/> object. </returns>
         public virtual OperationsPutContentResource GetOperationsPutContentResource(ResourceIdentifier id)
         {
-            OperationsPutContentResource.ValidateResourceId(id);
             return new OperationsPutContentResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="CustomRolloutResource"/> object. </returns>
         public virtual CustomRolloutResource GetCustomRolloutResource(ResourceIdentifier id)
         {
-            CustomRolloutResource.ValidateResourceId(id);
             return new CustomRolloutResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="ProviderRegistrationResource"/> object. </returns>
         public virtual ProviderRegistrationResource GetProviderRegistrationResource(ResourceIdentifier id)
         {
-            ProviderRegistrationResource.ValidateResourceId(id);
             return new ProviderRegistrationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="DefaultRolloutResource"/> object. </returns>
         public virtual DefaultRolloutResource GetDefaultRolloutResource(ResourceIdentifier id)
         {
-            DefaultRolloutResource.ValidateResourceId(id);
             return new DefaultRolloutResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="NotificationRegistrationResource"/> object. </returns>
         public virtual NotificationRegistrationResource GetNotificationRegistrationResource(ResourceIdentifier id)
         {
-            NotificationRegistrationResource.ValidateResourceId(id);
             return new NotificationRegistrationResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="ResourceTypeRegistrationResource"/> object. </returns>
         public virtual ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(ResourceIdentifier id)
         {
-            ResourceTypeRegistrationResource.ValidateResourceId(id);
             return new ResourceTypeRegistrationResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource"/> object. </returns>
         public virtual NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(ResourceIdentifier id)
         {
-            NestedResourceTypeFirstSkuResource.ValidateResourceId(id);
             return new NestedResourceTypeFirstSkuResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="ResourceTypeSkuResource"/> object. </returns>
         public virtual ResourceTypeSkuResource GetResourceTypeSkuResource(ResourceIdentifier id)
         {
-            ResourceTypeSkuResource.ValidateResourceId(id);
             return new ResourceTypeSkuResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource"/> object. </returns>
         public virtual NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(ResourceIdentifier id)
         {
-            NestedResourceTypeSecondSkuResource.ValidateResourceId(id);
             return new NestedResourceTypeSecondSkuResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource"/> object. </returns>
         public virtual NestedResourceTypeThirdSkuResource GetNestedResourceTypeThirdSkuResource(ResourceIdentifier id)
         {
-            NestedResourceTypeThirdSkuResource.ValidateResourceId(id);
             return new NestedResourceTypeThirdSkuResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="ProviderAuthorizedApplicationResource"/> object. </returns>
         public virtual ProviderAuthorizedApplicationResource GetProviderAuthorizedApplicationResource(ResourceIdentifier id)
         {
-            ProviderAuthorizedApplicationResource.ValidateResourceId(id);
             return new ProviderAuthorizedApplicationResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="ProviderMonitorSettingResource"/> object. </returns>
         public virtual ProviderMonitorSettingResource GetProviderMonitorSettingResource(ResourceIdentifier id)
         {
-            ProviderMonitorSettingResource.ValidateResourceId(id);
             return new ProviderMonitorSettingResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="ManifestInfoResource"/> object. </returns>
         public virtual ManifestInfoResource GetManifestInfoResource(ResourceIdentifier id)
         {
-            ManifestInfoResource.ValidateResourceId(id);
             return new ManifestInfoResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="DiscoveryBookshelfResource"/> object. </returns>
         public virtual DiscoveryBookshelfResource GetDiscoveryBookshelfResource(ResourceIdentifier id)
         {
-            DiscoveryBookshelfResource.ValidateResourceId(id);
             return new DiscoveryBookshelfResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="BookshelfPrivateEndpointConnectionResource"/> object. </returns>
         public virtual BookshelfPrivateEndpointConnectionResource GetBookshelfPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            BookshelfPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new BookshelfPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="BookshelfPrivateLinkResource"/> object. </returns>
         public virtual BookshelfPrivateLinkResource GetBookshelfPrivateLinkResource(ResourceIdentifier id)
         {
-            BookshelfPrivateLinkResource.ValidateResourceId(id);
             return new BookshelfPrivateLinkResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="DiscoveryToolResource"/> object. </returns>
         public virtual DiscoveryToolResource GetDiscoveryToolResource(ResourceIdentifier id)
         {
-            DiscoveryToolResource.ValidateResourceId(id);
             return new DiscoveryToolResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="DiscoveryProjectResource"/> object. </returns>
         public virtual DiscoveryProjectResource GetDiscoveryProjectResource(ResourceIdentifier id)
         {
-            DiscoveryProjectResource.ValidateResourceId(id);
             return new DiscoveryProjectResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="DiscoveryWorkspaceResource"/> object. </returns>
         public virtual DiscoveryWorkspaceResource GetDiscoveryWorkspaceResource(ResourceIdentifier id)
         {
-            DiscoveryWorkspaceResource.ValidateResourceId(id);
             return new DiscoveryWorkspaceResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource"/> object. </returns>
         public virtual WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            WorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new WorkspacePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="DiscoveryChatModelDeploymentResource"/> object. </returns>
         public virtual DiscoveryChatModelDeploymentResource GetDiscoveryChatModelDeploymentResource(ResourceIdentifier id)
         {
-            DiscoveryChatModelDeploymentResource.ValidateResourceId(id);
             return new DiscoveryChatModelDeploymentResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="WorkspacePrivateLinkResource"/> object. </returns>
         public virtual WorkspacePrivateLinkResource GetWorkspacePrivateLinkResource(ResourceIdentifier id)
         {
-            WorkspacePrivateLinkResource.ValidateResourceId(id);
             return new WorkspacePrivateLinkResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="DiscoveryNodePoolResource"/> object. </returns>
         public virtual DiscoveryNodePoolResource GetDiscoveryNodePoolResource(ResourceIdentifier id)
         {
-            DiscoveryNodePoolResource.ValidateResourceId(id);
             return new DiscoveryNodePoolResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="DiscoverySupercomputerResource"/> object. </returns>
         public virtual DiscoverySupercomputerResource GetDiscoverySupercomputerResource(ResourceIdentifier id)
         {
-            DiscoverySupercomputerResource.ValidateResourceId(id);
             return new DiscoverySupercomputerResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="DiscoveryStorageAssetResource"/> object. </returns>
         public virtual DiscoveryStorageAssetResource GetDiscoveryStorageAssetResource(ResourceIdentifier id)
         {
-            DiscoveryStorageAssetResource.ValidateResourceId(id);
             return new DiscoveryStorageAssetResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <returns> Returns a <see cref="DiscoveryStorageContainerResource"/> object. </returns>
         public virtual DiscoveryStorageContainerResource GetDiscoveryStorageContainerResource(ResourceIdentifier id)
         {
-            DiscoveryStorageContainerResource.ValidateResourceId(id);
             return new DiscoveryStorageContainerResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlMigrationResource"/> object. </returns>
         public virtual PostgreSqlMigrationResource GetPostgreSqlMigrationResource(ResourceIdentifier id)
         {
-            PostgreSqlMigrationResource.ValidateResourceId(id);
             return new PostgreSqlMigrationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServerResource"/> object. </returns>
         public virtual PostgreSqlFlexibleServerResource GetPostgreSqlFlexibleServerResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServerConfigurationResource"/> object. </returns>
         public virtual PostgreSqlFlexibleServerConfigurationResource GetPostgreSqlFlexibleServerConfigurationResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerConfigurationResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerConfigurationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServerDatabaseResource"/> object. </returns>
         public virtual PostgreSqlFlexibleServerDatabaseResource GetPostgreSqlFlexibleServerDatabaseResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerDatabaseResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerDatabaseResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServerFirewallRuleResource"/> object. </returns>
         public virtual PostgreSqlFlexibleServerFirewallRuleResource GetPostgreSqlFlexibleServerFirewallRuleResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerFirewallRuleResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerFirewallRuleResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionResource"/> object. </returns>
         public virtual PostgreSqlFlexibleServersPrivateEndpointConnectionResource GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServersPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServersPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServersPrivateLinkResource"/> object. </returns>
         public virtual PostgreSqlFlexibleServersPrivateLinkResource GetPostgreSqlFlexibleServersPrivateLinkResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServersPrivateLinkResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServersPrivateLinkResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="VirtualEndpointResource"/> object. </returns>
         public virtual VirtualEndpointResource GetVirtualEndpointResource(ResourceIdentifier id)
         {
-            VirtualEndpointResource.ValidateResourceId(id);
             return new VirtualEndpointResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MaintenanceEventResource"/> object. </returns>
         public virtual MaintenanceEventResource GetMaintenanceEventResource(ResourceIdentifier id)
         {
-            MaintenanceEventResource.ValidateResourceId(id);
             return new MaintenanceEventResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="MajorVersionUpgradePrecheckResource"/> object. </returns>
         public virtual MajorVersionUpgradePrecheckResource GetMajorVersionUpgradePrecheckResource(ResourceIdentifier id)
         {
-            MajorVersionUpgradePrecheckResource.ValidateResourceId(id);
             return new MajorVersionUpgradePrecheckResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> object. </returns>
         public virtual PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource GetPostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlLtrServerBackupOperationResource"/> object. </returns>
         public virtual PostgreSqlLtrServerBackupOperationResource GetPostgreSqlLtrServerBackupOperationResource(ResourceIdentifier id)
         {
-            PostgreSqlLtrServerBackupOperationResource.ValidateResourceId(id);
             return new PostgreSqlLtrServerBackupOperationResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="ServerThreatProtectionSettingsModelResource"/> object. </returns>
         public virtual ServerThreatProtectionSettingsModelResource GetServerThreatProtectionSettingsModelResource(ResourceIdentifier id)
         {
-            ServerThreatProtectionSettingsModelResource.ValidateResourceId(id);
             return new ServerThreatProtectionSettingsModelResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServerBackupResource"/> object. </returns>
         public virtual PostgreSqlFlexibleServerBackupResource GetPostgreSqlFlexibleServerBackupResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerBackupResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerBackupResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> object. </returns>
         public virtual PostgreSqlFlexibleServerTuningOptionResource GetPostgreSqlFlexibleServerTuningOptionResource(ResourceIdentifier id)
         {
-            PostgreSqlFlexibleServerTuningOptionResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerTuningOptionResource(Client, id);
         }
     }

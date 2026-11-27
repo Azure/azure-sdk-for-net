@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <returns> Returns a <see cref="DataBoxJobResource"/> object. </returns>
         public virtual DataBoxJobResource GetDataBoxJobResource(ResourceIdentifier id)
         {
-            DataBoxJobResource.ValidateResourceId(id);
             return new DataBoxJobResource(Client, id);
         }
     }

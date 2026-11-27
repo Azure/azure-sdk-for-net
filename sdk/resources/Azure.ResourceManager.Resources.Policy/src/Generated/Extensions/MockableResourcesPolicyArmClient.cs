@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> Returns a <see cref="PolicyAssignmentResource"/> object. </returns>
         public virtual PolicyAssignmentResource GetPolicyAssignmentResource(ResourceIdentifier id)
         {
-            PolicyAssignmentResource.ValidateResourceId(id);
             return new PolicyAssignmentResource(Client, id);
         }
 
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> Returns a <see cref="DataPolicyManifestResource"/> object. </returns>
         public virtual DataPolicyManifestResource GetDataPolicyManifestResource(ResourceIdentifier id)
         {
-            DataPolicyManifestResource.ValidateResourceId(id);
             return new DataPolicyManifestResource(Client, id);
         }
 
@@ -91,7 +89,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> Returns a <see cref="PolicyDefinitionResource"/> object. </returns>
         public virtual PolicyDefinitionResource GetPolicyDefinitionResource(ResourceIdentifier id)
         {
-            PolicyDefinitionResource.ValidateResourceId(id);
             return new PolicyDefinitionResource(Client, id);
         }
 
@@ -100,7 +97,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> Returns a <see cref="PolicyDefinitionVersionResource"/> object. </returns>
         public virtual PolicyDefinitionVersionResource GetPolicyDefinitionVersionResource(ResourceIdentifier id)
         {
-            PolicyDefinitionVersionResource.ValidateResourceId(id);
             return new PolicyDefinitionVersionResource(Client, id);
         }
 
@@ -109,7 +105,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> Returns a <see cref="PolicyExemptionResource"/> object. </returns>
         public virtual PolicyExemptionResource GetPolicyExemptionResource(ResourceIdentifier id)
         {
-            PolicyExemptionResource.ValidateResourceId(id);
             return new PolicyExemptionResource(Client, id);
         }
 
@@ -154,7 +149,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> Returns a <see cref="PolicySetDefinitionResource"/> object. </returns>
         public virtual PolicySetDefinitionResource GetPolicySetDefinitionResource(ResourceIdentifier id)
         {
-            PolicySetDefinitionResource.ValidateResourceId(id);
             return new PolicySetDefinitionResource(Client, id);
         }
 
@@ -163,7 +157,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> Returns a <see cref="PolicySetDefinitionVersionResource"/> object. </returns>
         public virtual PolicySetDefinitionVersionResource GetPolicySetDefinitionVersionResource(ResourceIdentifier id)
         {
-            PolicySetDefinitionVersionResource.ValidateResourceId(id);
             return new PolicySetDefinitionVersionResource(Client, id);
         }
 
@@ -172,7 +165,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> Returns a <see cref="VariableResource"/> object. </returns>
         public virtual VariableResource GetVariableResource(ResourceIdentifier id)
         {
-            VariableResource.ValidateResourceId(id);
             return new VariableResource(Client, id);
         }
 
@@ -181,7 +173,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> Returns a <see cref="VariableValueResource"/> object. </returns>
         public virtual VariableValueResource GetVariableValueResource(ResourceIdentifier id)
         {
-            VariableValueResource.ValidateResourceId(id);
             return new VariableValueResource(Client, id);
         }
     }

@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> Returns a <see cref="TopLevelTrackedResource"/> object. </returns>
         public virtual TopLevelTrackedResource GetTopLevelTrackedResource(ResourceIdentifier id)
         {
-            TopLevelTrackedResource.ValidateResourceId(id);
             return new TopLevelTrackedResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> Returns a <see cref="NestedProxyResource"/> object. </returns>
         public virtual NestedProxyResource GetNestedProxyResource(ResourceIdentifier id)
         {
-            NestedProxyResource.ValidateResourceId(id);
             return new NestedProxyResource(Client, id);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> Returns a <see cref="SingletonTrackedResource"/> object. </returns>
         public virtual SingletonTrackedResource GetSingletonTrackedResource(ResourceIdentifier id)
         {
-            SingletonTrackedResource.ValidateResourceId(id);
             return new SingletonTrackedResource(Client, id);
         }
 
@@ -62,7 +59,6 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> Returns a <see cref="ExtensionsResource"/> object. </returns>
         public virtual ExtensionsResource GetExtensionsResource(ResourceIdentifier id)
         {
-            ExtensionsResource.ValidateResourceId(id);
             return new ExtensionsResource(Client, id);
         }
 
@@ -107,7 +103,6 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> Returns a <see cref="LocationResource"/> object. </returns>
         public virtual LocationResource GetLocationResource(ResourceIdentifier id)
         {
-            LocationResource.ValidateResourceId(id);
             return new LocationResource(Client, id);
         }
     }

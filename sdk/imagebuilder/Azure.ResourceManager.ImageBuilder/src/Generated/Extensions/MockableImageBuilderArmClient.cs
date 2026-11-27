@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ImageBuilder.Mocking
         /// <returns> Returns a <see cref="ImageTemplateTriggerResource"/> object. </returns>
         public virtual ImageTemplateTriggerResource GetImageTemplateTriggerResource(ResourceIdentifier id)
         {
-            ImageTemplateTriggerResource.ValidateResourceId(id);
             return new ImageTemplateTriggerResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ImageBuilder.Mocking
         /// <returns> Returns a <see cref="ImageTemplateResource"/> object. </returns>
         public virtual ImageTemplateResource GetImageTemplateResource(ResourceIdentifier id)
         {
-            ImageTemplateResource.ValidateResourceId(id);
             return new ImageTemplateResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ImageBuilder.Mocking
         /// <returns> Returns a <see cref="ImageTemplateRunOutputResource"/> object. </returns>
         public virtual ImageTemplateRunOutputResource GetImageTemplateRunOutputResource(ResourceIdentifier id)
         {
-            ImageTemplateRunOutputResource.ValidateResourceId(id);
             return new ImageTemplateRunOutputResource(Client, id);
         }
     }

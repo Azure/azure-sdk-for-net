@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// <returns> Returns a <see cref="ComputeFleetResource"/> object. </returns>
         public virtual ComputeFleetResource GetComputeFleetResource(ResourceIdentifier id)
         {
-            ComputeFleetResource.ValidateResourceId(id);
             return new ComputeFleetResource(Client, id);
         }
     }

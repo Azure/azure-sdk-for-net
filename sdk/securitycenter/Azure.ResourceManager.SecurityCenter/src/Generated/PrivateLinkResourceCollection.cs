@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateLinkResources_Get. </description>
+        /// <description> PrivateLinkResources_Head. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -357,22 +357,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateLinkName, context);
+                HttpMessage message = _privateLinksRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateLinkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<SecurityCenterPrivateLinkResourceData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(SecurityCenterPrivateLinkResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SecurityCenterPrivateLinkResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {
@@ -390,7 +382,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateLinkResources_Get. </description>
+        /// <description> PrivateLinkResources_Head. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -414,22 +406,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateLinkName, context);
+                HttpMessage message = _privateLinksRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateLinkName, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<SecurityCenterPrivateLinkResourceData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(SecurityCenterPrivateLinkResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SecurityCenterPrivateLinkResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {

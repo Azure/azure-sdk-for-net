@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesAccountResource"/> object. </returns>
         public virtual CognitiveServicesAccountResource GetCognitiveServicesAccountResource(ResourceIdentifier id)
         {
-            CognitiveServicesAccountResource.ValidateResourceId(id);
             return new CognitiveServicesAccountResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesDeletedAccountResource"/> object. </returns>
         public virtual CognitiveServicesDeletedAccountResource GetCognitiveServicesDeletedAccountResource(ResourceIdentifier id)
         {
-            CognitiveServicesDeletedAccountResource.ValidateResourceId(id);
             return new CognitiveServicesDeletedAccountResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="AttachedAksClusterResource"/> object. </returns>
         public virtual AttachedAksClusterResource GetAttachedAksClusterResource(ResourceIdentifier id)
         {
-            AttachedAksClusterResource.ValidateResourceId(id);
             return new AttachedAksClusterResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> object. </returns>
         public virtual CognitiveServicesPrivateEndpointConnectionResource GetCognitiveServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            CognitiveServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new CognitiveServicesPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesAccountDeploymentResource"/> object. </returns>
         public virtual CognitiveServicesAccountDeploymentResource GetCognitiveServicesAccountDeploymentResource(ResourceIdentifier id)
         {
-            CognitiveServicesAccountDeploymentResource.ValidateResourceId(id);
             return new CognitiveServicesAccountDeploymentResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CommitmentPlanResource"/> object. </returns>
         public virtual CommitmentPlanResource GetCommitmentPlanResource(ResourceIdentifier id)
         {
-            CommitmentPlanResource.ValidateResourceId(id);
             return new CommitmentPlanResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesCommitmentPlanResource"/> object. </returns>
         public virtual CognitiveServicesCommitmentPlanResource GetCognitiveServicesCommitmentPlanResource(ResourceIdentifier id)
         {
-            CognitiveServicesCommitmentPlanResource.ValidateResourceId(id);
             return new CognitiveServicesCommitmentPlanResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CommitmentPlanAccountAssociationResource"/> object. </returns>
         public virtual CommitmentPlanAccountAssociationResource GetCommitmentPlanAccountAssociationResource(ResourceIdentifier id)
         {
-            CommitmentPlanAccountAssociationResource.ValidateResourceId(id);
             return new CommitmentPlanAccountAssociationResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesEncryptionScopeResource"/> object. </returns>
         public virtual CognitiveServicesEncryptionScopeResource GetCognitiveServicesEncryptionScopeResource(ResourceIdentifier id)
         {
-            CognitiveServicesEncryptionScopeResource.ValidateResourceId(id);
             return new CognitiveServicesEncryptionScopeResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="RaiPolicyResource"/> object. </returns>
         public virtual RaiPolicyResource GetRaiPolicyResource(ResourceIdentifier id)
         {
-            RaiPolicyResource.ValidateResourceId(id);
             return new RaiPolicyResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="SubscriptionRaiPolicyResource"/> object. </returns>
         public virtual SubscriptionRaiPolicyResource GetSubscriptionRaiPolicyResource(ResourceIdentifier id)
         {
-            SubscriptionRaiPolicyResource.ValidateResourceId(id);
             return new SubscriptionRaiPolicyResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="RaiRegoResource"/> object. </returns>
         public virtual RaiRegoResource GetRaiRegoResource(ResourceIdentifier id)
         {
-            RaiRegoResource.ValidateResourceId(id);
             return new RaiRegoResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="RaiBindingResource"/> object. </returns>
         public virtual RaiBindingResource GetRaiBindingResource(ResourceIdentifier id)
         {
-            RaiBindingResource.ValidateResourceId(id);
             return new RaiBindingResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="RaiBlocklistItemResource"/> object. </returns>
         public virtual RaiBlocklistItemResource GetRaiBlocklistItemResource(ResourceIdentifier id)
         {
-            RaiBlocklistItemResource.ValidateResourceId(id);
             return new RaiBlocklistItemResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="RaiBlocklistResource"/> object. </returns>
         public virtual RaiBlocklistResource GetRaiBlocklistResource(ResourceIdentifier id)
         {
-            RaiBlocklistResource.ValidateResourceId(id);
             return new RaiBlocklistResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="RaiTopicResource"/> object. </returns>
         public virtual RaiTopicResource GetRaiTopicResource(ResourceIdentifier id)
         {
-            RaiTopicResource.ValidateResourceId(id);
             return new RaiTopicResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="RaiExternalSafetyProviderSchemaResource"/> object. </returns>
         public virtual RaiExternalSafetyProviderSchemaResource GetRaiExternalSafetyProviderSchemaResource(ResourceIdentifier id)
         {
-            RaiExternalSafetyProviderSchemaResource.ValidateResourceId(id);
             return new RaiExternalSafetyProviderSchemaResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="RaiToolLabelResource"/> object. </returns>
         public virtual RaiToolLabelResource GetRaiToolLabelResource(ResourceIdentifier id)
         {
-            RaiToolLabelResource.ValidateResourceId(id);
             return new RaiToolLabelResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="RaiContentFilterResource"/> object. </returns>
         public virtual RaiContentFilterResource GetRaiContentFilterResource(ResourceIdentifier id)
         {
-            RaiContentFilterResource.ValidateResourceId(id);
             return new RaiContentFilterResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="DefenderForAISettingResource"/> object. </returns>
         public virtual DefenderForAISettingResource GetDefenderForAISettingResource(ResourceIdentifier id)
         {
-            DefenderForAISettingResource.ValidateResourceId(id);
             return new DefenderForAISettingResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesProjectResource"/> object. </returns>
         public virtual CognitiveServicesProjectResource GetCognitiveServicesProjectResource(ResourceIdentifier id)
         {
-            CognitiveServicesProjectResource.ValidateResourceId(id);
             return new CognitiveServicesProjectResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesConnectionResource"/> object. </returns>
         public virtual CognitiveServicesConnectionResource GetCognitiveServicesConnectionResource(ResourceIdentifier id)
         {
-            CognitiveServicesConnectionResource.ValidateResourceId(id);
             return new CognitiveServicesConnectionResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesProjectConnectionResource"/> object. </returns>
         public virtual CognitiveServicesProjectConnectionResource GetCognitiveServicesProjectConnectionResource(ResourceIdentifier id)
         {
-            CognitiveServicesProjectConnectionResource.ValidateResourceId(id);
             return new CognitiveServicesProjectConnectionResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesCapabilityHostResource"/> object. </returns>
         public virtual CognitiveServicesCapabilityHostResource GetCognitiveServicesCapabilityHostResource(ResourceIdentifier id)
         {
-            CognitiveServicesCapabilityHostResource.ValidateResourceId(id);
             return new CognitiveServicesCapabilityHostResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesProjectScopedCapabilityHostResource"/> object. </returns>
         public virtual CognitiveServicesProjectScopedCapabilityHostResource GetCognitiveServicesProjectScopedCapabilityHostResource(ResourceIdentifier id)
         {
-            CognitiveServicesProjectScopedCapabilityHostResource.ValidateResourceId(id);
             return new CognitiveServicesProjectScopedCapabilityHostResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesQuotaTierResource"/> object. </returns>
         public virtual CognitiveServicesQuotaTierResource GetCognitiveServicesQuotaTierResource(ResourceIdentifier id)
         {
-            CognitiveServicesQuotaTierResource.ValidateResourceId(id);
             return new CognitiveServicesQuotaTierResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesOutboundRuleBasicResource"/> object. </returns>
         public virtual CognitiveServicesOutboundRuleBasicResource GetCognitiveServicesOutboundRuleBasicResource(ResourceIdentifier id)
         {
-            CognitiveServicesOutboundRuleBasicResource.ValidateResourceId(id);
             return new CognitiveServicesOutboundRuleBasicResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesManagedNetworkSettingsResource"/> object. </returns>
         public virtual CognitiveServicesManagedNetworkSettingsResource GetCognitiveServicesManagedNetworkSettingsResource(ResourceIdentifier id)
         {
-            CognitiveServicesManagedNetworkSettingsResource.ValidateResourceId(id);
             return new CognitiveServicesManagedNetworkSettingsResource(Client, id);
         }
 
@@ -292,7 +263,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="ArcDeploymentResource"/> object. </returns>
         public virtual ArcDeploymentResource GetArcDeploymentResource(ResourceIdentifier id)
         {
-            ArcDeploymentResource.ValidateResourceId(id);
             return new ArcDeploymentResource(Client, id);
         }
 
@@ -301,7 +271,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesAgentApplicationResource"/> object. </returns>
         public virtual CognitiveServicesAgentApplicationResource GetCognitiveServicesAgentApplicationResource(ResourceIdentifier id)
         {
-            CognitiveServicesAgentApplicationResource.ValidateResourceId(id);
             return new CognitiveServicesAgentApplicationResource(Client, id);
         }
 
@@ -310,7 +279,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesAgentDeploymentResource"/> object. </returns>
         public virtual CognitiveServicesAgentDeploymentResource GetCognitiveServicesAgentDeploymentResource(ResourceIdentifier id)
         {
-            CognitiveServicesAgentDeploymentResource.ValidateResourceId(id);
             return new CognitiveServicesAgentDeploymentResource(Client, id);
         }
 
@@ -319,7 +287,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesManagedComputeDeploymentResource"/> object. </returns>
         public virtual CognitiveServicesManagedComputeDeploymentResource GetCognitiveServicesManagedComputeDeploymentResource(ResourceIdentifier id)
         {
-            CognitiveServicesManagedComputeDeploymentResource.ValidateResourceId(id);
             return new CognitiveServicesManagedComputeDeploymentResource(Client, id);
         }
 
@@ -328,7 +295,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="AdapterDeploymentResource"/> object. </returns>
         public virtual AdapterDeploymentResource GetAdapterDeploymentResource(ResourceIdentifier id)
         {
-            AdapterDeploymentResource.ValidateResourceId(id);
             return new AdapterDeploymentResource(Client, id);
         }
 
@@ -337,7 +303,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesComputeResource"/> object. </returns>
         public virtual CognitiveServicesComputeResource GetCognitiveServicesComputeResource(ResourceIdentifier id)
         {
-            CognitiveServicesComputeResource.ValidateResourceId(id);
             return new CognitiveServicesComputeResource(Client, id);
         }
 
@@ -346,7 +311,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesWorkbenchResource"/> object. </returns>
         public virtual CognitiveServicesWorkbenchResource GetCognitiveServicesWorkbenchResource(ResourceIdentifier id)
         {
-            CognitiveServicesWorkbenchResource.ValidateResourceId(id);
             return new CognitiveServicesWorkbenchResource(Client, id);
         }
 
@@ -355,7 +319,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesAccountCostControlResource"/> object. </returns>
         public virtual CognitiveServicesAccountCostControlResource GetCognitiveServicesAccountCostControlResource(ResourceIdentifier id)
         {
-            CognitiveServicesAccountCostControlResource.ValidateResourceId(id);
             return new CognitiveServicesAccountCostControlResource(Client, id);
         }
 
@@ -364,7 +327,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> Returns a <see cref="CognitiveServicesProjectCostControlResource"/> object. </returns>
         public virtual CognitiveServicesProjectCostControlResource GetCognitiveServicesProjectCostControlResource(ResourceIdentifier id)
         {
-            CognitiveServicesProjectCostControlResource.ValidateResourceId(id);
             return new CognitiveServicesProjectCostControlResource(Client, id);
         }
     }

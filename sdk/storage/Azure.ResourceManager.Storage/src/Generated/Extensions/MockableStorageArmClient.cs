@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="BlobContainerResource"/> object. </returns>
         public virtual BlobContainerResource GetBlobContainerResource(ResourceIdentifier id)
         {
-            BlobContainerResource.ValidateResourceId(id);
             return new BlobContainerResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource"/> object. </returns>
         public virtual ImmutabilityPolicyResource GetImmutabilityPolicyResource(ResourceIdentifier id)
         {
-            ImmutabilityPolicyResource.ValidateResourceId(id);
             return new ImmutabilityPolicyResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="BlobServiceResource"/> object. </returns>
         public virtual BlobServiceResource GetBlobServiceResource(ResourceIdentifier id)
         {
-            BlobServiceResource.ValidateResourceId(id);
             return new BlobServiceResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageAccountResource"/> object. </returns>
         public virtual StorageAccountResource GetStorageAccountResource(ResourceIdentifier id)
         {
-            StorageAccountResource.ValidateResourceId(id);
             return new StorageAccountResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageAccountMigrationResource"/> object. </returns>
         public virtual StorageAccountMigrationResource GetStorageAccountMigrationResource(ResourceIdentifier id)
         {
-            StorageAccountMigrationResource.ValidateResourceId(id);
             return new StorageAccountMigrationResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="FileShareResource"/> object. </returns>
         public virtual FileShareResource GetFileShareResource(ResourceIdentifier id)
         {
-            FileShareResource.ValidateResourceId(id);
             return new FileShareResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="FileServiceResource"/> object. </returns>
         public virtual FileServiceResource GetFileServiceResource(ResourceIdentifier id)
         {
-            FileServiceResource.ValidateResourceId(id);
             return new FileServiceResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="FileServiceUsageResource"/> object. </returns>
         public virtual FileServiceUsageResource GetFileServiceUsageResource(ResourceIdentifier id)
         {
-            FileServiceUsageResource.ValidateResourceId(id);
             return new FileServiceUsageResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="QueueServiceResource"/> object. </returns>
         public virtual QueueServiceResource GetQueueServiceResource(ResourceIdentifier id)
         {
-            QueueServiceResource.ValidateResourceId(id);
             return new QueueServiceResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="DeletedAccountResource"/> object. </returns>
         public virtual DeletedAccountResource GetDeletedAccountResource(ResourceIdentifier id)
         {
-            DeletedAccountResource.ValidateResourceId(id);
             return new DeletedAccountResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
         public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(ResourceIdentifier id)
         {
-            StorageAccountManagementPolicyResource.ValidateResourceId(id);
             return new StorageAccountManagementPolicyResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
         public virtual BlobInventoryPolicyResource GetBlobInventoryPolicyResource(ResourceIdentifier id)
         {
-            BlobInventoryPolicyResource.ValidateResourceId(id);
             return new BlobInventoryPolicyResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StoragePrivateEndpointConnectionResource"/> object. </returns>
         public virtual StoragePrivateEndpointConnectionResource GetStoragePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            StoragePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new StoragePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="EncryptionScopeResource"/> object. </returns>
         public virtual EncryptionScopeResource GetEncryptionScopeResource(ResourceIdentifier id)
         {
-            EncryptionScopeResource.ValidateResourceId(id);
             return new EncryptionScopeResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="TableServiceResource"/> object. </returns>
         public virtual TableServiceResource GetTableServiceResource(ResourceIdentifier id)
         {
-            TableServiceResource.ValidateResourceId(id);
             return new TableServiceResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageTaskAssignmentResource"/> object. </returns>
         public virtual StorageTaskAssignmentResource GetStorageTaskAssignmentResource(ResourceIdentifier id)
         {
-            StorageTaskAssignmentResource.ValidateResourceId(id);
             return new StorageTaskAssignmentResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageConnectorResource"/> object. </returns>
         public virtual StorageConnectorResource GetStorageConnectorResource(ResourceIdentifier id)
         {
-            StorageConnectorResource.ValidateResourceId(id);
             return new StorageConnectorResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageDataShareResource"/> object. </returns>
         public virtual StorageDataShareResource GetStorageDataShareResource(ResourceIdentifier id)
         {
-            StorageDataShareResource.ValidateResourceId(id);
             return new StorageDataShareResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="ContextCacheResource"/> object. </returns>
         public virtual ContextCacheResource GetContextCacheResource(ResourceIdentifier id)
         {
-            ContextCacheResource.ValidateResourceId(id);
             return new ContextCacheResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="ContextCacheContainerResource"/> object. </returns>
         public virtual ContextCacheContainerResource GetContextCacheContainerResource(ResourceIdentifier id)
         {
-            ContextCacheContainerResource.ValidateResourceId(id);
             return new ContextCacheContainerResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="BlobAccessPointConfigurationResource"/> object. </returns>
         public virtual BlobAccessPointConfigurationResource GetBlobAccessPointConfigurationResource(ResourceIdentifier id)
         {
-            BlobAccessPointConfigurationResource.ValidateResourceId(id);
             return new BlobAccessPointConfigurationResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="AdvancedPlatformMetricsRuleResource"/> object. </returns>
         public virtual AdvancedPlatformMetricsRuleResource GetAdvancedPlatformMetricsRuleResource(ResourceIdentifier id)
         {
-            AdvancedPlatformMetricsRuleResource.ValidateResourceId(id);
             return new AdvancedPlatformMetricsRuleResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageQueueResource"/> object. </returns>
         public virtual StorageQueueResource GetStorageQueueResource(ResourceIdentifier id)
         {
-            StorageQueueResource.ValidateResourceId(id);
             return new StorageQueueResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="ObjectReplicationPolicyResource"/> object. </returns>
         public virtual ObjectReplicationPolicyResource GetObjectReplicationPolicyResource(ResourceIdentifier id)
         {
-            ObjectReplicationPolicyResource.ValidateResourceId(id);
             return new ObjectReplicationPolicyResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageAccountLocalUserResource"/> object. </returns>
         public virtual StorageAccountLocalUserResource GetStorageAccountLocalUserResource(ResourceIdentifier id)
         {
-            StorageAccountLocalUserResource.ValidateResourceId(id);
             return new StorageAccountLocalUserResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="TableResource"/> object. </returns>
         public virtual TableResource GetTableResource(ResourceIdentifier id)
         {
-            TableResource.ValidateResourceId(id);
             return new TableResource(Client, id);
         }
     }

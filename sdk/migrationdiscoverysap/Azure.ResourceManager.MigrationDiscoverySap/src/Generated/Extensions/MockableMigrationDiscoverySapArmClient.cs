@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// <returns> Returns a <see cref="SapDiscoverySiteResource"/> object. </returns>
         public virtual SapDiscoverySiteResource GetSapDiscoverySiteResource(ResourceIdentifier id)
         {
-            SapDiscoverySiteResource.ValidateResourceId(id);
             return new SapDiscoverySiteResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// <returns> Returns a <see cref="SapInstanceResource"/> object. </returns>
         public virtual SapInstanceResource GetSapInstanceResource(ResourceIdentifier id)
         {
-            SapInstanceResource.ValidateResourceId(id);
             return new SapInstanceResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// <returns> Returns a <see cref="SapDiscoveryServerInstanceResource"/> object. </returns>
         public virtual SapDiscoveryServerInstanceResource GetSapDiscoveryServerInstanceResource(ResourceIdentifier id)
         {
-            SapDiscoveryServerInstanceResource.ValidateResourceId(id);
             return new SapDiscoveryServerInstanceResource(Client, id);
         }
     }

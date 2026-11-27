@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> Returns a <see cref="DataProtectionBackupVaultResource"/> object. </returns>
         public virtual DataProtectionBackupVaultResource GetDataProtectionBackupVaultResource(ResourceIdentifier id)
         {
-            DataProtectionBackupVaultResource.ValidateResourceId(id);
             return new DataProtectionBackupVaultResource(Client, id);
         }
 
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> Returns a <see cref="DataProtectionDeletedBackupVaultResource"/> object. </returns>
         public virtual DataProtectionDeletedBackupVaultResource GetDataProtectionDeletedBackupVaultResource(ResourceIdentifier id)
         {
-            DataProtectionDeletedBackupVaultResource.ValidateResourceId(id);
             return new DataProtectionDeletedBackupVaultResource(Client, id);
         }
 
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> Returns a <see cref="DataProtectionBackupPolicyResource"/> object. </returns>
         public virtual DataProtectionBackupPolicyResource GetDataProtectionBackupPolicyResource(ResourceIdentifier id)
         {
-            DataProtectionBackupPolicyResource.ValidateResourceId(id);
             return new DataProtectionBackupPolicyResource(Client, id);
         }
 
@@ -69,7 +66,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource"/> object. </returns>
         public virtual DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(ResourceIdentifier id)
         {
-            DataProtectionBackupInstanceResource.ValidateResourceId(id);
             return new DataProtectionBackupInstanceResource(Client, id);
         }
 
@@ -78,7 +74,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> Returns a <see cref="DataProtectionBackupRecoveryPointResource"/> object. </returns>
         public virtual DataProtectionBackupRecoveryPointResource GetDataProtectionBackupRecoveryPointResource(ResourceIdentifier id)
         {
-            DataProtectionBackupRecoveryPointResource.ValidateResourceId(id);
             return new DataProtectionBackupRecoveryPointResource(Client, id);
         }
 
@@ -87,7 +82,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> Returns a <see cref="DataProtectionBackupJobResource"/> object. </returns>
         public virtual DataProtectionBackupJobResource GetDataProtectionBackupJobResource(ResourceIdentifier id)
         {
-            DataProtectionBackupJobResource.ValidateResourceId(id);
             return new DataProtectionBackupJobResource(Client, id);
         }
 
@@ -96,7 +90,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> Returns a <see cref="DeletedDataProtectionBackupInstanceResource"/> object. </returns>
         public virtual DeletedDataProtectionBackupInstanceResource GetDeletedDataProtectionBackupInstanceResource(ResourceIdentifier id)
         {
-            DeletedDataProtectionBackupInstanceResource.ValidateResourceId(id);
             return new DeletedDataProtectionBackupInstanceResource(Client, id);
         }
 
@@ -105,7 +98,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> Returns a <see cref="ResourceGuardResource"/> object. </returns>
         public virtual ResourceGuardResource GetResourceGuardResource(ResourceIdentifier id)
         {
-            ResourceGuardResource.ValidateResourceId(id);
             return new ResourceGuardResource(Client, id);
         }
 
@@ -114,7 +106,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> Returns a <see cref="ResourceGuardProxyBaseResource"/> object. </returns>
         public virtual ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(ResourceIdentifier id)
         {
-            ResourceGuardProxyBaseResource.ValidateResourceId(id);
             return new ResourceGuardProxyBaseResource(Client, id);
         }
 

@@ -110,7 +110,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="GenerateDetailedCostReportOperationStatusesResource"/> object. </returns>
         public virtual GenerateDetailedCostReportOperationStatusesResource GetGenerateDetailedCostReportOperationStatusesResource(ResourceIdentifier id)
         {
-            GenerateDetailedCostReportOperationStatusesResource.ValidateResourceId(id);
             return new GenerateDetailedCostReportOperationStatusesResource(Client, id);
         }
 
@@ -155,7 +154,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="BudgetResource"/> object. </returns>
         public virtual BudgetResource GetBudgetResource(ResourceIdentifier id)
         {
-            BudgetResource.ValidateResourceId(id);
             return new BudgetResource(Client, id);
         }
 
@@ -200,7 +198,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="CostManagementExportResource"/> object. </returns>
         public virtual CostManagementExportResource GetCostManagementExportResource(ResourceIdentifier id)
         {
-            CostManagementExportResource.ValidateResourceId(id);
             return new CostManagementExportResource(Client, id);
         }
 
@@ -247,7 +244,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="GenerateDetailedCostReportOperationResultResource"/> object. </returns>
         public virtual GenerateDetailedCostReportOperationResultResource GetGenerateDetailedCostReportOperationResultResource(ResourceIdentifier id)
         {
-            GenerateDetailedCostReportOperationResultResource.ValidateResourceId(id);
             return new GenerateDetailedCostReportOperationResultResource(Client, id);
         }
 
@@ -294,7 +290,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
         public virtual TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(ResourceIdentifier id)
         {
-            TenantsCostManagementViewsResource.ValidateResourceId(id);
             return new TenantsCostManagementViewsResource(Client, id);
         }
 
@@ -303,7 +298,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
         public virtual CostManagementViewsResource GetCostManagementViewsResource(ResourceIdentifier id)
         {
-            CostManagementViewsResource.ValidateResourceId(id);
             return new CostManagementViewsResource(Client, id);
         }
 
@@ -348,7 +342,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="CostManagementAlertResource"/> object. </returns>
         public virtual CostManagementAlertResource GetCostManagementAlertResource(ResourceIdentifier id)
         {
-            CostManagementAlertResource.ValidateResourceId(id);
             return new CostManagementAlertResource(Client, id);
         }
 
@@ -393,7 +386,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="TenantScheduledActionResource"/> object. </returns>
         public virtual TenantScheduledActionResource GetTenantScheduledActionResource(ResourceIdentifier id)
         {
-            TenantScheduledActionResource.ValidateResourceId(id);
             return new TenantScheduledActionResource(Client, id);
         }
 
@@ -402,7 +394,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
         public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
         {
-            ScheduledActionResource.ValidateResourceId(id);
             return new ScheduledActionResource(Client, id);
         }
 
@@ -447,7 +438,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="CostManagementSettingResource"/> object. </returns>
         public virtual CostManagementSettingResource GetCostManagementSettingResource(ResourceIdentifier id)
         {
-            CostManagementSettingResource.ValidateResourceId(id);
             return new CostManagementSettingResource(Client, id);
         }
 
@@ -484,7 +474,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> Returns a <see cref="CostAllocationRuleResource"/> object. </returns>
         public virtual CostAllocationRuleResource GetCostAllocationRuleResource(ResourceIdentifier id)
         {
-            CostAllocationRuleResource.ValidateResourceId(id);
             return new CostAllocationRuleResource(Client, id);
         }
 

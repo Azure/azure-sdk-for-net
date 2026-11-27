@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// <returns> Returns a <see cref="OnlineExperimentationWorkspaceResource"/> object. </returns>
         public virtual OnlineExperimentationWorkspaceResource GetOnlineExperimentationWorkspaceResource(ResourceIdentifier id)
         {
-            OnlineExperimentationWorkspaceResource.ValidateResourceId(id);
             return new OnlineExperimentationWorkspaceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// <returns> Returns a <see cref="OnlineExperimentationPrivateEndpointConnectionResource"/> object. </returns>
         public virtual OnlineExperimentationPrivateEndpointConnectionResource GetOnlineExperimentationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            OnlineExperimentationPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new OnlineExperimentationPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// <returns> Returns a <see cref="OnlineExperimentationPrivateLinkResource"/> object. </returns>
         public virtual OnlineExperimentationPrivateLinkResource GetOnlineExperimentationPrivateLinkResource(ResourceIdentifier id)
         {
-            OnlineExperimentationPrivateLinkResource.ValidateResourceId(id);
             return new OnlineExperimentationPrivateLinkResource(Client, id);
         }
     }

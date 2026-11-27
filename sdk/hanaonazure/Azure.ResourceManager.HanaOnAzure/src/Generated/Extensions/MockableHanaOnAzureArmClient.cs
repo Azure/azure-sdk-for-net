@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.HanaOnAzure.Mocking
         /// <returns> Returns a <see cref="SapMonitorResource"/> object. </returns>
         public virtual SapMonitorResource GetSapMonitorResource(ResourceIdentifier id)
         {
-            SapMonitorResource.ValidateResourceId(id);
             return new SapMonitorResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.HanaOnAzure.Mocking
         /// <returns> Returns a <see cref="ProviderInstanceResource"/> object. </returns>
         public virtual ProviderInstanceResource GetProviderInstanceResource(ResourceIdentifier id)
         {
-            ProviderInstanceResource.ValidateResourceId(id);
             return new ProviderInstanceResource(Client, id);
         }
     }

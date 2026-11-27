@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> Returns a <see cref="SubscriptionAliasResource"/> object. </returns>
         public virtual SubscriptionAliasResource GetSubscriptionAliasResource(ResourceIdentifier id)
         {
-            SubscriptionAliasResource.ValidateResourceId(id);
             return new SubscriptionAliasResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public virtual TenantPolicyResource GetTenantPolicyResource(ResourceIdentifier id)
         {
-            TenantPolicyResource.ValidateResourceId(id);
             return new TenantPolicyResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
         public virtual BillingAccountPolicyResource GetBillingAccountPolicyResource(ResourceIdentifier id)
         {
-            BillingAccountPolicyResource.ValidateResourceId(id);
             return new BillingAccountPolicyResource(Client, id);
         }
 
@@ -66,7 +63,6 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> Returns a <see cref="TargetDirectoryResultResource"/> object. </returns>
         public virtual TargetDirectoryResultResource GetTargetDirectoryResultResource(ResourceIdentifier id)
         {
-            TargetDirectoryResultResource.ValidateResourceId(id);
             return new TargetDirectoryResultResource(Client, id);
         }
     }

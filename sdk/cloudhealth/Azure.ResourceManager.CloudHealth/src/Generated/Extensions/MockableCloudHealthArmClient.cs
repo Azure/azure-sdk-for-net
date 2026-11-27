@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// <returns> Returns a <see cref="HealthModelResource"/> object. </returns>
         public virtual HealthModelResource GetHealthModelResource(ResourceIdentifier id)
         {
-            HealthModelResource.ValidateResourceId(id);
             return new HealthModelResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// <returns> Returns a <see cref="HealthModelSignalDefinitionResource"/> object. </returns>
         public virtual HealthModelSignalDefinitionResource GetHealthModelSignalDefinitionResource(ResourceIdentifier id)
         {
-            HealthModelSignalDefinitionResource.ValidateResourceId(id);
             return new HealthModelSignalDefinitionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// <returns> Returns a <see cref="HealthModelAuthenticationSettingResource"/> object. </returns>
         public virtual HealthModelAuthenticationSettingResource GetHealthModelAuthenticationSettingResource(ResourceIdentifier id)
         {
-            HealthModelAuthenticationSettingResource.ValidateResourceId(id);
             return new HealthModelAuthenticationSettingResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// <returns> Returns a <see cref="HealthModelEntityResource"/> object. </returns>
         public virtual HealthModelEntityResource GetHealthModelEntityResource(ResourceIdentifier id)
         {
-            HealthModelEntityResource.ValidateResourceId(id);
             return new HealthModelEntityResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// <returns> Returns a <see cref="HealthModelRelationshipResource"/> object. </returns>
         public virtual HealthModelRelationshipResource GetHealthModelRelationshipResource(ResourceIdentifier id)
         {
-            HealthModelRelationshipResource.ValidateResourceId(id);
             return new HealthModelRelationshipResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// <returns> Returns a <see cref="HealthModelDiscoveryRuleResource"/> object. </returns>
         public virtual HealthModelDiscoveryRuleResource GetHealthModelDiscoveryRuleResource(ResourceIdentifier id)
         {
-            HealthModelDiscoveryRuleResource.ValidateResourceId(id);
             return new HealthModelDiscoveryRuleResource(Client, id);
         }
     }

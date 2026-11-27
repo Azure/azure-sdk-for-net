@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Maps.Mocking
         /// <returns> Returns a <see cref="MapsAccountResource"/> object. </returns>
         public virtual MapsAccountResource GetMapsAccountResource(ResourceIdentifier id)
         {
-            MapsAccountResource.ValidateResourceId(id);
             return new MapsAccountResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Maps.Mocking
         /// <returns> Returns a <see cref="MapsCreatorResource"/> object. </returns>
         public virtual MapsCreatorResource GetMapsCreatorResource(ResourceIdentifier id)
         {
-            MapsCreatorResource.ValidateResourceId(id);
             return new MapsCreatorResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Maps.Mocking
         /// <returns> Returns a <see cref="MapsPrivateLinkResource"/> object. </returns>
         public virtual MapsPrivateLinkResource GetMapsPrivateLinkResource(ResourceIdentifier id)
         {
-            MapsPrivateLinkResource.ValidateResourceId(id);
             return new MapsPrivateLinkResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Maps.Mocking
         /// <returns> Returns a <see cref="MapsPrivateEndpointConnectionResource"/> object. </returns>
         public virtual MapsPrivateEndpointConnectionResource GetMapsPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            MapsPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new MapsPrivateEndpointConnectionResource(Client, id);
         }
     }

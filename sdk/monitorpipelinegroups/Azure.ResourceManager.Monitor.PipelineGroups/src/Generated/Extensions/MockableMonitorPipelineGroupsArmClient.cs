@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Mocking
         /// <returns> Returns a <see cref="PipelineGroupResource"/> object. </returns>
         public virtual PipelineGroupResource GetPipelineGroupResource(ResourceIdentifier id)
         {
-            PipelineGroupResource.ValidateResourceId(id);
             return new PipelineGroupResource(Client, id);
         }
     }

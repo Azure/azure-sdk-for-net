@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Mocking
         /// <returns> Returns a <see cref="ManufacturingDataServiceResource"/> object. </returns>
         public virtual ManufacturingDataServiceResource GetManufacturingDataServiceResource(ResourceIdentifier id)
         {
-            ManufacturingDataServiceResource.ValidateResourceId(id);
             return new ManufacturingDataServiceResource(Client, id);
         }
     }

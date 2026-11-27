@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
         /// <returns> Returns a <see cref="StorageDiscoveryWorkspaceResource"/> object. </returns>
         public virtual StorageDiscoveryWorkspaceResource GetStorageDiscoveryWorkspaceResource(ResourceIdentifier id)
         {
-            StorageDiscoveryWorkspaceResource.ValidateResourceId(id);
             return new StorageDiscoveryWorkspaceResource(Client, id);
         }
     }

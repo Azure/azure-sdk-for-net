@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryResource"/> object. </returns>
         public virtual ContainerRegistryResource GetContainerRegistryResource(ResourceIdentifier id)
         {
-            ContainerRegistryResource.ValidateResourceId(id);
             return new ContainerRegistryResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource"/> object. </returns>
         public virtual ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(ResourceIdentifier id)
         {
-            ContainerRegistryPrivateLinkResource.ValidateResourceId(id);
             return new ContainerRegistryPrivateLinkResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryArchiveResource"/> object. </returns>
         public virtual ContainerRegistryArchiveResource GetContainerRegistryArchiveResource(ResourceIdentifier id)
         {
-            ContainerRegistryArchiveResource.ValidateResourceId(id);
             return new ContainerRegistryArchiveResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryArchiveVersionResource"/> object. </returns>
         public virtual ContainerRegistryArchiveVersionResource GetContainerRegistryArchiveVersionResource(ResourceIdentifier id)
         {
-            ContainerRegistryArchiveVersionResource.ValidateResourceId(id);
             return new ContainerRegistryArchiveVersionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryCacheRuleResource"/> object. </returns>
         public virtual ContainerRegistryCacheRuleResource GetContainerRegistryCacheRuleResource(ResourceIdentifier id)
         {
-            ContainerRegistryCacheRuleResource.ValidateResourceId(id);
             return new ContainerRegistryCacheRuleResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryCredentialSetResource"/> object. </returns>
         public virtual ContainerRegistryCredentialSetResource GetContainerRegistryCredentialSetResource(ResourceIdentifier id)
         {
-            ContainerRegistryCredentialSetResource.ValidateResourceId(id);
             return new ContainerRegistryCredentialSetResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ConnectedRegistryResource"/> object. </returns>
         public virtual ConnectedRegistryResource GetConnectedRegistryResource(ResourceIdentifier id)
         {
-            ConnectedRegistryResource.ValidateResourceId(id);
             return new ConnectedRegistryResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ContainerRegistryPrivateEndpointConnectionResource GetContainerRegistryPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ContainerRegistryPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ContainerRegistryPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryReplicationResource"/> object. </returns>
         public virtual ContainerRegistryReplicationResource GetContainerRegistryReplicationResource(ResourceIdentifier id)
         {
-            ContainerRegistryReplicationResource.ValidateResourceId(id);
             return new ContainerRegistryReplicationResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ScopeMapResource"/> object. </returns>
         public virtual ScopeMapResource GetScopeMapResource(ResourceIdentifier id)
         {
-            ScopeMapResource.ValidateResourceId(id);
             return new ScopeMapResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryTokenResource"/> object. </returns>
         public virtual ContainerRegistryTokenResource GetContainerRegistryTokenResource(ResourceIdentifier id)
         {
-            ContainerRegistryTokenResource.ValidateResourceId(id);
             return new ContainerRegistryTokenResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryExportPipelineResource"/> object. </returns>
         public virtual ContainerRegistryExportPipelineResource GetContainerRegistryExportPipelineResource(ResourceIdentifier id)
         {
-            ContainerRegistryExportPipelineResource.ValidateResourceId(id);
             return new ContainerRegistryExportPipelineResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryImportPipelineResource"/> object. </returns>
         public virtual ContainerRegistryImportPipelineResource GetContainerRegistryImportPipelineResource(ResourceIdentifier id)
         {
-            ContainerRegistryImportPipelineResource.ValidateResourceId(id);
             return new ContainerRegistryImportPipelineResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryPipelineRunResource"/> object. </returns>
         public virtual ContainerRegistryPipelineRunResource GetContainerRegistryPipelineRunResource(ResourceIdentifier id)
         {
-            ContainerRegistryPipelineRunResource.ValidateResourceId(id);
             return new ContainerRegistryPipelineRunResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryWebhookResource"/> object. </returns>
         public virtual ContainerRegistryWebhookResource GetContainerRegistryWebhookResource(ResourceIdentifier id)
         {
-            ContainerRegistryWebhookResource.ValidateResourceId(id);
             return new ContainerRegistryWebhookResource(Client, id);
         }
     }

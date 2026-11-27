@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <returns> Returns a <see cref="ConnectorDryrunResource"/> object. </returns>
         public virtual ConnectorDryrunResource GetConnectorDryrunResource(ResourceIdentifier id)
         {
-            ConnectorDryrunResource.ValidateResourceId(id);
             return new ConnectorDryrunResource(Client, id);
         }
 
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <returns> Returns a <see cref="LinkerDryrunResource"/> object. </returns>
         public virtual LinkerDryrunResource GetLinkerDryrunResource(ResourceIdentifier id)
         {
-            LinkerDryrunResource.ValidateResourceId(id);
             return new LinkerDryrunResource(Client, id);
         }
 
@@ -98,7 +96,6 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <returns> Returns a <see cref="LinkerConnectorResource"/> object. </returns>
         public virtual LinkerConnectorResource GetLinkerConnectorResource(ResourceIdentifier id)
         {
-            LinkerConnectorResource.ValidateResourceId(id);
             return new LinkerConnectorResource(Client, id);
         }
 
@@ -107,7 +104,6 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <returns> Returns a <see cref="LinkerResource"/> object. </returns>
         public virtual LinkerResource GetLinkerResource(ResourceIdentifier id)
         {
-            LinkerResource.ValidateResourceId(id);
             return new LinkerResource(Client, id);
         }
 

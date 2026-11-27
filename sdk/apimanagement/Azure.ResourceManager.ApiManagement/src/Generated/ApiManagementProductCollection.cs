@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProductContracts_Get. </description>
+        /// <description> ProductContracts_GetEntityTag. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -385,22 +385,14 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, productId, context);
+                HttpMessage message = _productRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, productId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ApiManagementProductData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiManagementProductData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {
@@ -418,7 +410,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProductContracts_Get. </description>
+        /// <description> ProductContracts_GetEntityTag. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -442,22 +434,14 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, productId, context);
+                HttpMessage message = _productRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, productId, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ApiManagementProductData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiManagementProductData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {

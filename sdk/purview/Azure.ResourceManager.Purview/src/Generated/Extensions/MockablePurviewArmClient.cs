@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <returns> Returns a <see cref="PurviewAccountResource"/> object. </returns>
         public virtual PurviewAccountResource GetPurviewAccountResource(ResourceIdentifier id)
         {
-            PurviewAccountResource.ValidateResourceId(id);
             return new PurviewAccountResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <returns> Returns a <see cref="PurviewKafkaConfigurationResource"/> object. </returns>
         public virtual PurviewKafkaConfigurationResource GetPurviewKafkaConfigurationResource(ResourceIdentifier id)
         {
-            PurviewKafkaConfigurationResource.ValidateResourceId(id);
             return new PurviewKafkaConfigurationResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <returns> Returns a <see cref="PurviewPrivateEndpointConnectionResource"/> object. </returns>
         public virtual PurviewPrivateEndpointConnectionResource GetPurviewPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PurviewPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new PurviewPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <returns> Returns a <see cref="PurviewPrivateLinkResource"/> object. </returns>
         public virtual PurviewPrivateLinkResource GetPurviewPrivateLinkResource(ResourceIdentifier id)
         {
-            PurviewPrivateLinkResource.ValidateResourceId(id);
             return new PurviewPrivateLinkResource(Client, id);
         }
     }

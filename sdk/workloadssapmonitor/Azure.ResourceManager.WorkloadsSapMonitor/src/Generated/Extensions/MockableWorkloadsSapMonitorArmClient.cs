@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
         /// <returns> Returns a <see cref="SapMonitorResource"/> object. </returns>
         public virtual SapMonitorResource GetSapMonitorResource(ResourceIdentifier id)
         {
-            SapMonitorResource.ValidateResourceId(id);
             return new SapMonitorResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
         /// <returns> Returns a <see cref="SapProviderInstanceResource"/> object. </returns>
         public virtual SapProviderInstanceResource GetSapProviderInstanceResource(ResourceIdentifier id)
         {
-            SapProviderInstanceResource.ValidateResourceId(id);
             return new SapProviderInstanceResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
         /// <returns> Returns a <see cref="SapLandscapeMonitorResource"/> object. </returns>
         public virtual SapLandscapeMonitorResource GetSapLandscapeMonitorResource(ResourceIdentifier id)
         {
-            SapLandscapeMonitorResource.ValidateResourceId(id);
             return new SapLandscapeMonitorResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
         /// <returns> Returns a <see cref="SapMonitorAlertResource"/> object. </returns>
         public virtual SapMonitorAlertResource GetSapMonitorAlertResource(ResourceIdentifier id)
         {
-            SapMonitorAlertResource.ValidateResourceId(id);
             return new SapMonitorAlertResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
         /// <returns> Returns a <see cref="SapMonitorAlertTemplateResource"/> object. </returns>
         public virtual SapMonitorAlertTemplateResource GetSapMonitorAlertTemplateResource(ResourceIdentifier id)
         {
-            SapMonitorAlertTemplateResource.ValidateResourceId(id);
             return new SapMonitorAlertTemplateResource(Client, id);
         }
     }

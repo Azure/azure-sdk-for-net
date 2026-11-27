@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <returns> Returns a <see cref="SelfHelpDiagnosticResource"/> object. </returns>
         public virtual SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(ResourceIdentifier id)
         {
-            SelfHelpDiagnosticResource.ValidateResourceId(id);
             return new SelfHelpDiagnosticResource(Client, id);
         }
 
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <returns> Returns a <see cref="SelfHelpSolutionResource"/> object. </returns>
         public virtual SelfHelpSolutionResource GetSelfHelpSolutionResource(ResourceIdentifier id)
         {
-            SelfHelpSolutionResource.ValidateResourceId(id);
             return new SelfHelpSolutionResource(Client, id);
         }
 
@@ -134,7 +132,6 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <returns> Returns a <see cref="SelfHelpSimplifiedSolutionResource"/> object. </returns>
         public virtual SelfHelpSimplifiedSolutionResource GetSelfHelpSimplifiedSolutionResource(ResourceIdentifier id)
         {
-            SelfHelpSimplifiedSolutionResource.ValidateResourceId(id);
             return new SelfHelpSimplifiedSolutionResource(Client, id);
         }
 
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <returns> Returns a <see cref="SelfHelpTroubleshooterResource"/> object. </returns>
         public virtual SelfHelpTroubleshooterResource GetSelfHelpTroubleshooterResource(ResourceIdentifier id)
         {
-            SelfHelpTroubleshooterResource.ValidateResourceId(id);
             return new SelfHelpTroubleshooterResource(Client, id);
         }
 
@@ -224,7 +220,6 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <returns> Returns a <see cref="SelfHelpSolutionResultResource"/> object. </returns>
         public virtual SelfHelpSolutionResultResource GetSelfHelpSolutionResultResource(ResourceIdentifier id)
         {
-            SelfHelpSolutionResultResource.ValidateResourceId(id);
             return new SelfHelpSolutionResultResource(Client, id);
         }
 

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ProgramEnrollment.Mocking
         /// <returns> Returns a <see cref="EduEnrollmentResource"/> object. </returns>
         public virtual EduEnrollmentResource GetEduEnrollmentResource(ResourceIdentifier id)
         {
-            EduEnrollmentResource.ValidateResourceId(id);
             return new EduEnrollmentResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
         /// <returns> Returns a <see cref="DeidServiceResource"/> object. </returns>
         public virtual DeidServiceResource GetDeidServiceResource(ResourceIdentifier id)
         {
-            DeidServiceResource.ValidateResourceId(id);
             return new DeidServiceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
         /// <returns> Returns a <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> object. </returns>
         public virtual HealthDataAIServicesPrivateEndpointConnectionResource GetHealthDataAIServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HealthDataAIServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HealthDataAIServicesPrivateEndpointConnectionResource(Client, id);
         }
     }

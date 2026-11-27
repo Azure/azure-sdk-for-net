@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <returns> Returns a <see cref="ManagedApplicationResource"/> object. </returns>
         public virtual ManagedApplicationResource GetManagedApplicationResource(ResourceIdentifier id)
         {
-            ManagedApplicationResource.ValidateResourceId(id);
             return new ManagedApplicationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <returns> Returns a <see cref="JitRequestDefinitionResource"/> object. </returns>
         public virtual JitRequestDefinitionResource GetJitRequestDefinitionResource(ResourceIdentifier id)
         {
-            JitRequestDefinitionResource.ValidateResourceId(id);
             return new JitRequestDefinitionResource(Client, id);
         }
     }

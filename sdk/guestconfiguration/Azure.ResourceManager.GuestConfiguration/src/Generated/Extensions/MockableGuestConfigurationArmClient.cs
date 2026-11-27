@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <returns> Returns a <see cref="GuestConfigurationVmAssignmentResource"/> object. </returns>
         public virtual GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(ResourceIdentifier id)
         {
-            GuestConfigurationVmAssignmentResource.ValidateResourceId(id);
             return new GuestConfigurationVmAssignmentResource(Client, id);
         }
 
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <returns> Returns a <see cref="GuestConfigurationHcrpAssignmentResource"/> object. </returns>
         public virtual GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(ResourceIdentifier id)
         {
-            GuestConfigurationHcrpAssignmentResource.ValidateResourceId(id);
             return new GuestConfigurationHcrpAssignmentResource(Client, id);
         }
 
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <returns> Returns a <see cref="GuestConfigurationVmssAssignmentResource"/> object. </returns>
         public virtual GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(ResourceIdentifier id)
         {
-            GuestConfigurationVmssAssignmentResource.ValidateResourceId(id);
             return new GuestConfigurationVmssAssignmentResource(Client, id);
         }
 
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <returns> Returns a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> object. </returns>
         public virtual GuestConfigurationVMwarevSphereAssignmentResource GetGuestConfigurationVMwarevSphereAssignmentResource(ResourceIdentifier id)
         {
-            GuestConfigurationVMwarevSphereAssignmentResource.ValidateResourceId(id);
             return new GuestConfigurationVMwarevSphereAssignmentResource(Client, id);
         }
 

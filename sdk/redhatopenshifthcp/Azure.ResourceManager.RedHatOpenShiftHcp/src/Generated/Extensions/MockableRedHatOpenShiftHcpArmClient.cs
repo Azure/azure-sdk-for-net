@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
         /// <returns> Returns a <see cref="HcpOpenShiftClusterResource"/> object. </returns>
         public virtual HcpOpenShiftClusterResource GetHcpOpenShiftClusterResource(ResourceIdentifier id)
         {
-            HcpOpenShiftClusterResource.ValidateResourceId(id);
             return new HcpOpenShiftClusterResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
         /// <returns> Returns a <see cref="HcpOpenShiftClusterNodePoolResource"/> object. </returns>
         public virtual HcpOpenShiftClusterNodePoolResource GetHcpOpenShiftClusterNodePoolResource(ResourceIdentifier id)
         {
-            HcpOpenShiftClusterNodePoolResource.ValidateResourceId(id);
             return new HcpOpenShiftClusterNodePoolResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
         /// <returns> Returns a <see cref="HcpOpenShiftClusterExternalAuthResource"/> object. </returns>
         public virtual HcpOpenShiftClusterExternalAuthResource GetHcpOpenShiftClusterExternalAuthResource(ResourceIdentifier id)
         {
-            HcpOpenShiftClusterExternalAuthResource.ValidateResourceId(id);
             return new HcpOpenShiftClusterExternalAuthResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
         /// <returns> Returns a <see cref="HcpOpenShiftVersionResource"/> object. </returns>
         public virtual HcpOpenShiftVersionResource GetHcpOpenShiftVersionResource(ResourceIdentifier id)
         {
-            HcpOpenShiftVersionResource.ValidateResourceId(id);
             return new HcpOpenShiftVersionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
         /// <returns> Returns a <see cref="HcpOperatorIdentityRoleSetResource"/> object. </returns>
         public virtual HcpOperatorIdentityRoleSetResource GetHcpOperatorIdentityRoleSetResource(ResourceIdentifier id)
         {
-            HcpOperatorIdentityRoleSetResource.ValidateResourceId(id);
             return new HcpOperatorIdentityRoleSetResource(Client, id);
         }
     }

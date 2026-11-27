@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Mocking
         /// <returns> Returns a <see cref="DeploymentSafeguardResource"/> object. </returns>
         public virtual DeploymentSafeguardResource GetDeploymentSafeguardResource(ResourceIdentifier id)
         {
-            DeploymentSafeguardResource.ValidateResourceId(id);
             return new DeploymentSafeguardResource(Client, id);
         }
 

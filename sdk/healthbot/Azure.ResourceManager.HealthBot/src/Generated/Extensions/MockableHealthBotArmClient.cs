@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// <returns> Returns a <see cref="HealthBotResource"/> object. </returns>
         public virtual HealthBotResource GetHealthBotResource(ResourceIdentifier id)
         {
-            HealthBotResource.ValidateResourceId(id);
             return new HealthBotResource(Client, id);
         }
     }

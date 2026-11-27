@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="DatabaseMigrationsMongoToCosmosDbvCoreMongoResource"/> object. </returns>
         public virtual DatabaseMigrationsMongoToCosmosDbvCoreMongoResource GetDatabaseMigrationsMongoToCosmosDbvCoreMongoResource(ResourceIdentifier id)
         {
-            DatabaseMigrationsMongoToCosmosDbvCoreMongoResource.ValidateResourceId(id);
             return new DatabaseMigrationsMongoToCosmosDbvCoreMongoResource(Client, id);
         }
 
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="MigrationServiceResource"/> object. </returns>
         public virtual MigrationServiceResource GetMigrationServiceResource(ResourceIdentifier id)
         {
-            MigrationServiceResource.ValidateResourceId(id);
             return new MigrationServiceResource(Client, id);
         }
 
@@ -89,7 +87,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="SqlMigrationServiceResource"/> object. </returns>
         public virtual SqlMigrationServiceResource GetSqlMigrationServiceResource(ResourceIdentifier id)
         {
-            SqlMigrationServiceResource.ValidateResourceId(id);
             return new SqlMigrationServiceResource(Client, id);
         }
 
@@ -98,7 +95,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="ServiceServiceTaskResource"/> object. </returns>
         public virtual ServiceServiceTaskResource GetServiceServiceTaskResource(ResourceIdentifier id)
         {
-            ServiceServiceTaskResource.ValidateResourceId(id);
             return new ServiceServiceTaskResource(Client, id);
         }
 
@@ -107,7 +103,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="DataMigrationProjectResource"/> object. </returns>
         public virtual DataMigrationProjectResource GetDataMigrationProjectResource(ResourceIdentifier id)
         {
-            DataMigrationProjectResource.ValidateResourceId(id);
             return new DataMigrationProjectResource(Client, id);
         }
 
@@ -116,7 +111,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoResource"/> object. </returns>
         public virtual DatabaseMigrationsMongoToCosmosDBRUMongoResource GetDatabaseMigrationsMongoToCosmosDBRUMongoResource(ResourceIdentifier id)
         {
-            DatabaseMigrationsMongoToCosmosDBRUMongoResource.ValidateResourceId(id);
             return new DatabaseMigrationsMongoToCosmosDBRUMongoResource(Client, id);
         }
 
@@ -161,7 +155,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="DatabaseMigrationSqlDBResource"/> object. </returns>
         public virtual DatabaseMigrationSqlDBResource GetDatabaseMigrationSqlDBResource(ResourceIdentifier id)
         {
-            DatabaseMigrationSqlDBResource.ValidateResourceId(id);
             return new DatabaseMigrationSqlDBResource(Client, id);
         }
 
@@ -210,7 +203,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="DatabaseMigrationSqlMIResource"/> object. </returns>
         public virtual DatabaseMigrationSqlMIResource GetDatabaseMigrationSqlMIResource(ResourceIdentifier id)
         {
-            DatabaseMigrationSqlMIResource.ValidateResourceId(id);
             return new DatabaseMigrationSqlMIResource(Client, id);
         }
 
@@ -259,7 +251,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="DatabaseMigrationSqlVmResource"/> object. </returns>
         public virtual DatabaseMigrationSqlVmResource GetDatabaseMigrationSqlVmResource(ResourceIdentifier id)
         {
-            DatabaseMigrationSqlVmResource.ValidateResourceId(id);
             return new DatabaseMigrationSqlVmResource(Client, id);
         }
 
@@ -308,7 +299,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="DataMigrationServiceResource"/> object. </returns>
         public virtual DataMigrationServiceResource GetDataMigrationServiceResource(ResourceIdentifier id)
         {
-            DataMigrationServiceResource.ValidateResourceId(id);
             return new DataMigrationServiceResource(Client, id);
         }
 
@@ -317,7 +307,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="DataMigrationServiceTaskResource"/> object. </returns>
         public virtual DataMigrationServiceTaskResource GetDataMigrationServiceTaskResource(ResourceIdentifier id)
         {
-            DataMigrationServiceTaskResource.ValidateResourceId(id);
             return new DataMigrationServiceTaskResource(Client, id);
         }
 
@@ -326,7 +315,6 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> Returns a <see cref="DataMigrationProjectFileResource"/> object. </returns>
         public virtual DataMigrationProjectFileResource GetDataMigrationProjectFileResource(ResourceIdentifier id)
         {
-            DataMigrationProjectFileResource.ValidateResourceId(id);
             return new DataMigrationProjectFileResource(Client, id);
         }
     }

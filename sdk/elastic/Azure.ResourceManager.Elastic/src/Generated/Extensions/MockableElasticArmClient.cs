@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <returns> Returns a <see cref="ElasticMonitorResource"/> object. </returns>
         public virtual ElasticMonitorResource GetElasticMonitorResource(ResourceIdentifier id)
         {
-            ElasticMonitorResource.ValidateResourceId(id);
             return new ElasticMonitorResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <returns> Returns a <see cref="ElasticMonitoredSubscriptionResource"/> object. </returns>
         public virtual ElasticMonitoredSubscriptionResource GetElasticMonitoredSubscriptionResource(ResourceIdentifier id)
         {
-            ElasticMonitoredSubscriptionResource.ValidateResourceId(id);
             return new ElasticMonitoredSubscriptionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <returns> Returns a <see cref="ElasticOpenAIIntegrationResource"/> object. </returns>
         public virtual ElasticOpenAIIntegrationResource GetElasticOpenAIIntegrationResource(ResourceIdentifier id)
         {
-            ElasticOpenAIIntegrationResource.ValidateResourceId(id);
             return new ElasticOpenAIIntegrationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <returns> Returns a <see cref="ElasticTagRuleResource"/> object. </returns>
         public virtual ElasticTagRuleResource GetElasticTagRuleResource(ResourceIdentifier id)
         {
-            ElasticTagRuleResource.ValidateResourceId(id);
             return new ElasticTagRuleResource(Client, id);
         }
     }

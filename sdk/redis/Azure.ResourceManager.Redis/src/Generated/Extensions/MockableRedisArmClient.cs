@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <returns> Returns a <see cref="RedisResource"/> object. </returns>
         public virtual RedisResource GetRedisResource(ResourceIdentifier id)
         {
-            RedisResource.ValidateResourceId(id);
             return new RedisResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <returns> Returns a <see cref="RedisFirewallRuleResource"/> object. </returns>
         public virtual RedisFirewallRuleResource GetRedisFirewallRuleResource(ResourceIdentifier id)
         {
-            RedisFirewallRuleResource.ValidateResourceId(id);
             return new RedisFirewallRuleResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <returns> Returns a <see cref="RedisPatchScheduleResource"/> object. </returns>
         public virtual RedisPatchScheduleResource GetRedisPatchScheduleResource(ResourceIdentifier id)
         {
-            RedisPatchScheduleResource.ValidateResourceId(id);
             return new RedisPatchScheduleResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <returns> Returns a <see cref="RedisLinkedServerWithPropertyResource"/> object. </returns>
         public virtual RedisLinkedServerWithPropertyResource GetRedisLinkedServerWithPropertyResource(ResourceIdentifier id)
         {
-            RedisLinkedServerWithPropertyResource.ValidateResourceId(id);
             return new RedisLinkedServerWithPropertyResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <returns> Returns a <see cref="RedisPrivateEndpointConnectionResource"/> object. </returns>
         public virtual RedisPrivateEndpointConnectionResource GetRedisPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            RedisPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new RedisPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <returns> Returns a <see cref="RedisCacheAccessPolicyResource"/> object. </returns>
         public virtual RedisCacheAccessPolicyResource GetRedisCacheAccessPolicyResource(ResourceIdentifier id)
         {
-            RedisCacheAccessPolicyResource.ValidateResourceId(id);
             return new RedisCacheAccessPolicyResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <returns> Returns a <see cref="RedisCacheAccessPolicyAssignmentResource"/> object. </returns>
         public virtual RedisCacheAccessPolicyAssignmentResource GetRedisCacheAccessPolicyAssignmentResource(ResourceIdentifier id)
         {
-            RedisCacheAccessPolicyAssignmentResource.ValidateResourceId(id);
             return new RedisCacheAccessPolicyAssignmentResource(Client, id);
         }
     }

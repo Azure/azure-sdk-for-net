@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         /// <returns> Returns a <see cref="FleetDatabaseResource"/> object. </returns>
         public virtual FleetDatabaseResource GetFleetDatabaseResource(ResourceIdentifier id)
         {
-            FleetDatabaseResource.ValidateResourceId(id);
             return new FleetDatabaseResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         /// <returns> Returns a <see cref="DatabaseFleetspaceResource"/> object. </returns>
         public virtual DatabaseFleetspaceResource GetDatabaseFleetspaceResource(ResourceIdentifier id)
         {
-            DatabaseFleetspaceResource.ValidateResourceId(id);
             return new DatabaseFleetspaceResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         /// <returns> Returns a <see cref="DatabaseFleetResource"/> object. </returns>
         public virtual DatabaseFleetResource GetDatabaseFleetResource(ResourceIdentifier id)
         {
-            DatabaseFleetResource.ValidateResourceId(id);
             return new DatabaseFleetResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         /// <returns> Returns a <see cref="FirewallRuleResource"/> object. </returns>
         public virtual FirewallRuleResource GetFirewallRuleResource(ResourceIdentifier id)
         {
-            FirewallRuleResource.ValidateResourceId(id);
             return new FirewallRuleResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         /// <returns> Returns a <see cref="FleetTierResource"/> object. </returns>
         public virtual FleetTierResource GetFleetTierResource(ResourceIdentifier id)
         {
-            FleetTierResource.ValidateResourceId(id);
             return new FleetTierResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryAgentPoolResource"/> object. </returns>
         public virtual ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(ResourceIdentifier id)
         {
-            ContainerRegistryAgentPoolResource.ValidateResourceId(id);
             return new ContainerRegistryAgentPoolResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryRunResource"/> object. </returns>
         public virtual ContainerRegistryRunResource GetContainerRegistryRunResource(ResourceIdentifier id)
         {
-            ContainerRegistryRunResource.ValidateResourceId(id);
             return new ContainerRegistryRunResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryTaskRunResource"/> object. </returns>
         public virtual ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(ResourceIdentifier id)
         {
-            ContainerRegistryTaskRunResource.ValidateResourceId(id);
             return new ContainerRegistryTaskRunResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <returns> Returns a <see cref="ContainerRegistryTaskResource"/> object. </returns>
         public virtual ContainerRegistryTaskResource GetContainerRegistryTaskResource(ResourceIdentifier id)
         {
-            ContainerRegistryTaskResource.ValidateResourceId(id);
             return new ContainerRegistryTaskResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmGalleryImageResource"/> object. </returns>
         public virtual HciVmGalleryImageResource GetHciVmGalleryImageResource(ResourceIdentifier id)
         {
-            HciVmGalleryImageResource.ValidateResourceId(id);
             return new HciVmGalleryImageResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmLogicalNetworkResource"/> object. </returns>
         public virtual HciVmLogicalNetworkResource GetHciVmLogicalNetworkResource(ResourceIdentifier id)
         {
-            HciVmLogicalNetworkResource.ValidateResourceId(id);
             return new HciVmLogicalNetworkResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmMarketplaceGalleryImageResource"/> object. </returns>
         public virtual HciVmMarketplaceGalleryImageResource GetHciVmMarketplaceGalleryImageResource(ResourceIdentifier id)
         {
-            HciVmMarketplaceGalleryImageResource.ValidateResourceId(id);
             return new HciVmMarketplaceGalleryImageResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmNetworkInterfaceResource"/> object. </returns>
         public virtual HciVmNetworkInterfaceResource GetHciVmNetworkInterfaceResource(ResourceIdentifier id)
         {
-            HciVmNetworkInterfaceResource.ValidateResourceId(id);
             return new HciVmNetworkInterfaceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmNetworkSecurityGroupResource"/> object. </returns>
         public virtual HciVmNetworkSecurityGroupResource GetHciVmNetworkSecurityGroupResource(ResourceIdentifier id)
         {
-            HciVmNetworkSecurityGroupResource.ValidateResourceId(id);
             return new HciVmNetworkSecurityGroupResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmSecurityRuleResource"/> object. </returns>
         public virtual HciVmSecurityRuleResource GetHciVmSecurityRuleResource(ResourceIdentifier id)
         {
-            HciVmSecurityRuleResource.ValidateResourceId(id);
             return new HciVmSecurityRuleResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmStorageContainerResource"/> object. </returns>
         public virtual HciVmStorageContainerResource GetHciVmStorageContainerResource(ResourceIdentifier id)
         {
-            HciVmStorageContainerResource.ValidateResourceId(id);
             return new HciVmStorageContainerResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmVirtualHardDiskResource"/> object. </returns>
         public virtual HciVmVirtualHardDiskResource GetHciVmVirtualHardDiskResource(ResourceIdentifier id)
         {
-            HciVmVirtualHardDiskResource.ValidateResourceId(id);
             return new HciVmVirtualHardDiskResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
         public virtual HciVmInstanceResource GetHciVmInstanceResource(ResourceIdentifier id)
         {
-            HciVmInstanceResource.ValidateResourceId(id);
             return new HciVmInstanceResource(Client, id);
         }
 
@@ -120,7 +111,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmHybridIdentityMetadataResource"/> object. </returns>
         public virtual HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadataResource(ResourceIdentifier id)
         {
-            HciVmHybridIdentityMetadataResource.ValidateResourceId(id);
             return new HciVmHybridIdentityMetadataResource(Client, id);
         }
 
@@ -137,7 +127,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmAttestationStatusResource"/> object. </returns>
         public virtual HciVmAttestationStatusResource GetHciVmAttestationStatusResource(ResourceIdentifier id)
         {
-            HciVmAttestationStatusResource.ValidateResourceId(id);
             return new HciVmAttestationStatusResource(Client, id);
         }
 
@@ -154,7 +143,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmGuestAgentResource"/> object. </returns>
         public virtual HciVmGuestAgentResource GetHciVmGuestAgentResource(ResourceIdentifier id)
         {
-            HciVmGuestAgentResource.ValidateResourceId(id);
             return new HciVmGuestAgentResource(Client, id);
         }
 
@@ -171,7 +159,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmVirtualNetworkResource"/> object. </returns>
         public virtual HciVmVirtualNetworkResource GetHciVmVirtualNetworkResource(ResourceIdentifier id)
         {
-            HciVmVirtualNetworkResource.ValidateResourceId(id);
             return new HciVmVirtualNetworkResource(Client, id);
         }
 
@@ -180,7 +167,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmVirtualNetworkSubnetResource"/> object. </returns>
         public virtual HciVmVirtualNetworkSubnetResource GetHciVmVirtualNetworkSubnetResource(ResourceIdentifier id)
         {
-            HciVmVirtualNetworkSubnetResource.ValidateResourceId(id);
             return new HciVmVirtualNetworkSubnetResource(Client, id);
         }
 
@@ -189,7 +175,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmPublicIPAddressResource"/> object. </returns>
         public virtual HciVmPublicIPAddressResource GetHciVmPublicIPAddressResource(ResourceIdentifier id)
         {
-            HciVmPublicIPAddressResource.ValidateResourceId(id);
             return new HciVmPublicIPAddressResource(Client, id);
         }
 
@@ -198,7 +183,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmNatGatewayResource"/> object. </returns>
         public virtual HciVmNatGatewayResource GetHciVmNatGatewayResource(ResourceIdentifier id)
         {
-            HciVmNatGatewayResource.ValidateResourceId(id);
             return new HciVmNatGatewayResource(Client, id);
         }
 
@@ -207,7 +191,6 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// <returns> Returns a <see cref="HciVmLoadBalancerResource"/> object. </returns>
         public virtual HciVmLoadBalancerResource GetHciVmLoadBalancerResource(ResourceIdentifier id)
         {
-            HciVmLoadBalancerResource.ValidateResourceId(id);
             return new HciVmLoadBalancerResource(Client, id);
         }
     }

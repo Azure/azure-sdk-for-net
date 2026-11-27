@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="GoalAssignmentResource"/> object. </returns>
         public virtual GoalAssignmentResource GetGoalAssignmentResource(ResourceIdentifier id)
         {
-            GoalAssignmentResource.ValidateResourceId(id);
             return new GoalAssignmentResource(Client, id);
         }
 
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="GoalMembersResource"/> object. </returns>
         public virtual GoalMembersResource GetGoalMembersResource(ResourceIdentifier id)
         {
-            GoalMembersResource.ValidateResourceId(id);
             return new GoalMembersResource(Client, id);
         }
 
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="RecoveryPlanResource"/> object. </returns>
         public virtual RecoveryPlanResource GetRecoveryPlanResource(ResourceIdentifier id)
         {
-            RecoveryPlanResource.ValidateResourceId(id);
             return new RecoveryPlanResource(Client, id);
         }
 
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="RecoveryMembersResource"/> object. </returns>
         public virtual RecoveryMembersResource GetRecoveryMembersResource(ResourceIdentifier id)
         {
-            RecoveryMembersResource.ValidateResourceId(id);
             return new RecoveryMembersResource(Client, id);
         }
 
@@ -215,7 +211,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="RecoveryJobResource"/> object. </returns>
         public virtual RecoveryJobResource GetRecoveryJobResource(ResourceIdentifier id)
         {
-            RecoveryJobResource.ValidateResourceId(id);
             return new RecoveryJobResource(Client, id);
         }
 
@@ -260,7 +255,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="RecoveryJobTargetResource"/> object. </returns>
         public virtual RecoveryJobTargetResource GetRecoveryJobTargetResource(ResourceIdentifier id)
         {
-            RecoveryJobTargetResource.ValidateResourceId(id);
             return new RecoveryJobTargetResource(Client, id);
         }
 
@@ -305,7 +299,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="ResilienceManagementDrillResource"/> object. </returns>
         public virtual ResilienceManagementDrillResource GetResilienceManagementDrillResource(ResourceIdentifier id)
         {
-            ResilienceManagementDrillResource.ValidateResourceId(id);
             return new ResilienceManagementDrillResource(Client, id);
         }
 
@@ -350,7 +343,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="DrillTargetResource"/> object. </returns>
         public virtual DrillTargetResource GetDrillTargetResource(ResourceIdentifier id)
         {
-            DrillTargetResource.ValidateResourceId(id);
             return new DrillTargetResource(Client, id);
         }
 
@@ -395,7 +387,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="DrillRunResource"/> object. </returns>
         public virtual DrillRunResource GetDrillRunResource(ResourceIdentifier id)
         {
-            DrillRunResource.ValidateResourceId(id);
             return new DrillRunResource(Client, id);
         }
 
@@ -440,7 +431,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="DrillRunTargetResource"/> object. </returns>
         public virtual DrillRunTargetResource GetDrillRunTargetResource(ResourceIdentifier id)
         {
-            DrillRunTargetResource.ValidateResourceId(id);
             return new DrillRunTargetResource(Client, id);
         }
 
@@ -485,7 +475,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="UnifiedResilienceItemResource"/> object. </returns>
         public virtual UnifiedResilienceItemResource GetUnifiedResilienceItemResource(ResourceIdentifier id)
         {
-            UnifiedResilienceItemResource.ValidateResourceId(id);
             return new UnifiedResilienceItemResource(Client, id);
         }
 
@@ -530,7 +519,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="UsagePlanResource"/> object. </returns>
         public virtual UsagePlanResource GetUsagePlanResource(ResourceIdentifier id)
         {
-            UsagePlanResource.ValidateResourceId(id);
             return new UsagePlanResource(Client, id);
         }
 
@@ -539,7 +527,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <returns> Returns a <see cref="UsagePlanEnrollmentResource"/> object. </returns>
         public virtual UsagePlanEnrollmentResource GetUsagePlanEnrollmentResource(ResourceIdentifier id)
         {
-            UsagePlanEnrollmentResource.ValidateResourceId(id);
             return new UsagePlanEnrollmentResource(Client, id);
         }
     }

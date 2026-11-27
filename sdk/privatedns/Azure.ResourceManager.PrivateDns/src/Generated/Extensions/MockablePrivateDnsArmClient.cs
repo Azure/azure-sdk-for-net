@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="PrivateDnsZoneResource"/> object. </returns>
         public virtual PrivateDnsZoneResource GetPrivateDnsZoneResource(ResourceIdentifier id)
         {
-            PrivateDnsZoneResource.ValidateResourceId(id);
             return new PrivateDnsZoneResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="VirtualNetworkLinkResource"/> object. </returns>
         public virtual VirtualNetworkLinkResource GetVirtualNetworkLinkResource(ResourceIdentifier id)
         {
-            VirtualNetworkLinkResource.ValidateResourceId(id);
             return new VirtualNetworkLinkResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="PrivateDnsARecordResource"/> object. </returns>
         public virtual PrivateDnsARecordResource GetPrivateDnsARecordResource(ResourceIdentifier id)
         {
-            PrivateDnsARecordResource.ValidateResourceId(id);
             return new PrivateDnsARecordResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="PrivateDnsAaaaRecordResource"/> object. </returns>
         public virtual PrivateDnsAaaaRecordResource GetPrivateDnsAaaaRecordResource(ResourceIdentifier id)
         {
-            PrivateDnsAaaaRecordResource.ValidateResourceId(id);
             return new PrivateDnsAaaaRecordResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="PrivateDnsCnameRecordResource"/> object. </returns>
         public virtual PrivateDnsCnameRecordResource GetPrivateDnsCnameRecordResource(ResourceIdentifier id)
         {
-            PrivateDnsCnameRecordResource.ValidateResourceId(id);
             return new PrivateDnsCnameRecordResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="PrivateDnsMXRecordResource"/> object. </returns>
         public virtual PrivateDnsMXRecordResource GetPrivateDnsMXRecordResource(ResourceIdentifier id)
         {
-            PrivateDnsMXRecordResource.ValidateResourceId(id);
             return new PrivateDnsMXRecordResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="PrivateDnsPtrRecordResource"/> object. </returns>
         public virtual PrivateDnsPtrRecordResource GetPrivateDnsPtrRecordResource(ResourceIdentifier id)
         {
-            PrivateDnsPtrRecordResource.ValidateResourceId(id);
             return new PrivateDnsPtrRecordResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="PrivateDnsSoaRecordResource"/> object. </returns>
         public virtual PrivateDnsSoaRecordResource GetPrivateDnsSoaRecordResource(ResourceIdentifier id)
         {
-            PrivateDnsSoaRecordResource.ValidateResourceId(id);
             return new PrivateDnsSoaRecordResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="PrivateDnsSrvRecordResource"/> object. </returns>
         public virtual PrivateDnsSrvRecordResource GetPrivateDnsSrvRecordResource(ResourceIdentifier id)
         {
-            PrivateDnsSrvRecordResource.ValidateResourceId(id);
             return new PrivateDnsSrvRecordResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> Returns a <see cref="PrivateDnsTxtRecordResource"/> object. </returns>
         public virtual PrivateDnsTxtRecordResource GetPrivateDnsTxtRecordResource(ResourceIdentifier id)
         {
-            PrivateDnsTxtRecordResource.ValidateResourceId(id);
             return new PrivateDnsTxtRecordResource(Client, id);
         }
     }

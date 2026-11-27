@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Monitor.Slis.Mocking
         /// <returns> Returns a <see cref="MonitorSliResource"/> object. </returns>
         public virtual MonitorSliResource GetMonitorSliResource(ResourceIdentifier id)
         {
-            MonitorSliResource.ValidateResourceId(id);
             return new MonitorSliResource(Client, id);
         }
 

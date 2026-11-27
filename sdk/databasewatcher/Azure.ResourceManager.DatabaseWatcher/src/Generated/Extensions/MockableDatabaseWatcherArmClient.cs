@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// <returns> Returns a <see cref="DatabaseWatcherResource"/> object. </returns>
         public virtual DatabaseWatcherResource GetDatabaseWatcherResource(ResourceIdentifier id)
         {
-            DatabaseWatcherResource.ValidateResourceId(id);
             return new DatabaseWatcherResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// <returns> Returns a <see cref="DatabaseWatcherAlertRuleResource"/> object. </returns>
         public virtual DatabaseWatcherAlertRuleResource GetDatabaseWatcherAlertRuleResource(ResourceIdentifier id)
         {
-            DatabaseWatcherAlertRuleResource.ValidateResourceId(id);
             return new DatabaseWatcherAlertRuleResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// <returns> Returns a <see cref="DatabaseWatcherHealthValidationResource"/> object. </returns>
         public virtual DatabaseWatcherHealthValidationResource GetDatabaseWatcherHealthValidationResource(ResourceIdentifier id)
         {
-            DatabaseWatcherHealthValidationResource.ValidateResourceId(id);
             return new DatabaseWatcherHealthValidationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// <returns> Returns a <see cref="DatabaseWatcherTargetResource"/> object. </returns>
         public virtual DatabaseWatcherTargetResource GetDatabaseWatcherTargetResource(ResourceIdentifier id)
         {
-            DatabaseWatcherTargetResource.ValidateResourceId(id);
             return new DatabaseWatcherTargetResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// <returns> Returns a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> object. </returns>
         public virtual DatabaseWatcherSharedPrivateLinkResource GetDatabaseWatcherSharedPrivateLinkResource(ResourceIdentifier id)
         {
-            DatabaseWatcherSharedPrivateLinkResource.ValidateResourceId(id);
             return new DatabaseWatcherSharedPrivateLinkResource(Client, id);
         }
     }

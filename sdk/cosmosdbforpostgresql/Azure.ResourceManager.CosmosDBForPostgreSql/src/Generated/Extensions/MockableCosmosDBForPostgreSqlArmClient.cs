@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlClusterResource GetCosmosDBForPostgreSqlClusterResource(ResourceIdentifier id)
         {
-            CosmosDBForPostgreSqlClusterResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlClusterResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlConfigurationResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlConfigurationResource GetCosmosDBForPostgreSqlConfigurationResource(ResourceIdentifier id)
         {
-            CosmosDBForPostgreSqlConfigurationResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlConfigurationResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlNodeConfigurationResource GetCosmosDBForPostgreSqlNodeConfigurationResource(ResourceIdentifier id)
         {
-            CosmosDBForPostgreSqlNodeConfigurationResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlNodeConfigurationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlCoordinatorConfigurationResource GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(ResourceIdentifier id)
         {
-            CosmosDBForPostgreSqlCoordinatorConfigurationResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlCoordinatorConfigurationResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlFirewallRuleResource GetCosmosDBForPostgreSqlFirewallRuleResource(ResourceIdentifier id)
         {
-            CosmosDBForPostgreSqlFirewallRuleResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlFirewallRuleResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlPrivateEndpointConnectionResource GetCosmosDBForPostgreSqlPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            CosmosDBForPostgreSqlPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlPrivateLinkResource GetCosmosDBForPostgreSqlPrivateLinkResource(ResourceIdentifier id)
         {
-            CosmosDBForPostgreSqlPrivateLinkResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlPrivateLinkResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(ResourceIdentifier id)
         {
-            CosmosDBForPostgreSqlRoleResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlRoleResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(ResourceIdentifier id)
         {
-            CosmosDBForPostgreSqlClusterServerResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlClusterServerResource(Client, id);
         }
     }

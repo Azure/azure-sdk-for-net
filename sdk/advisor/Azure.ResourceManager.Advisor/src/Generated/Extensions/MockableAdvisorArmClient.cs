@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <returns> Returns a <see cref="AdvisorMetadataEntityResource"/> object. </returns>
         public virtual AdvisorMetadataEntityResource GetAdvisorMetadataEntityResource(ResourceIdentifier id)
         {
-            AdvisorMetadataEntityResource.ValidateResourceId(id);
             return new AdvisorMetadataEntityResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <returns> Returns a <see cref="AdvisorRecommendationResource"/> object. </returns>
         public virtual AdvisorRecommendationResource GetAdvisorRecommendationResource(ResourceIdentifier id)
         {
-            AdvisorRecommendationResource.ValidateResourceId(id);
             return new AdvisorRecommendationResource(Client, id);
         }
 
@@ -89,7 +87,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <returns> Returns a <see cref="AdvisorSuppressionContractResource"/> object. </returns>
         public virtual AdvisorSuppressionContractResource GetAdvisorSuppressionContractResource(ResourceIdentifier id)
         {
-            AdvisorSuppressionContractResource.ValidateResourceId(id);
             return new AdvisorSuppressionContractResource(Client, id);
         }
 
@@ -134,7 +131,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <returns> Returns a <see cref="AdvisorScoreEntityResource"/> object. </returns>
         public virtual AdvisorScoreEntityResource GetAdvisorScoreEntityResource(ResourceIdentifier id)
         {
-            AdvisorScoreEntityResource.ValidateResourceId(id);
             return new AdvisorScoreEntityResource(Client, id);
         }
 
@@ -143,7 +139,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <returns> Returns a <see cref="AdvisorAssessmentResource"/> object. </returns>
         public virtual AdvisorAssessmentResource GetAdvisorAssessmentResource(ResourceIdentifier id)
         {
-            AdvisorAssessmentResource.ValidateResourceId(id);
             return new AdvisorAssessmentResource(Client, id);
         }
 
@@ -152,7 +147,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <returns> Returns a <see cref="AdvisorResiliencyReviewResource"/> object. </returns>
         public virtual AdvisorResiliencyReviewResource GetAdvisorResiliencyReviewResource(ResourceIdentifier id)
         {
-            AdvisorResiliencyReviewResource.ValidateResourceId(id);
             return new AdvisorResiliencyReviewResource(Client, id);
         }
 
@@ -161,7 +155,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <returns> Returns a <see cref="AdvisorTriageRecommendationResource"/> object. </returns>
         public virtual AdvisorTriageRecommendationResource GetAdvisorTriageRecommendationResource(ResourceIdentifier id)
         {
-            AdvisorTriageRecommendationResource.ValidateResourceId(id);
             return new AdvisorTriageRecommendationResource(Client, id);
         }
 
@@ -206,7 +199,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <returns> Returns a <see cref="AdvisorTriageResource"/> object. </returns>
         public virtual AdvisorTriageResource GetAdvisorTriageResource(ResourceIdentifier id)
         {
-            AdvisorTriageResource.ValidateResourceId(id);
             return new AdvisorTriageResource(Client, id);
         }
 

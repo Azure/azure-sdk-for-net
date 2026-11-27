@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <returns> Returns a <see cref="ApplicationInsightsWebTestResource"/> object. </returns>
         public virtual ApplicationInsightsWebTestResource GetApplicationInsightsWebTestResource(ResourceIdentifier id)
         {
-            ApplicationInsightsWebTestResource.ValidateResourceId(id);
             return new ApplicationInsightsWebTestResource(Client, id);
         }
 
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <returns> Returns a <see cref="ApplicationInsightsWorkbookResource"/> object. </returns>
         public virtual ApplicationInsightsWorkbookResource GetApplicationInsightsWorkbookResource(ResourceIdentifier id)
         {
-            ApplicationInsightsWorkbookResource.ValidateResourceId(id);
             return new ApplicationInsightsWorkbookResource(Client, id);
         }
 
@@ -62,7 +60,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <returns> Returns a <see cref="ApplicationInsightsWorkbookRevisionResource"/> object. </returns>
         public virtual ApplicationInsightsWorkbookRevisionResource GetApplicationInsightsWorkbookRevisionResource(ResourceIdentifier id)
         {
-            ApplicationInsightsWorkbookRevisionResource.ValidateResourceId(id);
             return new ApplicationInsightsWorkbookRevisionResource(Client, id);
         }
 
@@ -71,7 +68,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <returns> Returns a <see cref="ApplicationInsightsWorkbookTemplateResource"/> object. </returns>
         public virtual ApplicationInsightsWorkbookTemplateResource GetApplicationInsightsWorkbookTemplateResource(ResourceIdentifier id)
         {
-            ApplicationInsightsWorkbookTemplateResource.ValidateResourceId(id);
             return new ApplicationInsightsWorkbookTemplateResource(Client, id);
         }
 
@@ -80,7 +76,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <returns> Returns a <see cref="ComponentLinkedStorageAccountsResource"/> object. </returns>
         public virtual ComponentLinkedStorageAccountsResource GetComponentLinkedStorageAccountsResource(ResourceIdentifier id)
         {
-            ComponentLinkedStorageAccountsResource.ValidateResourceId(id);
             return new ComponentLinkedStorageAccountsResource(Client, id);
         }
 
@@ -89,7 +84,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <returns> Returns a <see cref="ApplicationInsightsComponentResource"/> object. </returns>
         public virtual ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(ResourceIdentifier id)
         {
-            ApplicationInsightsComponentResource.ValidateResourceId(id);
             return new ApplicationInsightsComponentResource(Client, id);
         }
 

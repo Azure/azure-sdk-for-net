@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <returns> Returns a <see cref="ConnectedClusterStorageClassResource"/> object. </returns>
         public virtual ConnectedClusterStorageClassResource GetConnectedClusterStorageClassResource(ResourceIdentifier id)
         {
-            ConnectedClusterStorageClassResource.ValidateResourceId(id);
             return new ConnectedClusterStorageClassResource(Client, id);
         }
 
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <returns> Returns a <see cref="ConnectedClusterLoadBalancerResource"/> object. </returns>
         public virtual ConnectedClusterLoadBalancerResource GetConnectedClusterLoadBalancerResource(ResourceIdentifier id)
         {
-            ConnectedClusterLoadBalancerResource.ValidateResourceId(id);
             return new ConnectedClusterLoadBalancerResource(Client, id);
         }
 
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <returns> Returns a <see cref="ConnectedClusterBgpPeerResource"/> object. </returns>
         public virtual ConnectedClusterBgpPeerResource GetConnectedClusterBgpPeerResource(ResourceIdentifier id)
         {
-            ConnectedClusterBgpPeerResource.ValidateResourceId(id);
             return new ConnectedClusterBgpPeerResource(Client, id);
         }
 
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <returns> Returns a <see cref="ConnectedClusterServiceResource"/> object. </returns>
         public virtual ConnectedClusterServiceResource GetConnectedClusterServiceResource(ResourceIdentifier id)
         {
-            ConnectedClusterServiceResource.ValidateResourceId(id);
             return new ConnectedClusterServiceResource(Client, id);
         }
 

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="RelayHybridConnectionAuthorizationRuleResource"/> object. </returns>
         public virtual RelayHybridConnectionAuthorizationRuleResource GetRelayHybridConnectionAuthorizationRuleResource(ResourceIdentifier id)
         {
-            RelayHybridConnectionAuthorizationRuleResource.ValidateResourceId(id);
             return new RelayHybridConnectionAuthorizationRuleResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="RelayHybridConnectionResource"/> object. </returns>
         public virtual RelayHybridConnectionResource GetRelayHybridConnectionResource(ResourceIdentifier id)
         {
-            RelayHybridConnectionResource.ValidateResourceId(id);
             return new RelayHybridConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="WcfRelayAuthorizationRuleResource"/> object. </returns>
         public virtual WcfRelayAuthorizationRuleResource GetWcfRelayAuthorizationRuleResource(ResourceIdentifier id)
         {
-            WcfRelayAuthorizationRuleResource.ValidateResourceId(id);
             return new WcfRelayAuthorizationRuleResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="WcfRelayResource"/> object. </returns>
         public virtual WcfRelayResource GetWcfRelayResource(ResourceIdentifier id)
         {
-            WcfRelayResource.ValidateResourceId(id);
             return new WcfRelayResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="RelayPrivateEndpointConnectionResource"/> object. </returns>
         public virtual RelayPrivateEndpointConnectionResource GetRelayPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            RelayPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new RelayPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="RelayPrivateLinkResource"/> object. </returns>
         public virtual RelayPrivateLinkResource GetRelayPrivateLinkResource(ResourceIdentifier id)
         {
-            RelayPrivateLinkResource.ValidateResourceId(id);
             return new RelayPrivateLinkResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="RelayClusterResource"/> object. </returns>
         public virtual RelayClusterResource GetRelayClusterResource(ResourceIdentifier id)
         {
-            RelayClusterResource.ValidateResourceId(id);
             return new RelayClusterResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="RelayNamespaceAuthorizationRuleResource"/> object. </returns>
         public virtual RelayNamespaceAuthorizationRuleResource GetRelayNamespaceAuthorizationRuleResource(ResourceIdentifier id)
         {
-            RelayNamespaceAuthorizationRuleResource.ValidateResourceId(id);
             return new RelayNamespaceAuthorizationRuleResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="RelayNamespaceResource"/> object. </returns>
         public virtual RelayNamespaceResource GetRelayNamespaceResource(ResourceIdentifier id)
         {
-            RelayNamespaceResource.ValidateResourceId(id);
             return new RelayNamespaceResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <returns> Returns a <see cref="RelayNetworkRuleSetResource"/> object. </returns>
         public virtual RelayNetworkRuleSetResource GetRelayNetworkRuleSetResource(ResourceIdentifier id)
         {
-            RelayNetworkRuleSetResource.ValidateResourceId(id);
             return new RelayNetworkRuleSetResource(Client, id);
         }
     }

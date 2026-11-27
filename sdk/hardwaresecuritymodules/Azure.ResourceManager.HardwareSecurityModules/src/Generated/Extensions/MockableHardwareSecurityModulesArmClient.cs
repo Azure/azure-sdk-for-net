@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <returns> Returns a <see cref="CloudHsmClusterResource"/> object. </returns>
         public virtual CloudHsmClusterResource GetCloudHsmClusterResource(ResourceIdentifier id)
         {
-            CloudHsmClusterResource.ValidateResourceId(id);
             return new CloudHsmClusterResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <returns> Returns a <see cref="CloudHsmClusterPrivateEndpointConnectionResource"/> object. </returns>
         public virtual CloudHsmClusterPrivateEndpointConnectionResource GetCloudHsmClusterPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            CloudHsmClusterPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new CloudHsmClusterPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <returns> Returns a <see cref="DedicatedHsmResource"/> object. </returns>
         public virtual DedicatedHsmResource GetDedicatedHsmResource(ResourceIdentifier id)
         {
-            DedicatedHsmResource.ValidateResourceId(id);
             return new DedicatedHsmResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <returns> Returns a <see cref="PaymentHsmClusterResource"/> object. </returns>
         public virtual PaymentHsmClusterResource GetPaymentHsmClusterResource(ResourceIdentifier id)
         {
-            PaymentHsmClusterResource.ValidateResourceId(id);
             return new PaymentHsmClusterResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <returns> Returns a <see cref="PaymentHsmClusterPrivateEndpointConnectionResource"/> object. </returns>
         public virtual PaymentHsmClusterPrivateEndpointConnectionResource GetPaymentHsmClusterPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PaymentHsmClusterPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new PaymentHsmClusterPrivateEndpointConnectionResource(Client, id);
         }
     }

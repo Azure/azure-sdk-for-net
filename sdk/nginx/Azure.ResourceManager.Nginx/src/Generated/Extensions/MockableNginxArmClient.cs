@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <returns> Returns a <see cref="NginxDeploymentApiKeyResource"/> object. </returns>
         public virtual NginxDeploymentApiKeyResource GetNginxDeploymentApiKeyResource(ResourceIdentifier id)
         {
-            NginxDeploymentApiKeyResource.ValidateResourceId(id);
             return new NginxDeploymentApiKeyResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <returns> Returns a <see cref="NginxDeploymentResource"/> object. </returns>
         public virtual NginxDeploymentResource GetNginxDeploymentResource(ResourceIdentifier id)
         {
-            NginxDeploymentResource.ValidateResourceId(id);
             return new NginxDeploymentResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <returns> Returns a <see cref="NginxCertificateResource"/> object. </returns>
         public virtual NginxCertificateResource GetNginxCertificateResource(ResourceIdentifier id)
         {
-            NginxCertificateResource.ValidateResourceId(id);
             return new NginxCertificateResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <returns> Returns a <see cref="NginxConfigurationResource"/> object. </returns>
         public virtual NginxConfigurationResource GetNginxConfigurationResource(ResourceIdentifier id)
         {
-            NginxConfigurationResource.ValidateResourceId(id);
             return new NginxConfigurationResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <returns> Returns a <see cref="NginxDeploymentWafPolicyResource"/> object. </returns>
         public virtual NginxDeploymentWafPolicyResource GetNginxDeploymentWafPolicyResource(ResourceIdentifier id)
         {
-            NginxDeploymentWafPolicyResource.ValidateResourceId(id);
             return new NginxDeploymentWafPolicyResource(Client, id);
         }
     }

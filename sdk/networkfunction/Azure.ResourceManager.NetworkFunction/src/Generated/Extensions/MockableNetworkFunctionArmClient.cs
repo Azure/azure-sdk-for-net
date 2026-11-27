@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// <returns> Returns a <see cref="AzureTrafficCollectorResource"/> object. </returns>
         public virtual AzureTrafficCollectorResource GetAzureTrafficCollectorResource(ResourceIdentifier id)
         {
-            AzureTrafficCollectorResource.ValidateResourceId(id);
             return new AzureTrafficCollectorResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// <returns> Returns a <see cref="CollectorPolicyResource"/> object. </returns>
         public virtual CollectorPolicyResource GetCollectorPolicyResource(ResourceIdentifier id)
         {
-            CollectorPolicyResource.ValidateResourceId(id);
             return new CollectorPolicyResource(Client, id);
         }
     }

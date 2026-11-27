@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// <returns> Returns a <see cref="MongoClusterResource"/> object. </returns>
         public virtual MongoClusterResource GetMongoClusterResource(ResourceIdentifier id)
         {
-            MongoClusterResource.ValidateResourceId(id);
             return new MongoClusterResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// <returns> Returns a <see cref="MongoClusterFirewallRuleResource"/> object. </returns>
         public virtual MongoClusterFirewallRuleResource GetMongoClusterFirewallRuleResource(ResourceIdentifier id)
         {
-            MongoClusterFirewallRuleResource.ValidateResourceId(id);
             return new MongoClusterFirewallRuleResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// <returns> Returns a <see cref="MongoClusterPrivateEndpointConnectionResource"/> object. </returns>
         public virtual MongoClusterPrivateEndpointConnectionResource GetMongoClusterPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            MongoClusterPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new MongoClusterPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// <returns> Returns a <see cref="MongoClusterUserResource"/> object. </returns>
         public virtual MongoClusterUserResource GetMongoClusterUserResource(ResourceIdentifier id)
         {
-            MongoClusterUserResource.ValidateResourceId(id);
             return new MongoClusterUserResource(Client, id);
         }
     }

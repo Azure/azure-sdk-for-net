@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <returns> Returns a <see cref="ElasticSanResource"/> object. </returns>
         public virtual ElasticSanResource GetElasticSanResource(ResourceIdentifier id)
         {
-            ElasticSanResource.ValidateResourceId(id);
             return new ElasticSanResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <returns> Returns a <see cref="ElasticSanPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ElasticSanPrivateEndpointConnectionResource GetElasticSanPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ElasticSanPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ElasticSanPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <returns> Returns a <see cref="ElasticSanVolumeResource"/> object. </returns>
         public virtual ElasticSanVolumeResource GetElasticSanVolumeResource(ResourceIdentifier id)
         {
-            ElasticSanVolumeResource.ValidateResourceId(id);
             return new ElasticSanVolumeResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <returns> Returns a <see cref="ElasticSanVolumeGroupResource"/> object. </returns>
         public virtual ElasticSanVolumeGroupResource GetElasticSanVolumeGroupResource(ResourceIdentifier id)
         {
-            ElasticSanVolumeGroupResource.ValidateResourceId(id);
             return new ElasticSanVolumeGroupResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <returns> Returns a <see cref="ElasticSanSnapshotResource"/> object. </returns>
         public virtual ElasticSanSnapshotResource GetElasticSanSnapshotResource(ResourceIdentifier id)
         {
-            ElasticSanSnapshotResource.ValidateResourceId(id);
             return new ElasticSanSnapshotResource(Client, id);
         }
     }

@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Mocki
         /// <returns> Returns a <see cref="FluxConfigurationResource"/> object. </returns>
         public virtual FluxConfigurationResource GetFluxConfigurationResource(ResourceIdentifier id)
         {
-            FluxConfigurationResource.ValidateResourceId(id);
             return new FluxConfigurationResource(Client, id);
         }
 

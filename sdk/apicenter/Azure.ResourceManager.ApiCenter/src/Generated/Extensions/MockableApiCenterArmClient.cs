@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiCenterServiceResource"/> object. </returns>
         public virtual ApiCenterServiceResource GetApiCenterServiceResource(ResourceIdentifier id)
         {
-            ApiCenterServiceResource.ValidateResourceId(id);
             return new ApiCenterServiceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiCenterDeletedServiceResource"/> object. </returns>
         public virtual ApiCenterDeletedServiceResource GetApiCenterDeletedServiceResource(ResourceIdentifier id)
         {
-            ApiCenterDeletedServiceResource.ValidateResourceId(id);
             return new ApiCenterDeletedServiceResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiCenterMetadataSchemaResource"/> object. </returns>
         public virtual ApiCenterMetadataSchemaResource GetApiCenterMetadataSchemaResource(ResourceIdentifier id)
         {
-            ApiCenterMetadataSchemaResource.ValidateResourceId(id);
             return new ApiCenterMetadataSchemaResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiCenterWorkspaceResource"/> object. </returns>
         public virtual ApiCenterWorkspaceResource GetApiCenterWorkspaceResource(ResourceIdentifier id)
         {
-            ApiCenterWorkspaceResource.ValidateResourceId(id);
             return new ApiCenterWorkspaceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiCenterApiResource"/> object. </returns>
         public virtual ApiCenterApiResource GetApiCenterApiResource(ResourceIdentifier id)
         {
-            ApiCenterApiResource.ValidateResourceId(id);
             return new ApiCenterApiResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiCenterApiVersionResource"/> object. </returns>
         public virtual ApiCenterApiVersionResource GetApiCenterApiVersionResource(ResourceIdentifier id)
         {
-            ApiCenterApiVersionResource.ValidateResourceId(id);
             return new ApiCenterApiVersionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiCenterApiDefinitionResource"/> object. </returns>
         public virtual ApiCenterApiDefinitionResource GetApiCenterApiDefinitionResource(ResourceIdentifier id)
         {
-            ApiCenterApiDefinitionResource.ValidateResourceId(id);
             return new ApiCenterApiDefinitionResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiSourceResource"/> object. </returns>
         public virtual ApiSourceResource GetApiSourceResource(ResourceIdentifier id)
         {
-            ApiSourceResource.ValidateResourceId(id);
             return new ApiSourceResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiCenterDeploymentResource"/> object. </returns>
         public virtual ApiCenterDeploymentResource GetApiCenterDeploymentResource(ResourceIdentifier id)
         {
-            ApiCenterDeploymentResource.ValidateResourceId(id);
             return new ApiCenterDeploymentResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> Returns a <see cref="ApiCenterEnvironmentResource"/> object. </returns>
         public virtual ApiCenterEnvironmentResource GetApiCenterEnvironmentResource(ResourceIdentifier id)
         {
-            ApiCenterEnvironmentResource.ValidateResourceId(id);
             return new ApiCenterEnvironmentResource(Client, id);
         }
     }

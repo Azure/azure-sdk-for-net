@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Relationships.Mocking
         /// <returns> Returns a <see cref="DependencyOfRelationshipResource"/> object. </returns>
         public virtual DependencyOfRelationshipResource GetDependencyOfRelationshipResource(ResourceIdentifier id)
         {
-            DependencyOfRelationshipResource.ValidateResourceId(id);
             return new DependencyOfRelationshipResource(Client, id);
         }
 
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.Relationships.Mocking
         /// <returns> Returns a <see cref="ServiceGroupDependencyOfRelationshipResource"/> object. </returns>
         public virtual ServiceGroupDependencyOfRelationshipResource GetServiceGroupDependencyOfRelationshipResource(ResourceIdentifier id)
         {
-            ServiceGroupDependencyOfRelationshipResource.ValidateResourceId(id);
             return new ServiceGroupDependencyOfRelationshipResource(Client, id);
         }
 
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.Relationships.Mocking
         /// <returns> Returns a <see cref="ServiceGroupMemberRelationshipResource"/> object. </returns>
         public virtual ServiceGroupMemberRelationshipResource GetServiceGroupMemberRelationshipResource(ResourceIdentifier id)
         {
-            ServiceGroupMemberRelationshipResource.ValidateResourceId(id);
             return new ServiceGroupMemberRelationshipResource(Client, id);
         }
 

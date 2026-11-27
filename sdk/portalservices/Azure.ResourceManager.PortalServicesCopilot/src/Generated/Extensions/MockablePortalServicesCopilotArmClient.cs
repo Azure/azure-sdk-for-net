@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Mocking
         /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
         public virtual PortalServicesCopilotSettingResource GetPortalServicesCopilotSettingResource(ResourceIdentifier id)
         {
-            PortalServicesCopilotSettingResource.ValidateResourceId(id);
             return new PortalServicesCopilotSettingResource(Client, id);
         }
     }

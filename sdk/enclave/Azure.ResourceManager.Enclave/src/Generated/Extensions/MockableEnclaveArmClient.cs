@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <returns> Returns a <see cref="VirtualEnclaveWorkloadResource"/> object. </returns>
         public virtual VirtualEnclaveWorkloadResource GetVirtualEnclaveWorkloadResource(ResourceIdentifier id)
         {
-            VirtualEnclaveWorkloadResource.ValidateResourceId(id);
             return new VirtualEnclaveWorkloadResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <returns> Returns a <see cref="VirtualEnclaveResource"/> object. </returns>
         public virtual VirtualEnclaveResource GetVirtualEnclaveResource(ResourceIdentifier id)
         {
-            VirtualEnclaveResource.ValidateResourceId(id);
             return new VirtualEnclaveResource(Client, id);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <returns> Returns a <see cref="VirtualEnclaveCommunityResource"/> object. </returns>
         public virtual VirtualEnclaveCommunityResource GetVirtualEnclaveCommunityResource(ResourceIdentifier id)
         {
-            VirtualEnclaveCommunityResource.ValidateResourceId(id);
             return new VirtualEnclaveCommunityResource(Client, id);
         }
 
@@ -62,7 +59,6 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <returns> Returns a <see cref="VirtualEnclaveTransitHubResource"/> object. </returns>
         public virtual VirtualEnclaveTransitHubResource GetVirtualEnclaveTransitHubResource(ResourceIdentifier id)
         {
-            VirtualEnclaveTransitHubResource.ValidateResourceId(id);
             return new VirtualEnclaveTransitHubResource(Client, id);
         }
 
@@ -71,7 +67,6 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <returns> Returns a <see cref="VirtualEnclaveConnectionResource"/> object. </returns>
         public virtual VirtualEnclaveConnectionResource GetVirtualEnclaveConnectionResource(ResourceIdentifier id)
         {
-            VirtualEnclaveConnectionResource.ValidateResourceId(id);
             return new VirtualEnclaveConnectionResource(Client, id);
         }
 
@@ -80,7 +75,6 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <returns> Returns a <see cref="VirtualEnclaveEndpointResource"/> object. </returns>
         public virtual VirtualEnclaveEndpointResource GetVirtualEnclaveEndpointResource(ResourceIdentifier id)
         {
-            VirtualEnclaveEndpointResource.ValidateResourceId(id);
             return new VirtualEnclaveEndpointResource(Client, id);
         }
 
@@ -89,7 +83,6 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <returns> Returns a <see cref="VirtualEnclaveCommunityEndpointResource"/> object. </returns>
         public virtual VirtualEnclaveCommunityEndpointResource GetVirtualEnclaveCommunityEndpointResource(ResourceIdentifier id)
         {
-            VirtualEnclaveCommunityEndpointResource.ValidateResourceId(id);
             return new VirtualEnclaveCommunityEndpointResource(Client, id);
         }
 
@@ -98,7 +91,6 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <returns> Returns a <see cref="VirtualEnclaveDedicatedHubResource"/> object. </returns>
         public virtual VirtualEnclaveDedicatedHubResource GetVirtualEnclaveDedicatedHubResource(ResourceIdentifier id)
         {
-            VirtualEnclaveDedicatedHubResource.ValidateResourceId(id);
             return new VirtualEnclaveDedicatedHubResource(Client, id);
         }
 
@@ -107,7 +99,6 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <returns> Returns a <see cref="VirtualEnclaveApprovalResource"/> object. </returns>
         public virtual VirtualEnclaveApprovalResource GetVirtualEnclaveApprovalResource(ResourceIdentifier id)
         {
-            VirtualEnclaveApprovalResource.ValidateResourceId(id);
             return new VirtualEnclaveApprovalResource(Client, id);
         }
 

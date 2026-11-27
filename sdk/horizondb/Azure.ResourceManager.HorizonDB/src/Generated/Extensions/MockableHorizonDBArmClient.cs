@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <returns> Returns a <see cref="HorizonDBClusterResource"/> object. </returns>
         public virtual HorizonDBClusterResource GetHorizonDBClusterResource(ResourceIdentifier id)
         {
-            HorizonDBClusterResource.ValidateResourceId(id);
             return new HorizonDBClusterResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <returns> Returns a <see cref="HorizonDBPoolResource"/> object. </returns>
         public virtual HorizonDBPoolResource GetHorizonDBPoolResource(ResourceIdentifier id)
         {
-            HorizonDBPoolResource.ValidateResourceId(id);
             return new HorizonDBPoolResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <returns> Returns a <see cref="HorizonDBReplicaResource"/> object. </returns>
         public virtual HorizonDBReplicaResource GetHorizonDBReplicaResource(ResourceIdentifier id)
         {
-            HorizonDBReplicaResource.ValidateResourceId(id);
             return new HorizonDBReplicaResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <returns> Returns a <see cref="HorizonDBFirewallRuleResource"/> object. </returns>
         public virtual HorizonDBFirewallRuleResource GetHorizonDBFirewallRuleResource(ResourceIdentifier id)
         {
-            HorizonDBFirewallRuleResource.ValidateResourceId(id);
             return new HorizonDBFirewallRuleResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <returns> Returns a <see cref="HorizonDBPrivateEndpointConnectionResource"/> object. </returns>
         public virtual HorizonDBPrivateEndpointConnectionResource GetHorizonDBPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HorizonDBPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HorizonDBPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <returns> Returns a <see cref="HorizonDBPrivateLinkResource"/> object. </returns>
         public virtual HorizonDBPrivateLinkResource GetHorizonDBPrivateLinkResource(ResourceIdentifier id)
         {
-            HorizonDBPrivateLinkResource.ValidateResourceId(id);
             return new HorizonDBPrivateLinkResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <returns> Returns a <see cref="HorizonDBParameterGroupResource"/> object. </returns>
         public virtual HorizonDBParameterGroupResource GetHorizonDBParameterGroupResource(ResourceIdentifier id)
         {
-            HorizonDBParameterGroupResource.ValidateResourceId(id);
             return new HorizonDBParameterGroupResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <returns> Returns a <see cref="HorizonDBAdministratorResource"/> object. </returns>
         public virtual HorizonDBAdministratorResource GetHorizonDBAdministratorResource(ResourceIdentifier id)
         {
-            HorizonDBAdministratorResource.ValidateResourceId(id);
             return new HorizonDBAdministratorResource(Client, id);
         }
     }

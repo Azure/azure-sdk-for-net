@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="MonitorWorkspaceResource"/> object. </returns>
         public virtual MonitorWorkspaceResource GetMonitorWorkspaceResource(ResourceIdentifier id)
         {
-            MonitorWorkspaceResource.ValidateResourceId(id);
             return new MonitorWorkspaceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="MonitorIssueResource"/> object. </returns>
         public virtual MonitorIssueResource GetMonitorIssueResource(ResourceIdentifier id)
         {
-            MonitorIssueResource.ValidateResourceId(id);
             return new MonitorIssueResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="MonitorMetricsContainerResource"/> object. </returns>
         public virtual MonitorMetricsContainerResource GetMonitorMetricsContainerResource(ResourceIdentifier id)
         {
-            MonitorMetricsContainerResource.ValidateResourceId(id);
             return new MonitorMetricsContainerResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="MetricNamespaceResource"/> object. </returns>
         public virtual MetricNamespaceResource GetMetricNamespaceResource(ResourceIdentifier id)
         {
-            MetricNamespaceResource.ValidateResourceId(id);
             return new MetricNamespaceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="MetricConfigurationResource"/> object. </returns>
         public virtual MetricConfigurationResource GetMetricConfigurationResource(ResourceIdentifier id)
         {
-            MetricConfigurationResource.ValidateResourceId(id);
             return new MetricConfigurationResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceContainerResource"/> object. </returns>
         public virtual TraceContainerResource GetTraceContainerResource(ResourceIdentifier id)
         {
-            TraceContainerResource.ValidateResourceId(id);
             return new TraceContainerResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceAssociationAtResourceGroupResource"/> object. </returns>
         public virtual TraceAssociationAtResourceGroupResource GetTraceAssociationAtResourceGroupResource(ResourceIdentifier id)
         {
-            TraceAssociationAtResourceGroupResource.ValidateResourceId(id);
             return new TraceAssociationAtResourceGroupResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceAssociationAtSubscriptionResource"/> object. </returns>
         public virtual TraceAssociationAtSubscriptionResource GetTraceAssociationAtSubscriptionResource(ResourceIdentifier id)
         {
-            TraceAssociationAtSubscriptionResource.ValidateResourceId(id);
             return new TraceAssociationAtSubscriptionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceAssociationResource"/> object. </returns>
         public virtual TraceAssociationResource GetTraceAssociationResource(ResourceIdentifier id)
         {
-            TraceAssociationResource.ValidateResourceId(id);
             return new TraceAssociationResource(Client, id);
         }
 

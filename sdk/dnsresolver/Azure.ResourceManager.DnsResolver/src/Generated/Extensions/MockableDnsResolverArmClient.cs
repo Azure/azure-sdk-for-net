@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsResolverResource"/> object. </returns>
         public virtual DnsResolverResource GetDnsResolverResource(ResourceIdentifier id)
         {
-            DnsResolverResource.ValidateResourceId(id);
             return new DnsResolverResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsResolverInboundEndpointResource"/> object. </returns>
         public virtual DnsResolverInboundEndpointResource GetDnsResolverInboundEndpointResource(ResourceIdentifier id)
         {
-            DnsResolverInboundEndpointResource.ValidateResourceId(id);
             return new DnsResolverInboundEndpointResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsResolverOutboundEndpointResource"/> object. </returns>
         public virtual DnsResolverOutboundEndpointResource GetDnsResolverOutboundEndpointResource(ResourceIdentifier id)
         {
-            DnsResolverOutboundEndpointResource.ValidateResourceId(id);
             return new DnsResolverOutboundEndpointResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsForwardingRulesetResource"/> object. </returns>
         public virtual DnsForwardingRulesetResource GetDnsForwardingRulesetResource(ResourceIdentifier id)
         {
-            DnsForwardingRulesetResource.ValidateResourceId(id);
             return new DnsForwardingRulesetResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsForwardingRuleResource"/> object. </returns>
         public virtual DnsForwardingRuleResource GetDnsForwardingRuleResource(ResourceIdentifier id)
         {
-            DnsForwardingRuleResource.ValidateResourceId(id);
             return new DnsForwardingRuleResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> object. </returns>
         public virtual DnsForwardingRulesetVirtualNetworkLinkResource GetDnsForwardingRulesetVirtualNetworkLinkResource(ResourceIdentifier id)
         {
-            DnsForwardingRulesetVirtualNetworkLinkResource.ValidateResourceId(id);
             return new DnsForwardingRulesetVirtualNetworkLinkResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsResolverPolicyResource"/> object. </returns>
         public virtual DnsResolverPolicyResource GetDnsResolverPolicyResource(ResourceIdentifier id)
         {
-            DnsResolverPolicyResource.ValidateResourceId(id);
             return new DnsResolverPolicyResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsSecurityRuleResource"/> object. </returns>
         public virtual DnsSecurityRuleResource GetDnsSecurityRuleResource(ResourceIdentifier id)
         {
-            DnsSecurityRuleResource.ValidateResourceId(id);
             return new DnsSecurityRuleResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> object. </returns>
         public virtual DnsResolverPolicyVirtualNetworkLinkResource GetDnsResolverPolicyVirtualNetworkLinkResource(ResourceIdentifier id)
         {
-            DnsResolverPolicyVirtualNetworkLinkResource.ValidateResourceId(id);
             return new DnsResolverPolicyVirtualNetworkLinkResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <returns> Returns a <see cref="DnsResolverDomainListResource"/> object. </returns>
         public virtual DnsResolverDomainListResource GetDnsResolverDomainListResource(ResourceIdentifier id)
         {
-            DnsResolverDomainListResource.ValidateResourceId(id);
             return new DnsResolverDomainListResource(Client, id);
         }
     }

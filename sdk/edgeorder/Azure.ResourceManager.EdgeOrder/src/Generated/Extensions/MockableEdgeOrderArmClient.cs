@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> Returns a <see cref="EdgeOrderAddressResource"/> object. </returns>
         public virtual EdgeOrderAddressResource GetEdgeOrderAddressResource(ResourceIdentifier id)
         {
-            EdgeOrderAddressResource.ValidateResourceId(id);
             return new EdgeOrderAddressResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> Returns a <see cref="EdgeOrderItemResource"/> object. </returns>
         public virtual EdgeOrderItemResource GetEdgeOrderItemResource(ResourceIdentifier id)
         {
-            EdgeOrderItemResource.ValidateResourceId(id);
             return new EdgeOrderItemResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> Returns a <see cref="EdgeOrderResource"/> object. </returns>
         public virtual EdgeOrderResource GetEdgeOrderResource(ResourceIdentifier id)
         {
-            EdgeOrderResource.ValidateResourceId(id);
             return new EdgeOrderResource(Client, id);
         }
     }

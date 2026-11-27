@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         /// <returns> Returns a <see cref="DisconnectedOperationResource"/> object. </returns>
         public virtual DisconnectedOperationResource GetDisconnectedOperationResource(ResourceIdentifier id)
         {
-            DisconnectedOperationResource.ValidateResourceId(id);
             return new DisconnectedOperationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         /// <returns> Returns a <see cref="DisconnectedOperationsImageResource"/> object. </returns>
         public virtual DisconnectedOperationsImageResource GetDisconnectedOperationsImageResource(ResourceIdentifier id)
         {
-            DisconnectedOperationsImageResource.ValidateResourceId(id);
             return new DisconnectedOperationsImageResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         /// <returns> Returns a <see cref="DisconnectedOperationsArtifactResource"/> object. </returns>
         public virtual DisconnectedOperationsArtifactResource GetDisconnectedOperationsArtifactResource(ResourceIdentifier id)
         {
-            DisconnectedOperationsArtifactResource.ValidateResourceId(id);
             return new DisconnectedOperationsArtifactResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         /// <returns> Returns a <see cref="DisconnectedOperationsHardwareSettingResource"/> object. </returns>
         public virtual DisconnectedOperationsHardwareSettingResource GetDisconnectedOperationsHardwareSettingResource(ResourceIdentifier id)
         {
-            DisconnectedOperationsHardwareSettingResource.ValidateResourceId(id);
             return new DisconnectedOperationsHardwareSettingResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
         /// <returns> Returns a <see cref="TenantActivityLogAlertResource"/> object. </returns>
         public virtual TenantActivityLogAlertResource GetTenantActivityLogAlertResource(ResourceIdentifier id)
         {
-            TenantActivityLogAlertResource.ValidateResourceId(id);
             return new TenantActivityLogAlertResource(Client, id);
         }
     }

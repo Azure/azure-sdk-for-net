@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         /// <returns> Returns a <see cref="KeyVaultSecretProviderClassResource"/> object. </returns>
         public virtual KeyVaultSecretProviderClassResource GetKeyVaultSecretProviderClassResource(ResourceIdentifier id)
         {
-            KeyVaultSecretProviderClassResource.ValidateResourceId(id);
             return new KeyVaultSecretProviderClassResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         /// <returns> Returns a <see cref="SecretSyncResource"/> object. </returns>
         public virtual SecretSyncResource GetSecretSyncResource(ResourceIdentifier id)
         {
-            SecretSyncResource.ValidateResourceId(id);
             return new SecretSyncResource(Client, id);
         }
     }

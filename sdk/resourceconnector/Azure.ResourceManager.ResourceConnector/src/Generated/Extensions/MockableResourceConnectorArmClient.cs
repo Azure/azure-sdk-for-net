@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <returns> Returns a <see cref="ResourceConnectorApplianceResource"/> object. </returns>
         public virtual ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(ResourceIdentifier id)
         {
-            ResourceConnectorApplianceResource.ValidateResourceId(id);
             return new ResourceConnectorApplianceResource(Client, id);
         }
     }

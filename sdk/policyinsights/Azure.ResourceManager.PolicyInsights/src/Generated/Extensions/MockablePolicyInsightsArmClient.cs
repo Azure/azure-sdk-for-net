@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> Returns a <see cref="PolicyRemediationResource"/> object. </returns>
         public virtual PolicyRemediationResource GetPolicyRemediationResource(ResourceIdentifier id)
         {
-            PolicyRemediationResource.ValidateResourceId(id);
             return new PolicyRemediationResource(Client, id);
         }
 
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> Returns a <see cref="PolicyAttestationResource"/> object. </returns>
         public virtual PolicyAttestationResource GetPolicyAttestationResource(ResourceIdentifier id)
         {
-            PolicyAttestationResource.ValidateResourceId(id);
             return new PolicyAttestationResource(Client, id);
         }
 
@@ -157,7 +155,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> Returns a <see cref="PolicyMetadataResource"/> object. </returns>
         public virtual PolicyMetadataResource GetPolicyMetadataResource(ResourceIdentifier id)
         {
-            PolicyMetadataResource.ValidateResourceId(id);
             return new PolicyMetadataResource(Client, id);
         }
     }

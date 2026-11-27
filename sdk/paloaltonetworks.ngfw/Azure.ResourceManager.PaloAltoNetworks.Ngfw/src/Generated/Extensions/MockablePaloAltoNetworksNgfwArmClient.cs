@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="CustomCaptureConfigurationsFirewallResource"/> object. </returns>
         public virtual CustomCaptureConfigurationsFirewallResource GetCustomCaptureConfigurationsFirewallResource(ResourceIdentifier id)
         {
-            CustomCaptureConfigurationsFirewallResource.ValidateResourceId(id);
             return new CustomCaptureConfigurationsFirewallResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="LogIngestionSettingsResource"/> object. </returns>
         public virtual LogIngestionSettingsResource GetLogIngestionSettingsResource(ResourceIdentifier id)
         {
-            LogIngestionSettingsResource.ValidateResourceId(id);
             return new LogIngestionSettingsResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="GlobalRulestackResource"/> object. </returns>
         public virtual GlobalRulestackResource GetGlobalRulestackResource(ResourceIdentifier id)
         {
-            GlobalRulestackResource.ValidateResourceId(id);
             return new GlobalRulestackResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="GlobalRulestackCertificateObjectResource"/> object. </returns>
         public virtual GlobalRulestackCertificateObjectResource GetGlobalRulestackCertificateObjectResource(ResourceIdentifier id)
         {
-            GlobalRulestackCertificateObjectResource.ValidateResourceId(id);
             return new GlobalRulestackCertificateObjectResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="GlobalRulestackFqdnResource"/> object. </returns>
         public virtual GlobalRulestackFqdnResource GetGlobalRulestackFqdnResource(ResourceIdentifier id)
         {
-            GlobalRulestackFqdnResource.ValidateResourceId(id);
             return new GlobalRulestackFqdnResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="PostRulestackRuleResource"/> object. </returns>
         public virtual PostRulestackRuleResource GetPostRulestackRuleResource(ResourceIdentifier id)
         {
-            PostRulestackRuleResource.ValidateResourceId(id);
             return new PostRulestackRuleResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="GlobalRulestackPrefixResource"/> object. </returns>
         public virtual GlobalRulestackPrefixResource GetGlobalRulestackPrefixResource(ResourceIdentifier id)
         {
-            GlobalRulestackPrefixResource.ValidateResourceId(id);
             return new GlobalRulestackPrefixResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="PreRulestackRuleResource"/> object. </returns>
         public virtual PreRulestackRuleResource GetPreRulestackRuleResource(ResourceIdentifier id)
         {
-            PreRulestackRuleResource.ValidateResourceId(id);
             return new PreRulestackRuleResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="PaloAltoNetworksFirewallResource"/> object. </returns>
         public virtual PaloAltoNetworksFirewallResource GetPaloAltoNetworksFirewallResource(ResourceIdentifier id)
         {
-            PaloAltoNetworksFirewallResource.ValidateResourceId(id);
             return new PaloAltoNetworksFirewallResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="LocalRulestackResource"/> object. </returns>
         public virtual LocalRulestackResource GetLocalRulestackResource(ResourceIdentifier id)
         {
-            LocalRulestackResource.ValidateResourceId(id);
             return new LocalRulestackResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="MetricsObjectFirewallResource"/> object. </returns>
         public virtual MetricsObjectFirewallResource GetMetricsObjectFirewallResource(ResourceIdentifier id)
         {
-            MetricsObjectFirewallResource.ValidateResourceId(id);
             return new MetricsObjectFirewallResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource"/> object. </returns>
         public virtual PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatusResource(ResourceIdentifier id)
         {
-            PaloAltoNetworksFirewallStatusResource.ValidateResourceId(id);
             return new PaloAltoNetworksFirewallStatusResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="LocalRulestackCertificateObjectResource"/> object. </returns>
         public virtual LocalRulestackCertificateObjectResource GetLocalRulestackCertificateObjectResource(ResourceIdentifier id)
         {
-            LocalRulestackCertificateObjectResource.ValidateResourceId(id);
             return new LocalRulestackCertificateObjectResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="LocalRulestackFqdnResource"/> object. </returns>
         public virtual LocalRulestackFqdnResource GetLocalRulestackFqdnResource(ResourceIdentifier id)
         {
-            LocalRulestackFqdnResource.ValidateResourceId(id);
             return new LocalRulestackFqdnResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="LocalRulestackRuleResource"/> object. </returns>
         public virtual LocalRulestackRuleResource GetLocalRulestackRuleResource(ResourceIdentifier id)
         {
-            LocalRulestackRuleResource.ValidateResourceId(id);
             return new LocalRulestackRuleResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="LocalRulestackPrefixResource"/> object. </returns>
         public virtual LocalRulestackPrefixResource GetLocalRulestackPrefixResource(ResourceIdentifier id)
         {
-            LocalRulestackPrefixResource.ValidateResourceId(id);
             return new LocalRulestackPrefixResource(Client, id);
         }
     }

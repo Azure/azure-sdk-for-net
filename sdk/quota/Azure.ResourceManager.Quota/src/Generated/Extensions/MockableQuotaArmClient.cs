@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="GroupQuotaEntityResource"/> object. </returns>
         public virtual GroupQuotaEntityResource GetGroupQuotaEntityResource(ResourceIdentifier id)
         {
-            GroupQuotaEntityResource.ValidateResourceId(id);
             return new GroupQuotaEntityResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="GroupQuotaSubscriptionResource"/> object. </returns>
         public virtual GroupQuotaSubscriptionResource GetGroupQuotaSubscriptionResource(ResourceIdentifier id)
         {
-            GroupQuotaSubscriptionResource.ValidateResourceId(id);
             return new GroupQuotaSubscriptionResource(Client, id);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> object. </returns>
         public virtual GroupQuotaSubscriptionRequestStatusResource GetGroupQuotaSubscriptionRequestStatusResource(ResourceIdentifier id)
         {
-            GroupQuotaSubscriptionRequestStatusResource.ValidateResourceId(id);
             return new GroupQuotaSubscriptionRequestStatusResource(Client, id);
         }
 
@@ -62,7 +59,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="GroupQuotaLimitListResource"/> object. </returns>
         public virtual GroupQuotaLimitListResource GetGroupQuotaLimitListResource(ResourceIdentifier id)
         {
-            GroupQuotaLimitListResource.ValidateResourceId(id);
             return new GroupQuotaLimitListResource(Client, id);
         }
 
@@ -71,7 +67,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="GroupQuotaRequestStatusResource"/> object. </returns>
         public virtual GroupQuotaRequestStatusResource GetGroupQuotaRequestStatusResource(ResourceIdentifier id)
         {
-            GroupQuotaRequestStatusResource.ValidateResourceId(id);
             return new GroupQuotaRequestStatusResource(Client, id);
         }
 
@@ -80,7 +75,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="SubscriptionQuotaAllocationsListResource"/> object. </returns>
         public virtual SubscriptionQuotaAllocationsListResource GetSubscriptionQuotaAllocationsListResource(ResourceIdentifier id)
         {
-            SubscriptionQuotaAllocationsListResource.ValidateResourceId(id);
             return new SubscriptionQuotaAllocationsListResource(Client, id);
         }
 
@@ -131,7 +125,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="QuotaAllocationRequestStatusResource"/> object. </returns>
         public virtual QuotaAllocationRequestStatusResource GetQuotaAllocationRequestStatusResource(ResourceIdentifier id)
         {
-            QuotaAllocationRequestStatusResource.ValidateResourceId(id);
             return new QuotaAllocationRequestStatusResource(Client, id);
         }
 
@@ -182,7 +175,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="GroupQuotasEnforcementStatusResource"/> object. </returns>
         public virtual GroupQuotasEnforcementStatusResource GetGroupQuotasEnforcementStatusResource(ResourceIdentifier id)
         {
-            GroupQuotasEnforcementStatusResource.ValidateResourceId(id);
             return new GroupQuotasEnforcementStatusResource(Client, id);
         }
 
@@ -191,7 +183,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="CurrentUsagesBaseResource"/> object. </returns>
         public virtual CurrentUsagesBaseResource GetCurrentUsagesBaseResource(ResourceIdentifier id)
         {
-            CurrentUsagesBaseResource.ValidateResourceId(id);
             return new CurrentUsagesBaseResource(Client, id);
         }
 
@@ -244,7 +235,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="CurrentQuotaLimitBaseResource"/> object. </returns>
         public virtual CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(ResourceIdentifier id)
         {
-            CurrentQuotaLimitBaseResource.ValidateResourceId(id);
             return new CurrentQuotaLimitBaseResource(Client, id);
         }
 
@@ -297,7 +287,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <returns> Returns a <see cref="QuotaRequestDetailResource"/> object. </returns>
         public virtual QuotaRequestDetailResource GetQuotaRequestDetailResource(ResourceIdentifier id)
         {
-            QuotaRequestDetailResource.ValidateResourceId(id);
             return new QuotaRequestDetailResource(Client, id);
         }
 

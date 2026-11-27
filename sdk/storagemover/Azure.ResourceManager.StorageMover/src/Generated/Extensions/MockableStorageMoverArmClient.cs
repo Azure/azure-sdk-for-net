@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <returns> Returns a <see cref="StorageMoverResource"/> object. </returns>
         public virtual StorageMoverResource GetStorageMoverResource(ResourceIdentifier id)
         {
-            StorageMoverResource.ValidateResourceId(id);
             return new StorageMoverResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <returns> Returns a <see cref="StorageMoverAgentResource"/> object. </returns>
         public virtual StorageMoverAgentResource GetStorageMoverAgentResource(ResourceIdentifier id)
         {
-            StorageMoverAgentResource.ValidateResourceId(id);
             return new StorageMoverAgentResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <returns> Returns a <see cref="StorageMoverEndpointResource"/> object. </returns>
         public virtual StorageMoverEndpointResource GetStorageMoverEndpointResource(ResourceIdentifier id)
         {
-            StorageMoverEndpointResource.ValidateResourceId(id);
             return new StorageMoverEndpointResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <returns> Returns a <see cref="StorageMoverProjectResource"/> object. </returns>
         public virtual StorageMoverProjectResource GetStorageMoverProjectResource(ResourceIdentifier id)
         {
-            StorageMoverProjectResource.ValidateResourceId(id);
             return new StorageMoverProjectResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <returns> Returns a <see cref="JobDefinitionResource"/> object. </returns>
         public virtual JobDefinitionResource GetJobDefinitionResource(ResourceIdentifier id)
         {
-            JobDefinitionResource.ValidateResourceId(id);
             return new JobDefinitionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <returns> Returns a <see cref="StorageMoverConnectionResource"/> object. </returns>
         public virtual StorageMoverConnectionResource GetStorageMoverConnectionResource(ResourceIdentifier id)
         {
-            StorageMoverConnectionResource.ValidateResourceId(id);
             return new StorageMoverConnectionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <returns> Returns a <see cref="JobRunResource"/> object. </returns>
         public virtual JobRunResource GetJobRunResource(ResourceIdentifier id)
         {
-            JobRunResource.ValidateResourceId(id);
             return new JobRunResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <returns> Returns a <see cref="WebPubSubResource"/> object. </returns>
         public virtual WebPubSubResource GetWebPubSubResource(ResourceIdentifier id)
         {
-            WebPubSubResource.ValidateResourceId(id);
             return new WebPubSubResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <returns> Returns a <see cref="WebPubSubCustomCertificateResource"/> object. </returns>
         public virtual WebPubSubCustomCertificateResource GetWebPubSubCustomCertificateResource(ResourceIdentifier id)
         {
-            WebPubSubCustomCertificateResource.ValidateResourceId(id);
             return new WebPubSubCustomCertificateResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <returns> Returns a <see cref="WebPubSubCustomDomainResource"/> object. </returns>
         public virtual WebPubSubCustomDomainResource GetWebPubSubCustomDomainResource(ResourceIdentifier id)
         {
-            WebPubSubCustomDomainResource.ValidateResourceId(id);
             return new WebPubSubCustomDomainResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <returns> Returns a <see cref="WebPubSubHubResource"/> object. </returns>
         public virtual WebPubSubHubResource GetWebPubSubHubResource(ResourceIdentifier id)
         {
-            WebPubSubHubResource.ValidateResourceId(id);
             return new WebPubSubHubResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <returns> Returns a <see cref="WebPubSubPrivateEndpointConnectionResource"/> object. </returns>
         public virtual WebPubSubPrivateEndpointConnectionResource GetWebPubSubPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            WebPubSubPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new WebPubSubPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <returns> Returns a <see cref="WebPubSubReplicaResource"/> object. </returns>
         public virtual WebPubSubReplicaResource GetWebPubSubReplicaResource(ResourceIdentifier id)
         {
-            WebPubSubReplicaResource.ValidateResourceId(id);
             return new WebPubSubReplicaResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <returns> Returns a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> object. </returns>
         public virtual WebPubSubReplicaSharedPrivateLinkResource GetWebPubSubReplicaSharedPrivateLinkResource(ResourceIdentifier id)
         {
-            WebPubSubReplicaSharedPrivateLinkResource.ValidateResourceId(id);
             return new WebPubSubReplicaSharedPrivateLinkResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <returns> Returns a <see cref="WebPubSubSharedPrivateLinkResource"/> object. </returns>
         public virtual WebPubSubSharedPrivateLinkResource GetWebPubSubSharedPrivateLinkResource(ResourceIdentifier id)
         {
-            WebPubSubSharedPrivateLinkResource.ValidateResourceId(id);
             return new WebPubSubSharedPrivateLinkResource(Client, id);
         }
     }

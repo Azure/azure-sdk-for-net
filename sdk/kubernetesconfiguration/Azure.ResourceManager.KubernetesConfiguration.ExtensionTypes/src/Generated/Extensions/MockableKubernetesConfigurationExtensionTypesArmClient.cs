@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <returns> Returns a <see cref="LocationExtensionTypeResource"/> object. </returns>
         public virtual LocationExtensionTypeResource GetLocationExtensionTypeResource(ResourceIdentifier id)
         {
-            LocationExtensionTypeResource.ValidateResourceId(id);
             return new LocationExtensionTypeResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <returns> Returns a <see cref="ClusterExtensionTypeResource"/> object. </returns>
         public virtual ClusterExtensionTypeResource GetClusterExtensionTypeResource(ResourceIdentifier id)
         {
-            ClusterExtensionTypeResource.ValidateResourceId(id);
             return new ClusterExtensionTypeResource(Client, id);
         }
 
@@ -89,7 +87,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <returns> Returns a <see cref="LocationExtensionTypeVersionResource"/> object. </returns>
         public virtual LocationExtensionTypeVersionResource GetLocationExtensionTypeVersionResource(ResourceIdentifier id)
         {
-            LocationExtensionTypeVersionResource.ValidateResourceId(id);
             return new LocationExtensionTypeVersionResource(Client, id);
         }
 
@@ -98,7 +95,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <returns> Returns a <see cref="ClusterExtensionTypeVersionResource"/> object. </returns>
         public virtual ClusterExtensionTypeVersionResource GetClusterExtensionTypeVersionResource(ResourceIdentifier id)
         {
-            ClusterExtensionTypeVersionResource.ValidateResourceId(id);
             return new ClusterExtensionTypeVersionResource(Client, id);
         }
 

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <returns> Returns a <see cref="AttestationProviderResource"/> object. </returns>
         public virtual AttestationProviderResource GetAttestationProviderResource(ResourceIdentifier id)
         {
-            AttestationProviderResource.ValidateResourceId(id);
             return new AttestationProviderResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <returns> Returns a <see cref="AttestationPrivateEndpointConnectionResource"/> object. </returns>
         public virtual AttestationPrivateEndpointConnectionResource GetAttestationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            AttestationPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new AttestationPrivateEndpointConnectionResource(Client, id);
         }
     }

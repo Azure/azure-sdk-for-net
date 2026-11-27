@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupResourceConfigResource"/> object. </returns>
         public virtual BackupResourceConfigResource GetBackupResourceConfigResource(ResourceIdentifier id)
         {
-            BackupResourceConfigResource.ValidateResourceId(id);
             return new BackupResourceConfigResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupProtectionIntentResource"/> object. </returns>
         public virtual BackupProtectionIntentResource GetBackupProtectionIntentResource(ResourceIdentifier id)
         {
-            BackupProtectionIntentResource.ValidateResourceId(id);
             return new BackupProtectionIntentResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupResourceVaultConfigResource"/> object. </returns>
         public virtual BackupResourceVaultConfigResource GetBackupResourceVaultConfigResource(ResourceIdentifier id)
         {
-            BackupResourceVaultConfigResource.ValidateResourceId(id);
             return new BackupResourceVaultConfigResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupResourceEncryptionConfigExtendedResource"/> object. </returns>
         public virtual BackupResourceEncryptionConfigExtendedResource GetBackupResourceEncryptionConfigExtendedResource(ResourceIdentifier id)
         {
-            BackupResourceEncryptionConfigExtendedResource.ValidateResourceId(id);
             return new BackupResourceEncryptionConfigExtendedResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupPrivateEndpointConnectionResource"/> object. </returns>
         public virtual BackupPrivateEndpointConnectionResource GetBackupPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            BackupPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new BackupPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupProtectedItemResource"/> object. </returns>
         public virtual BackupProtectedItemResource GetBackupProtectedItemResource(ResourceIdentifier id)
         {
-            BackupProtectedItemResource.ValidateResourceId(id);
             return new BackupProtectedItemResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupProtectionContainerResource"/> object. </returns>
         public virtual BackupProtectionContainerResource GetBackupProtectionContainerResource(ResourceIdentifier id)
         {
-            BackupProtectionContainerResource.ValidateResourceId(id);
             return new BackupProtectionContainerResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupRecoveryPointResource"/> object. </returns>
         public virtual BackupRecoveryPointResource GetBackupRecoveryPointResource(ResourceIdentifier id)
         {
-            BackupRecoveryPointResource.ValidateResourceId(id);
             return new BackupRecoveryPointResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupProtectionPolicyResource"/> object. </returns>
         public virtual BackupProtectionPolicyResource GetBackupProtectionPolicyResource(ResourceIdentifier id)
         {
-            BackupProtectionPolicyResource.ValidateResourceId(id);
             return new BackupProtectionPolicyResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupJobResource"/> object. </returns>
         public virtual BackupJobResource GetBackupJobResource(ResourceIdentifier id)
         {
-            BackupJobResource.ValidateResourceId(id);
             return new BackupJobResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupEngineResource"/> object. </returns>
         public virtual BackupEngineResource GetBackupEngineResource(ResourceIdentifier id)
         {
-            BackupEngineResource.ValidateResourceId(id);
             return new BackupEngineResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="ResourceGuardProxyResource"/> object. </returns>
         public virtual ResourceGuardProxyResource GetResourceGuardProxyResource(ResourceIdentifier id)
         {
-            ResourceGuardProxyResource.ValidateResourceId(id);
             return new ResourceGuardProxyResource(Client, id);
         }
     }

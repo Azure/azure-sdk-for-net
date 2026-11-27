@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// <returns> Returns a <see cref="FileShareResource"/> object. </returns>
         public virtual FileShareResource GetFileShareResource(ResourceIdentifier id)
         {
-            FileShareResource.ValidateResourceId(id);
             return new FileShareResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// <returns> Returns a <see cref="FileShareSnapshotResource"/> object. </returns>
         public virtual FileShareSnapshotResource GetFileShareSnapshotResource(ResourceIdentifier id)
         {
-            FileShareSnapshotResource.ValidateResourceId(id);
             return new FileShareSnapshotResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// <returns> Returns a <see cref="FileSharePrivateEndpointConnectionResource"/> object. </returns>
         public virtual FileSharePrivateEndpointConnectionResource GetFileSharePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            FileSharePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new FileSharePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// <returns> Returns a <see cref="FileSharePrivateLinkResource"/> object. </returns>
         public virtual FileSharePrivateLinkResource GetFileSharePrivateLinkResource(ResourceIdentifier id)
         {
-            FileSharePrivateLinkResource.ValidateResourceId(id);
             return new FileSharePrivateLinkResource(Client, id);
         }
     }

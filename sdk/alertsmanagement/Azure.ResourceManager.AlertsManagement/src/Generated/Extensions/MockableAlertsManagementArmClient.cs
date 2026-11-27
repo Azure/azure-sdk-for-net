@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <returns> Returns a <see cref="ServiceAlertTenantResource"/> object. </returns>
         public virtual ServiceAlertTenantResource GetServiceAlertTenantResource(ResourceIdentifier id)
         {
-            ServiceAlertTenantResource.ValidateResourceId(id);
             return new ServiceAlertTenantResource(Client, id);
         }
 
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <returns> Returns a <see cref="ServiceAlertResource"/> object. </returns>
         public virtual ServiceAlertResource GetServiceAlertResource(ResourceIdentifier id)
         {
-            ServiceAlertResource.ValidateResourceId(id);
             return new ServiceAlertResource(Client, id);
         }
 

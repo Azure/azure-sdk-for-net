@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// <returns> Returns a <see cref="NapsterOrganizationResource"/> object. </returns>
         public virtual NapsterOrganizationResource GetNapsterOrganizationResource(ResourceIdentifier id)
         {
-            NapsterOrganizationResource.ValidateResourceId(id);
             return new NapsterOrganizationResource(Client, id);
         }
     }

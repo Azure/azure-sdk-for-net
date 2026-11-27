@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="CaCertificateResource"/> object. </returns>
         public virtual CaCertificateResource GetCaCertificateResource(ResourceIdentifier id)
         {
-            CaCertificateResource.ValidateResourceId(id);
             return new CaCertificateResource(Client, id);
         }
 
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventGridNamespaceResource"/> object. </returns>
         public virtual EventGridNamespaceResource GetEventGridNamespaceResource(ResourceIdentifier id)
         {
-            EventGridNamespaceResource.ValidateResourceId(id);
             return new EventGridNamespaceResource(Client, id);
         }
 
@@ -80,7 +78,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="PartnerNamespaceChannelResource"/> object. </returns>
         public virtual PartnerNamespaceChannelResource GetPartnerNamespaceChannelResource(ResourceIdentifier id)
         {
-            PartnerNamespaceChannelResource.ValidateResourceId(id);
             return new PartnerNamespaceChannelResource(Client, id);
         }
 
@@ -89,7 +86,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="PartnerNamespaceResource"/> object. </returns>
         public virtual PartnerNamespaceResource GetPartnerNamespaceResource(ResourceIdentifier id)
         {
-            PartnerNamespaceResource.ValidateResourceId(id);
             return new PartnerNamespaceResource(Client, id);
         }
 
@@ -98,7 +94,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventGridNamespaceClientGroupResource"/> object. </returns>
         public virtual EventGridNamespaceClientGroupResource GetEventGridNamespaceClientGroupResource(ResourceIdentifier id)
         {
-            EventGridNamespaceClientGroupResource.ValidateResourceId(id);
             return new EventGridNamespaceClientGroupResource(Client, id);
         }
 
@@ -107,7 +102,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventGridNamespaceClientResource"/> object. </returns>
         public virtual EventGridNamespaceClientResource GetEventGridNamespaceClientResource(ResourceIdentifier id)
         {
-            EventGridNamespaceClientResource.ValidateResourceId(id);
             return new EventGridNamespaceClientResource(Client, id);
         }
 
@@ -116,7 +110,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventGridDomainResource"/> object. </returns>
         public virtual EventGridDomainResource GetEventGridDomainResource(ResourceIdentifier id)
         {
-            EventGridDomainResource.ValidateResourceId(id);
             return new EventGridDomainResource(Client, id);
         }
 
@@ -125,7 +118,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="DomainTopicResource"/> object. </returns>
         public virtual DomainTopicResource GetDomainTopicResource(ResourceIdentifier id)
         {
-            DomainTopicResource.ValidateResourceId(id);
             return new DomainTopicResource(Client, id);
         }
 
@@ -134,7 +126,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventSubscriptionResource"/> object. </returns>
         public virtual EventSubscriptionResource GetEventSubscriptionResource(ResourceIdentifier id)
         {
-            EventSubscriptionResource.ValidateResourceId(id);
             return new EventSubscriptionResource(Client, id);
         }
 
@@ -179,7 +170,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="TopicEventSubscriptionResource"/> object. </returns>
         public virtual TopicEventSubscriptionResource GetTopicEventSubscriptionResource(ResourceIdentifier id)
         {
-            TopicEventSubscriptionResource.ValidateResourceId(id);
             return new TopicEventSubscriptionResource(Client, id);
         }
 
@@ -188,7 +178,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="DomainEventSubscriptionResource"/> object. </returns>
         public virtual DomainEventSubscriptionResource GetDomainEventSubscriptionResource(ResourceIdentifier id)
         {
-            DomainEventSubscriptionResource.ValidateResourceId(id);
             return new DomainEventSubscriptionResource(Client, id);
         }
 
@@ -197,7 +186,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="SystemTopicEventSubscriptionResource"/> object. </returns>
         public virtual SystemTopicEventSubscriptionResource GetSystemTopicEventSubscriptionResource(ResourceIdentifier id)
         {
-            SystemTopicEventSubscriptionResource.ValidateResourceId(id);
             return new SystemTopicEventSubscriptionResource(Client, id);
         }
 
@@ -206,7 +194,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="PartnerTopicEventSubscriptionResource"/> object. </returns>
         public virtual PartnerTopicEventSubscriptionResource GetPartnerTopicEventSubscriptionResource(ResourceIdentifier id)
         {
-            PartnerTopicEventSubscriptionResource.ValidateResourceId(id);
             return new PartnerTopicEventSubscriptionResource(Client, id);
         }
 
@@ -215,7 +202,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="NamespaceTopicResource"/> object. </returns>
         public virtual NamespaceTopicResource GetNamespaceTopicResource(ResourceIdentifier id)
         {
-            NamespaceTopicResource.ValidateResourceId(id);
             return new NamespaceTopicResource(Client, id);
         }
 
@@ -224,7 +210,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="PartnerConfigurationResource"/> object. </returns>
         public virtual PartnerConfigurationResource GetPartnerConfigurationResource(ResourceIdentifier id)
         {
-            PartnerConfigurationResource.ValidateResourceId(id);
             return new PartnerConfigurationResource(Client, id);
         }
 
@@ -233,7 +218,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="PartnerDestinationResource"/> object. </returns>
         public virtual PartnerDestinationResource GetPartnerDestinationResource(ResourceIdentifier id)
         {
-            PartnerDestinationResource.ValidateResourceId(id);
             return new PartnerDestinationResource(Client, id);
         }
 
@@ -242,7 +226,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="PartnerRegistrationResource"/> object. </returns>
         public virtual PartnerRegistrationResource GetPartnerRegistrationResource(ResourceIdentifier id)
         {
-            PartnerRegistrationResource.ValidateResourceId(id);
             return new PartnerRegistrationResource(Client, id);
         }
 
@@ -251,7 +234,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="PartnerTopicResource"/> object. </returns>
         public virtual PartnerTopicResource GetPartnerTopicResource(ResourceIdentifier id)
         {
-            PartnerTopicResource.ValidateResourceId(id);
             return new PartnerTopicResource(Client, id);
         }
 
@@ -260,7 +242,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventGridNamespacePermissionBindingResource"/> object. </returns>
         public virtual EventGridNamespacePermissionBindingResource GetEventGridNamespacePermissionBindingResource(ResourceIdentifier id)
         {
-            EventGridNamespacePermissionBindingResource.ValidateResourceId(id);
             return new EventGridNamespacePermissionBindingResource(Client, id);
         }
 
@@ -269,7 +250,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="SystemTopicResource"/> object. </returns>
         public virtual SystemTopicResource GetSystemTopicResource(ResourceIdentifier id)
         {
-            SystemTopicResource.ValidateResourceId(id);
             return new SystemTopicResource(Client, id);
         }
 
@@ -278,7 +258,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventGridTopicResource"/> object. </returns>
         public virtual EventGridTopicResource GetEventGridTopicResource(ResourceIdentifier id)
         {
-            EventGridTopicResource.ValidateResourceId(id);
             return new EventGridTopicResource(Client, id);
         }
 
@@ -287,7 +266,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="ExtensionTopicResource"/> object. </returns>
         public virtual ExtensionTopicResource GetExtensionTopicResource(ResourceIdentifier id)
         {
-            ExtensionTopicResource.ValidateResourceId(id);
             return new ExtensionTopicResource(Client, id);
         }
 
@@ -304,7 +282,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="TopicSpaceResource"/> object. </returns>
         public virtual TopicSpaceResource GetTopicSpaceResource(ResourceIdentifier id)
         {
-            TopicSpaceResource.ValidateResourceId(id);
             return new TopicSpaceResource(Client, id);
         }
 
@@ -313,7 +290,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="VerifiedPartnerResource"/> object. </returns>
         public virtual VerifiedPartnerResource GetVerifiedPartnerResource(ResourceIdentifier id)
         {
-            VerifiedPartnerResource.ValidateResourceId(id);
             return new VerifiedPartnerResource(Client, id);
         }
 
@@ -322,7 +298,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="DomainTopicEventSubscriptionResource"/> object. </returns>
         public virtual DomainTopicEventSubscriptionResource GetDomainTopicEventSubscriptionResource(ResourceIdentifier id)
         {
-            DomainTopicEventSubscriptionResource.ValidateResourceId(id);
             return new DomainTopicEventSubscriptionResource(Client, id);
         }
 
@@ -331,7 +306,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="NamespaceTopicEventSubscriptionResource"/> object. </returns>
         public virtual NamespaceTopicEventSubscriptionResource GetNamespaceTopicEventSubscriptionResource(ResourceIdentifier id)
         {
-            NamespaceTopicEventSubscriptionResource.ValidateResourceId(id);
             return new NamespaceTopicEventSubscriptionResource(Client, id);
         }
 
@@ -340,7 +314,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="TopicTypeResource"/> object. </returns>
         public virtual TopicTypeResource GetTopicTypeResource(ResourceIdentifier id)
         {
-            TopicTypeResource.ValidateResourceId(id);
             return new TopicTypeResource(Client, id);
         }
 
@@ -349,7 +322,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual TopicNetworkSecurityPerimeterConfigurationResource GetTopicNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            TopicNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new TopicNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -358,7 +330,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual DomainNetworkSecurityPerimeterConfigurationResource GetDomainNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            DomainNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new DomainNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -367,7 +338,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> object. </returns>
         public virtual EventGridTopicPrivateEndpointConnectionResource GetEventGridTopicPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            EventGridTopicPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new EventGridTopicPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -376,7 +346,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> object. </returns>
         public virtual EventGridDomainPrivateEndpointConnectionResource GetEventGridDomainPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            EventGridDomainPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new EventGridDomainPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -385,7 +354,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/> object. </returns>
         public virtual EventGridPartnerNamespacePrivateEndpointConnectionResource GetEventGridPartnerNamespacePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            EventGridPartnerNamespacePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new EventGridPartnerNamespacePrivateEndpointConnectionResource(Client, id);
         }
 

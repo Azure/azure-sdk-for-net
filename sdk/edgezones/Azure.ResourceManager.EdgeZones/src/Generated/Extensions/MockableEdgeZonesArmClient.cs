@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.EdgeZones.Mocking
         /// <returns> Returns a <see cref="ExtendedZoneResource"/> object. </returns>
         public virtual ExtendedZoneResource GetExtendedZoneResource(ResourceIdentifier id)
         {
-            ExtendedZoneResource.ValidateResourceId(id);
             return new ExtendedZoneResource(Client, id);
         }
     }

@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Mocking
         /// <returns> Returns a <see cref="KubernetesClusterExtensionResource"/> object. </returns>
         public virtual KubernetesClusterExtensionResource GetKubernetesClusterExtensionResource(ResourceIdentifier id)
         {
-            KubernetesClusterExtensionResource.ValidateResourceId(id);
             return new KubernetesClusterExtensionResource(Client, id);
         }
 

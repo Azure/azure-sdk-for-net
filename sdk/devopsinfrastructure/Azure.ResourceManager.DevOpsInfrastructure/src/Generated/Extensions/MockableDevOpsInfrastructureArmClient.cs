@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <returns> Returns a <see cref="DevOpsPoolResource"/> object. </returns>
         public virtual DevOpsPoolResource GetDevOpsPoolResource(ResourceIdentifier id)
         {
-            DevOpsPoolResource.ValidateResourceId(id);
             return new DevOpsPoolResource(Client, id);
         }
     }

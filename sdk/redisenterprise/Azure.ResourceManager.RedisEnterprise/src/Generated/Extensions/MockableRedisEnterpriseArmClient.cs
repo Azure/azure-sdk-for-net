@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <returns> Returns a <see cref="RedisEnterpriseDatabaseResource"/> object. </returns>
         public virtual RedisEnterpriseDatabaseResource GetRedisEnterpriseDatabaseResource(ResourceIdentifier id)
         {
-            RedisEnterpriseDatabaseResource.ValidateResourceId(id);
             return new RedisEnterpriseDatabaseResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <returns> Returns a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> object. </returns>
         public virtual RedisEnterprisePrivateEndpointConnectionResource GetRedisEnterprisePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            RedisEnterprisePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new RedisEnterprisePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <returns> Returns a <see cref="RedisEnterpriseMigrationResource"/> object. </returns>
         public virtual RedisEnterpriseMigrationResource GetRedisEnterpriseMigrationResource(ResourceIdentifier id)
         {
-            RedisEnterpriseMigrationResource.ValidateResourceId(id);
             return new RedisEnterpriseMigrationResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <returns> Returns a <see cref="RedisEnterpriseClusterResource"/> object. </returns>
         public virtual RedisEnterpriseClusterResource GetRedisEnterpriseClusterResource(ResourceIdentifier id)
         {
-            RedisEnterpriseClusterResource.ValidateResourceId(id);
             return new RedisEnterpriseClusterResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <returns> Returns a <see cref="AccessPolicyAssignmentResource"/> object. </returns>
         public virtual AccessPolicyAssignmentResource GetAccessPolicyAssignmentResource(ResourceIdentifier id)
         {
-            AccessPolicyAssignmentResource.ValidateResourceId(id);
             return new AccessPolicyAssignmentResource(Client, id);
         }
     }

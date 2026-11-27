@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// <returns> Returns a <see cref="DellFileSystemResource"/> object. </returns>
         public virtual DellFileSystemResource GetDellFileSystemResource(ResourceIdentifier id)
         {
-            DellFileSystemResource.ValidateResourceId(id);
             return new DellFileSystemResource(Client, id);
         }
     }

@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ApiDefinitions_Get. </description>
+        /// <description> ApiDefinitions_Head. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -373,22 +373,14 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, definitionName, context);
+                HttpMessage message = _apiDefinitionsRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, definitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ApiCenterApiDefinitionData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(ApiCenterApiDefinitionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiCenterApiDefinitionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {
@@ -406,7 +398,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ApiDefinitions_Get. </description>
+        /// <description> ApiDefinitions_Head. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -430,22 +422,14 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, definitionName, context);
+                HttpMessage message = _apiDefinitionsRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, definitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ApiCenterApiDefinitionData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(ApiCenterApiDefinitionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiCenterApiDefinitionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {

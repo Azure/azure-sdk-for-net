@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// <returns> Returns a <see cref="SapVirtualInstanceResource"/> object. </returns>
         public virtual SapVirtualInstanceResource GetSapVirtualInstanceResource(ResourceIdentifier id)
         {
-            SapVirtualInstanceResource.ValidateResourceId(id);
             return new SapVirtualInstanceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// <returns> Returns a <see cref="SapCentralServerInstanceResource"/> object. </returns>
         public virtual SapCentralServerInstanceResource GetSapCentralServerInstanceResource(ResourceIdentifier id)
         {
-            SapCentralServerInstanceResource.ValidateResourceId(id);
             return new SapCentralServerInstanceResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// <returns> Returns a <see cref="SapDatabaseInstanceResource"/> object. </returns>
         public virtual SapDatabaseInstanceResource GetSapDatabaseInstanceResource(ResourceIdentifier id)
         {
-            SapDatabaseInstanceResource.ValidateResourceId(id);
             return new SapDatabaseInstanceResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         /// <returns> Returns a <see cref="SapApplicationServerInstanceResource"/> object. </returns>
         public virtual SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(ResourceIdentifier id)
         {
-            SapApplicationServerInstanceResource.ValidateResourceId(id);
             return new SapApplicationServerInstanceResource(Client, id);
         }
     }

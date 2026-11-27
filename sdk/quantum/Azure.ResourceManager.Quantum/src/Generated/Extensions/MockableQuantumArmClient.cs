@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <returns> Returns a <see cref="QuantumWorkspaceResource"/> object. </returns>
         public virtual QuantumWorkspaceResource GetQuantumWorkspaceResource(ResourceIdentifier id)
         {
-            QuantumWorkspaceResource.ValidateResourceId(id);
             return new QuantumWorkspaceResource(Client, id);
         }
     }

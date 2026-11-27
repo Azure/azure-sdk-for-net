@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="ProfileResource"/> object. </returns>
         public virtual ProfileResource GetProfileResource(ResourceIdentifier id)
         {
-            ProfileResource.ValidateResourceId(id);
             return new ProfileResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="FrontDoorEndpointResource"/> object. </returns>
         public virtual FrontDoorEndpointResource GetFrontDoorEndpointResource(ResourceIdentifier id)
         {
-            FrontDoorEndpointResource.ValidateResourceId(id);
             return new FrontDoorEndpointResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="FrontDoorOriginGroupResource"/> object. </returns>
         public virtual FrontDoorOriginGroupResource GetFrontDoorOriginGroupResource(ResourceIdentifier id)
         {
-            FrontDoorOriginGroupResource.ValidateResourceId(id);
             return new FrontDoorOriginGroupResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="FrontDoorOriginResource"/> object. </returns>
         public virtual FrontDoorOriginResource GetFrontDoorOriginResource(ResourceIdentifier id)
         {
-            FrontDoorOriginResource.ValidateResourceId(id);
             return new FrontDoorOriginResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="FrontDoorRouteResource"/> object. </returns>
         public virtual FrontDoorRouteResource GetFrontDoorRouteResource(ResourceIdentifier id)
         {
-            FrontDoorRouteResource.ValidateResourceId(id);
             return new FrontDoorRouteResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="FrontDoorRuleSetResource"/> object. </returns>
         public virtual FrontDoorRuleSetResource GetFrontDoorRuleSetResource(ResourceIdentifier id)
         {
-            FrontDoorRuleSetResource.ValidateResourceId(id);
             return new FrontDoorRuleSetResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="FrontDoorRuleResource"/> object. </returns>
         public virtual FrontDoorRuleResource GetFrontDoorRuleResource(ResourceIdentifier id)
         {
-            FrontDoorRuleResource.ValidateResourceId(id);
             return new FrontDoorRuleResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="FrontDoorSecurityPolicyResource"/> object. </returns>
         public virtual FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(ResourceIdentifier id)
         {
-            FrontDoorSecurityPolicyResource.ValidateResourceId(id);
             return new FrontDoorSecurityPolicyResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="FrontDoorSecretResource"/> object. </returns>
         public virtual FrontDoorSecretResource GetFrontDoorSecretResource(ResourceIdentifier id)
         {
-            FrontDoorSecretResource.ValidateResourceId(id);
             return new FrontDoorSecretResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="CdnEndpointResource"/> object. </returns>
         public virtual CdnEndpointResource GetCdnEndpointResource(ResourceIdentifier id)
         {
-            CdnEndpointResource.ValidateResourceId(id);
             return new CdnEndpointResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="CdnOriginResource"/> object. </returns>
         public virtual CdnOriginResource GetCdnOriginResource(ResourceIdentifier id)
         {
-            CdnOriginResource.ValidateResourceId(id);
             return new CdnOriginResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="CdnOriginGroupResource"/> object. </returns>
         public virtual CdnOriginGroupResource GetCdnOriginGroupResource(ResourceIdentifier id)
         {
-            CdnOriginGroupResource.ValidateResourceId(id);
             return new CdnOriginGroupResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="CdnCustomDomainResource"/> object. </returns>
         public virtual CdnCustomDomainResource GetCdnCustomDomainResource(ResourceIdentifier id)
         {
-            CdnCustomDomainResource.ValidateResourceId(id);
             return new CdnCustomDomainResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="FrontDoorCustomDomainResource"/> object. </returns>
         public virtual FrontDoorCustomDomainResource GetFrontDoorCustomDomainResource(ResourceIdentifier id)
         {
-            FrontDoorCustomDomainResource.ValidateResourceId(id);
             return new FrontDoorCustomDomainResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyResource"/> object. </returns>
         public virtual CdnWebApplicationFirewallPolicyResource GetCdnWebApplicationFirewallPolicyResource(ResourceIdentifier id)
         {
-            CdnWebApplicationFirewallPolicyResource.ValidateResourceId(id);
             return new CdnWebApplicationFirewallPolicyResource(Client, id);
         }
     }

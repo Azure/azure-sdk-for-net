@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> Returns a <see cref="LoadTestingResource"/> object. </returns>
         public virtual LoadTestingResource GetLoadTestingResource(ResourceIdentifier id)
         {
-            LoadTestingResource.ValidateResourceId(id);
             return new LoadTestingResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> Returns a <see cref="LoadTestingQuotaResource"/> object. </returns>
         public virtual LoadTestingQuotaResource GetLoadTestingQuotaResource(ResourceIdentifier id)
         {
-            LoadTestingQuotaResource.ValidateResourceId(id);
             return new LoadTestingQuotaResource(Client, id);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> Returns a <see cref="LoadTestMappingResource"/> object. </returns>
         public virtual LoadTestMappingResource GetLoadTestMappingResource(ResourceIdentifier id)
         {
-            LoadTestMappingResource.ValidateResourceId(id);
             return new LoadTestMappingResource(Client, id);
         }
 
@@ -98,7 +95,6 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> Returns a <see cref="LoadTestProfileMappingResource"/> object. </returns>
         public virtual LoadTestProfileMappingResource GetLoadTestProfileMappingResource(ResourceIdentifier id)
         {
-            LoadTestProfileMappingResource.ValidateResourceId(id);
             return new LoadTestProfileMappingResource(Client, id);
         }
 
@@ -143,7 +139,6 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> Returns a <see cref="MaxMonthlyVirtualUserHoursResource"/> object. </returns>
         public virtual MaxMonthlyVirtualUserHoursResource GetMaxMonthlyVirtualUserHoursResource(ResourceIdentifier id)
         {
-            MaxMonthlyVirtualUserHoursResource.ValidateResourceId(id);
             return new MaxMonthlyVirtualUserHoursResource(Client, id);
         }
     }

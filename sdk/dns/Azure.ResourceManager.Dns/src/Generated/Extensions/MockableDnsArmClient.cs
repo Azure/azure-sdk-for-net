@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnssecConfigResource"/> object. </returns>
         public virtual DnssecConfigResource GetDnssecConfigResource(ResourceIdentifier id)
         {
-            DnssecConfigResource.ValidateResourceId(id);
             return new DnssecConfigResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsZoneResource"/> object. </returns>
         public virtual DnsZoneResource GetDnsZoneResource(ResourceIdentifier id)
         {
-            DnsZoneResource.ValidateResourceId(id);
             return new DnsZoneResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsARecordResource"/> object. </returns>
         public virtual DnsARecordResource GetDnsARecordResource(ResourceIdentifier id)
         {
-            DnsARecordResource.ValidateResourceId(id);
             return new DnsARecordResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsAaaaRecordResource"/> object. </returns>
         public virtual DnsAaaaRecordResource GetDnsAaaaRecordResource(ResourceIdentifier id)
         {
-            DnsAaaaRecordResource.ValidateResourceId(id);
             return new DnsAaaaRecordResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsCaaRecordResource"/> object. </returns>
         public virtual DnsCaaRecordResource GetDnsCaaRecordResource(ResourceIdentifier id)
         {
-            DnsCaaRecordResource.ValidateResourceId(id);
             return new DnsCaaRecordResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsCnameRecordResource"/> object. </returns>
         public virtual DnsCnameRecordResource GetDnsCnameRecordResource(ResourceIdentifier id)
         {
-            DnsCnameRecordResource.ValidateResourceId(id);
             return new DnsCnameRecordResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsMXRecordResource"/> object. </returns>
         public virtual DnsMXRecordResource GetDnsMXRecordResource(ResourceIdentifier id)
         {
-            DnsMXRecordResource.ValidateResourceId(id);
             return new DnsMXRecordResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsNSRecordResource"/> object. </returns>
         public virtual DnsNSRecordResource GetDnsNSRecordResource(ResourceIdentifier id)
         {
-            DnsNSRecordResource.ValidateResourceId(id);
             return new DnsNSRecordResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsPtrRecordResource"/> object. </returns>
         public virtual DnsPtrRecordResource GetDnsPtrRecordResource(ResourceIdentifier id)
         {
-            DnsPtrRecordResource.ValidateResourceId(id);
             return new DnsPtrRecordResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsSoaRecordResource"/> object. </returns>
         public virtual DnsSoaRecordResource GetDnsSoaRecordResource(ResourceIdentifier id)
         {
-            DnsSoaRecordResource.ValidateResourceId(id);
             return new DnsSoaRecordResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsSrvRecordResource"/> object. </returns>
         public virtual DnsSrvRecordResource GetDnsSrvRecordResource(ResourceIdentifier id)
         {
-            DnsSrvRecordResource.ValidateResourceId(id);
             return new DnsSrvRecordResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsTxtRecordResource"/> object. </returns>
         public virtual DnsTxtRecordResource GetDnsTxtRecordResource(ResourceIdentifier id)
         {
-            DnsTxtRecordResource.ValidateResourceId(id);
             return new DnsTxtRecordResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsTlsaRecordResource"/> object. </returns>
         public virtual DnsTlsaRecordResource GetDnsTlsaRecordResource(ResourceIdentifier id)
         {
-            DnsTlsaRecordResource.ValidateResourceId(id);
             return new DnsTlsaRecordResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsDSRecordResource"/> object. </returns>
         public virtual DnsDSRecordResource GetDnsDSRecordResource(ResourceIdentifier id)
         {
-            DnsDSRecordResource.ValidateResourceId(id);
             return new DnsDSRecordResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnsNaptrRecordResource"/> object. </returns>
         public virtual DnsNaptrRecordResource GetDnsNaptrRecordResource(ResourceIdentifier id)
         {
-            DnsNaptrRecordResource.ValidateResourceId(id);
             return new DnsNaptrRecordResource(Client, id);
         }
     }

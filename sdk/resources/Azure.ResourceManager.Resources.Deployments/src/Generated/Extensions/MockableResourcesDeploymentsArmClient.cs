@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Resources.Deployments.Mocking
         /// <returns> Returns a <see cref="ArmDeploymentResource"/> object. </returns>
         public virtual ArmDeploymentResource GetArmDeploymentResource(ResourceIdentifier id)
         {
-            ArmDeploymentResource.ValidateResourceId(id);
             return new ArmDeploymentResource(Client, id);
         }
 

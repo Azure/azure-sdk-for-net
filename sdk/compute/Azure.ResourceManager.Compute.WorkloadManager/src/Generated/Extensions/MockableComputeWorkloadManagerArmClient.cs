@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Mocking
         /// <returns> Returns a <see cref="WorkloadSpaceResource"/> object. </returns>
         public virtual WorkloadSpaceResource GetWorkloadSpaceResource(ResourceIdentifier id)
         {
-            WorkloadSpaceResource.ValidateResourceId(id);
             return new WorkloadSpaceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Mocking
         /// <returns> Returns a <see cref="RuntimeBindingResource"/> object. </returns>
         public virtual RuntimeBindingResource GetRuntimeBindingResource(ResourceIdentifier id)
         {
-            RuntimeBindingResource.ValidateResourceId(id);
             return new RuntimeBindingResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Mocking
         /// <returns> Returns a <see cref="RuntimeLinkResource"/> object. </returns>
         public virtual RuntimeLinkResource GetRuntimeLinkResource(ResourceIdentifier id)
         {
-            RuntimeLinkResource.ValidateResourceId(id);
             return new RuntimeLinkResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Mocking
         /// <returns> Returns a <see cref="WorkloadCapabilityResource"/> object. </returns>
         public virtual WorkloadCapabilityResource GetWorkloadCapabilityResource(ResourceIdentifier id)
         {
-            WorkloadCapabilityResource.ValidateResourceId(id);
             return new WorkloadCapabilityResource(Client, id);
         }
     }

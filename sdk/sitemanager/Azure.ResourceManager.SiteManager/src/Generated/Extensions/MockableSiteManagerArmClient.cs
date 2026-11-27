@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <returns> Returns a <see cref="ResourceGroupEdgeSiteResource"/> object. </returns>
         public virtual ResourceGroupEdgeSiteResource GetResourceGroupEdgeSiteResource(ResourceIdentifier id)
         {
-            ResourceGroupEdgeSiteResource.ValidateResourceId(id);
             return new ResourceGroupEdgeSiteResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <returns> Returns a <see cref="SubscriptionEdgeSiteResource"/> object. </returns>
         public virtual SubscriptionEdgeSiteResource GetSubscriptionEdgeSiteResource(ResourceIdentifier id)
         {
-            SubscriptionEdgeSiteResource.ValidateResourceId(id);
             return new SubscriptionEdgeSiteResource(Client, id);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <returns> Returns a <see cref="ServiceGroupEdgeSiteResource"/> object. </returns>
         public virtual ServiceGroupEdgeSiteResource GetServiceGroupEdgeSiteResource(ResourceIdentifier id)
         {
-            ServiceGroupEdgeSiteResource.ValidateResourceId(id);
             return new ServiceGroupEdgeSiteResource(Client, id);
         }
 

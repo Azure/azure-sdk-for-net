@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <returns> Returns a <see cref="RecoveryServicesPrivateLinkResource"/> object. </returns>
         public virtual RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(ResourceIdentifier id)
         {
-            RecoveryServicesPrivateLinkResource.ValidateResourceId(id);
             return new RecoveryServicesPrivateLinkResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <returns> Returns a <see cref="RecoveryServicesVaultResource"/> object. </returns>
         public virtual RecoveryServicesVaultResource GetRecoveryServicesVaultResource(ResourceIdentifier id)
         {
-            RecoveryServicesVaultResource.ValidateResourceId(id);
             return new RecoveryServicesVaultResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource"/> object. </returns>
         public virtual RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfoResource(ResourceIdentifier id)
         {
-            RecoveryServicesVaultExtendedInfoResource.ValidateResourceId(id);
             return new RecoveryServicesVaultExtendedInfoResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <returns> Returns a <see cref="RecoveryServicesDeletedVaultResource"/> object. </returns>
         public virtual RecoveryServicesDeletedVaultResource GetRecoveryServicesDeletedVaultResource(ResourceIdentifier id)
         {
-            RecoveryServicesDeletedVaultResource.ValidateResourceId(id);
             return new RecoveryServicesDeletedVaultResource(Client, id);
         }
     }

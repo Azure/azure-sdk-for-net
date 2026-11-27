@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="OfferingResource"/> object. </returns>
         public virtual OfferingResource GetOfferingResource(ResourceIdentifier id)
         {
-            OfferingResource.ValidateResourceId(id);
             return new OfferingResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="OntologyResource"/> object. </returns>
         public virtual OntologyResource GetOntologyResource(ResourceIdentifier id)
         {
-            OntologyResource.ValidateResourceId(id);
             return new OntologyResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="DataOnboardingResource"/> object. </returns>
         public virtual DataOnboardingResource GetDataOnboardingResource(ResourceIdentifier id)
         {
-            DataOnboardingResource.ValidateResourceId(id);
             return new DataOnboardingResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="DataOnboardingLocationResource"/> object. </returns>
         public virtual DataOnboardingLocationResource GetDataOnboardingLocationResource(ResourceIdentifier id)
         {
-            DataOnboardingLocationResource.ValidateResourceId(id);
             return new DataOnboardingLocationResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="DataOnboardingActivationResource"/> object. </returns>
         public virtual DataOnboardingActivationResource GetDataOnboardingActivationResource(ResourceIdentifier id)
         {
-            DataOnboardingActivationResource.ValidateResourceId(id);
             return new DataOnboardingActivationResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="QueryEndpointResource"/> object. </returns>
         public virtual QueryEndpointResource GetQueryEndpointResource(ResourceIdentifier id)
         {
-            QueryEndpointResource.ValidateResourceId(id);
             return new QueryEndpointResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="OntologyLocationResource"/> object. </returns>
         public virtual OntologyLocationResource GetOntologyLocationResource(ResourceIdentifier id)
         {
-            OntologyLocationResource.ValidateResourceId(id);
             return new OntologyLocationResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="QueryEndpointLocationResource"/> object. </returns>
         public virtual QueryEndpointLocationResource GetQueryEndpointLocationResource(ResourceIdentifier id)
         {
-            QueryEndpointLocationResource.ValidateResourceId(id);
             return new QueryEndpointLocationResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="OntologyActivationResource"/> object. </returns>
         public virtual OntologyActivationResource GetOntologyActivationResource(ResourceIdentifier id)
         {
-            OntologyActivationResource.ValidateResourceId(id);
             return new OntologyActivationResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="QueryEndpointActivationResource"/> object. </returns>
         public virtual QueryEndpointActivationResource GetQueryEndpointActivationResource(ResourceIdentifier id)
         {
-            QueryEndpointActivationResource.ValidateResourceId(id);
             return new QueryEndpointActivationResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> Returns a <see cref="ResourceGraphQueryResource"/> object. </returns>
         public virtual ResourceGraphQueryResource GetResourceGraphQueryResource(ResourceIdentifier id)
         {
-            ResourceGraphQueryResource.ValidateResourceId(id);
             return new ResourceGraphQueryResource(Client, id);
         }
     }

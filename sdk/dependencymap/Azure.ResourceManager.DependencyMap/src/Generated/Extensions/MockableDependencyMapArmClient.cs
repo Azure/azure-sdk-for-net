@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         /// <returns> Returns a <see cref="DependencyMapResource"/> object. </returns>
         public virtual DependencyMapResource GetDependencyMapResource(ResourceIdentifier id)
         {
-            DependencyMapResource.ValidateResourceId(id);
             return new DependencyMapResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         /// <returns> Returns a <see cref="DependencyMapDiscoverySourceResource"/> object. </returns>
         public virtual DependencyMapDiscoverySourceResource GetDependencyMapDiscoverySourceResource(ResourceIdentifier id)
         {
-            DependencyMapDiscoverySourceResource.ValidateResourceId(id);
             return new DependencyMapDiscoverySourceResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsInstanceResource"/> object. </returns>
         public virtual IotOperationsInstanceResource GetIotOperationsInstanceResource(ResourceIdentifier id)
         {
-            IotOperationsInstanceResource.ValidateResourceId(id);
             return new IotOperationsInstanceResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsBrokerResource"/> object. </returns>
         public virtual IotOperationsBrokerResource GetIotOperationsBrokerResource(ResourceIdentifier id)
         {
-            IotOperationsBrokerResource.ValidateResourceId(id);
             return new IotOperationsBrokerResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsBrokerListenerResource"/> object. </returns>
         public virtual IotOperationsBrokerListenerResource GetIotOperationsBrokerListenerResource(ResourceIdentifier id)
         {
-            IotOperationsBrokerListenerResource.ValidateResourceId(id);
             return new IotOperationsBrokerListenerResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsBrokerAuthenticationResource"/> object. </returns>
         public virtual IotOperationsBrokerAuthenticationResource GetIotOperationsBrokerAuthenticationResource(ResourceIdentifier id)
         {
-            IotOperationsBrokerAuthenticationResource.ValidateResourceId(id);
             return new IotOperationsBrokerAuthenticationResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsBrokerAuthorizationResource"/> object. </returns>
         public virtual IotOperationsBrokerAuthorizationResource GetIotOperationsBrokerAuthorizationResource(ResourceIdentifier id)
         {
-            IotOperationsBrokerAuthorizationResource.ValidateResourceId(id);
             return new IotOperationsBrokerAuthorizationResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsDataflowProfileResource"/> object. </returns>
         public virtual IotOperationsDataflowProfileResource GetIotOperationsDataflowProfileResource(ResourceIdentifier id)
         {
-            IotOperationsDataflowProfileResource.ValidateResourceId(id);
             return new IotOperationsDataflowProfileResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsDataflowResource"/> object. </returns>
         public virtual IotOperationsDataflowResource GetIotOperationsDataflowResource(ResourceIdentifier id)
         {
-            IotOperationsDataflowResource.ValidateResourceId(id);
             return new IotOperationsDataflowResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsDataflowEndpointResource"/> object. </returns>
         public virtual IotOperationsDataflowEndpointResource GetIotOperationsDataflowEndpointResource(ResourceIdentifier id)
         {
-            IotOperationsDataflowEndpointResource.ValidateResourceId(id);
             return new IotOperationsDataflowEndpointResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsDataflowGraphResource"/> object. </returns>
         public virtual IotOperationsDataflowGraphResource GetIotOperationsDataflowGraphResource(ResourceIdentifier id)
         {
-            IotOperationsDataflowGraphResource.ValidateResourceId(id);
             return new IotOperationsDataflowGraphResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsRegistryEndpointResource"/> object. </returns>
         public virtual IotOperationsRegistryEndpointResource GetIotOperationsRegistryEndpointResource(ResourceIdentifier id)
         {
-            IotOperationsRegistryEndpointResource.ValidateResourceId(id);
             return new IotOperationsRegistryEndpointResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsAkriConnectorTemplateResource"/> object. </returns>
         public virtual IotOperationsAkriConnectorTemplateResource GetIotOperationsAkriConnectorTemplateResource(ResourceIdentifier id)
         {
-            IotOperationsAkriConnectorTemplateResource.ValidateResourceId(id);
             return new IotOperationsAkriConnectorTemplateResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="IotOperationsAkriConnectorResource"/> object. </returns>
         public virtual IotOperationsAkriConnectorResource GetIotOperationsAkriConnectorResource(ResourceIdentifier id)
         {
-            IotOperationsAkriConnectorResource.ValidateResourceId(id);
             return new IotOperationsAkriConnectorResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <returns> Returns a <see cref="AkriServiceResource"/> object. </returns>
         public virtual AkriServiceResource GetAkriServiceResource(ResourceIdentifier id)
         {
-            AkriServiceResource.ValidateResourceId(id);
             return new AkriServiceResource(Client, id);
         }
     }

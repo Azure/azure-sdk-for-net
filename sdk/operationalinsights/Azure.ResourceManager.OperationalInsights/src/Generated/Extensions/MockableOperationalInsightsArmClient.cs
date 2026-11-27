@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="OperationalInsightsClusterResource"/> object. </returns>
         public virtual OperationalInsightsClusterResource GetOperationalInsightsClusterResource(ResourceIdentifier id)
         {
-            OperationalInsightsClusterResource.ValidateResourceId(id);
             return new OperationalInsightsClusterResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="OperationalInsightsDataExportResource"/> object. </returns>
         public virtual OperationalInsightsDataExportResource GetOperationalInsightsDataExportResource(ResourceIdentifier id)
         {
-            OperationalInsightsDataExportResource.ValidateResourceId(id);
             return new OperationalInsightsDataExportResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="OperationalInsightsWorkspaceResource"/> object. </returns>
         public virtual OperationalInsightsWorkspaceResource GetOperationalInsightsWorkspaceResource(ResourceIdentifier id)
         {
-            OperationalInsightsWorkspaceResource.ValidateResourceId(id);
             return new OperationalInsightsWorkspaceResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="OperationalInsightsDataSourceResource"/> object. </returns>
         public virtual OperationalInsightsDataSourceResource GetOperationalInsightsDataSourceResource(ResourceIdentifier id)
         {
-            OperationalInsightsDataSourceResource.ValidateResourceId(id);
             return new OperationalInsightsDataSourceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="OperationalInsightsLinkedServiceResource"/> object. </returns>
         public virtual OperationalInsightsLinkedServiceResource GetOperationalInsightsLinkedServiceResource(ResourceIdentifier id)
         {
-            OperationalInsightsLinkedServiceResource.ValidateResourceId(id);
             return new OperationalInsightsLinkedServiceResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="OperationalInsightsSavedSearchResource"/> object. </returns>
         public virtual OperationalInsightsSavedSearchResource GetOperationalInsightsSavedSearchResource(ResourceIdentifier id)
         {
-            OperationalInsightsSavedSearchResource.ValidateResourceId(id);
             return new OperationalInsightsSavedSearchResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="OperationalInsightsTableResource"/> object. </returns>
         public virtual OperationalInsightsTableResource GetOperationalInsightsTableResource(ResourceIdentifier id)
         {
-            OperationalInsightsTableResource.ValidateResourceId(id);
             return new OperationalInsightsTableResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="OperationalInsightsLinkedStorageAccountsResource"/> object. </returns>
         public virtual OperationalInsightsLinkedStorageAccountsResource GetOperationalInsightsLinkedStorageAccountsResource(ResourceIdentifier id)
         {
-            OperationalInsightsLinkedStorageAccountsResource.ValidateResourceId(id);
             return new OperationalInsightsLinkedStorageAccountsResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="LogAnalyticsQueryResource"/> object. </returns>
         public virtual LogAnalyticsQueryResource GetLogAnalyticsQueryResource(ResourceIdentifier id)
         {
-            LogAnalyticsQueryResource.ValidateResourceId(id);
             return new LogAnalyticsQueryResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="LogAnalyticsQueryPackResource"/> object. </returns>
         public virtual LogAnalyticsQueryPackResource GetLogAnalyticsQueryPackResource(ResourceIdentifier id)
         {
-            LogAnalyticsQueryPackResource.ValidateResourceId(id);
             return new LogAnalyticsQueryPackResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="StorageInsightResource"/> object. </returns>
         public virtual StorageInsightResource GetStorageInsightResource(ResourceIdentifier id)
         {
-            StorageInsightResource.ValidateResourceId(id);
             return new StorageInsightResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> Returns a <see cref="OperationalInsightsSummaryLogsResource"/> object. </returns>
         public virtual OperationalInsightsSummaryLogsResource GetOperationalInsightsSummaryLogsResource(ResourceIdentifier id)
         {
-            OperationalInsightsSummaryLogsResource.ValidateResourceId(id);
             return new OperationalInsightsSummaryLogsResource(Client, id);
         }
     }

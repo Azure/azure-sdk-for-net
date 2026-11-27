@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
         public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
         {
-            ScheduledActionResource.ValidateResourceId(id);
             return new ScheduledActionResource(Client, id);
         }
 
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <returns> Returns a <see cref="ScheduledActionOccurrenceResource"/> object. </returns>
         public virtual ScheduledActionOccurrenceResource GetScheduledActionOccurrenceResource(ResourceIdentifier id)
         {
-            ScheduledActionOccurrenceResource.ValidateResourceId(id);
             return new ScheduledActionOccurrenceResource(Client, id);
         }
 

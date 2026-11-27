@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <returns> Returns a <see cref="SignalRResource"/> object. </returns>
         public virtual SignalRResource GetSignalRResource(ResourceIdentifier id)
         {
-            SignalRResource.ValidateResourceId(id);
             return new SignalRResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <returns> Returns a <see cref="SignalRCustomCertificateResource"/> object. </returns>
         public virtual SignalRCustomCertificateResource GetSignalRCustomCertificateResource(ResourceIdentifier id)
         {
-            SignalRCustomCertificateResource.ValidateResourceId(id);
             return new SignalRCustomCertificateResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <returns> Returns a <see cref="SignalRCustomDomainResource"/> object. </returns>
         public virtual SignalRCustomDomainResource GetSignalRCustomDomainResource(ResourceIdentifier id)
         {
-            SignalRCustomDomainResource.ValidateResourceId(id);
             return new SignalRCustomDomainResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource"/> object. </returns>
         public virtual SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            SignalRPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new SignalRPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <returns> Returns a <see cref="SignalRReplicaResource"/> object. </returns>
         public virtual SignalRReplicaResource GetSignalRReplicaResource(ResourceIdentifier id)
         {
-            SignalRReplicaResource.ValidateResourceId(id);
             return new SignalRReplicaResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <returns> Returns a <see cref="SignalRReplicaSharedPrivateLinkResource"/> object. </returns>
         public virtual SignalRReplicaSharedPrivateLinkResource GetSignalRReplicaSharedPrivateLinkResource(ResourceIdentifier id)
         {
-            SignalRReplicaSharedPrivateLinkResource.ValidateResourceId(id);
             return new SignalRReplicaSharedPrivateLinkResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource"/> object. </returns>
         public virtual SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(ResourceIdentifier id)
         {
-            SignalRSharedPrivateLinkResource.ValidateResourceId(id);
             return new SignalRSharedPrivateLinkResource(Client, id);
         }
     }

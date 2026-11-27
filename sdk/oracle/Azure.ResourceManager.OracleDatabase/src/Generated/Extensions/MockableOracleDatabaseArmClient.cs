@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="CloudExadataInfrastructureResource"/> object. </returns>
         public virtual CloudExadataInfrastructureResource GetCloudExadataInfrastructureResource(ResourceIdentifier id)
         {
-            CloudExadataInfrastructureResource.ValidateResourceId(id);
             return new CloudExadataInfrastructureResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleDBServerResource"/> object. </returns>
         public virtual OracleDBServerResource GetOracleDBServerResource(ResourceIdentifier id)
         {
-            OracleDBServerResource.ValidateResourceId(id);
             return new OracleDBServerResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="CloudVmClusterResource"/> object. </returns>
         public virtual CloudVmClusterResource GetCloudVmClusterResource(ResourceIdentifier id)
         {
-            CloudVmClusterResource.ValidateResourceId(id);
             return new CloudVmClusterResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="CloudVmClusterVirtualNetworkAddressResource"/> object. </returns>
         public virtual CloudVmClusterVirtualNetworkAddressResource GetCloudVmClusterVirtualNetworkAddressResource(ResourceIdentifier id)
         {
-            CloudVmClusterVirtualNetworkAddressResource.ValidateResourceId(id);
             return new CloudVmClusterVirtualNetworkAddressResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleSystemVersionResource"/> object. </returns>
         public virtual OracleSystemVersionResource GetOracleSystemVersionResource(ResourceIdentifier id)
         {
-            OracleSystemVersionResource.ValidateResourceId(id);
             return new OracleSystemVersionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleSubscriptionResource"/> object. </returns>
         public virtual OracleSubscriptionResource GetOracleSubscriptionResource(ResourceIdentifier id)
         {
-            OracleSubscriptionResource.ValidateResourceId(id);
             return new OracleSubscriptionResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="CloudVmClusterDBNodeResource"/> object. </returns>
         public virtual CloudVmClusterDBNodeResource GetCloudVmClusterDBNodeResource(ResourceIdentifier id)
         {
-            CloudVmClusterDBNodeResource.ValidateResourceId(id);
             return new CloudVmClusterDBNodeResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleGIVersionResource"/> object. </returns>
         public virtual OracleGIVersionResource GetOracleGIVersionResource(ResourceIdentifier id)
         {
-            OracleGIVersionResource.ValidateResourceId(id);
             return new OracleGIVersionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleGIMinorVersionResource"/> object. </returns>
         public virtual OracleGIMinorVersionResource GetOracleGIMinorVersionResource(ResourceIdentifier id)
         {
-            OracleGIMinorVersionResource.ValidateResourceId(id);
             return new OracleGIMinorVersionResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleDBSystemShapeResource"/> object. </returns>
         public virtual OracleDBSystemShapeResource GetOracleDBSystemShapeResource(ResourceIdentifier id)
         {
-            OracleDBSystemShapeResource.ValidateResourceId(id);
             return new OracleDBSystemShapeResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleDnsPrivateViewResource"/> object. </returns>
         public virtual OracleDnsPrivateViewResource GetOracleDnsPrivateViewResource(ResourceIdentifier id)
         {
-            OracleDnsPrivateViewResource.ValidateResourceId(id);
             return new OracleDnsPrivateViewResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleDnsPrivateZoneResource"/> object. </returns>
         public virtual OracleDnsPrivateZoneResource GetOracleDnsPrivateZoneResource(ResourceIdentifier id)
         {
-            OracleDnsPrivateZoneResource.ValidateResourceId(id);
             return new OracleDnsPrivateZoneResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleFlexComponentResource"/> object. </returns>
         public virtual OracleFlexComponentResource GetOracleFlexComponentResource(ResourceIdentifier id)
         {
-            OracleFlexComponentResource.ValidateResourceId(id);
             return new OracleFlexComponentResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="AutonomousDatabaseResource"/> object. </returns>
         public virtual AutonomousDatabaseResource GetAutonomousDatabaseResource(ResourceIdentifier id)
         {
-            AutonomousDatabaseResource.ValidateResourceId(id);
             return new AutonomousDatabaseResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="AutonomousDatabaseBackupResource"/> object. </returns>
         public virtual AutonomousDatabaseBackupResource GetAutonomousDatabaseBackupResource(ResourceIdentifier id)
         {
-            AutonomousDatabaseBackupResource.ValidateResourceId(id);
             return new AutonomousDatabaseBackupResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="AutonomousDatabaseCharacterSetResource"/> object. </returns>
         public virtual AutonomousDatabaseCharacterSetResource GetAutonomousDatabaseCharacterSetResource(ResourceIdentifier id)
         {
-            AutonomousDatabaseCharacterSetResource.ValidateResourceId(id);
             return new AutonomousDatabaseCharacterSetResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="AutonomousDatabaseNationalCharacterSetResource"/> object. </returns>
         public virtual AutonomousDatabaseNationalCharacterSetResource GetAutonomousDatabaseNationalCharacterSetResource(ResourceIdentifier id)
         {
-            AutonomousDatabaseNationalCharacterSetResource.ValidateResourceId(id);
             return new AutonomousDatabaseNationalCharacterSetResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="AutonomousDBVersionResource"/> object. </returns>
         public virtual AutonomousDBVersionResource GetAutonomousDBVersionResource(ResourceIdentifier id)
         {
-            AutonomousDBVersionResource.ValidateResourceId(id);
             return new AutonomousDBVersionResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="ExadbVmClusterResource"/> object. </returns>
         public virtual ExadbVmClusterResource GetExadbVmClusterResource(ResourceIdentifier id)
         {
-            ExadbVmClusterResource.ValidateResourceId(id);
             return new ExadbVmClusterResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="ExascaleDBNodeResource"/> object. </returns>
         public virtual ExascaleDBNodeResource GetExascaleDBNodeResource(ResourceIdentifier id)
         {
-            ExascaleDBNodeResource.ValidateResourceId(id);
             return new ExascaleDBNodeResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="ExascaleDBStorageVaultResource"/> object. </returns>
         public virtual ExascaleDBStorageVaultResource GetExascaleDBStorageVaultResource(ResourceIdentifier id)
         {
-            ExascaleDBStorageVaultResource.ValidateResourceId(id);
             return new ExascaleDBStorageVaultResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleNetworkAnchorResource"/> object. </returns>
         public virtual OracleNetworkAnchorResource GetOracleNetworkAnchorResource(ResourceIdentifier id)
         {
-            OracleNetworkAnchorResource.ValidateResourceId(id);
             return new OracleNetworkAnchorResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleResourceAnchorResource"/> object. </returns>
         public virtual OracleResourceAnchorResource GetOracleResourceAnchorResource(ResourceIdentifier id)
         {
-            OracleResourceAnchorResource.ValidateResourceId(id);
             return new OracleResourceAnchorResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleDBSystemResource"/> object. </returns>
         public virtual OracleDBSystemResource GetOracleDBSystemResource(ResourceIdentifier id)
         {
-            OracleDBSystemResource.ValidateResourceId(id);
             return new OracleDBSystemResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleDBVersionResource"/> object. </returns>
         public virtual OracleDBVersionResource GetOracleDBVersionResource(ResourceIdentifier id)
         {
-            OracleDBVersionResource.ValidateResourceId(id);
             return new OracleDBVersionResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="DatabaseEditionResource"/> object. </returns>
         public virtual DatabaseEditionResource GetDatabaseEditionResource(ResourceIdentifier id)
         {
-            DatabaseEditionResource.ValidateResourceId(id);
             return new DatabaseEditionResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="DatabaseSystemShapeResource"/> object. </returns>
         public virtual DatabaseSystemShapeResource GetDatabaseSystemShapeResource(ResourceIdentifier id)
         {
-            DatabaseSystemShapeResource.ValidateResourceId(id);
             return new DatabaseSystemShapeResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="GoldenGateConnectionResource"/> object. </returns>
         public virtual GoldenGateConnectionResource GetGoldenGateConnectionResource(ResourceIdentifier id)
         {
-            GoldenGateConnectionResource.ValidateResourceId(id);
             return new GoldenGateConnectionResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="AssignedDeploymentResource"/> object. </returns>
         public virtual AssignedDeploymentResource GetAssignedDeploymentResource(ResourceIdentifier id)
         {
-            AssignedDeploymentResource.ValidateResourceId(id);
             return new AssignedDeploymentResource(Client, id);
         }
 
@@ -292,7 +263,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="GoldenGateDeploymentResource"/> object. </returns>
         public virtual GoldenGateDeploymentResource GetGoldenGateDeploymentResource(ResourceIdentifier id)
         {
-            GoldenGateDeploymentResource.ValidateResourceId(id);
             return new GoldenGateDeploymentResource(Client, id);
         }
 
@@ -301,7 +271,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="AssignedConnectionResource"/> object. </returns>
         public virtual AssignedConnectionResource GetAssignedConnectionResource(ResourceIdentifier id)
         {
-            AssignedConnectionResource.ValidateResourceId(id);
             return new AssignedConnectionResource(Client, id);
         }
     }

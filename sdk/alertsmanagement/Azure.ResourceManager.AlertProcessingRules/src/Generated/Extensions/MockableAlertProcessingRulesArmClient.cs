@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AlertProcessingRules.Mocking
         /// <returns> Returns a <see cref="AlertProcessingRuleResource"/> object. </returns>
         public virtual AlertProcessingRuleResource GetAlertProcessingRuleResource(ResourceIdentifier id)
         {
-            AlertProcessingRuleResource.ValidateResourceId(id);
             return new AlertProcessingRuleResource(Client, id);
         }
     }

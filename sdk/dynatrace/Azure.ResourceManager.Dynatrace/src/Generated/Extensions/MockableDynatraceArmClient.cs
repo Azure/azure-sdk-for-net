@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <returns> Returns a <see cref="DynatraceMonitoredSubscriptionResource"/> object. </returns>
         public virtual DynatraceMonitoredSubscriptionResource GetDynatraceMonitoredSubscriptionResource(ResourceIdentifier id)
         {
-            DynatraceMonitoredSubscriptionResource.ValidateResourceId(id);
             return new DynatraceMonitoredSubscriptionResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <returns> Returns a <see cref="DynatraceTagRuleResource"/> object. </returns>
         public virtual DynatraceTagRuleResource GetDynatraceTagRuleResource(ResourceIdentifier id)
         {
-            DynatraceTagRuleResource.ValidateResourceId(id);
             return new DynatraceTagRuleResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <returns> Returns a <see cref="DynatraceMonitorResource"/> object. </returns>
         public virtual DynatraceMonitorResource GetDynatraceMonitorResource(ResourceIdentifier id)
         {
-            DynatraceMonitorResource.ValidateResourceId(id);
             return new DynatraceMonitorResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <returns> Returns a <see cref="DynatraceSingleSignOnResource"/> object. </returns>
         public virtual DynatraceSingleSignOnResource GetDynatraceSingleSignOnResource(ResourceIdentifier id)
         {
-            DynatraceSingleSignOnResource.ValidateResourceId(id);
             return new DynatraceSingleSignOnResource(Client, id);
         }
     }

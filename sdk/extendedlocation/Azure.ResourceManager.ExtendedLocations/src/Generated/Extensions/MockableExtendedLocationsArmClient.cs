@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// <returns> Returns a <see cref="CustomLocationResource"/> object. </returns>
         public virtual CustomLocationResource GetCustomLocationResource(ResourceIdentifier id)
         {
-            CustomLocationResource.ValidateResourceId(id);
             return new CustomLocationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// <returns> Returns a <see cref="ResourceSyncRuleResource"/> object. </returns>
         public virtual ResourceSyncRuleResource GetResourceSyncRuleResource(ResourceIdentifier id)
         {
-            ResourceSyncRuleResource.ValidateResourceId(id);
             return new ResourceSyncRuleResource(Client, id);
         }
     }
