@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Changed `PrivateLinkResourceCollection.Exists` and `ExistsAsync` to use HEAD instead of GET.
+
 ## 1.2.0-beta.8 (2026-06-30)
 
 ### Other Changes

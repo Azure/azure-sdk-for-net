@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- On 12 collections, selector-bearing `Exists` and `ExistsAsync` overloads are obsolete and now require both the selector and cancellation token. Pass a token explicitly or use `GetIfExists` to check existence with a selector. The new selector-free overloads use HEAD rather than GET; recompiled calls may bind to these overloads instead of existing overrides of the legacy methods. The legacy overloads also use HEAD when the selector is null, including calls from existing binaries that omitted the optional selector.
+
 ### Bugs Fixed
 
 ### Other Changes

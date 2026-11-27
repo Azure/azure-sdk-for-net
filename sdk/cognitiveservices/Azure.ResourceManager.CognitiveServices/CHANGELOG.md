@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Changed `Exists` and `ExistsAsync` on `CognitiveServicesAccountCostControlCollection` and `CognitiveServicesProjectCostControlCollection` to use HEAD instead of GET.
+
 ## 1.8.0-beta.1 (2026-11-25)
 
 ### Features Added

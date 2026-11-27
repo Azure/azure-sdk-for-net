@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetadataSchemas_Get. </description>
+        /// <description> MetadataSchemas_Head. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -367,22 +367,14 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
+                HttpMessage message = _metadataSchemasRestClient.CreateHeadMetadataSchemaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ApiCenterMetadataSchemaData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiCenterMetadataSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {
@@ -400,7 +392,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetadataSchemas_Get. </description>
+        /// <description> MetadataSchemas_Head. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -424,22 +416,14 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
+                HttpMessage message = _metadataSchemasRestClient.CreateHeadMetadataSchemaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ApiCenterMetadataSchemaData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiCenterMetadataSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {
