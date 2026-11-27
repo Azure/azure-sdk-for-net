@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="MigrationRecoveryPointResource"/> object. </returns>
         public virtual MigrationRecoveryPointResource GetMigrationRecoveryPointResource(ResourceIdentifier id)
         {
-            MigrationRecoveryPointResource.ValidateResourceId(id);
             return new MigrationRecoveryPointResource(Client, id);
         }
 
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="ReplicationProtectedItemResource"/> object. </returns>
         public virtual ReplicationProtectedItemResource GetReplicationProtectedItemResource(ResourceIdentifier id)
         {
-            ReplicationProtectedItemResource.ValidateResourceId(id);
             return new ReplicationProtectedItemResource(Client, id);
         }
 
@@ -62,7 +60,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryPointResource"/> object. </returns>
         public virtual SiteRecoveryPointResource GetSiteRecoveryPointResource(ResourceIdentifier id)
         {
-            SiteRecoveryPointResource.ValidateResourceId(id);
             return new SiteRecoveryPointResource(Client, id);
         }
 
@@ -71,7 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryReplicationProtectionClusterResource"/> object. </returns>
         public virtual SiteRecoveryReplicationProtectionClusterResource GetSiteRecoveryReplicationProtectionClusterResource(ResourceIdentifier id)
         {
-            SiteRecoveryReplicationProtectionClusterResource.ValidateResourceId(id);
             return new SiteRecoveryReplicationProtectionClusterResource(Client, id);
         }
 
@@ -80,7 +76,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="ReplicationProtectionIntentResource"/> object. </returns>
         public virtual ReplicationProtectionIntentResource GetReplicationProtectionIntentResource(ResourceIdentifier id)
         {
-            ReplicationProtectionIntentResource.ValidateResourceId(id);
             return new ReplicationProtectionIntentResource(Client, id);
         }
 
@@ -89,7 +84,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryAlertResource"/> object. </returns>
         public virtual SiteRecoveryAlertResource GetSiteRecoveryAlertResource(ResourceIdentifier id)
         {
-            SiteRecoveryAlertResource.ValidateResourceId(id);
             return new SiteRecoveryAlertResource(Client, id);
         }
 
@@ -98,7 +92,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="ReplicationEligibilityResultResource"/> object. </returns>
         public virtual ReplicationEligibilityResultResource GetReplicationEligibilityResultResource(ResourceIdentifier id)
         {
-            ReplicationEligibilityResultResource.ValidateResourceId(id);
             return new ReplicationEligibilityResultResource(Client, id);
         }
 
@@ -115,7 +108,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryEventResource"/> object. </returns>
         public virtual SiteRecoveryEventResource GetSiteRecoveryEventResource(ResourceIdentifier id)
         {
-            SiteRecoveryEventResource.ValidateResourceId(id);
             return new SiteRecoveryEventResource(Client, id);
         }
 
@@ -124,7 +116,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryFabricResource"/> object. </returns>
         public virtual SiteRecoveryFabricResource GetSiteRecoveryFabricResource(ResourceIdentifier id)
         {
-            SiteRecoveryFabricResource.ValidateResourceId(id);
             return new SiteRecoveryFabricResource(Client, id);
         }
 
@@ -133,7 +124,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryLogicalNetworkResource"/> object. </returns>
         public virtual SiteRecoveryLogicalNetworkResource GetSiteRecoveryLogicalNetworkResource(ResourceIdentifier id)
         {
-            SiteRecoveryLogicalNetworkResource.ValidateResourceId(id);
             return new SiteRecoveryLogicalNetworkResource(Client, id);
         }
 
@@ -142,7 +132,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryNetworkResource"/> object. </returns>
         public virtual SiteRecoveryNetworkResource GetSiteRecoveryNetworkResource(ResourceIdentifier id)
         {
-            SiteRecoveryNetworkResource.ValidateResourceId(id);
             return new SiteRecoveryNetworkResource(Client, id);
         }
 
@@ -151,7 +140,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryNetworkMappingResource"/> object. </returns>
         public virtual SiteRecoveryNetworkMappingResource GetSiteRecoveryNetworkMappingResource(ResourceIdentifier id)
         {
-            SiteRecoveryNetworkMappingResource.ValidateResourceId(id);
             return new SiteRecoveryNetworkMappingResource(Client, id);
         }
 
@@ -160,7 +148,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryProtectionContainerResource"/> object. </returns>
         public virtual SiteRecoveryProtectionContainerResource GetSiteRecoveryProtectionContainerResource(ResourceIdentifier id)
         {
-            SiteRecoveryProtectionContainerResource.ValidateResourceId(id);
             return new SiteRecoveryProtectionContainerResource(Client, id);
         }
 
@@ -169,7 +156,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryMigrationItemResource"/> object. </returns>
         public virtual SiteRecoveryMigrationItemResource GetSiteRecoveryMigrationItemResource(ResourceIdentifier id)
         {
-            SiteRecoveryMigrationItemResource.ValidateResourceId(id);
             return new SiteRecoveryMigrationItemResource(Client, id);
         }
 
@@ -178,7 +164,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryProtectableItemResource"/> object. </returns>
         public virtual SiteRecoveryProtectableItemResource GetSiteRecoveryProtectableItemResource(ResourceIdentifier id)
         {
-            SiteRecoveryProtectableItemResource.ValidateResourceId(id);
             return new SiteRecoveryProtectableItemResource(Client, id);
         }
 
@@ -187,7 +172,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="ProtectionContainerMappingResource"/> object. </returns>
         public virtual ProtectionContainerMappingResource GetProtectionContainerMappingResource(ResourceIdentifier id)
         {
-            ProtectionContainerMappingResource.ValidateResourceId(id);
             return new ProtectionContainerMappingResource(Client, id);
         }
 
@@ -196,7 +180,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryServicesProviderResource"/> object. </returns>
         public virtual SiteRecoveryServicesProviderResource GetSiteRecoveryServicesProviderResource(ResourceIdentifier id)
         {
-            SiteRecoveryServicesProviderResource.ValidateResourceId(id);
             return new SiteRecoveryServicesProviderResource(Client, id);
         }
 
@@ -205,7 +188,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="StorageClassificationResource"/> object. </returns>
         public virtual StorageClassificationResource GetStorageClassificationResource(ResourceIdentifier id)
         {
-            StorageClassificationResource.ValidateResourceId(id);
             return new StorageClassificationResource(Client, id);
         }
 
@@ -214,7 +196,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="StorageClassificationMappingResource"/> object. </returns>
         public virtual StorageClassificationMappingResource GetStorageClassificationMappingResource(ResourceIdentifier id)
         {
-            StorageClassificationMappingResource.ValidateResourceId(id);
             return new StorageClassificationMappingResource(Client, id);
         }
 
@@ -223,7 +204,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryVCenterResource"/> object. </returns>
         public virtual SiteRecoveryVCenterResource GetSiteRecoveryVCenterResource(ResourceIdentifier id)
         {
-            SiteRecoveryVCenterResource.ValidateResourceId(id);
             return new SiteRecoveryVCenterResource(Client, id);
         }
 
@@ -232,7 +212,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryJobResource"/> object. </returns>
         public virtual SiteRecoveryJobResource GetSiteRecoveryJobResource(ResourceIdentifier id)
         {
-            SiteRecoveryJobResource.ValidateResourceId(id);
             return new SiteRecoveryJobResource(Client, id);
         }
 
@@ -241,7 +220,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryPolicyResource"/> object. </returns>
         public virtual SiteRecoveryPolicyResource GetSiteRecoveryPolicyResource(ResourceIdentifier id)
         {
-            SiteRecoveryPolicyResource.ValidateResourceId(id);
             return new SiteRecoveryPolicyResource(Client, id);
         }
 
@@ -250,7 +228,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryRecoveryPlanResource"/> object. </returns>
         public virtual SiteRecoveryRecoveryPlanResource GetSiteRecoveryRecoveryPlanResource(ResourceIdentifier id)
         {
-            SiteRecoveryRecoveryPlanResource.ValidateResourceId(id);
             return new SiteRecoveryRecoveryPlanResource(Client, id);
         }
 
@@ -259,7 +236,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> Returns a <see cref="SiteRecoveryVaultSettingResource"/> object. </returns>
         public virtual SiteRecoveryVaultSettingResource GetSiteRecoveryVaultSettingResource(ResourceIdentifier id)
         {
-            SiteRecoveryVaultSettingResource.ValidateResourceId(id);
             return new SiteRecoveryVaultSettingResource(Client, id);
         }
 

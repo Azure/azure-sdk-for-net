@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <returns> Returns a <see cref="QuotaRequestDetailResource"/> object. </returns>
         public virtual QuotaRequestDetailResource GetQuotaRequestDetailResource(ResourceIdentifier id)
         {
-            QuotaRequestDetailResource.ValidateResourceId(id);
             return new QuotaRequestDetailResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <returns> Returns a <see cref="ReservationQuotaResource"/> object. </returns>
         public virtual ReservationQuotaResource GetReservationQuotaResource(ResourceIdentifier id)
         {
-            ReservationQuotaResource.ValidateResourceId(id);
             return new ReservationQuotaResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <returns> Returns a <see cref="ReservationDetailResource"/> object. </returns>
         public virtual ReservationDetailResource GetReservationDetailResource(ResourceIdentifier id)
         {
-            ReservationDetailResource.ValidateResourceId(id);
             return new ReservationDetailResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <returns> Returns a <see cref="ReservationOrderResource"/> object. </returns>
         public virtual ReservationOrderResource GetReservationOrderResource(ResourceIdentifier id)
         {
-            ReservationOrderResource.ValidateResourceId(id);
             return new ReservationOrderResource(Client, id);
         }
     }

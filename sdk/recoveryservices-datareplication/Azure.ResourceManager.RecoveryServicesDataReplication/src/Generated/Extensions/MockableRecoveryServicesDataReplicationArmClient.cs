@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationEmailConfigurationResource"/> object. </returns>
         public virtual DataReplicationEmailConfigurationResource GetDataReplicationEmailConfigurationResource(ResourceIdentifier id)
         {
-            DataReplicationEmailConfigurationResource.ValidateResourceId(id);
             return new DataReplicationEmailConfigurationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationVaultResource"/> object. </returns>
         public virtual DataReplicationVaultResource GetDataReplicationVaultResource(ResourceIdentifier id)
         {
-            DataReplicationVaultResource.ValidateResourceId(id);
             return new DataReplicationVaultResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationEventResource"/> object. </returns>
         public virtual DataReplicationEventResource GetDataReplicationEventResource(ResourceIdentifier id)
         {
-            DataReplicationEventResource.ValidateResourceId(id);
             return new DataReplicationEventResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationFabricResource"/> object. </returns>
         public virtual DataReplicationFabricResource GetDataReplicationFabricResource(ResourceIdentifier id)
         {
-            DataReplicationFabricResource.ValidateResourceId(id);
             return new DataReplicationFabricResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationFabricAgentResource"/> object. </returns>
         public virtual DataReplicationFabricAgentResource GetDataReplicationFabricAgentResource(ResourceIdentifier id)
         {
-            DataReplicationFabricAgentResource.ValidateResourceId(id);
             return new DataReplicationFabricAgentResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationJobResource"/> object. </returns>
         public virtual DataReplicationJobResource GetDataReplicationJobResource(ResourceIdentifier id)
         {
-            DataReplicationJobResource.ValidateResourceId(id);
             return new DataReplicationJobResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationPolicyResource"/> object. </returns>
         public virtual DataReplicationPolicyResource GetDataReplicationPolicyResource(ResourceIdentifier id)
         {
-            DataReplicationPolicyResource.ValidateResourceId(id);
             return new DataReplicationPolicyResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationPrivateEndpointConnectionResource"/> object. </returns>
         public virtual DataReplicationPrivateEndpointConnectionResource GetDataReplicationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            DataReplicationPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new DataReplicationPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> object. </returns>
         public virtual DataReplicationPrivateEndpointConnectionProxyResource GetDataReplicationPrivateEndpointConnectionProxyResource(ResourceIdentifier id)
         {
-            DataReplicationPrivateEndpointConnectionProxyResource.ValidateResourceId(id);
             return new DataReplicationPrivateEndpointConnectionProxyResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationPrivateLinkResource"/> object. </returns>
         public virtual DataReplicationPrivateLinkResource GetDataReplicationPrivateLinkResource(ResourceIdentifier id)
         {
-            DataReplicationPrivateLinkResource.ValidateResourceId(id);
             return new DataReplicationPrivateLinkResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationProtectedItemResource"/> object. </returns>
         public virtual DataReplicationProtectedItemResource GetDataReplicationProtectedItemResource(ResourceIdentifier id)
         {
-            DataReplicationProtectedItemResource.ValidateResourceId(id);
             return new DataReplicationProtectedItemResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationRecoveryPointResource"/> object. </returns>
         public virtual DataReplicationRecoveryPointResource GetDataReplicationRecoveryPointResource(ResourceIdentifier id)
         {
-            DataReplicationRecoveryPointResource.ValidateResourceId(id);
             return new DataReplicationRecoveryPointResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <returns> Returns a <see cref="DataReplicationExtensionResource"/> object. </returns>
         public virtual DataReplicationExtensionResource GetDataReplicationExtensionResource(ResourceIdentifier id)
         {
-            DataReplicationExtensionResource.ValidateResourceId(id);
             return new DataReplicationExtensionResource(Client, id);
         }
     }

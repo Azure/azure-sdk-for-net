@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// <returns> Returns a <see cref="OpenShiftVersionResource"/> object. </returns>
         public virtual OpenShiftVersionResource GetOpenShiftVersionResource(ResourceIdentifier id)
         {
-            OpenShiftVersionResource.ValidateResourceId(id);
             return new OpenShiftVersionResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// <returns> Returns a <see cref="OpenShiftClusterResource"/> object. </returns>
         public virtual OpenShiftClusterResource GetOpenShiftClusterResource(ResourceIdentifier id)
         {
-            OpenShiftClusterResource.ValidateResourceId(id);
             return new OpenShiftClusterResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// <returns> Returns a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> object. </returns>
         public virtual OpenShiftPlatformWorkloadIdentityRoleSetResource GetOpenShiftPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier id)
         {
-            OpenShiftPlatformWorkloadIdentityRoleSetResource.ValidateResourceId(id);
             return new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, id);
         }
     }
