@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Converts a string to a <see cref="TruncationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TruncationStrategy?(string value) => value == null ? null : new TruncationStrategy(value);
+        public static implicit operator TruncationStrategy?(string value) => value == null ? (TruncationStrategy?)null : new TruncationStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -7,6 +7,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -17,6 +18,16 @@ namespace Azure.ResourceManager.NetApp.Models
         private LargeVolumeType? _largeVolumeType;
         private BreakthroughMode? _breakthroughMode;
         private BreakthroughMode? _breakthroughModeOld;
+
+        // The current service API omits this field; retain it for callers using older versions.
+        /// <summary> Gets or sets whether subvolumes are enabled. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version.")]
+        public EnableNetAppSubvolume? EnableSubvolumes
+        {
+            get => SubvolumeEnablement.ToLegacy(Properties?.EnableSubvolumes);
+            set => (Properties ??= new VolumeProperties()).EnableSubvolumes = SubvolumeEnablement.FromLegacy(value);
+        }
 
         /// <summary> Restoring. </summary>
         public bool? IsRestoring

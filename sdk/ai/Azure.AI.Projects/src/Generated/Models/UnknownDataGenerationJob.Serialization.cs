@@ -110,8 +110,8 @@ namespace Azure.AI.Projects
             IList<DataGenerationJobSource> sources = default;
             DataGenerationJobConfiguration generationConfiguration = default;
             DataGenerationJobScenario scenario = default;
-            DateTimeOffset createdOn = default;
-            DateTimeOffset? finishedOn = default;
+            DateTimeOffset createdAt = default;
+            DateTimeOffset? finishedAt = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,7 +170,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("finished_at"u8))
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    finishedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    finishedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,8 +196,8 @@ namespace Azure.AI.Projects
                 sources ?? new ChangeTrackingList<DataGenerationJobSource>(),
                 generationConfiguration,
                 scenario,
-                createdOn,
-                finishedOn,
+                createdAt,
+                finishedAt,
                 additionalBinaryDataProperties);
         }
     }

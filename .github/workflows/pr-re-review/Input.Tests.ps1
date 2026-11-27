@@ -72,6 +72,26 @@ Describe 'Export-PrReReviewInput' {
         $inputText | Should -Match '// deleted declaration'
     }
 
+    It 'exports a local diff instead of both full copies when a modified file has no patch' {
+        Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent {
+            $changed = if ($HeadSha -eq 'abc1234') { 'line 1500 changed' } else { 'line 1500' }
+            (@(1..1499 | ForEach-Object { "line $_" }) + $changed + @(1501..2000 | ForEach-Object { "line $_" })) -join "`n"
+        }
+        $export = Invoke-Export @(New-ChangedFile 'src/Changed.cs' -Status 'modified' -Patch $null)
+        $export.Files[0].readFiles.Count | Should -Be 1
+        $inputText = & $export.Read $export.Files[0]
+        $inputText | Should -Match '(?m)^@@ -1497,7 \+1497,7 @@'
+        $inputText | Should -Match '(?m)^-line 1500$'
+        $inputText | Should -Match '(?m)^\+line 1500 changed$'
+    }
+
+    It 'leaves a zero exit code after a local diff so the pwsh step does not fail' {
+        Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { if ($HeadSha -eq 'abc1234') { '// new declaration' } else { '// deleted declaration' } }
+        $global:LASTEXITCODE = 0
+        $null = Invoke-Export @(New-ChangedFile 'src/Changed.cs' -Status 'modified' -Patch $null)
+        $global:LASTEXITCODE | Should -Be 0
+    }
+
     It 'uses the previous path at the merge base when a renamed file has no patch' {
         Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { "content of $Path at $HeadSha" }
         $file = New-ChangedFile 'src/New.cs' -Status 'renamed' -Patch $null
@@ -227,6 +247,39 @@ Describe 'Get-PrReReviewHeadContent' {
         $content | Should -BeExactly ''
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { "abc$([char]0)def" }
         Get-PrReReviewHeadContent -Repository 'Azure/azure-sdk-for-net' -HeadSha 'abc1234' -Path 'binary.dat' | Should -BeNullOrEmpty
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { $null }
+        Get-PrReReviewHeadContent -Repository 'Azure/azure-sdk-for-net' -HeadSha 'abc1234' -Path 'binary.dat' | Should -BeNullOrEmpty
+    }
+
+    It 'fails closed for NUL-free native output containing invalid UTF-8' -ForEach @(
+        @{ Encoded = 'YYBi'; Label = '0x80' }
+        @{ Encoded = 'YYFi'; Label = '0x81' }
+    ) {
+        $arguments = @('-NoProfile', '-NonInteractive', '-Command', "[Console]::OpenStandardOutput().Write([Convert]::FromBase64String('$Encoded'))")
+        { InModuleScope PrReReviewInput -Parameters @{ Command = (Get-Process -Id $PID).Path; Arguments = $arguments } {
+            Read-PrReReviewNativeOutput -Command $Command -Arguments $Arguments
+        } } | Should -Throw
+    }
+
+    It 'recognizes binary native output containing NUL even when it is not UTF-8' {
+        $arguments = @('-NoProfile', '-NonInteractive', '-Command', "[Console]::OpenStandardOutput().Write([Convert]::FromBase64String('YQCA'))")
+        $output = InModuleScope PrReReviewInput -Parameters @{ Command = (Get-Process -Id $PID).Path; Arguments = $arguments } {
+            Read-PrReReviewNativeOutput -Command $Command -Arguments $Arguments
+        }
+        ($null -eq $output) | Should -BeTrue
+    }
+
+    It 'reads native output byte-for-byte when <Label>' -ForEach @(
+        @{ Label = 'it is empty'; Text = '' }
+        @{ Label = 'it ends with a newline'; Text = "a`nb`n" }
+        @{ Label = 'it has no final newline'; Text = "a`nb" }
+    ) {
+        $encoded = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Text))
+        $arguments = @('-NoProfile', '-NonInteractive', '-Command', "[Console]::Out.Write([Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('$encoded')))")
+        $output = InModuleScope PrReReviewInput -Parameters @{ Command = (Get-Process -Id $PID).Path; Arguments = $arguments } {
+            Read-PrReReviewNativeOutput -Command $Command -Arguments $Arguments
+        }
+        $output | Should -BeExactly $Text
     }
 }
 

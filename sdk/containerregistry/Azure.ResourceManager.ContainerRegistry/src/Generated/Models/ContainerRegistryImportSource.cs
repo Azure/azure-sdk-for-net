@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal ContainerRegistryImportSource(ResourceIdentifier resourceId, Uri registryUri, ContainerRegistryImportSourceCredentials credentials, string sourceImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             RegistryUri = registryUri;
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             Credentials = credentials;
             SourceImage = sourceImage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

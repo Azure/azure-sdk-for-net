@@ -185,6 +185,53 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             return false;
         }
 
+        internal static void ValidateRoomJoinIdentifiers(string room, string @namespace, string socketId)
+        {
+            ValidateRoomJoinIdentifier(room, nameof(AddSocketToRoomAction.Room));
+            ValidateRoomJoinIdentifier(@namespace, nameof(AddSocketToRoomAction.Namespace));
+            ValidateRoomJoinIdentifier(socketId, nameof(AddSocketToRoomAction.SocketId));
+        }
+
+        // Unpaired UTF-16 surrogates can become U+FFFD either in the Functions host's JSON parser
+        // (before this extension sees the action) or in the default UTF-8 group-name encoder.
+        // For example, "\uD800" and "\uFFFD" can target the same group even though the application's
+        // room authorization compared them as different names.
+        //
+        // After JSON parsing, the original value is lost: strict UTF-8 encoding alone cannot
+        // distinguish a replaced surrogate from an intentional U+FFFD. We reject both unpaired
+        // surrogates and U+FFFD, knowingly disallowing legitimate U+FFFD in join identifiers.
+        // Valid surrogate pairs, including emoji, remain supported.
+        //
+        // Scope this restriction to joins so existing rooms can still receive messages and have
+        // members removed. This prevents new ambiguous joins; it does not remove existing members.
+        internal static void ValidateRoomJoinIdentifier(string value, string paramName)
+        {
+            // Keep the collector's existing null/empty validation.
+            if (value == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (value[i] == '\uFFFD' || char.IsLowSurrogate(value[i]))
+                {
+                    throw new ArgumentException("Room join identifiers must not contain U+FFFD or unpaired UTF-16 surrogates.", paramName);
+                }
+
+                if (char.IsHighSurrogate(value[i]))
+                {
+                    if (i + 1 >= value.Length || !char.IsLowSurrogate(value[i + 1]))
+                    {
+                        throw new ArgumentException("Room join identifiers must not contain U+FFFD or unpaired UTF-16 surrogates.", paramName);
+                    }
+
+                    // A paired low surrogate must not be rejected as an isolated one on the next iteration.
+                    i++;
+                }
+            }
+        }
+
         public static string GetGroupNameByNamespace(string @namespace)
         {
             return NamespaceGroupType + Separator + Base64UrlEncoder.Encode(@namespace) + Separator;
@@ -234,6 +281,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 
             if (!string.IsNullOrEmpty(filter) && !string.IsNullOrEmpty(denyFilter))
             {
+                if (rooms != null && rooms.Count > 1)
+                {
+                    // In OData filter syntax, 'and' has higher precedence than 'or', so wrap OR-joined rooms in parentheses to ensure exclusions apply to all target rooms.
+                    filter = $"({filter})";
+                }
                 return $"{filter} and {denyFilter}";
             }
             else if (!string.IsNullOrEmpty(filter))

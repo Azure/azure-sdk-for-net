@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Converts a string to a <see cref="InboundEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InboundEndpointProtocol?(string value) => value == null ? null : new InboundEndpointProtocol(value);
+        public static implicit operator InboundEndpointProtocol?(string value) => value == null ? (InboundEndpointProtocol?)null : new InboundEndpointProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

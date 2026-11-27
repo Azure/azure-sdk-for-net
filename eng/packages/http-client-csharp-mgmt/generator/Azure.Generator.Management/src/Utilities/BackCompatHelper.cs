@@ -617,7 +617,7 @@ namespace Azure.Generator.Management.Utilities
                     conditions);
         }
 
-        private static ParameterProvider CloneParameter(
+        internal static ParameterProvider CloneParameter(
             ParameterProvider parameter,
             bool removeDefault = false,
             string? name = null,

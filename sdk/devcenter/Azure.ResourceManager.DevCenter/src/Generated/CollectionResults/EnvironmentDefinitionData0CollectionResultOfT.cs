@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByProjectCatalogRequest(nextLink, _subscriptionId, _resourceGroupName, _projectName, _catalogName, _context) : _client.CreateGetByProjectCatalogRequest(_subscriptionId, _resourceGroupName, _projectName, _catalogName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByProjectCatalogRequest(nextLink, _subscriptionId, _resourceGroupName, _projectName, _catalogName, _context) : _client.CreateListByProjectCatalogRequest(_subscriptionId, _resourceGroupName, _projectName, _catalogName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -52,7 +52,7 @@ namespace Azure.Security.ConfidentialLedger.Models
 
         /// <summary> Converts a string to a <see cref="UserDefinedFunctionExecutionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UserDefinedFunctionExecutionStatus?(string value) => value == null ? null : new UserDefinedFunctionExecutionStatus(value);
+        public static implicit operator UserDefinedFunctionExecutionStatus?(string value) => value == null ? (UserDefinedFunctionExecutionStatus?)null : new UserDefinedFunctionExecutionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

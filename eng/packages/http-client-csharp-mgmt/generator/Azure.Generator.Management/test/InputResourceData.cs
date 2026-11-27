@@ -10,10 +10,9 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null, bool? resourceNameIsExplicit = null, string? singletonResourceName = null)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null, bool? resourceNameIsExplicit = null, string? singletonResourceName = null, string resourceModelName = "ResponseType")
         {
             const string TestClientName = "TestClient";
-            const string ResourceModelName = "ResponseType";
             List<InputModelProperty> properties =
             [
                 InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
@@ -36,7 +35,7 @@ namespace Azure.Generator.Management.Tests.Common
                 usage |= InputModelTypeUsage.Input;
             }
 
-            var responseModel = InputFactory.Model(ResourceModelName,
+            var responseModel = InputFactory.Model(resourceModelName,
                         usage: usage,
                         properties: properties,
                         baseModel: baseModel,

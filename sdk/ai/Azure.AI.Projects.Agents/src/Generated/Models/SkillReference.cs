@@ -4,42 +4,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A reference to a versioned Foundry skill. </summary>
-    [Experimental("AAIP001")]
-    public partial class SkillReference
+    /// <summary> The SkillReference. </summary>
+    public partial class SkillReference : ContainerSkill
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SkillReference"/>. </summary>
-        /// <param name="name"> The name of the skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SkillReference(string name)
+        /// <param name="skillId"> The ID of the referenced skill. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillId"/> is null. </exception>
+        public SkillReference(string skillId) : base(ContainerSkillType.SkillReference)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(skillId, nameof(skillId));
 
-            Name = name;
+            SkillId = skillId;
         }
 
         /// <summary> Initializes a new instance of <see cref="SkillReference"/>. </summary>
-        /// <param name="name"> The name of the skill. </param>
-        /// <param name="version"> The skill version. If omitted, the current default version is resolved and pinned when the agent version is created. </param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkillReference(string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="skillId"> The ID of the referenced skill. </param>
+        /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
+        internal SkillReference(ContainerSkillType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string skillId, string version) : base(@type, additionalBinaryDataProperties)
         {
-            Name = name;
+            SkillId = skillId;
             Version = version;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the skill. </summary>
-        public string Name { get; set; }
+        /// <summary> The ID of the referenced skill. </summary>
+        public string SkillId { get; set; }
 
-        /// <summary> The skill version. If omitted, the current default version is resolved and pinned when the agent version is created. </summary>
+        /// <summary> Optional skill version. Use a positive integer or 'latest'. Omit for default. </summary>
         public string Version { get; set; }
     }
 }

@@ -89,7 +89,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="include">
         /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content`
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content`
         /// to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -162,7 +162,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="include">
         /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content`
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content`
         /// to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

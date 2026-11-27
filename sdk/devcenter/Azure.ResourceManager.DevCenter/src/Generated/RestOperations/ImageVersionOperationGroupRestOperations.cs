@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetByProjectRequest(Guid subscriptionId, string resourceGroupName, string projectName, string imageName, RequestContext context)
+        internal HttpMessage CreateListByProjectRequest(Guid subscriptionId, string resourceGroupName, string projectName, string imageName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetByProjectRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string projectName, string imageName, RequestContext context)
+        internal HttpMessage CreateNextListByProjectRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string projectName, string imageName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

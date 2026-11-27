@@ -4,6 +4,8 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
+#pragma warning disable AAAS002 // Internal transport for the experimental snapshot lifecycle contract.
+
 namespace Azure.AI.AgentServer.Core.Internal;
 
 internal sealed class SnapshotLifecycleMiddleware : IMiddleware

@@ -4553,7 +4553,7 @@ namespace Azure.Storage.Files.Shares
             // Assign builder's ShareName and Path, if they are null.
             builder.ShareName ??= Name;
 
-            if (!builder.ShareName.Equals(Name, StringComparison.InvariantCulture))
+            if (!builder.ShareName.Equals(Name, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.ShareName),

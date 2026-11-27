@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -17,6 +18,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// comments emitted by the session's timer never interleave with event
 /// frames.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class SseWriter
 {
     private readonly SseKeepAliveSession _session;
@@ -48,7 +50,7 @@ internal sealed class SseWriter
     public static (string? EventType, string Data) SerializeEvent(
         ResponseStreamEvent evt, long sequenceNumber, JsonSerializerOptions jsonOptions)
     {
-        var eventType = evt.EventType.ToString();
+        var eventType = evt.Kind.ToString();
         var json = JsonSerializer.Serialize(evt, evt.GetType(), jsonOptions);
 
         // Inject the SDK-assigned sequence number into the serialized JSON and strip internal metadata

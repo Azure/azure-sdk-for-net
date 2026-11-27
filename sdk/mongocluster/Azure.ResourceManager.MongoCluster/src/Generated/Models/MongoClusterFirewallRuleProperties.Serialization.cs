@@ -13,7 +13,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The properties of a mongo cluster firewall rule. </summary>
+    /// <summary> The properties of a DocumentDB cluster firewall rule. </summary>
     public partial class MongoClusterFirewallRuleProperties : IJsonModel<MongoClusterFirewallRuleProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MongoClusterFirewallRuleProperties"/> for deserialization. </summary>

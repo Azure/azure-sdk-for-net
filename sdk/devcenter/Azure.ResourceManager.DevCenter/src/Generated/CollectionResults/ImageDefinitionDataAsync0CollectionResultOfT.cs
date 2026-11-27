@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByProjectCatalogRequest(nextLink, _subscriptionId, _resourceGroupName, _projectName, _catalogName, _top, _context) : _client.CreateGetByProjectCatalogRequest(_subscriptionId, _resourceGroupName, _projectName, _catalogName, _top, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByProjectCatalogRequest(nextLink, _subscriptionId, _resourceGroupName, _projectName, _catalogName, _top, _context) : _client.CreateListByProjectCatalogRequest(_subscriptionId, _resourceGroupName, _projectName, _catalogName, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

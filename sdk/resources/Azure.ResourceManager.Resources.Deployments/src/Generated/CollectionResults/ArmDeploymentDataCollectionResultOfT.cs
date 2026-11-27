@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Deployments
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            Core.HttpMessage message = nextLink != null ? _client.CreateNextGetAtScopeRequest(nextLink, _scope, _filter, _top, _context) : _client.CreateGetAtScopeRequest(_scope, _filter, _top, _context);
+            Core.HttpMessage message = nextLink != null ? _client.CreateNextListAtScopeRequest(nextLink, _scope, _filter, _top, _context) : _client.CreateListAtScopeRequest(_scope, _filter, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

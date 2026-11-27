@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            MaintenanceWindowResourceProperties properties = default;
+            ContainerServiceManagedMaintenanceWindowProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    properties = MaintenanceWindowResourceProperties.DeserializeMaintenanceWindowResourceProperties(prop.Value, options);
+                    properties = ContainerServiceManagedMaintenanceWindowProperties.DeserializeContainerServiceManagedMaintenanceWindowProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

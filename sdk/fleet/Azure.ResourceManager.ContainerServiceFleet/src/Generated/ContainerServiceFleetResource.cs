@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         internal ContainerServiceFleetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/fleets", out string fleetsApiVersionOverride) ? fleetsApiVersionOverride : "2026-06-02-preview");
+            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/fleets", out string fleetsApiVersionOverride) ? fleetsApiVersionOverride : "2026-11-02-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-11-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-11-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-11-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location,
+                    OperationFinalStateVia.OriginalUri,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-11-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location,
+                    OperationFinalStateVia.OriginalUri,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-11-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-11-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-11-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-11-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -921,6 +921,39 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
             return GetContainerServiceFleetGates().Get(gateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of IdentityBindingProfiles in the <see cref="ContainerServiceFleetResource"/>. </summary>
+        /// <returns> An object representing collection of IdentityBindingProfiles and their operations over a IdentityBindingProfileResource. </returns>
+        public virtual IdentityBindingProfileCollection GetIdentityBindingProfiles()
+        {
+            return GetCachedClient(client => new IdentityBindingProfileCollection(client, Id));
+        }
+
+        /// <summary> Get a IdentityBindingProfile. </summary>
+        /// <param name="identityBindingProfileName"> The name of the IdentityBindingProfile resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="identityBindingProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="identityBindingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IdentityBindingProfileResource>> GetIdentityBindingProfileAsync(string identityBindingProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(identityBindingProfileName, nameof(identityBindingProfileName));
+
+            return await GetIdentityBindingProfiles().GetAsync(identityBindingProfileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a IdentityBindingProfile. </summary>
+        /// <param name="identityBindingProfileName"> The name of the IdentityBindingProfile resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="identityBindingProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="identityBindingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IdentityBindingProfileResource> GetIdentityBindingProfile(string identityBindingProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(identityBindingProfileName, nameof(identityBindingProfileName));
+
+            return GetIdentityBindingProfiles().Get(identityBindingProfileName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerServiceFleetUpdateRuns in the <see cref="ContainerServiceFleetResource"/>. </summary>

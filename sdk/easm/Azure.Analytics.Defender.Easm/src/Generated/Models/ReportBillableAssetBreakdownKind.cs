@@ -53,7 +53,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="ReportBillableAssetBreakdownKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReportBillableAssetBreakdownKind?(string value) => value == null ? null : new ReportBillableAssetBreakdownKind(value);
+        public static implicit operator ReportBillableAssetBreakdownKind?(string value) => value == null ? (ReportBillableAssetBreakdownKind?)null : new ReportBillableAssetBreakdownKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

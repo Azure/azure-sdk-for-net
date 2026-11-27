@@ -135,6 +135,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The index of the physical network adapter. </summary>
+        [WirePath("properties.networkAdapterIndex")]
+        public int? NetworkAdapterIndex
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkAdapterIndex;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.NetworkAdapterIndex = value;
+            }
+        }
+
         /// <summary> Whether this is a primary network interface on a virtual machine. </summary>
         [WirePath("properties.primary")]
         public bool? Primary

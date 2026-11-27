@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDryrunRequest(nextLink, _resourceUri, _context) : _client.CreateGetDryrunRequest(_resourceUri, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListDryrunRequest(nextLink, _resourceUri, _context) : _client.CreateListDryrunRequest(_resourceUri, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

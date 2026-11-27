@@ -91,7 +91,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Converts a string to a <see cref="TypeCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TypeCategory?(string value) => value == null ? null : new TypeCategory(value);
+        public static implicit operator TypeCategory?(string value) => value == null ? (TypeCategory?)null : new TypeCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

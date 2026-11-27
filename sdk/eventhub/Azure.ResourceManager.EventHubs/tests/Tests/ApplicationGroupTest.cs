@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
     {
         private ResourceGroupResource _resourceGroup;
         private EventHubsApplicationGroupCollection _applicationGroupCollection;
+        private EventHubsNamespaceResource _namespace;
         public ApplicationGroupTest(bool isAsync) : base(isAsync)
         {
         }
@@ -33,14 +34,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation)
-            {
-                Sku = new EventHubsSku("Premium")
-                {
-                    Tier = "Premium",
-                    Capacity = 1
-                }
-            })).Value;
+            EventHubsNamespaceResource eventHubNamespace = await CreateNamespaceAsync(_resourceGroup, namespaceName, EventHubsSkuName.Premium, AzureLocation.EastUS);
+            _namespace = eventHubNamespace;
             eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
             Assert.IsTrue(await namespaceCollection.ExistsAsync(namespaceName));
             // VerifyNamespaceProperties(eventHubNamespace, true);
@@ -49,10 +44,10 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("RequestFailedException:Cannot create or update an Application Group with non-existent SAS Key.")]
+        [Ignore("Premium namespace creation is restricted in the recording subscription; re-record when Premium capacity is available.")]
         public async Task CreateApplicationGroupWithParameter()
         {
-            string SASKey = Recording.GenerateAssetName("SasKey_");
+            string SASKey = await CreateApplicationKeyAsync();
             string ClientAppGroupIdentifier = "SASKeyName=" + SASKey;
             string applicationGroupName = Recording.GenerateAssetName("applicationgroup");
             EventHubsApplicationGroupData applicationgroupData = new EventHubsApplicationGroupData()
@@ -65,36 +60,35 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 }
             };
             applicationgroupData.Policies.Add(new EventHubsThrottlingPolicy("Throttlingpolicy3", 3451, "IncomingBytes"));
-            EventHubsApplicationGroupResource applicationgroup = (await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName, applicationgroupData)).Value;
+            EventHubsApplicationGroupResource applicationgroup = await CompleteAsync(await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Started, applicationGroupName, applicationgroupData));
             Assert.IsNotNull(applicationgroup);
             Assert.AreEqual(applicationgroup.Id.Name, applicationGroupName);
             Assert.AreEqual(applicationgroup.Data.IsEnabled, applicationgroupData.IsEnabled);
             Assert.AreEqual(applicationgroup.Data.ClientAppGroupIdentifier, applicationgroupData.ClientAppGroupIdentifier);
             Assert.IsTrue(await _applicationGroupCollection.ExistsAsync(applicationGroupName));
-            List<EventHubsThrottlingPolicy> policy = new List<EventHubsThrottlingPolicy>();
-
-            policy = applicationgroupData.Policies.Select(x => x as EventHubsThrottlingPolicy).ToList();
-            // List<ThrottlingPolicy> lp = applicationgroupData.Policies.ConvertAll(new Converter<ApplicationGroupPolicy,ThrottlingPolicy>(ApplicationGroupPolicyToThrottling));
+            applicationgroup = await applicationgroup.GetAsync();
+            List<EventHubsThrottlingPolicy> policy = applicationgroup.Data.Policies.OfType<EventHubsThrottlingPolicy>().ToList();
+            Assert.AreEqual(2, policy.Count);
             Assert.AreEqual("Throttlingpolicy1", policy[0].Name);
             Assert.AreEqual(3452, policy[0].RateLimitThreshold);
             Assert.AreEqual(EventHubsMetricId.IncomingMessages, policy[0].MetricId);
             Assert.AreEqual("Throttlingpolicy3", policy[1].Name);
             Assert.AreEqual(3451, policy[1].RateLimitThreshold);
             Assert.AreEqual(EventHubsMetricId.IncomingBytes, policy[1].MetricId);
-            applicationgroup = await _applicationGroupCollection.GetAsync(applicationGroupName);
 
             //delete applicationGroup
-            await applicationgroup.DeleteAsync(WaitUntil.Completed);
+            await CompleteAsync(await applicationgroup.DeleteAsync(WaitUntil.Started));
+            Assert.IsFalse(await _applicationGroupCollection.ExistsAsync(applicationGroupName));
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("RequestFailedException:Cannot create or update an Application Group with non-existent SAS Key.")]
+        [Ignore("Premium namespace creation is restricted in the recording subscription; re-record when Premium capacity is available.")]
         public async Task GetAllApplicationGroups()
         {
-            string SASKey = Recording.GenerateAssetName("SasKey_");
+            string SASKey = await CreateApplicationKeyAsync();
             string ClientAppGroupIdentifier1 = "SASKeyName=" + SASKey;
-            string SASKey1 = Recording.GenerateAssetName("SasKey_");
+            string SASKey1 = await CreateApplicationKeyAsync();
             string ClientAppGroupIdentifier2 = "SASKeyName=" + SASKey1;
             //create two Application Groups
             string applicationGroupName1 = Recording.GenerateAssetName("applicationgroup1");
@@ -117,12 +111,12 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                     new EventHubsThrottlingPolicy("Throttlingpolicy4", 3455, "IncomingMessages")
                 }
             };
-            _ = (await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName1, applicationgroupData1)).Value;
-            _ = (await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName2, applicationgroupData2)).Value;
+            await CompleteAsync(await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Started, applicationGroupName1, applicationgroupData1));
+            await CompleteAsync(await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Started, applicationGroupName2, applicationgroupData2));
 
             //validate
             int count = 0;
-            await foreach (EventHubsApplicationGroupResource applicationgroup in _applicationGroupCollection.GetAllAsync())
+            foreach (EventHubsApplicationGroupResource applicationgroup in await ReadAllAsync(_applicationGroupCollection.GetAllAsync()))
             {
                 if (applicationgroup.Id.Name == applicationGroupName1)
                     count++;
@@ -130,6 +124,38 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                     count++;
             }
             Assert.AreEqual(count, 2);
+        }
+
+        [RecordedTest]
+        [Ignore("Premium namespace creation is restricted in the recording subscription; re-record when Premium capacity is available.")]
+        public async Task UpdateApplicationGroup()
+        {
+            string name = Recording.GenerateAssetName("applicationgroup");
+            var data = new EventHubsApplicationGroupData
+            {
+                IsEnabled = true,
+                ClientAppGroupIdentifier = "SASKeyName=" + await CreateApplicationKeyAsync(),
+                Policies = { new EventHubsThrottlingPolicy("incoming", 100, EventHubsMetricId.IncomingMessages) }
+            };
+            EventHubsApplicationGroupResource resource = await CompleteAsync(
+                await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Started, name, data));
+            data.IsEnabled = false;
+            await CompleteAsync(await resource.UpdateAsync(WaitUntil.Started, data));
+            Response<EventHubsApplicationGroupResource> readBack = await resource.GetAsync();
+            AssertStatus(readBack.GetRawResponse(), 200);
+            Assert.IsFalse(readBack.Value.Data.IsEnabled);
+            Assert.AreEqual(data.ClientAppGroupIdentifier, readBack.Value.Data.ClientAppGroupIdentifier);
+        }
+
+        private async Task<string> CreateApplicationKeyAsync()
+        {
+            string name = Recording.GenerateAssetName("appkey");
+            await CompleteAsync(await _namespace.GetEventHubsNamespaceAuthorizationRules().CreateOrUpdateAsync(
+                WaitUntil.Started, name, new EventHubsAuthorizationRuleData
+                {
+                    Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
+                }));
+            return name;
         }
     }
 }

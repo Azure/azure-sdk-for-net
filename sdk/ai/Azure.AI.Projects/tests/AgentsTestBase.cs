@@ -494,7 +494,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     private async Task<McpTool> GetToolBoxAsync(AIProjectClient projectClient, bool usePreview)
     {
         await RemoveToolBoxMayBe(projectClient);
-        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        McpToolboxTool mcp = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
             ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)

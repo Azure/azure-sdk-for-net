@@ -75,7 +75,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(ReferenceSource))
             {
                 writer.WritePropertyName("reference_source"u8);
-                writer.WriteStringValue(ReferenceSource.Value.ToSerialString());
+                writer.WriteStringValue(ReferenceSource.Value.ToString());
             }
             if (Optional.IsDefined(Channels))
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    referenceSource = prop.Value.GetString().ToVoiceAgentEchoCancellationReferenceSource();
+                    referenceSource = new VoiceAgentEchoCancellationReferenceSource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("channels"u8))

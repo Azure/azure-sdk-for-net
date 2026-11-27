@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="AcsUserEngagement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsUserEngagement?(string value) => value == null ? null : new AcsUserEngagement(value);
+        public static implicit operator AcsUserEngagement?(string value) => value == null ? (AcsUserEngagement?)null : new AcsUserEngagement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

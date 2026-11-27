@@ -65,16 +65,9 @@ public sealed class AgentEventStreamOptions
         TimeSpan? ttl = null)
     {
         _configuration = AgentEventStreamConfiguration.FileBackedReplay(
-            ResolveStreamDirectory(storageDirectory),
+            storageDirectory,
             ValidateTtl(ttl ?? DefaultReplayTtl));
     }
-
-    // Defaults an unspecified stream directory to the shared agent-server state root so streams
-    // live alongside tasks with no required configuration; callers can still point anywhere.
-    private static string ResolveStreamDirectory(string? storageDirectory)
-        => string.IsNullOrEmpty(storageDirectory)
-            ? AgentServerStatePaths.StreamsRoot()
-            : storageDirectory;
 
     private static TimeSpan ValidateTtl(TimeSpan ttl)
     {
@@ -134,16 +127,24 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
 
     public string? StorageDirectory { get; }
 
+    internal string? EffectiveStorageDirectory
+        => Backing == AgentEventStreamBackingKind.FileBackedReplay
+            ? ResolveStorageDirectory()
+            : null;
+
     public static AgentEventStreamConfiguration InMemoryReplay(TimeSpan ttl)
         => new(AgentEventStreamBackingKind.InMemoryReplay, ttl, storageDirectory: null);
 
     public static AgentEventStreamConfiguration FileBackedReplay(
-        string storageDirectory,
+        string? storageDirectory,
         TimeSpan ttl)
         => new(
             AgentEventStreamBackingKind.FileBackedReplay,
             ttl,
-            Path.TrimEndingDirectorySeparator(Path.GetFullPath(storageDirectory)));
+            string.IsNullOrEmpty(storageDirectory)
+                ? null
+                : Path.TrimEndingDirectorySeparator(
+                    Path.GetFullPath(storageDirectory)));
 
     public AgentEventStream CreateStream(
         string id,
@@ -155,7 +156,7 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
             AgentEventStreamBackingKind.InMemoryReplay => new ReplayEventStream(id, Ttl, onDestroy),
             AgentEventStreamBackingKind.FileBackedReplay => new FileBackedReplayEventStream(
                 id,
-                StorageDirectory!,
+                ResolveStorageDirectory(),
                 Ttl!.Value,
                 onDestroy,
                 taskId),
@@ -175,7 +176,7 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
 
         return FileBackedReplayEventStream.OpenExisting(
             id,
-            StorageDirectory!,
+            ResolveStorageDirectory(),
             Ttl!.Value,
             onDestroy,
             taskId);
@@ -185,7 +186,9 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
         => other is not null
         && Backing == other.Backing
         && Ttl == other.Ttl
-        && PathComparer.Equals(StorageDirectory, other.StorageDirectory);
+        && PathComparer.Equals(
+            EffectiveStorageDirectory,
+            other.EffectiveStorageDirectory);
 
     public override bool Equals(object? obj)
         => obj is AgentEventStreamConfiguration other && Equals(other);
@@ -195,7 +198,7 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
         var hash = new HashCode();
         hash.Add(Backing);
         hash.Add(Ttl);
-        hash.Add(StorageDirectory, PathComparer);
+        hash.Add(EffectiveStorageDirectory, PathComparer);
         return hash.ToHashCode();
     }
 
@@ -207,10 +210,13 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
                 $"{nameof(AgentEventStreamBackingKind.InMemoryReplay)}(ttl='{FormatTtl(Ttl)}')",
             AgentEventStreamBackingKind.FileBackedReplay =>
                 $"{nameof(AgentEventStreamBackingKind.FileBackedReplay)}" +
-                $"(path='{StorageDirectory}', ttl='{FormatTtl(Ttl)}')",
+                $"(path='{StorageDirectory ?? "<default>"}', ttl='{FormatTtl(Ttl)}')",
             _ => Backing.ToString(),
         };
 
     private static string FormatTtl(TimeSpan? ttl)
         => ttl?.ToString("c", System.Globalization.CultureInfo.InvariantCulture) ?? "none";
+
+    private string ResolveStorageDirectory()
+        => StorageDirectory ?? AgentServerStatePaths.StreamsRoot();
 }

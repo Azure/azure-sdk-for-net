@@ -9,7 +9,28 @@ namespace Azure.Data.AI
     // (Azure.Data.AI -> AIModelFactory), which is too generic. Rename it to align
     // with the InferenceClient surface.
     [CodeGenType("AIModelFactory")]
+    [CodeGenSuppress("EmbeddingItem", typeof(string), typeof(int), typeof(string))]
+    [CodeGenSuppress("EmbeddingUsage", typeof(string), typeof(long?), typeof(long?))]
     public static partial class InferenceModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Azure.Data.AI.EmbeddingItem"/>. </summary>
+        /// <param name="kind"> The discriminator value. </param>
+        /// <param name="index"> The index of the embedding. </param>
+        /// <param name="id"> The embedding identifier. </param>
+        /// <returns> A new <see cref="Azure.Data.AI.EmbeddingItem"/> instance for mocking. </returns>
+        public static EmbeddingItem EmbeddingItem(string kind = default, int index = default, string id = default)
+        {
+            return new UnknownEmbeddingItem(kind == null ? default(EmbeddingDataKind) : new EmbeddingDataKind(kind), index, id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Azure.Data.AI.EmbeddingUsage"/>. </summary>
+        /// <param name="kind"> The discriminator value. </param>
+        /// <param name="promptTokens"> The number of prompt tokens. </param>
+        /// <param name="totalTokens"> The total number of tokens. </param>
+        /// <returns> A new <see cref="Azure.Data.AI.EmbeddingUsage"/> instance for mocking. </returns>
+        public static EmbeddingUsage EmbeddingUsage(string kind = default, long? promptTokens = default, long? totalTokens = default)
+        {
+            return new UnknownEmbeddingUsage(kind == null ? default(EmbeddingUsageKind) : new EmbeddingUsageKind(kind), promptTokens, totalTokens, additionalBinaryDataProperties: null);
+        }
     }
 }

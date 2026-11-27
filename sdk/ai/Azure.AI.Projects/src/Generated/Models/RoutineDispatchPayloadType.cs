@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="RoutineDispatchPayloadType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutineDispatchPayloadType?(string value) => value == null ? null : new RoutineDispatchPayloadType(value);
+        public static implicit operator RoutineDispatchPayloadType?(string value) => value == null ? (RoutineDispatchPayloadType?)null : new RoutineDispatchPayloadType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

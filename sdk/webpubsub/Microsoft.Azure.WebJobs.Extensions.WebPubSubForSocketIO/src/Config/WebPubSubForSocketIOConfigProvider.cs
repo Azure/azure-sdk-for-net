@@ -221,6 +221,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                 {
                     if (TryToWebPubSubOperation(input, kind.ToString() + "Action", item, out var operation))
                     {
+                        if (operation is AddSocketToRoomAction addToRoom)
+                        {
+                            // Fail JSON output conversion early; the collector also validates direct .NET actions.
+                            Utilities.ValidateRoomJoinIdentifiers(addToRoom.Room, addToRoom.Namespace, addToRoom.SocketId);
+                        }
+
                         return operation;
                     }
                 }

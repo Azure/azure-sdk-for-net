@@ -211,7 +211,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Converts a string to a <see cref="ScriptKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptKind?(string value) => value == null ? null : new ScriptKind(value);
+        public static implicit operator ScriptKind?(string value) => value == null ? (ScriptKind?)null : new ScriptKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

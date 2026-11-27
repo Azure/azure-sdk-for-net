@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByPrivateLinkScopeRequest(nextLink, _subscriptionId, _resourceGroupName, _scopeName, _context) : _client.CreateGetByPrivateLinkScopeRequest(_subscriptionId, _resourceGroupName, _scopeName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByPrivateLinkScopeRequest(nextLink, _subscriptionId, _resourceGroupName, _scopeName, _context) : _client.CreateListByPrivateLinkScopeRequest(_subscriptionId, _resourceGroupName, _scopeName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

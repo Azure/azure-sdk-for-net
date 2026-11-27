@@ -130,7 +130,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #region Snippet:Sample_WaitForSession_CodeAgentReminderTool_Async
         string prompt = "Please remind me to go to lunch after one minute.";
         DateTimeOffset responseTime;
-        ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentName: agentVersion.Name, versionIndicator: new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(500);
@@ -176,13 +176,13 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
         {
             // The routine created no earlier than response and not later than one minute after response.
-            if (routine.CreatedOn >= responseTime && routine.CreatedOn < responseTime.AddMinutes(1))
+            if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
             {
                 created = routine;
                 break;
             }
             // If the latest routine was created before the response, our routine was not created.
-            else if (routine.CreatedOn < responseTime)
+            else if (routine.CreatedAt < responseTime)
             {
                 break;
             }
@@ -205,7 +205,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
             await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
             {
                 runWasTriggered = true;
-                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredOn?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedOn?.ToString() ?? "<Not ended yet>"}");
+                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
@@ -287,7 +287,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #region Snippet:Sample_WaitForSession_CodeAgentReminderTool_Sync
         string prompt = "Please remind me to go to lunch after one minute.";
         DateTimeOffset responseTime;
-        ProjectAgentSession session = projectClient.AgentAdministrationClient.CreateSession(agentName: agentVersion.Name, versionIndicator: new VersionRefIndicator(agentVersion.Version));
+        ProjectAgentSession session = projectClient.AgentAdministrationClient.CreateSession(agentName: agentVersion.Name, versionIndicator: new VersionReferenceIndicator(agentVersion.Version));
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(500);
@@ -333,13 +333,13 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutines(order: MemoryStoreListOrder.Descending, limit: 1))
         {
             // The routine created no earlier than response and not later than one minute after response.
-            if (routine.CreatedOn >= responseTime && routine.CreatedOn < responseTime.AddMinutes(1))
+            if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
             {
                 created = routine;
                 break;
             }
             // If the latest routine was created before the response, our routine was not created.
-            else if (routine.CreatedOn < responseTime)
+            else if (routine.CreatedAt < responseTime)
             {
                 break;
             }
@@ -362,7 +362,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
             foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(routineName: created.Name))
             {
                 runWasTriggered = true;
-                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredOn?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedOn?.ToString() ?? "<Not ended yet>"}");
+                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))

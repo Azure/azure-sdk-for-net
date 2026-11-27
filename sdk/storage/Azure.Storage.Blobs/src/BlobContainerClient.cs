@@ -4862,7 +4862,7 @@ namespace Azure.Storage.Blobs
             builder.BlobContainerName ??= Name;
 
             // Validate that builder is properly set
-            if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
+            if (!builder.BlobContainerName.Equals(Name, StringComparison.Ordinal))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.BlobContainerName),

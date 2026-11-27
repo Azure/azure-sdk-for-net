@@ -36,14 +36,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the semantic configuration. </param>
         /// <param name="prioritizedFields"> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </param>
         /// <param name="rankingOrder"> Specifies the score type to be used for the sort order of the search results. </param>
-        /// <param name="flightingOptIn"> Determines which semantic or query rewrite models to use during model flighting/upgrades. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields, RankingOrder? rankingOrder, bool? flightingOptIn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields, RankingOrder? rankingOrder, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             PrioritizedFields = prioritizedFields;
             _rankingOrder = rankingOrder;
-            FlightingOptIn = flightingOptIn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,8 +64,5 @@ namespace Azure.Search.Documents.Indexes.Models
                 _rankingOrderIsDefined = true;
             }
         }
-
-        /// <summary> Determines which semantic or query rewrite models to use during model flighting/upgrades. </summary>
-        public bool? FlightingOptIn { get; set; }
     }
 }

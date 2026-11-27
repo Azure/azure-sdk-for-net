@@ -119,6 +119,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
+            if (Optional.IsDefined(NetworkAdapterIndex))
+            {
+                writer.WritePropertyName("networkAdapterIndex"u8);
+                writer.WriteNumberValue(NetworkAdapterIndex.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
@@ -258,6 +263,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations = default;
             NetworkInterfaceDnsSettings dnsSettings = default;
             string macAddress = default;
+            int? networkAdapterIndex = default;
             bool? primary = default;
             bool? vnetEncryptionSupported = default;
             bool? defaultOutboundConnectivityEnabled = default;
@@ -344,6 +350,15 @@ namespace Azure.ResourceManager.Network.Models
                 if (prop.NameEquals("macAddress"u8))
                 {
                     macAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("networkAdapterIndex"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkAdapterIndex = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("primary"u8))
@@ -511,6 +526,7 @@ namespace Azure.ResourceManager.Network.Models
                 tapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>(),
                 dnsSettings,
                 macAddress,
+                networkAdapterIndex,
                 primary,
                 vnetEncryptionSupported,
                 defaultOutboundConnectivityEnabled,

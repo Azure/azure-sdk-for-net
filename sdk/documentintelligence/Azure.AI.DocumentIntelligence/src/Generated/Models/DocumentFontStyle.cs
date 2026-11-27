@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Converts a string to a <see cref="DocumentFontStyle"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentFontStyle?(string value) => value == null ? null : new DocumentFontStyle(value);
+        public static implicit operator DocumentFontStyle?(string value) => value == null ? (DocumentFontStyle?)null : new DocumentFontStyle(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

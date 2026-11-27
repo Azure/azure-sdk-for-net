@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Memory
 
         /// <summary> Converts a string to a <see cref="MemoryStoreListOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MemoryStoreListOrder?(string value) => value == null ? null : new MemoryStoreListOrder(value);
+        public static implicit operator MemoryStoreListOrder?(string value) => value == null ? (MemoryStoreListOrder?)null : new MemoryStoreListOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

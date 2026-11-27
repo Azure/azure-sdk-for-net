@@ -91,6 +91,18 @@ Describe 'Assert-PrReReviewReadCoverage' {
         { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $markers.Path -SessionLogPath $log } | Should -Not -Throw
     }
 
+    It 'requires a single-result reread after a part was split across tool results' {
+        $markers = New-ReviewInputMarkers @($script:Paths[0])
+        $part = New-PatchRead $markers.Files[0]
+        $middle = [int]($part.Length / 2)
+        $windows = @((New-ToolResult $part.Substring(0, $middle)), (New-ToolResult $part.Substring($middle)))
+        $splitLog = New-SessionLog $windows
+        { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $markers.Path -SessionLogPath $splitLog } |
+            Should -Throw -ExpectedMessage '*0 of 1*CHANGELOG.md*'
+        $recoveredLog = New-SessionLog ($windows + @((New-ToolResult $part)))
+        { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $markers.Path -SessionLogPath $recoveredLog } | Should -Not -Throw
+    }
+
     It 'counts a patch as unread when <Label>' -ForEach @(
         @{ Label = 'its read was cut off as too large'; Event = { param($Marker) New-ToolResult 'Output too large to read at once (41.2 KB). Saved to: /tmp/1-copilot-tool-output-a.txt' } }
         @{ Label = 'only its start was read'; Event = { param($Marker) New-ToolResult "# Review input 3/3: sdk/widgets/Azure.Widgets/api/Azure.Widgets.net8.0.cs`n+public partial class WidgetClient" } }

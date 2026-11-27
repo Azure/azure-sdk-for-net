@@ -46,7 +46,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="ContainerNetworkPolicyParamType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerNetworkPolicyParamType?(string value) => value == null ? null : new ContainerNetworkPolicyParamType(value);
+        public static implicit operator ContainerNetworkPolicyParamType?(string value) => value == null ? (ContainerNetworkPolicyParamType?)null : new ContainerNetworkPolicyParamType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

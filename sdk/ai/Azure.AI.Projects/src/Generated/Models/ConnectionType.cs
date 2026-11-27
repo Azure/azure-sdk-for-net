@@ -98,7 +98,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="ConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionType?(string value) => value == null ? null : new ConnectionType(value);
+        public static implicit operator ConnectionType?(string value) => value == null ? (ConnectionType?)null : new ConnectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
