@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="LogCollectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogCollectionStatus?(string value) => value == null ? null : new LogCollectionStatus(value);
+        public static implicit operator LogCollectionStatus?(string value) => value == null ? (LogCollectionStatus?)null : new LogCollectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

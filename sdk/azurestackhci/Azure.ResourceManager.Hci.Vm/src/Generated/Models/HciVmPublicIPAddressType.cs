@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmPublicIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmPublicIPAddressType?(string value) => value == null ? null : new HciVmPublicIPAddressType(value);
+        public static implicit operator HciVmPublicIPAddressType?(string value) => value == null ? (HciVmPublicIPAddressType?)null : new HciVmPublicIPAddressType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

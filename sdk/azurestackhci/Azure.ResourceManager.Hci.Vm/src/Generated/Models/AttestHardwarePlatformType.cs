@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="AttestHardwarePlatformType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttestHardwarePlatformType?(string value) => value == null ? null : new AttestHardwarePlatformType(value);
+        public static implicit operator AttestHardwarePlatformType?(string value) => value == null ? (AttestHardwarePlatformType?)null : new AttestHardwarePlatformType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

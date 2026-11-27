@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciVolumeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVolumeType?(string value) => value == null ? null : new HciVolumeType(value);
+        public static implicit operator HciVolumeType?(string value) => value == null ? (HciVolumeType?)null : new HciVolumeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

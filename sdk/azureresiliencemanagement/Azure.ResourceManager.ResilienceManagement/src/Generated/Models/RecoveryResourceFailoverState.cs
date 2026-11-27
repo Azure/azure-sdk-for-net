@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryResourceFailoverState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryResourceFailoverState?(string value) => value == null ? null : new RecoveryResourceFailoverState(value);
+        public static implicit operator RecoveryResourceFailoverState?(string value) => value == null ? (RecoveryResourceFailoverState?)null : new RecoveryResourceFailoverState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

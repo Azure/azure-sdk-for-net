@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="EceSecret"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EceSecret?(string value) => value == null ? null : new EceSecret(value);
+        public static implicit operator EceSecret?(string value) => value == null ? (EceSecret?)null : new EceSecret(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

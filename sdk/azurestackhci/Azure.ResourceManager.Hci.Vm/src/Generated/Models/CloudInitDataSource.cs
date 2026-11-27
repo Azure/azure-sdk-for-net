@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="CloudInitDataSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudInitDataSource?(string value) => value == null ? null : new CloudInitDataSource(value);
+        public static implicit operator CloudInitDataSource?(string value) => value == null ? (CloudInitDataSource?)null : new CloudInitDataSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

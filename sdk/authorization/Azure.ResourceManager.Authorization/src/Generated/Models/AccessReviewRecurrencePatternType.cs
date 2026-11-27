@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessReviewRecurrencePatternType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessReviewRecurrencePatternType?(string value) => value == null ? null : new AccessReviewRecurrencePatternType(value);
+        public static implicit operator AccessReviewRecurrencePatternType?(string value) => value == null ? (AccessReviewRecurrencePatternType?)null : new AccessReviewRecurrencePatternType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

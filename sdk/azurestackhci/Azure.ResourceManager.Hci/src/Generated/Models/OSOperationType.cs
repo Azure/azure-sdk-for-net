@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="OSOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OSOperationType?(string value) => value == null ? null : new OSOperationType(value);
+        public static implicit operator OSOperationType?(string value) => value == null ? (OSOperationType?)null : new OSOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

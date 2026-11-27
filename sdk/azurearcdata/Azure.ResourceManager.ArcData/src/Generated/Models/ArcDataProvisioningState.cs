@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="ArcDataProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcDataProvisioningState?(string value) => value == null ? null : new ArcDataProvisioningState(value);
+        public static implicit operator ArcDataProvisioningState?(string value) => value == null ? (ArcDataProvisioningState?)null : new ArcDataProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

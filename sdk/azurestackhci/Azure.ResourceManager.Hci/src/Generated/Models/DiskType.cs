@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="DiskType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskType?(string value) => value == null ? null : new DiskType(value);
+        public static implicit operator DiskType?(string value) => value == null ? (DiskType?)null : new DiskType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

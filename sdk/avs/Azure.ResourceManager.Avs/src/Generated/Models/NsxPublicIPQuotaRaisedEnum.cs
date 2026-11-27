@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="NsxPublicIPQuotaRaisedEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NsxPublicIPQuotaRaisedEnum?(string value) => value == null ? null : new NsxPublicIPQuotaRaisedEnum(value);
+        public static implicit operator NsxPublicIPQuotaRaisedEnum?(string value) => value == null ? (NsxPublicIPQuotaRaisedEnum?)null : new NsxPublicIPQuotaRaisedEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

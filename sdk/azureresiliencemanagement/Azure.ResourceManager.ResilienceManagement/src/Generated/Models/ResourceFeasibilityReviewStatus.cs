@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResourceFeasibilityReviewStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceFeasibilityReviewStatus?(string value) => value == null ? null : new ResourceFeasibilityReviewStatus(value);
+        public static implicit operator ResourceFeasibilityReviewStatus?(string value) => value == null ? (ResourceFeasibilityReviewStatus?)null : new ResourceFeasibilityReviewStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

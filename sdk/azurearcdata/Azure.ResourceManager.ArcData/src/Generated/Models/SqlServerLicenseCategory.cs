@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerLicenseCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerLicenseCategory?(string value) => value == null ? null : new SqlServerLicenseCategory(value);
+        public static implicit operator SqlServerLicenseCategory?(string value) => value == null ? (SqlServerLicenseCategory?)null : new SqlServerLicenseCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

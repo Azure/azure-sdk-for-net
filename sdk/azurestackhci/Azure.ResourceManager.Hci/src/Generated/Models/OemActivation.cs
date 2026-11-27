@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="OemActivation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OemActivation?(string value) => value == null ? null : new OemActivation(value);
+        public static implicit operator OemActivation?(string value) => value == null ? (OemActivation?)null : new OemActivation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

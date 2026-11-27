@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsProvisionedNetworkType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsProvisionedNetworkType?(string value) => value == null ? null : new AvsProvisionedNetworkType(value);
+        public static implicit operator AvsProvisionedNetworkType?(string value) => value == null ? (AvsProvisionedNetworkType?)null : new AvsProvisionedNetworkType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

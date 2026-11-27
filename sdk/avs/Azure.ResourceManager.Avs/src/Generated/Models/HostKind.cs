@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="HostKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostKind?(string value) => value == null ? null : new HostKind(value);
+        public static implicit operator HostKind?(string value) => value == null ? (HostKind?)null : new HostKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerBackgroundJobExecutionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerBackgroundJobExecutionState?(string value) => value == null ? null : new SqlServerBackgroundJobExecutionState(value);
+        public static implicit operator SqlServerBackgroundJobExecutionState?(string value) => value == null ? (SqlServerBackgroundJobExecutionState?)null : new SqlServerBackgroundJobExecutionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

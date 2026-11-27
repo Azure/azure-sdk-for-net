@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryGroupActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryGroupActionType?(string value) => value == null ? null : new RecoveryGroupActionType(value);
+        public static implicit operator RecoveryGroupActionType?(string value) => value == null ? (RecoveryGroupActionType?)null : new RecoveryGroupActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

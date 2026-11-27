@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlMirroringEndpointEncryptionAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlMirroringEndpointEncryptionAlgorithm?(string value) => value == null ? null : new SqlMirroringEndpointEncryptionAlgorithm(value);
+        public static implicit operator SqlMirroringEndpointEncryptionAlgorithm?(string value) => value == null ? (SqlMirroringEndpointEncryptionAlgorithm?)null : new SqlMirroringEndpointEncryptionAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="ScheduleOperationConstraintKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleOperationConstraintKind?(string value) => value == null ? null : new ScheduleOperationConstraintKind(value);
+        public static implicit operator ScheduleOperationConstraintKind?(string value) => value == null ? (ScheduleOperationConstraintKind?)null : new ScheduleOperationConstraintKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

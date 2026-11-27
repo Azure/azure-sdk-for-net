@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="WindowsServerSubscription"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowsServerSubscription?(string value) => value == null ? null : new WindowsServerSubscription(value);
+        public static implicit operator WindowsServerSubscription?(string value) => value == null ? (WindowsServerSubscription?)null : new WindowsServerSubscription(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

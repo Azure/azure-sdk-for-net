@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         /// <summary> Converts a string to a <see cref="LargeInstanceHardwareTypeName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LargeInstanceHardwareTypeName?(string value) => value == null ? null : new LargeInstanceHardwareTypeName(value);
+        public static implicit operator LargeInstanceHardwareTypeName?(string value) => value == null ? (LargeInstanceHardwareTypeName?)null : new LargeInstanceHardwareTypeName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

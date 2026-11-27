@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="InternetConnectivityState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InternetConnectivityState?(string value) => value == null ? null : new InternetConnectivityState(value);
+        public static implicit operator InternetConnectivityState?(string value) => value == null ? (InternetConnectivityState?)null : new InternetConnectivityState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

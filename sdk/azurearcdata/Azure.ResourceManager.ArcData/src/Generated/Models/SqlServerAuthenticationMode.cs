@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerAuthenticationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerAuthenticationMode?(string value) => value == null ? null : new SqlServerAuthenticationMode(value);
+        public static implicit operator SqlServerAuthenticationMode?(string value) => value == null ? (SqlServerAuthenticationMode?)null : new SqlServerAuthenticationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <summary> Converts a string to a <see cref="AttestationPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttestationPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new AttestationPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator AttestationPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (AttestationPrivateEndpointServiceConnectionStatus?)null : new AttestationPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

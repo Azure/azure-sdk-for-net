@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessRecommendationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessRecommendationType?(string value) => value == null ? null : new AccessRecommendationType(value);
+        public static implicit operator AccessRecommendationType?(string value) => value == null ? (AccessRecommendationType?)null : new AccessRecommendationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

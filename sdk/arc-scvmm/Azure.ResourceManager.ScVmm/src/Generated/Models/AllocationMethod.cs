@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="AllocationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllocationMethod?(string value) => value == null ? null : new AllocationMethod(value);
+        public static implicit operator AllocationMethod?(string value) => value == null ? (AllocationMethod?)null : new AllocationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

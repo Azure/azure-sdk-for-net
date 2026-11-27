@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Converts a string to a <see cref="AppLinkUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppLinkUpgradeMode?(string value) => value == null ? null : new AppLinkUpgradeMode(value);
+        public static implicit operator AppLinkUpgradeMode?(string value) => value == null ? (AppLinkUpgradeMode?)null : new AppLinkUpgradeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

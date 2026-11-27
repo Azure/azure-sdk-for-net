@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsPureStoragePolicyProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsPureStoragePolicyProvisioningState?(string value) => value == null ? null : new AvsPureStoragePolicyProvisioningState(value);
+        public static implicit operator AvsPureStoragePolicyProvisioningState?(string value) => value == null ? (AvsPureStoragePolicyProvisioningState?)null : new AvsPureStoragePolicyProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

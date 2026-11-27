@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="SoftwareAssuranceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SoftwareAssuranceStatus?(string value) => value == null ? null : new SoftwareAssuranceStatus(value);
+        public static implicit operator SoftwareAssuranceStatus?(string value) => value == null ? (SoftwareAssuranceStatus?)null : new SoftwareAssuranceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

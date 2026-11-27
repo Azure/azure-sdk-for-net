@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmLogicalNetworkType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmLogicalNetworkType?(string value) => value == null ? null : new HciVmLogicalNetworkType(value);
+        public static implicit operator HciVmLogicalNetworkType?(string value) => value == null ? (HciVmLogicalNetworkType?)null : new HciVmLogicalNetworkType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

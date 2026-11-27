@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="EdgeMachineJobType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeMachineJobType?(string value) => value == null ? null : new EdgeMachineJobType(value);
+        public static implicit operator EdgeMachineJobType?(string value) => value == null ? (EdgeMachineJobType?)null : new EdgeMachineJobType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

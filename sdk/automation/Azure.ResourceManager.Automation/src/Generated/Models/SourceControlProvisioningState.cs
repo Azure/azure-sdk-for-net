@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="SourceControlProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceControlProvisioningState?(string value) => value == null ? null : new SourceControlProvisioningState(value);
+        public static implicit operator SourceControlProvisioningState?(string value) => value == null ? (SourceControlProvisioningState?)null : new SourceControlProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

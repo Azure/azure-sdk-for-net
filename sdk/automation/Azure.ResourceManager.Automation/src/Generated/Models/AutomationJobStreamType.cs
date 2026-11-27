@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationJobStreamType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationJobStreamType?(string value) => value == null ? null : new AutomationJobStreamType(value);
+        public static implicit operator AutomationJobStreamType?(string value) => value == null ? (AutomationJobStreamType?)null : new AutomationJobStreamType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

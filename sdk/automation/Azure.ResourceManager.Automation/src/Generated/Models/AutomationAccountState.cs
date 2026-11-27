@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationAccountState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationAccountState?(string value) => value == null ? null : new AutomationAccountState(value);
+        public static implicit operator AutomationAccountState?(string value) => value == null ? (AutomationAccountState?)null : new AutomationAccountState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

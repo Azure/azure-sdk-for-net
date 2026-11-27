@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="SliType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SliType?(string value) => value == null ? null : new SliType(value);
+        public static implicit operator SliType?(string value) => value == null ? (SliType?)null : new SliType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

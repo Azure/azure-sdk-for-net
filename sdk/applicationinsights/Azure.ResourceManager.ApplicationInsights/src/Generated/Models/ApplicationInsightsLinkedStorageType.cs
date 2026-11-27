@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationInsightsLinkedStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationInsightsLinkedStorageType?(string value) => value == null ? null : new ApplicationInsightsLinkedStorageType(value);
+        public static implicit operator ApplicationInsightsLinkedStorageType?(string value) => value == null ? (ApplicationInsightsLinkedStorageType?)null : new ApplicationInsightsLinkedStorageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

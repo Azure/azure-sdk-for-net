@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteAuthorizationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteAuthorizationProvisioningState?(string value) => value == null ? null : new ExpressRouteAuthorizationProvisioningState(value);
+        public static implicit operator ExpressRouteAuthorizationProvisioningState?(string value) => value == null ? (ExpressRouteAuthorizationProvisioningState?)null : new ExpressRouteAuthorizationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

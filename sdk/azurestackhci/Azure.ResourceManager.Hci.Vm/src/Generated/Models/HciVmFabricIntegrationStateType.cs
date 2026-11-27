@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmFabricIntegrationStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmFabricIntegrationStateType?(string value) => value == null ? null : new HciVmFabricIntegrationStateType(value);
+        public static implicit operator HciVmFabricIntegrationStateType?(string value) => value == null ? (HciVmFabricIntegrationStateType?)null : new HciVmFabricIntegrationStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

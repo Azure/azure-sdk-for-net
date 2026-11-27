@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="RemoteSupportType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RemoteSupportType?(string value) => value == null ? null : new RemoteSupportType(value);
+        public static implicit operator RemoteSupportType?(string value) => value == null ? (RemoteSupportType?)null : new RemoteSupportType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvailabilityStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvailabilityStrategy?(string value) => value == null ? null : new AvailabilityStrategy(value);
+        public static implicit operator AvailabilityStrategy?(string value) => value == null ? (AvailabilityStrategy?)null : new AvailabilityStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

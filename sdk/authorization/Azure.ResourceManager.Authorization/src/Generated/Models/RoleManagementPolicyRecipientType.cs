@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleManagementPolicyRecipientType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleManagementPolicyRecipientType?(string value) => value == null ? null : new RoleManagementPolicyRecipientType(value);
+        public static implicit operator RoleManagementPolicyRecipientType?(string value) => value == null ? (RoleManagementPolicyRecipientType?)null : new RoleManagementPolicyRecipientType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="MaintenanceGroupKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenanceGroupKind?(string value) => value == null ? null : new MaintenanceGroupKind(value);
+        public static implicit operator MaintenanceGroupKind?(string value) => value == null ? (MaintenanceGroupKind?)null : new MaintenanceGroupKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

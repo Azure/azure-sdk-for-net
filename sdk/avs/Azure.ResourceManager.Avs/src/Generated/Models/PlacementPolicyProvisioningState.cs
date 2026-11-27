@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="PlacementPolicyProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlacementPolicyProvisioningState?(string value) => value == null ? null : new PlacementPolicyProvisioningState(value);
+        public static implicit operator PlacementPolicyProvisioningState?(string value) => value == null ? (PlacementPolicyProvisioningState?)null : new PlacementPolicyProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineRestrictMovementState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineRestrictMovementState?(string value) => value == null ? null : new VirtualMachineRestrictMovementState(value);
+        public static implicit operator VirtualMachineRestrictMovementState?(string value) => value == null ? (VirtualMachineRestrictMovementState?)null : new VirtualMachineRestrictMovementState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlMigrationTargetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlMigrationTargetType?(string value) => value == null ? null : new SqlMigrationTargetType(value);
+        public static implicit operator SqlMigrationTargetType?(string value) => value == null ? (SqlMigrationTargetType?)null : new SqlMigrationTargetType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

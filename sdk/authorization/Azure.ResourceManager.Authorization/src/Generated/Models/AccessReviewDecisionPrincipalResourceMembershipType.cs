@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessReviewDecisionPrincipalResourceMembershipType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessReviewDecisionPrincipalResourceMembershipType?(string value) => value == null ? null : new AccessReviewDecisionPrincipalResourceMembershipType(value);
+        public static implicit operator AccessReviewDecisionPrincipalResourceMembershipType?(string value) => value == null ? (AccessReviewDecisionPrincipalResourceMembershipType?)null : new AccessReviewDecisionPrincipalResourceMembershipType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

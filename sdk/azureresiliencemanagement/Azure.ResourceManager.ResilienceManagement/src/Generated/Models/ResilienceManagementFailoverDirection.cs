@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResilienceManagementFailoverDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResilienceManagementFailoverDirection?(string value) => value == null ? null : new ResilienceManagementFailoverDirection(value);
+        public static implicit operator ResilienceManagementFailoverDirection?(string value) => value == null ? (ResilienceManagementFailoverDirection?)null : new ResilienceManagementFailoverDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

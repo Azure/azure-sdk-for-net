@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmSecurityEncryptionType?(string value) => value == null ? null : new HciVmSecurityEncryptionType(value);
+        public static implicit operator HciVmSecurityEncryptionType?(string value) => value == null ? (HciVmSecurityEncryptionType?)null : new HciVmSecurityEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

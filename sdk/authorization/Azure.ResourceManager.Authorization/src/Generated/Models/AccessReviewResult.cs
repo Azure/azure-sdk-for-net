@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessReviewResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessReviewResult?(string value) => value == null ? null : new AccessReviewResult(value);
+        public static implicit operator AccessReviewResult?(string value) => value == null ? (AccessReviewResult?)null : new AccessReviewResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

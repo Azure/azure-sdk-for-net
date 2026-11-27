@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="WorkbookCategoryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkbookCategoryType?(string value) => value == null ? null : new WorkbookCategoryType(value);
+        public static implicit operator WorkbookCategoryType?(string value) => value == null ? (WorkbookCategoryType?)null : new WorkbookCategoryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

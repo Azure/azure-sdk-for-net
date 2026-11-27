@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmSize?(string value) => value == null ? null : new HciVmSize(value);
+        public static implicit operator HciVmSize?(string value) => value == null ? (HciVmSize?)null : new HciVmSize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

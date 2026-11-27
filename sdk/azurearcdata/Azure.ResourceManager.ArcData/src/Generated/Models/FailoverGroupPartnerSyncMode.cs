@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="FailoverGroupPartnerSyncMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverGroupPartnerSyncMode?(string value) => value == null ? null : new FailoverGroupPartnerSyncMode(value);
+        public static implicit operator FailoverGroupPartnerSyncMode?(string value) => value == null ? (FailoverGroupPartnerSyncMode?)null : new FailoverGroupPartnerSyncMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

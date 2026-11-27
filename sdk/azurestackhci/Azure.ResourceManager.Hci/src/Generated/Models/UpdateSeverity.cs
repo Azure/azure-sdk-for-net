@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="UpdateSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpdateSeverity?(string value) => value == null ? null : new UpdateSeverity(value);
+        public static implicit operator UpdateSeverity?(string value) => value == null ? (UpdateSeverity?)null : new UpdateSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

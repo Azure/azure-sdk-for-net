@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsResourceSkuRestrictionsReasonCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsResourceSkuRestrictionsReasonCode?(string value) => value == null ? null : new AvsResourceSkuRestrictionsReasonCode(value);
+        public static implicit operator AvsResourceSkuRestrictionsReasonCode?(string value) => value == null ? (AvsResourceSkuRestrictionsReasonCode?)null : new AvsResourceSkuRestrictionsReasonCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

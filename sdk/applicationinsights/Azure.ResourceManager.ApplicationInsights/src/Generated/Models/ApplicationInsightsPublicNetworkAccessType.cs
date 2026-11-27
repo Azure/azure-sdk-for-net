@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationInsightsPublicNetworkAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationInsightsPublicNetworkAccessType?(string value) => value == null ? null : new ApplicationInsightsPublicNetworkAccessType(value);
+        public static implicit operator ApplicationInsightsPublicNetworkAccessType?(string value) => value == null ? (ApplicationInsightsPublicNetworkAccessType?)null : new ApplicationInsightsPublicNetworkAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

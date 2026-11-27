@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationSkuName?(string value) => value == null ? null : new AutomationSkuName(value);
+        public static implicit operator AutomationSkuName?(string value) => value == null ? (AutomationSkuName?)null : new AutomationSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="ArcSqlServerAvailabilityGroupTypeFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcSqlServerAvailabilityGroupTypeFilter?(string value) => value == null ? null : new ArcSqlServerAvailabilityGroupTypeFilter(value);
+        public static implicit operator ArcSqlServerAvailabilityGroupTypeFilter?(string value) => value == null ? (ArcSqlServerAvailabilityGroupTypeFilter?)null : new ArcSqlServerAvailabilityGroupTypeFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

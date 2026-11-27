@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessReviewScheduleDefinitionReviewersType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessReviewScheduleDefinitionReviewersType?(string value) => value == null ? null : new AccessReviewScheduleDefinitionReviewersType(value);
+        public static implicit operator AccessReviewScheduleDefinitionReviewersType?(string value) => value == null ? (AccessReviewScheduleDefinitionReviewersType?)null : new AccessReviewScheduleDefinitionReviewersType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

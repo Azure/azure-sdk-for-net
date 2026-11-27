@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerConnectionStatus?(string value) => value == null ? null : new SqlServerConnectionStatus(value);
+        public static implicit operator SqlServerConnectionStatus?(string value) => value == null ? (SqlServerConnectionStatus?)null : new SqlServerConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

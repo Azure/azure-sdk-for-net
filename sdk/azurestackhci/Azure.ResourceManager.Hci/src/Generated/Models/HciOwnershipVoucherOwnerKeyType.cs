@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciOwnershipVoucherOwnerKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciOwnershipVoucherOwnerKeyType?(string value) => value == null ? null : new HciOwnershipVoucherOwnerKeyType(value);
+        public static implicit operator HciOwnershipVoucherOwnerKeyType?(string value) => value == null ? (HciOwnershipVoucherOwnerKeyType?)null : new HciOwnershipVoucherOwnerKeyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

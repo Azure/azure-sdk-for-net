@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadNetworkPortMirroringProfileProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadNetworkPortMirroringProfileProvisioningState?(string value) => value == null ? null : new WorkloadNetworkPortMirroringProfileProvisioningState(value);
+        public static implicit operator WorkloadNetworkPortMirroringProfileProvisioningState?(string value) => value == null ? (WorkloadNetworkPortMirroringProfileProvisioningState?)null : new WorkloadNetworkPortMirroringProfileProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

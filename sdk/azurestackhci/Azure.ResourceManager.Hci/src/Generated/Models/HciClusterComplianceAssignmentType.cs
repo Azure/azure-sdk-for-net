@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciClusterComplianceAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciClusterComplianceAssignmentType?(string value) => value == null ? null : new HciClusterComplianceAssignmentType(value);
+        public static implicit operator HciClusterComplianceAssignmentType?(string value) => value == null ? (HciClusterComplianceAssignmentType?)null : new HciClusterComplianceAssignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

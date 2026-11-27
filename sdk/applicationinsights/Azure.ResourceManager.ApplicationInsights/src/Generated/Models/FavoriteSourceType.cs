@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="FavoriteSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FavoriteSourceType?(string value) => value == null ? null : new FavoriteSourceType(value);
+        public static implicit operator FavoriteSourceType?(string value) => value == null ? (FavoriteSourceType?)null : new FavoriteSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

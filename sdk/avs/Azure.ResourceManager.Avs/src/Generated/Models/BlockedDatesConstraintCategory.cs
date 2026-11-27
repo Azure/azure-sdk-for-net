@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="BlockedDatesConstraintCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlockedDatesConstraintCategory?(string value) => value == null ? null : new BlockedDatesConstraintCategory(value);
+        public static implicit operator BlockedDatesConstraintCategory?(string value) => value == null ? (BlockedDatesConstraintCategory?)null : new BlockedDatesConstraintCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="NetworkAdapterOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkAdapterOperationStatus?(string value) => value == null ? null : new NetworkAdapterOperationStatus(value);
+        public static implicit operator NetworkAdapterOperationStatus?(string value) => value == null ? (NetworkAdapterOperationStatus?)null : new NetworkAdapterOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

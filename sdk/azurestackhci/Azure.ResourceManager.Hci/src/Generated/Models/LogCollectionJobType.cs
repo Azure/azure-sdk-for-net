@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="LogCollectionJobType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogCollectionJobType?(string value) => value == null ? null : new LogCollectionJobType(value);
+        public static implicit operator LogCollectionJobType?(string value) => value == null ? (LogCollectionJobType?)null : new LogCollectionJobType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

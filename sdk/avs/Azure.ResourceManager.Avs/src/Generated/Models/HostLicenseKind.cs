@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="HostLicenseKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HostLicenseKind?(string value) => value == null ? null : new HostLicenseKind(value);
+        public static implicit operator HostLicenseKind?(string value) => value == null ? (HostLicenseKind?)null : new HostLicenseKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="DrillReportFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DrillReportFormat?(string value) => value == null ? null : new DrillReportFormat(value);
+        public static implicit operator DrillReportFormat?(string value) => value == null ? (DrillReportFormat?)null : new DrillReportFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

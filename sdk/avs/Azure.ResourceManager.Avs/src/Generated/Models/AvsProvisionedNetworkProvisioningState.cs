@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsProvisionedNetworkProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsProvisionedNetworkProvisioningState?(string value) => value == null ? null : new AvsProvisionedNetworkProvisioningState(value);
+        public static implicit operator AvsProvisionedNetworkProvisioningState?(string value) => value == null ? (AvsProvisionedNetworkProvisioningState?)null : new AvsProvisionedNetworkProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

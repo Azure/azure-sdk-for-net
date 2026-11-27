@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="AttestBootIntegrityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttestBootIntegrityStatus?(string value) => value == null ? null : new AttestBootIntegrityStatus(value);
+        public static implicit operator AttestBootIntegrityStatus?(string value) => value == null ? (AttestBootIntegrityStatus?)null : new AttestBootIntegrityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

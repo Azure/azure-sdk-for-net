@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="JobProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobProvisioningState?(string value) => value == null ? null : new JobProvisioningState(value);
+        public static implicit operator JobProvisioningState?(string value) => value == null ? (JobProvisioningState?)null : new JobProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

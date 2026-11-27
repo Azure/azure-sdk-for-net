@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="ScriptExecutionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptExecutionProvisioningState?(string value) => value == null ? null : new ScriptExecutionProvisioningState(value);
+        public static implicit operator ScriptExecutionProvisioningState?(string value) => value == null ? (ScriptExecutionProvisioningState?)null : new ScriptExecutionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

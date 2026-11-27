@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="WorkloadNetworkDnsServiceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadNetworkDnsServiceProvisioningState?(string value) => value == null ? null : new WorkloadNetworkDnsServiceProvisioningState(value);
+        public static implicit operator WorkloadNetworkDnsServiceProvisioningState?(string value) => value == null ? (WorkloadNetworkDnsServiceProvisioningState?)null : new WorkloadNetworkDnsServiceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmExtendedLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmExtendedLocationType?(string value) => value == null ? null : new HciVmExtendedLocationType(value);
+        public static implicit operator HciVmExtendedLocationType?(string value) => value == null ? (HciVmExtendedLocationType?)null : new HciVmExtendedLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

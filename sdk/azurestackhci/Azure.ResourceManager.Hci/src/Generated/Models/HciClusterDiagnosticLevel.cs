@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciClusterDiagnosticLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciClusterDiagnosticLevel?(string value) => value == null ? null : new HciClusterDiagnosticLevel(value);
+        public static implicit operator HciClusterDiagnosticLevel?(string value) => value == null ? (HciClusterDiagnosticLevel?)null : new HciClusterDiagnosticLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

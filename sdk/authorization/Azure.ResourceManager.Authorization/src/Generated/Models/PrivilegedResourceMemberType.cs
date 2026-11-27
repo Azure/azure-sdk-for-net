@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="PrivilegedResourceMemberType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivilegedResourceMemberType?(string value) => value == null ? null : new PrivilegedResourceMemberType(value);
+        public static implicit operator PrivilegedResourceMemberType?(string value) => value == null ? (PrivilegedResourceMemberType?)null : new PrivilegedResourceMemberType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciEdgeDeviceJobType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciEdgeDeviceJobType?(string value) => value == null ? null : new HciEdgeDeviceJobType(value);
+        public static implicit operator HciEdgeDeviceJobType?(string value) => value == null ? (HciEdgeDeviceJobType?)null : new HciEdgeDeviceJobType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationJobStatus?(string value) => value == null ? null : new AutomationJobStatus(value);
+        public static implicit operator AutomationJobStatus?(string value) => value == null ? (AutomationJobStatus?)null : new AutomationJobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

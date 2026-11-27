@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="DhcpTypeEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DhcpTypeEnum?(string value) => value == null ? null : new DhcpTypeEnum(value);
+        public static implicit operator DhcpTypeEnum?(string value) => value == null ? (DhcpTypeEnum?)null : new DhcpTypeEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

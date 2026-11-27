@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         /// <summary> Converts a string to a <see cref="LargeInstanceSizeName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LargeInstanceSizeName?(string value) => value == null ? null : new LargeInstanceSizeName(value);
+        public static implicit operator LargeInstanceSizeName?(string value) => value == null ? (LargeInstanceSizeName?)null : new LargeInstanceSizeName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="ArcExtensionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcExtensionState?(string value) => value == null ? null : new ArcExtensionState(value);
+        public static implicit operator ArcExtensionState?(string value) => value == null ? (ArcExtensionState?)null : new ArcExtensionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

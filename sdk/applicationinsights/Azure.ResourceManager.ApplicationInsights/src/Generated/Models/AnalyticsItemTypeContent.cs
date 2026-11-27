@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="AnalyticsItemTypeContent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyticsItemTypeContent?(string value) => value == null ? null : new AnalyticsItemTypeContent(value);
+        public static implicit operator AnalyticsItemTypeContent?(string value) => value == null ? (AnalyticsItemTypeContent?)null : new AnalyticsItemTypeContent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

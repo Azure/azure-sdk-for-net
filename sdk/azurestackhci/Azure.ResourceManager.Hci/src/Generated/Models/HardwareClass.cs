@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HardwareClass"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HardwareClass?(string value) => value == null ? null : new HardwareClass(value);
+        public static implicit operator HardwareClass?(string value) => value == null ? (HardwareClass?)null : new HardwareClass(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

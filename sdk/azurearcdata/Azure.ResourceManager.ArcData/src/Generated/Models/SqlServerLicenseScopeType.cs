@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerLicenseScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerLicenseScopeType?(string value) => value == null ? null : new SqlServerLicenseScopeType(value);
+        public static implicit operator SqlServerLicenseScopeType?(string value) => value == null ? (SqlServerLicenseScopeType?)null : new SqlServerLicenseScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

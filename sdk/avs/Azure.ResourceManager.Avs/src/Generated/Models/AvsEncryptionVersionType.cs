@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="AvsEncryptionVersionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvsEncryptionVersionType?(string value) => value == null ? null : new AvsEncryptionVersionType(value);
+        public static implicit operator AvsEncryptionVersionType?(string value) => value == null ? (AvsEncryptionVersionType?)null : new AvsEncryptionVersionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

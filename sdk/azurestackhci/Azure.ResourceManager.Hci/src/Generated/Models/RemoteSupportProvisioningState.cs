@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="RemoteSupportProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RemoteSupportProvisioningState?(string value) => value == null ? null : new RemoteSupportProvisioningState(value);
+        public static implicit operator RemoteSupportProvisioningState?(string value) => value == null ? (RemoteSupportProvisioningState?)null : new RemoteSupportProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

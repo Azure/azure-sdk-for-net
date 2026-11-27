@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleManagementScheduleExpirationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleManagementScheduleExpirationType?(string value) => value == null ? null : new RoleManagementScheduleExpirationType(value);
+        public static implicit operator RoleManagementScheduleExpirationType?(string value) => value == null ? (RoleManagementScheduleExpirationType?)null : new RoleManagementScheduleExpirationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerLicenseBillingPlan"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerLicenseBillingPlan?(string value) => value == null ? null : new SqlServerLicenseBillingPlan(value);
+        public static implicit operator SqlServerLicenseBillingPlan?(string value) => value == null ? (SqlServerLicenseBillingPlan?)null : new SqlServerLicenseBillingPlan(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

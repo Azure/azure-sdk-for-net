@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SequencerActionResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SequencerActionResult?(string value) => value == null ? null : new SequencerActionResult(value);
+        public static implicit operator SequencerActionResult?(string value) => value == null ? (SequencerActionResult?)null : new SequencerActionResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

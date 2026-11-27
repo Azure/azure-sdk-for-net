@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HybridMachineAgentInstallationStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridMachineAgentInstallationStatusType?(string value) => value == null ? null : new HybridMachineAgentInstallationStatusType(value);
+        public static implicit operator HybridMachineAgentInstallationStatusType?(string value) => value == null ? (HybridMachineAgentInstallationStatusType?)null : new HybridMachineAgentInstallationStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

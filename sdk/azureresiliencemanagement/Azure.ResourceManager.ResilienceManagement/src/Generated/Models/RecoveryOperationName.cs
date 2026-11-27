@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryOperationName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryOperationName?(string value) => value == null ? null : new RecoveryOperationName(value);
+        public static implicit operator RecoveryOperationName?(string value) => value == null ? (RecoveryOperationName?)null : new RecoveryOperationName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

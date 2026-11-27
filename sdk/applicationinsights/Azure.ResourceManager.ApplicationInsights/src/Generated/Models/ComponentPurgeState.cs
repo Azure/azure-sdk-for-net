@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="ComponentPurgeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComponentPurgeState?(string value) => value == null ? null : new ComponentPurgeState(value);
+        public static implicit operator ComponentPurgeState?(string value) => value == null ? (ComponentPurgeState?)null : new ComponentPurgeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="GoalResourceExclusionReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GoalResourceExclusionReason?(string value) => value == null ? null : new GoalResourceExclusionReason(value);
+        public static implicit operator GoalResourceExclusionReason?(string value) => value == null ? (GoalResourceExclusionReason?)null : new GoalResourceExclusionReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

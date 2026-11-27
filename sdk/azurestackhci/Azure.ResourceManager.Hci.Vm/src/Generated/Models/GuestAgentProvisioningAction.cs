@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="GuestAgentProvisioningAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GuestAgentProvisioningAction?(string value) => value == null ? null : new GuestAgentProvisioningAction(value);
+        public static implicit operator GuestAgentProvisioningAction?(string value) => value == null ? (GuestAgentProvisioningAction?)null : new GuestAgentProvisioningAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

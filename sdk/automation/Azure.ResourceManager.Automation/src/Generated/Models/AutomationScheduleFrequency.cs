@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationScheduleFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationScheduleFrequency?(string value) => value == null ? null : new AutomationScheduleFrequency(value);
+        public static implicit operator AutomationScheduleFrequency?(string value) => value == null ? (AutomationScheduleFrequency?)null : new AutomationScheduleFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

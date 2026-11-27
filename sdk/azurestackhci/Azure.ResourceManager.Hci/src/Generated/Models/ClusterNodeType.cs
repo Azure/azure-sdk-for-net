@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="ClusterNodeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterNodeType?(string value) => value == null ? null : new ClusterNodeType(value);
+        public static implicit operator ClusterNodeType?(string value) => value == null ? (ClusterNodeType?)null : new ClusterNodeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

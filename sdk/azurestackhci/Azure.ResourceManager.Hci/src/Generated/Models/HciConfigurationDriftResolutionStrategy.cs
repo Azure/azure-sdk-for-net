@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciConfigurationDriftResolutionStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciConfigurationDriftResolutionStrategy?(string value) => value == null ? null : new HciConfigurationDriftResolutionStrategy(value);
+        public static implicit operator HciConfigurationDriftResolutionStrategy?(string value) => value == null ? (HciConfigurationDriftResolutionStrategy?)null : new HciConfigurationDriftResolutionStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

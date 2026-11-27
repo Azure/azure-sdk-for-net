@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="EdgeMachineNetworkInterfaceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeMachineNetworkInterfaceState?(string value) => value == null ? null : new EdgeMachineNetworkInterfaceState(value);
+        public static implicit operator EdgeMachineNetworkInterfaceState?(string value) => value == null ? (EdgeMachineNetworkInterfaceState?)null : new EdgeMachineNetworkInterfaceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

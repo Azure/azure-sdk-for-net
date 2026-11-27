@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciClusterAccessLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciClusterAccessLevel?(string value) => value == null ? null : new HciClusterAccessLevel(value);
+        public static implicit operator HciClusterAccessLevel?(string value) => value == null ? (HciClusterAccessLevel?)null : new HciClusterAccessLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="DrillResourceTypeCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DrillResourceTypeCategory?(string value) => value == null ? null : new DrillResourceTypeCategory(value);
+        public static implicit operator DrillResourceTypeCategory?(string value) => value == null ? (DrillResourceTypeCategory?)null : new DrillResourceTypeCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

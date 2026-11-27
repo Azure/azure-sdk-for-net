@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="RecoveryActionUserConsent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryActionUserConsent?(string value) => value == null ? null : new RecoveryActionUserConsent(value);
+        public static implicit operator RecoveryActionUserConsent?(string value) => value == null ? (RecoveryActionUserConsent?)null : new RecoveryActionUserConsent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

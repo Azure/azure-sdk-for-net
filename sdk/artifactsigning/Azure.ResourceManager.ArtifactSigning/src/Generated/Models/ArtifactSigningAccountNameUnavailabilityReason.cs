@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
 
         /// <summary> Converts a string to a <see cref="ArtifactSigningAccountNameUnavailabilityReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArtifactSigningAccountNameUnavailabilityReason?(string value) => value == null ? null : new ArtifactSigningAccountNameUnavailabilityReason(value);
+        public static implicit operator ArtifactSigningAccountNameUnavailabilityReason?(string value) => value == null ? (ArtifactSigningAccountNameUnavailabilityReason?)null : new ArtifactSigningAccountNameUnavailabilityReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

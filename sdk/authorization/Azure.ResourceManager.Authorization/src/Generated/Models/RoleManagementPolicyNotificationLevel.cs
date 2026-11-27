@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleManagementPolicyNotificationLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleManagementPolicyNotificationLevel?(string value) => value == null ? null : new RoleManagementPolicyNotificationLevel(value);
+        public static implicit operator RoleManagementPolicyNotificationLevel?(string value) => value == null ? (RoleManagementPolicyNotificationLevel?)null : new RoleManagementPolicyNotificationLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

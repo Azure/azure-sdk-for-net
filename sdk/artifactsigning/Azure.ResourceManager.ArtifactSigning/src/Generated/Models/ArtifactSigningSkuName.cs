@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
 
         /// <summary> Converts a string to a <see cref="ArtifactSigningSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArtifactSigningSkuName?(string value) => value == null ? null : new ArtifactSigningSkuName(value);
+        public static implicit operator ArtifactSigningSkuName?(string value) => value == null ? (ArtifactSigningSkuName?)null : new ArtifactSigningSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

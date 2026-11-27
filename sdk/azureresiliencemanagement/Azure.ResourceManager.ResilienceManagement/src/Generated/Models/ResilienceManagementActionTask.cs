@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="ResilienceManagementActionTask"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResilienceManagementActionTask?(string value) => value == null ? null : new ResilienceManagementActionTask(value);
+        public static implicit operator ResilienceManagementActionTask?(string value) => value == null ? (ResilienceManagementActionTask?)null : new ResilienceManagementActionTask(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

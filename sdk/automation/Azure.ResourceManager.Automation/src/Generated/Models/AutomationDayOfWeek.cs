@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AutomationDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationDayOfWeek?(string value) => value == null ? null : new AutomationDayOfWeek(value);
+        public static implicit operator AutomationDayOfWeek?(string value) => value == null ? (AutomationDayOfWeek?)null : new AutomationDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

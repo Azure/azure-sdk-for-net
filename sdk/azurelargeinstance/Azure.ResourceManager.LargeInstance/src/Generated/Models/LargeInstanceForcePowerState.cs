@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         /// <summary> Converts a string to a <see cref="LargeInstanceForcePowerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LargeInstanceForcePowerState?(string value) => value == null ? null : new LargeInstanceForcePowerState(value);
+        public static implicit operator LargeInstanceForcePowerState?(string value) => value == null ? (LargeInstanceForcePowerState?)null : new LargeInstanceForcePowerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

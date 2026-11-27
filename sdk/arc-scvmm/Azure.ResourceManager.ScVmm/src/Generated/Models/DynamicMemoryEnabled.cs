@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="DynamicMemoryEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DynamicMemoryEnabled?(string value) => value == null ? null : new DynamicMemoryEnabled(value);
+        public static implicit operator DynamicMemoryEnabled?(string value) => value == null ? (DynamicMemoryEnabled?)null : new DynamicMemoryEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

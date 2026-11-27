@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleManagementApprovalMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleManagementApprovalMode?(string value) => value == null ? null : new RoleManagementApprovalMode(value);
+        public static implicit operator RoleManagementApprovalMode?(string value) => value == null ? (RoleManagementApprovalMode?)null : new RoleManagementApprovalMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

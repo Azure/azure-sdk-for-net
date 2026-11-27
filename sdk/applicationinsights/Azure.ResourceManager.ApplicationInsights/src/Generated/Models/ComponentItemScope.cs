@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="ComponentItemScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComponentItemScope?(string value) => value == null ? null : new ComponentItemScope(value);
+        public static implicit operator ComponentItemScope?(string value) => value == null ? (ComponentItemScope?)null : new ComponentItemScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

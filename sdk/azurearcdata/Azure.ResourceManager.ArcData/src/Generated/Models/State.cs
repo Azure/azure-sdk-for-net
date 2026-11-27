@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="State"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator State?(string value) => value == null ? null : new State(value);
+        public static implicit operator State?(string value) => value == null ? (State?)null : new State(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

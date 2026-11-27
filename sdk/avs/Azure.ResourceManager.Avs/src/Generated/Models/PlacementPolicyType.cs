@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="PlacementPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PlacementPolicyType?(string value) => value == null ? null : new PlacementPolicyType(value);
+        public static implicit operator PlacementPolicyType?(string value) => value == null ? (PlacementPolicyType?)null : new PlacementPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

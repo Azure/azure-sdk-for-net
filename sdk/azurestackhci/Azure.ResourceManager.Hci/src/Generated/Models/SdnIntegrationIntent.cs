@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="SdnIntegrationIntent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SdnIntegrationIntent?(string value) => value == null ? null : new SdnIntegrationIntent(value);
+        public static implicit operator SdnIntegrationIntent?(string value) => value == null ? (SdnIntegrationIntent?)null : new SdnIntegrationIntent(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="GoalResourceAttestationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GoalResourceAttestationState?(string value) => value == null ? null : new GoalResourceAttestationState(value);
+        public static implicit operator GoalResourceAttestationState?(string value) => value == null ? (GoalResourceAttestationState?)null : new GoalResourceAttestationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

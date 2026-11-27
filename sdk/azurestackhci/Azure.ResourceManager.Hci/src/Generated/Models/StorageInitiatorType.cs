@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="StorageInitiatorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageInitiatorType?(string value) => value == null ? null : new StorageInitiatorType(value);
+        public static implicit operator StorageInitiatorType?(string value) => value == null ? (StorageInitiatorType?)null : new StorageInitiatorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

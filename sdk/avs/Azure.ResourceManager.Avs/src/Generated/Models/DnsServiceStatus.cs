@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="DnsServiceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsServiceStatus?(string value) => value == null ? null : new DnsServiceStatus(value);
+        public static implicit operator DnsServiceStatus?(string value) => value == null ? (DnsServiceStatus?)null : new DnsServiceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

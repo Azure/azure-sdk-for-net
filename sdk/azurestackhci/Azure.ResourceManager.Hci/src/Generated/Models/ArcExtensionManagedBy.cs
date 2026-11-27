@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="ArcExtensionManagedBy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcExtensionManagedBy?(string value) => value == null ? null : new ArcExtensionManagedBy(value);
+        public static implicit operator ArcExtensionManagedBy?(string value) => value == null ? (ArcExtensionManagedBy?)null : new ArcExtensionManagedBy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

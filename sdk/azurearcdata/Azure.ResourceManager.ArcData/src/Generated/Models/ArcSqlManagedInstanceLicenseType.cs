@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="ArcSqlManagedInstanceLicenseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcSqlManagedInstanceLicenseType?(string value) => value == null ? null : new ArcSqlManagedInstanceLicenseType(value);
+        public static implicit operator ArcSqlManagedInstanceLicenseType?(string value) => value == null ? (ArcSqlManagedInstanceLicenseType?)null : new ArcSqlManagedInstanceLicenseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

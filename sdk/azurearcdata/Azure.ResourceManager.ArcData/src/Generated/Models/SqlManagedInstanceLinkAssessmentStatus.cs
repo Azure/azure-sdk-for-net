@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlManagedInstanceLinkAssessmentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlManagedInstanceLinkAssessmentStatus?(string value) => value == null ? null : new SqlManagedInstanceLinkAssessmentStatus(value);
+        public static implicit operator SqlManagedInstanceLinkAssessmentStatus?(string value) => value == null ? (SqlManagedInstanceLinkAssessmentStatus?)null : new SqlManagedInstanceLinkAssessmentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

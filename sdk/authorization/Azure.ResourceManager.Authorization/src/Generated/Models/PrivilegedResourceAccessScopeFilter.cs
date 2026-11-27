@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="PrivilegedResourceAccessScopeFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivilegedResourceAccessScopeFilter?(string value) => value == null ? null : new PrivilegedResourceAccessScopeFilter(value);
+        public static implicit operator PrivilegedResourceAccessScopeFilter?(string value) => value == null ? (PrivilegedResourceAccessScopeFilter?)null : new PrivilegedResourceAccessScopeFilter(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

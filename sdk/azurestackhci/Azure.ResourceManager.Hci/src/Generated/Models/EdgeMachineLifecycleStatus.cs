@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="EdgeMachineLifecycleStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeMachineLifecycleStatus?(string value) => value == null ? null : new EdgeMachineLifecycleStatus(value);
+        public static implicit operator EdgeMachineLifecycleStatus?(string value) => value == null ? (EdgeMachineLifecycleStatus?)null : new EdgeMachineLifecycleStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

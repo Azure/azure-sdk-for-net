@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="LunMountMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LunMountMode?(string value) => value == null ? null : new LunMountMode(value);
+        public static implicit operator LunMountMode?(string value) => value == null ? (LunMountMode?)null : new LunMountMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="RoleManagementScheduleStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleManagementScheduleStatus?(string value) => value == null ? null : new RoleManagementScheduleStatus(value);
+        public static implicit operator RoleManagementScheduleStatus?(string value) => value == null ? (RoleManagementScheduleStatus?)null : new RoleManagementScheduleStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

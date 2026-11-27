@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="HciVmPowerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciVmPowerState?(string value) => value == null ? null : new HciVmPowerState(value);
+        public static implicit operator HciVmPowerState?(string value) => value == null ? (HciVmPowerState?)null : new HciVmPowerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

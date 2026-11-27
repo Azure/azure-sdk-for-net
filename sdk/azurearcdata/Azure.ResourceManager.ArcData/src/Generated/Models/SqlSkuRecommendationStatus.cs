@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlSkuRecommendationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlSkuRecommendationStatus?(string value) => value == null ? null : new SqlSkuRecommendationStatus(value);
+        public static implicit operator SqlSkuRecommendationStatus?(string value) => value == null ? (SqlSkuRecommendationStatus?)null : new SqlSkuRecommendationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="IsHighlyAvailable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsHighlyAvailable?(string value) => value == null ? null : new IsHighlyAvailable(value);
+        public static implicit operator IsHighlyAvailable?(string value) => value == null ? (IsHighlyAvailable?)null : new IsHighlyAvailable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

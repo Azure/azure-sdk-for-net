@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlMirroringEndpointAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlMirroringEndpointAuthenticationType?(string value) => value == null ? null : new SqlMirroringEndpointAuthenticationType(value);
+        public static implicit operator SqlMirroringEndpointAuthenticationType?(string value) => value == null ? (SqlMirroringEndpointAuthenticationType?)null : new SqlMirroringEndpointAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

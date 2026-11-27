@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="ScriptExecutionParameterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptExecutionParameterType?(string value) => value == null ? null : new ScriptExecutionParameterType(value);
+        public static implicit operator ScriptExecutionParameterType?(string value) => value == null ? (ScriptExecutionParameterType?)null : new ScriptExecutionParameterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

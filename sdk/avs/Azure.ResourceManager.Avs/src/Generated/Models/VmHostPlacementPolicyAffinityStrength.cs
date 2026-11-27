@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="VmHostPlacementPolicyAffinityStrength"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmHostPlacementPolicyAffinityStrength?(string value) => value == null ? null : new VmHostPlacementPolicyAffinityStrength(value);
+        public static implicit operator VmHostPlacementPolicyAffinityStrength?(string value) => value == null ? (VmHostPlacementPolicyAffinityStrength?)null : new VmHostPlacementPolicyAffinityStrength(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

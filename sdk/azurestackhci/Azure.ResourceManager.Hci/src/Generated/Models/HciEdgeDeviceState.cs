@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="HciEdgeDeviceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HciEdgeDeviceState?(string value) => value == null ? null : new HciEdgeDeviceState(value);
+        public static implicit operator HciEdgeDeviceState?(string value) => value == null ? (HciEdgeDeviceState?)null : new HciEdgeDeviceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

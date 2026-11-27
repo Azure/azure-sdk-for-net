@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="AgentRegistrationKeyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentRegistrationKeyName?(string value) => value == null ? null : new AgentRegistrationKeyName(value);
+        public static implicit operator AgentRegistrationKeyName?(string value) => value == null ? (AgentRegistrationKeyName?)null : new AgentRegistrationKeyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

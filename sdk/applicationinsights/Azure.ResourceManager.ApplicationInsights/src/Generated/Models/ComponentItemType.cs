@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="ComponentItemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComponentItemType?(string value) => value == null ? null : new ComponentItemType(value);
+        public static implicit operator ComponentItemType?(string value) => value == null ? (ComponentItemType?)null : new ComponentItemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

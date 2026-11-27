@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="JobResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobResourceType?(string value) => value == null ? null : new JobResourceType(value);
+        public static implicit operator JobResourceType?(string value) => value == null ? (JobResourceType?)null : new JobResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

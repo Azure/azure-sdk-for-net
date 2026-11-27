@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="DeviceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceKind?(string value) => value == null ? null : new DeviceKind(value);
+        public static implicit operator DeviceKind?(string value) => value == null ? (DeviceKind?)null : new DeviceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

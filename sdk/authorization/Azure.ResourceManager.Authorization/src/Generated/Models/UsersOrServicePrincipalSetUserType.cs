@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="UsersOrServicePrincipalSetUserType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UsersOrServicePrincipalSetUserType?(string value) => value == null ? null : new UsersOrServicePrincipalSetUserType(value);
+        public static implicit operator UsersOrServicePrincipalSetUserType?(string value) => value == null ? (UsersOrServicePrincipalSetUserType?)null : new UsersOrServicePrincipalSetUserType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

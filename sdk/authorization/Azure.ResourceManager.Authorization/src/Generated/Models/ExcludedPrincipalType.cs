@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="ExcludedPrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExcludedPrincipalType?(string value) => value == null ? null : new ExcludedPrincipalType(value);
+        public static implicit operator ExcludedPrincipalType?(string value) => value == null ? (ExcludedPrincipalType?)null : new ExcludedPrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

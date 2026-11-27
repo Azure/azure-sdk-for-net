@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Converts a string to a <see cref="HybridWorkerGroup"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridWorkerGroup?(string value) => value == null ? null : new HybridWorkerGroup(value);
+        public static implicit operator HybridWorkerGroup?(string value) => value == null ? (HybridWorkerGroup?)null : new HybridWorkerGroup(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

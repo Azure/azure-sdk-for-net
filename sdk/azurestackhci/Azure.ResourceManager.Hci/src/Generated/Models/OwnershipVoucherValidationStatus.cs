@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Converts a string to a <see cref="OwnershipVoucherValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OwnershipVoucherValidationStatus?(string value) => value == null ? null : new OwnershipVoucherValidationStatus(value);
+        public static implicit operator OwnershipVoucherValidationStatus?(string value) => value == null ? (OwnershipVoucherValidationStatus?)null : new OwnershipVoucherValidationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Converts a string to a <see cref="AttestDiskSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttestDiskSecurityEncryptionType?(string value) => value == null ? null : new AttestDiskSecurityEncryptionType(value);
+        public static implicit operator AttestDiskSecurityEncryptionType?(string value) => value == null ? (AttestDiskSecurityEncryptionType?)null : new AttestDiskSecurityEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

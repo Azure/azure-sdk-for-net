@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Converts a string to a <see cref="SqlMigrationInitiationSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlMigrationInitiationSource?(string value) => value == null ? null : new SqlMigrationInitiationSource(value);
+        public static implicit operator SqlMigrationInitiationSource?(string value) => value == null ? (SqlMigrationInitiationSource?)null : new SqlMigrationInitiationSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

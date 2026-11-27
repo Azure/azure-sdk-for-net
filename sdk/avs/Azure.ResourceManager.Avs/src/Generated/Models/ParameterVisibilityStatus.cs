@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Converts a string to a <see cref="ParameterVisibilityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParameterVisibilityStatus?(string value) => value == null ? null : new ParameterVisibilityStatus(value);
+        public static implicit operator ParameterVisibilityStatus?(string value) => value == null ? (ParameterVisibilityStatus?)null : new ParameterVisibilityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

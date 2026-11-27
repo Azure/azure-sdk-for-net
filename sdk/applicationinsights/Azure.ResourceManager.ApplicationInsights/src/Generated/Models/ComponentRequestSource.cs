@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Converts a string to a <see cref="ComponentRequestSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComponentRequestSource?(string value) => value == null ? null : new ComponentRequestSource(value);
+        public static implicit operator ComponentRequestSource?(string value) => value == null ? (ComponentRequestSource?)null : new ComponentRequestSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

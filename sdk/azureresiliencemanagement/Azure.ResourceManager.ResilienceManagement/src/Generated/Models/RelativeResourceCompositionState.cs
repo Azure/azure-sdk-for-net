@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Converts a string to a <see cref="RelativeResourceCompositionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelativeResourceCompositionState?(string value) => value == null ? null : new RelativeResourceCompositionState(value);
+        public static implicit operator RelativeResourceCompositionState?(string value) => value == null ? (RelativeResourceCompositionState?)null : new RelativeResourceCompositionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

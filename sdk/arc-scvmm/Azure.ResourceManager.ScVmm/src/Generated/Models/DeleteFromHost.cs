@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary> Converts a string to a <see cref="DeleteFromHost"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeleteFromHost?(string value) => value == null ? null : new DeleteFromHost(value);
+        public static implicit operator DeleteFromHost?(string value) => value == null ? (DeleteFromHost?)null : new DeleteFromHost(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

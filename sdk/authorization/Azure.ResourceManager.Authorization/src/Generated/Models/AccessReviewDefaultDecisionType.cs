@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Converts a string to a <see cref="AccessReviewDefaultDecisionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessReviewDefaultDecisionType?(string value) => value == null ? null : new AccessReviewDefaultDecisionType(value);
+        public static implicit operator AccessReviewDefaultDecisionType?(string value) => value == null ? (AccessReviewDefaultDecisionType?)null : new AccessReviewDefaultDecisionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
