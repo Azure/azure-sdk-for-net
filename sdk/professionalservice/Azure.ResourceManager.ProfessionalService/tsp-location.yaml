@@ -1,0 +1,6 @@
+directory: specification/professionalservice/resource-manager/Microsoft.ProfessionalService/ProfessionalService
+commit: 8ebbe47450d4431a1264a9dc2e166159bfadbaf7
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
