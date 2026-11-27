@@ -26,6 +26,8 @@ namespace Azure.Storage.Blobs.Test
         private int _layoutSessionAuthCount;
         private int _layoutBearerCount;
         private int _routedRequestCount;
+        private int _structuredMessageSessionAuthSuccessCount;
+        private int _structuredMessageBearerCount;
         private volatile bool _enabled;
         private readonly List<string> _getBlobSessionTokens = new List<string>();
         private readonly List<string> _routedHosts = new List<string>();
@@ -54,6 +56,18 @@ namespace Azure.Storage.Blobs.Test
 
         /// <summary>Number of GET blob requests authenticated with a bearer token.</summary>
         public int BearerGetBlobCount => _bearerGetBlobCount;
+
+        /// <summary>
+        /// Number of structured message GET blob requests (request carried <c>x-ms-structured-body</c>)
+        /// that were signed with a session token and succeeded with a structured message response.
+        /// </summary>
+        public int StructuredMessageSessionAuthSuccessCount => _structuredMessageSessionAuthSuccessCount;
+
+        /// <summary>
+        /// Number of structured message GET blob requests (request carried <c>x-ms-structured-body</c>)
+        /// that were authenticated with a bearer token.
+        /// </summary>
+        public int StructuredMessageBearerCount => _structuredMessageBearerCount;
 
         /// <summary>Number of non-GET-blob requests authenticated with a bearer token.</summary>
         public int BearerNonGetCount => _bearerNonGetCount;
@@ -105,6 +119,8 @@ namespace Azure.Storage.Blobs.Test
             Interlocked.Exchange(ref _layoutSessionAuthCount, 0);
             Interlocked.Exchange(ref _layoutBearerCount, 0);
             Interlocked.Exchange(ref _routedRequestCount, 0);
+            Interlocked.Exchange(ref _structuredMessageSessionAuthSuccessCount, 0);
+            Interlocked.Exchange(ref _structuredMessageBearerCount, 0);
             lock (_tokensLock)
             {
                 _getBlobSessionTokens.Clear();
@@ -196,6 +212,20 @@ namespace Azure.Storage.Blobs.Test
                 else if (!isLayoutRequest)
                 {
                     Interlocked.Increment(ref _nonGetSessionAuthCount);
+                }
+            }
+
+            if (isGetBlob && message.Request.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+            {
+                if (hasSessionAuth
+                    && message.Response.Status >= 200 && message.Response.Status < 300
+                    && message.Response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+                {
+                    Interlocked.Increment(ref _structuredMessageSessionAuthSuccessCount);
+                }
+                if (hasBearerAuth)
+                {
+                    Interlocked.Increment(ref _structuredMessageBearerCount);
                 }
             }
 

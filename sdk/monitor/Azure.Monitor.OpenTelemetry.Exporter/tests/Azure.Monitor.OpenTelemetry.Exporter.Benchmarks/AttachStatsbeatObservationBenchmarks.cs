@@ -140,7 +140,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             for (int i = 0; i < BatchSize; i++)
             {
                 var key = keys[i % CustomerCount];
-                batch.GetOrAdd(endpoints[i % EndpointCount]).TelemetryItems.Add(
+                batch.GetOrAdd(endpoints[i % EndpointCount]).Add(
                     new TelemetryItem(DateTime.UtcNow, resource: null,
                         DistinctKeyInstances ? new string(key.ToCharArray()) : key));
             }

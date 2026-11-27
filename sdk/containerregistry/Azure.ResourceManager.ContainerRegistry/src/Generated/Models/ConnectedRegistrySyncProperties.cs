@@ -49,8 +49,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistrySyncProperties"/>. </summary>
         /// <param name="tokenId"> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </param>
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tokenId"/> is null. </exception>
         public ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, TimeSpan messageTtl) : this(messageTtl)
         {
+            Argument.AssertNotNull(tokenId, nameof(tokenId));
+
             TokenId = tokenId;
         }
 

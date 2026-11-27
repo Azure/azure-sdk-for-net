@@ -162,7 +162,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(
                 _routedBatch,
                 s_resource,
-                sampleRate: 100F,
+                fallbackSampleRate: 100F,
                 _routeBatch);
 
             return _routeBatch.Count;
@@ -187,7 +187,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
                 batch,
                 s_resource,
                 InstrumentationKey,
-                sampleRate: 100F);
+                fallbackSampleRate: 100F);
 
             return telemetryItems.Count;
         }

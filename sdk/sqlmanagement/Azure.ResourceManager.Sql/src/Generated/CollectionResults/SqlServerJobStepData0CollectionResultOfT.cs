@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByVersionRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _jobAgentName, _jobName, _jobVersion, _context) : _client.CreateGetByVersionRequest(_subscriptionId, _resourceGroupName, _serverName, _jobAgentName, _jobName, _jobVersion, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListByVersionRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _jobAgentName, _jobName, _jobVersion, _context) : _client.CreateListByVersionRequest(_subscriptionId, _resourceGroupName, _serverName, _jobAgentName, _jobName, _jobVersion, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

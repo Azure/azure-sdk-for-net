@@ -566,8 +566,15 @@
               "type": {
                 "$id": "47",
                 "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
+                "name": "armResourceIdentifier",
+                "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
+                "baseType": {
+                  "$id": "48",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
                 "decorators": []
               },
               "optional": true,
@@ -585,7 +592,7 @@
               "isExactName": false
             },
             {
-              "$id": "48",
+              "$id": "49",
               "kind": "property",
               "name": "name",
               "apiVersions": [
@@ -597,7 +604,7 @@
               "serializedName": "name",
               "doc": "The name of the resource",
               "type": {
-                "$id": "49",
+                "$id": "50",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -618,7 +625,7 @@
               "isExactName": false
             },
             {
-              "$id": "50",
+              "$id": "51",
               "kind": "property",
               "name": "type",
               "apiVersions": [
@@ -630,12 +637,12 @@
               "serializedName": "type",
               "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
               "type": {
-                "$id": "51",
+                "$id": "52",
                 "kind": "string",
                 "name": "armResourceType",
                 "crossLanguageDefinitionId": "Azure.Core.armResourceType",
                 "baseType": {
-                  "$id": "52",
+                  "$id": "53",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -658,7 +665,7 @@
               "isExactName": false
             },
             {
-              "$id": "53",
+              "$id": "54",
               "kind": "property",
               "name": "systemData",
               "apiVersions": [
@@ -670,7 +677,7 @@
               "serializedName": "systemData",
               "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
               "type": {
-                "$id": "54",
+                "$id": "55",
                 "kind": "model",
                 "name": "SystemData",
                 "apiVersions": [
@@ -692,7 +699,7 @@
                 "isExactName": false,
                 "properties": [
                   {
-                    "$id": "55",
+                    "$id": "56",
                     "kind": "property",
                     "name": "createdBy",
                     "apiVersions": [
@@ -704,7 +711,7 @@
                     "serializedName": "createdBy",
                     "doc": "The identity that created the resource.",
                     "type": {
-                      "$id": "56",
+                      "$id": "57",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -725,7 +732,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "57",
+                    "$id": "58",
                     "kind": "property",
                     "name": "createdByType",
                     "apiVersions": [
@@ -754,7 +761,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "58",
+                    "$id": "59",
                     "kind": "property",
                     "name": "createdAt",
                     "apiVersions": [
@@ -766,12 +773,12 @@
                     "serializedName": "createdAt",
                     "doc": "The timestamp of resource creation (UTC).",
                     "type": {
-                      "$id": "59",
+                      "$id": "60",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "60",
+                        "$id": "61",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -795,7 +802,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "61",
+                    "$id": "62",
                     "kind": "property",
                     "name": "lastModifiedBy",
                     "apiVersions": [
@@ -807,7 +814,7 @@
                     "serializedName": "lastModifiedBy",
                     "doc": "The identity that last modified the resource.",
                     "type": {
-                      "$id": "62",
+                      "$id": "63",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -828,7 +835,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "63",
+                    "$id": "64",
                     "kind": "property",
                     "name": "lastModifiedByType",
                     "apiVersions": [
@@ -857,7 +864,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "64",
+                    "$id": "65",
                     "kind": "property",
                     "name": "lastModifiedAt",
                     "apiVersions": [
@@ -869,12 +876,12 @@
                     "serializedName": "lastModifiedAt",
                     "doc": "The timestamp of resource last modification (UTC)",
                     "type": {
-                      "$id": "65",
+                      "$id": "66",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "66",
+                        "$id": "67",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -917,7 +924,7 @@
         },
         "properties": [
           {
-            "$id": "67",
+            "$id": "68",
             "kind": "property",
             "name": "tags",
             "apiVersions": [
@@ -929,17 +936,17 @@
             "serializedName": "tags",
             "doc": "Resource tags.",
             "type": {
-              "$id": "68",
+              "$id": "69",
               "kind": "dict",
               "keyType": {
-                "$id": "69",
+                "$id": "70",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
                 "decorators": []
               },
               "valueType": {
-                "$id": "70",
+                "$id": "71",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -962,7 +969,7 @@
             "isExactName": false
           },
           {
-            "$id": "71",
+            "$id": "72",
             "kind": "property",
             "name": "location",
             "apiVersions": [
@@ -974,12 +981,12 @@
             "serializedName": "location",
             "doc": "The geo-location where the resource lives",
             "type": {
-              "$id": "72",
+              "$id": "73",
               "kind": "string",
               "name": "azureLocation",
               "crossLanguageDefinitionId": "Azure.Core.azureLocation",
               "baseType": {
-                "$id": "73",
+                "$id": "74",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1005,14 +1012,14 @@
       },
       "properties": [
         {
-          "$id": "74",
+          "$id": "75",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$id": "75",
+            "$id": "76",
             "kind": "model",
             "name": "ManagedIdentityTrackedResourceProperties",
             "apiVersions": [
@@ -1036,7 +1043,7 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "76",
+                "$id": "77",
                 "kind": "property",
                 "name": "provisioningState",
                 "apiVersions": [
@@ -1045,7 +1052,7 @@
                 "serializedName": "provisioningState",
                 "doc": "The status of the last operation.",
                 "type": {
-                  "$id": "77",
+                  "$id": "78",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1082,7 +1089,7 @@
           "isExactName": false
         },
         {
-          "$id": "78",
+          "$id": "79",
           "kind": "property",
           "name": "name",
           "apiVersions": [
@@ -1091,7 +1098,7 @@
           "serializedName": "name",
           "doc": "arm resource name for path",
           "type": {
-            "$id": "79",
+            "$id": "80",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1119,14 +1126,14 @@
           "isExactName": false
         },
         {
-          "$id": "80",
+          "$id": "81",
           "kind": "property",
           "name": "identity",
           "apiVersions": [],
           "serializedName": "identity",
           "doc": "The managed service identities assigned to this resource.",
           "type": {
-            "$id": "81",
+            "$id": "82",
             "kind": "model",
             "name": "ManagedServiceIdentity",
             "apiVersions": [
@@ -1148,7 +1155,7 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "82",
+                "$id": "83",
                 "kind": "property",
                 "name": "principalId",
                 "apiVersions": [
@@ -1160,12 +1167,12 @@
                 "serializedName": "principalId",
                 "doc": "The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.",
                 "type": {
-                  "$id": "83",
+                  "$id": "84",
                   "kind": "string",
                   "name": "uuid",
                   "crossLanguageDefinitionId": "Azure.Core.uuid",
                   "baseType": {
-                    "$id": "84",
+                    "$id": "85",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1188,7 +1195,7 @@
                 "isExactName": false
               },
               {
-                "$id": "85",
+                "$id": "86",
                 "kind": "property",
                 "name": "tenantId",
                 "apiVersions": [
@@ -1200,12 +1207,12 @@
                 "serializedName": "tenantId",
                 "doc": "The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.",
                 "type": {
-                  "$id": "86",
+                  "$id": "87",
                   "kind": "string",
                   "name": "uuid",
                   "crossLanguageDefinitionId": "Azure.Core.uuid",
                   "baseType": {
-                    "$id": "87",
+                    "$id": "88",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1228,7 +1235,7 @@
                 "isExactName": false
               },
               {
-                "$id": "88",
+                "$id": "89",
                 "kind": "property",
                 "name": "type",
                 "apiVersions": [
@@ -1257,7 +1264,7 @@
                 "isExactName": false
               },
               {
-                "$id": "89",
+                "$id": "90",
                 "kind": "property",
                 "name": "userAssignedIdentities",
                 "apiVersions": [
@@ -1269,118 +1276,123 @@
                 "serializedName": "userAssignedIdentities",
                 "doc": "The identities assigned to this resource by the user.",
                 "type": {
-                  "$id": "90",
+                  "$id": "91",
                   "kind": "dict",
                   "keyType": {
-                    "$id": "91",
+                    "$id": "92",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
                     "decorators": []
                   },
                   "valueType": {
-                    "$id": "92",
-                    "kind": "model",
-                    "name": "UserAssignedIdentity",
-                    "apiVersions": [
-                      "v3",
-                      "v4",
-                      "v5",
-                      "v6"
-                    ],
-                    "namespace": "Azure.ResourceManager.CommonTypes",
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity",
-                    "usage": "Input,Output,Json",
-                    "doc": "User assigned identity properties",
-                    "decorators": [],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "UserAssignedIdentity"
-                      }
-                    },
-                    "isExactName": false,
-                    "properties": [
-                      {
-                        "$id": "93",
-                        "kind": "property",
-                        "name": "principalId",
-                        "apiVersions": [
-                          "v3",
-                          "v4",
-                          "v5",
-                          "v6"
-                        ],
-                        "serializedName": "principalId",
-                        "doc": "The principal ID of the assigned identity.",
-                        "type": {
-                          "$id": "94",
-                          "kind": "string",
-                          "name": "uuid",
-                          "crossLanguageDefinitionId": "Azure.Core.uuid",
-                          "baseType": {
-                            "$id": "95",
-                            "kind": "string",
-                            "name": "string",
-                            "crossLanguageDefinitionId": "TypeSpec.string",
-                            "decorators": []
-                          },
-                          "decorators": []
-                        },
-                        "optional": true,
-                        "readOnly": true,
-                        "discriminator": false,
-                        "flatten": false,
-                        "decorators": [],
-                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.principalId",
-                        "serializationOptions": {
-                          "json": {
-                            "name": "principalId"
-                          }
-                        },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                    "$id": "93",
+                    "kind": "nullable",
+                    "type": {
+                      "$id": "94",
+                      "kind": "model",
+                      "name": "UserAssignedIdentity",
+                      "apiVersions": [
+                        "v3",
+                        "v4",
+                        "v5",
+                        "v6"
+                      ],
+                      "namespace": "Azure.ResourceManager.CommonTypes",
+                      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity",
+                      "usage": "Input,Output,Json",
+                      "doc": "User assigned identity properties",
+                      "decorators": [],
+                      "serializationOptions": {
+                        "json": {
+                          "name": "UserAssignedIdentity"
+                        }
                       },
-                      {
-                        "$id": "96",
-                        "kind": "property",
-                        "name": "clientId",
-                        "apiVersions": [
-                          "v3",
-                          "v4",
-                          "v5",
-                          "v6"
-                        ],
-                        "serializedName": "clientId",
-                        "doc": "The client ID of the assigned identity.",
-                        "type": {
-                          "$id": "97",
-                          "kind": "string",
-                          "name": "uuid",
-                          "crossLanguageDefinitionId": "Azure.Core.uuid",
-                          "baseType": {
-                            "$id": "98",
+                      "isExactName": false,
+                      "properties": [
+                        {
+                          "$id": "95",
+                          "kind": "property",
+                          "name": "principalId",
+                          "apiVersions": [
+                            "v3",
+                            "v4",
+                            "v5",
+                            "v6"
+                          ],
+                          "serializedName": "principalId",
+                          "doc": "The principal ID of the assigned identity.",
+                          "type": {
+                            "$id": "96",
                             "kind": "string",
-                            "name": "string",
-                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "name": "uuid",
+                            "crossLanguageDefinitionId": "Azure.Core.uuid",
+                            "baseType": {
+                              "$id": "97",
+                              "kind": "string",
+                              "name": "string",
+                              "crossLanguageDefinitionId": "TypeSpec.string",
+                              "decorators": []
+                            },
                             "decorators": []
                           },
-                          "decorators": []
+                          "optional": true,
+                          "readOnly": true,
+                          "discriminator": false,
+                          "flatten": false,
+                          "decorators": [],
+                          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.principalId",
+                          "serializationOptions": {
+                            "json": {
+                              "name": "principalId"
+                            }
+                          },
+                          "isHttpMetadata": false,
+                          "isExactName": false
                         },
-                        "optional": true,
-                        "readOnly": true,
-                        "discriminator": false,
-                        "flatten": false,
-                        "decorators": [],
-                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.clientId",
-                        "serializationOptions": {
-                          "json": {
-                            "name": "clientId"
-                          }
-                        },
-                        "isHttpMetadata": false,
-                        "isExactName": false
-                      }
-                    ]
+                        {
+                          "$id": "98",
+                          "kind": "property",
+                          "name": "clientId",
+                          "apiVersions": [
+                            "v3",
+                            "v4",
+                            "v5",
+                            "v6"
+                          ],
+                          "serializedName": "clientId",
+                          "doc": "The client ID of the assigned identity.",
+                          "type": {
+                            "$id": "99",
+                            "kind": "string",
+                            "name": "uuid",
+                            "crossLanguageDefinitionId": "Azure.Core.uuid",
+                            "baseType": {
+                              "$id": "100",
+                              "kind": "string",
+                              "name": "string",
+                              "crossLanguageDefinitionId": "TypeSpec.string",
+                              "decorators": []
+                            },
+                            "decorators": []
+                          },
+                          "optional": true,
+                          "readOnly": true,
+                          "discriminator": false,
+                          "flatten": false,
+                          "decorators": [],
+                          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.clientId",
+                          "serializationOptions": {
+                            "json": {
+                              "name": "clientId"
+                            }
+                          },
+                          "isHttpMetadata": false,
+                          "isExactName": false
+                        }
+                      ]
+                    },
+                    "namespace": "Azure.ResourceManager.CommonTypes"
                   },
                   "decorators": []
                 },
@@ -1417,13 +1429,13 @@
       ]
     },
     {
-      "$ref": "75"
+      "$ref": "76"
     },
     {
-      "$ref": "81"
+      "$ref": "82"
     },
     {
-      "$ref": "92"
+      "$ref": "94"
     },
     {
       "$ref": "44"
@@ -1432,10 +1444,10 @@
       "$ref": "45"
     },
     {
-      "$ref": "54"
+      "$ref": "55"
     },
     {
-      "$id": "99",
+      "$id": "101",
       "kind": "model",
       "name": "ErrorResponse",
       "apiVersions": [
@@ -1458,7 +1470,7 @@
       "isExactName": false,
       "properties": [
         {
-          "$id": "100",
+          "$id": "102",
           "kind": "property",
           "name": "error",
           "apiVersions": [
@@ -1470,7 +1482,7 @@
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
-            "$id": "101",
+            "$id": "103",
             "kind": "model",
             "name": "ErrorDetail",
             "apiVersions": [
@@ -1492,7 +1504,7 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "102",
+                "$id": "104",
                 "kind": "property",
                 "name": "code",
                 "apiVersions": [
@@ -1504,7 +1516,7 @@
                 "serializedName": "code",
                 "doc": "The error code.",
                 "type": {
-                  "$id": "103",
+                  "$id": "105",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1525,7 +1537,7 @@
                 "isExactName": false
               },
               {
-                "$id": "104",
+                "$id": "106",
                 "kind": "property",
                 "name": "message",
                 "apiVersions": [
@@ -1537,7 +1549,7 @@
                 "serializedName": "message",
                 "doc": "The error message.",
                 "type": {
-                  "$id": "105",
+                  "$id": "107",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1558,7 +1570,7 @@
                 "isExactName": false
               },
               {
-                "$id": "106",
+                "$id": "108",
                 "kind": "property",
                 "name": "target",
                 "apiVersions": [
@@ -1570,7 +1582,7 @@
                 "serializedName": "target",
                 "doc": "The error target.",
                 "type": {
-                  "$id": "107",
+                  "$id": "109",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1591,7 +1603,7 @@
                 "isExactName": false
               },
               {
-                "$id": "108",
+                "$id": "110",
                 "kind": "property",
                 "name": "details",
                 "apiVersions": [
@@ -1603,11 +1615,11 @@
                 "serializedName": "details",
                 "doc": "The error details.",
                 "type": {
-                  "$id": "109",
+                  "$id": "111",
                   "kind": "array",
                   "name": "ArrayErrorDetail",
                   "valueType": {
-                    "$ref": "101"
+                    "$ref": "103"
                   },
                   "crossLanguageDefinitionId": "TypeSpec.Array",
                   "decorators": []
@@ -1627,7 +1639,7 @@
                 "isExactName": false
               },
               {
-                "$id": "110",
+                "$id": "112",
                 "kind": "property",
                 "name": "additionalInfo",
                 "apiVersions": [
@@ -1639,11 +1651,11 @@
                 "serializedName": "additionalInfo",
                 "doc": "The error additional info.",
                 "type": {
-                  "$id": "111",
+                  "$id": "113",
                   "kind": "array",
                   "name": "ArrayErrorAdditionalInfo",
                   "valueType": {
-                    "$id": "112",
+                    "$id": "114",
                     "kind": "model",
                     "name": "ErrorAdditionalInfo",
                     "apiVersions": [
@@ -1665,7 +1677,7 @@
                     "isExactName": false,
                     "properties": [
                       {
-                        "$id": "113",
+                        "$id": "115",
                         "kind": "property",
                         "name": "type",
                         "apiVersions": [
@@ -1677,7 +1689,7 @@
                         "serializedName": "type",
                         "doc": "The additional info type.",
                         "type": {
-                          "$id": "114",
+                          "$id": "116",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1698,7 +1710,7 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "115",
+                        "$id": "117",
                         "kind": "property",
                         "name": "info",
                         "apiVersions": [
@@ -1710,7 +1722,7 @@
                         "serializedName": "info",
                         "doc": "The additional info.",
                         "type": {
-                          "$id": "116",
+                          "$id": "118",
                           "kind": "unknown",
                           "name": "unknown",
                           "crossLanguageDefinitionId": "",
@@ -1768,13 +1780,13 @@
       ]
     },
     {
-      "$ref": "101"
+      "$ref": "103"
     },
     {
-      "$ref": "112"
+      "$ref": "114"
     },
     {
-      "$id": "117",
+      "$id": "119",
       "kind": "model",
       "name": "ConfidentialResource",
       "apiVersions": [
@@ -1805,14 +1817,14 @@
       },
       "properties": [
         {
-          "$id": "118",
+          "$id": "120",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$id": "119",
+            "$id": "121",
             "kind": "model",
             "name": "ConfidentialResourceProperties",
             "apiVersions": [
@@ -1836,7 +1848,7 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "120",
+                "$id": "122",
                 "kind": "property",
                 "name": "provisioningState",
                 "apiVersions": [
@@ -1845,7 +1857,7 @@
                 "serializedName": "provisioningState",
                 "doc": "The status of the last operation.",
                 "type": {
-                  "$id": "121",
+                  "$id": "123",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1866,7 +1878,7 @@
                 "isExactName": false
               },
               {
-                "$id": "122",
+                "$id": "124",
                 "kind": "property",
                 "name": "username",
                 "apiVersions": [
@@ -1874,7 +1886,7 @@
                 ],
                 "serializedName": "username",
                 "type": {
-                  "$id": "123",
+                  "$id": "125",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1911,14 +1923,14 @@
           "isExactName": false
         },
         {
-          "$id": "124",
+          "$id": "126",
           "kind": "property",
           "name": "name",
           "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the ConfidentialResource",
           "type": {
-            "$id": "125",
+            "$id": "127",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1948,10 +1960,10 @@
       ]
     },
     {
-      "$ref": "119"
+      "$ref": "121"
     },
     {
-      "$id": "126",
+      "$id": "128",
       "kind": "model",
       "name": "CloudError",
       "apiVersions": [
@@ -1975,7 +1987,7 @@
       "isExactName": false,
       "properties": [
         {
-          "$id": "127",
+          "$id": "129",
           "kind": "property",
           "name": "error",
           "apiVersions": [
@@ -1984,7 +1996,7 @@
           "serializedName": "error",
           "doc": "Api error.",
           "type": {
-            "$id": "128",
+            "$id": "130",
             "kind": "model",
             "name": "ApiError",
             "apiVersions": [
@@ -2008,7 +2020,7 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "129",
+                "$id": "131",
                 "kind": "property",
                 "name": "details",
                 "apiVersions": [
@@ -2017,11 +2029,11 @@
                 "serializedName": "details",
                 "doc": "The Api error details",
                 "type": {
-                  "$id": "130",
+                  "$id": "132",
                   "kind": "array",
                   "name": "ArrayApiErrorBase",
                   "valueType": {
-                    "$id": "131",
+                    "$id": "133",
                     "kind": "model",
                     "name": "ApiErrorBase",
                     "apiVersions": [
@@ -2045,7 +2057,7 @@
                     "isExactName": false,
                     "properties": [
                       {
-                        "$id": "132",
+                        "$id": "134",
                         "kind": "property",
                         "name": "code",
                         "apiVersions": [
@@ -2054,7 +2066,7 @@
                         "serializedName": "code",
                         "doc": "The error code.",
                         "type": {
-                          "$id": "133",
+                          "$id": "135",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2075,7 +2087,7 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "134",
+                        "$id": "136",
                         "kind": "property",
                         "name": "target",
                         "apiVersions": [
@@ -2084,7 +2096,7 @@
                         "serializedName": "target",
                         "doc": "The target of the particular error.",
                         "type": {
-                          "$id": "135",
+                          "$id": "137",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2105,7 +2117,7 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "136",
+                        "$id": "138",
                         "kind": "property",
                         "name": "message",
                         "apiVersions": [
@@ -2114,7 +2126,7 @@
                         "serializedName": "message",
                         "doc": "The error message.",
                         "type": {
-                          "$id": "137",
+                          "$id": "139",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2154,7 +2166,7 @@
                 "isExactName": false
               },
               {
-                "$id": "138",
+                "$id": "140",
                 "kind": "property",
                 "name": "innererror",
                 "apiVersions": [
@@ -2163,7 +2175,7 @@
                 "serializedName": "innererror",
                 "doc": "The Api inner error",
                 "type": {
-                  "$id": "139",
+                  "$id": "141",
                   "kind": "model",
                   "name": "InnerError",
                   "apiVersions": [
@@ -2187,7 +2199,7 @@
                   "isExactName": false,
                   "properties": [
                     {
-                      "$id": "140",
+                      "$id": "142",
                       "kind": "property",
                       "name": "exceptiontype",
                       "apiVersions": [
@@ -2196,7 +2208,7 @@
                       "serializedName": "exceptiontype",
                       "doc": "The exception type.",
                       "type": {
-                        "$id": "141",
+                        "$id": "143",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2217,7 +2229,7 @@
                       "isExactName": false
                     },
                     {
-                      "$id": "142",
+                      "$id": "144",
                       "kind": "property",
                       "name": "errordetail",
                       "apiVersions": [
@@ -2226,7 +2238,7 @@
                       "serializedName": "errordetail",
                       "doc": "The internal error message or exception dump.",
                       "type": {
-                        "$id": "143",
+                        "$id": "145",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2263,7 +2275,7 @@
                 "isExactName": false
               },
               {
-                "$id": "144",
+                "$id": "146",
                 "kind": "property",
                 "name": "code",
                 "apiVersions": [
@@ -2272,7 +2284,7 @@
                 "serializedName": "code",
                 "doc": "The error code.",
                 "type": {
-                  "$id": "145",
+                  "$id": "147",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2293,7 +2305,7 @@
                 "isExactName": false
               },
               {
-                "$id": "146",
+                "$id": "148",
                 "kind": "property",
                 "name": "target",
                 "apiVersions": [
@@ -2302,7 +2314,7 @@
                 "serializedName": "target",
                 "doc": "The target of the particular error.",
                 "type": {
-                  "$id": "147",
+                  "$id": "149",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2323,7 +2335,7 @@
                 "isExactName": false
               },
               {
-                "$id": "148",
+                "$id": "150",
                 "kind": "property",
                 "name": "message",
                 "apiVersions": [
@@ -2332,7 +2344,7 @@
                 "serializedName": "message",
                 "doc": "The error message.",
                 "type": {
-                  "$id": "149",
+                  "$id": "151",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2371,16 +2383,16 @@
       ]
     },
     {
-      "$ref": "128"
+      "$ref": "130"
     },
     {
-      "$ref": "131"
+      "$ref": "133"
     },
     {
-      "$ref": "139"
+      "$ref": "141"
     },
     {
-      "$id": "150",
+      "$id": "152",
       "kind": "model",
       "name": "ArmResourceIdentifierResource",
       "apiVersions": [
@@ -2411,14 +2423,14 @@
       },
       "properties": [
         {
-          "$id": "151",
+          "$id": "153",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$id": "152",
+            "$id": "154",
             "kind": "model",
             "name": "ArmResourceIdentifierResourceProperties",
             "apiVersions": [
@@ -2442,7 +2454,7 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "153",
+                "$id": "155",
                 "kind": "property",
                 "name": "provisioningState",
                 "apiVersions": [
@@ -2468,7 +2480,7 @@
                 "isExactName": false
               },
               {
-                "$id": "154",
+                "$id": "156",
                 "kind": "property",
                 "name": "simpleArmId",
                 "apiVersions": [
@@ -2477,12 +2489,12 @@
                 "serializedName": "simpleArmId",
                 "doc": "A basic ARM resource identifier without type or scopes.",
                 "type": {
-                  "$id": "155",
+                  "$id": "157",
                   "kind": "string",
                   "name": "armResourceIdentifier",
                   "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                   "baseType": {
-                    "$id": "156",
+                    "$id": "158",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2505,7 +2517,7 @@
                 "isExactName": false
               },
               {
-                "$id": "157",
+                "$id": "159",
                 "kind": "property",
                 "name": "armIdWithType",
                 "apiVersions": [
@@ -2514,12 +2526,12 @@
                 "serializedName": "armIdWithType",
                 "doc": "An ARM resource identifier with type only.",
                 "type": {
-                  "$id": "158",
+                  "$id": "160",
                   "kind": "string",
                   "name": "armResourceIdentifier",
                   "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                   "baseType": {
-                    "$id": "159",
+                    "$id": "161",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2542,7 +2554,7 @@
                 "isExactName": false
               },
               {
-                "$id": "160",
+                "$id": "162",
                 "kind": "property",
                 "name": "armIdWithTypeAndScope",
                 "apiVersions": [
@@ -2551,12 +2563,12 @@
                 "serializedName": "armIdWithTypeAndScope",
                 "doc": "An ARM resource identifier with type and scopes.",
                 "type": {
-                  "$id": "161",
+                  "$id": "163",
                   "kind": "string",
                   "name": "armResourceIdentifier",
                   "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                   "baseType": {
-                    "$id": "162",
+                    "$id": "164",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2579,7 +2591,7 @@
                 "isExactName": false
               },
               {
-                "$id": "163",
+                "$id": "165",
                 "kind": "property",
                 "name": "armIdWithAllScopes",
                 "apiVersions": [
@@ -2588,12 +2600,12 @@
                 "serializedName": "armIdWithAllScopes",
                 "doc": "An ARM resource identifier with all scopes.",
                 "type": {
-                  "$id": "164",
+                  "$id": "166",
                   "kind": "string",
                   "name": "armResourceIdentifier",
                   "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                   "baseType": {
-                    "$id": "165",
+                    "$id": "167",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2616,7 +2628,7 @@
                 "isExactName": false
               },
               {
-                "$id": "166",
+                "$id": "168",
                 "kind": "property",
                 "name": "armIdWithGroupScope",
                 "apiVersions": [
@@ -2625,12 +2637,12 @@
                 "serializedName": "armIdWithGroupScope",
                 "doc": "An ARM resource identifier with group scopes.",
                 "type": {
-                  "$id": "167",
+                  "$id": "169",
                   "kind": "string",
                   "name": "armResourceIdentifier",
                   "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                   "baseType": {
-                    "$id": "168",
+                    "$id": "170",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2669,7 +2681,7 @@
           "isExactName": false
         },
         {
-          "$id": "169",
+          "$id": "171",
           "kind": "property",
           "name": "name",
           "apiVersions": [
@@ -2678,7 +2690,7 @@
           "serializedName": "name",
           "doc": "arm resource name for path",
           "type": {
-            "$id": "170",
+            "$id": "172",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2708,12 +2720,12 @@
       ]
     },
     {
-      "$ref": "152"
+      "$ref": "154"
     }
   ],
   "clients": [
     {
-      "$id": "171",
+      "$id": "173",
       "kind": "client",
       "name": "CommonPropertiesClient",
       "isExactName": false,
@@ -2722,13 +2734,13 @@
       "methods": [],
       "parameters": [
         {
-          "$id": "172",
+          "$id": "174",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "173",
+            "$id": "175",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2739,7 +2751,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "174",
+              "$id": "176",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2753,13 +2765,13 @@
           "isExactName": false
         },
         {
-          "$id": "175",
+          "$id": "177",
           "kind": "method",
           "name": "apiVersion",
           "serializedName": "apiVersion",
           "doc": "The API version to use for this operation.",
           "type": {
-            "$id": "176",
+            "$id": "178",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2769,7 +2781,7 @@
           "isApiVersion": true,
           "defaultValue": {
             "type": {
-              "$id": "177",
+              "$id": "179",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2810,21 +2822,9 @@
                 "resourceType": "Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources",
                 "methods": [
                   {
-                    "$id": "178",
+                    "$id": "180",
                     "methodId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned",
                     "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
-                    "scope": {
-                      "$id": "179",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "180",
-                    "methodId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get",
-                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
                     "scope": {
                       "$id": "181",
@@ -2835,8 +2835,8 @@
                   },
                   {
                     "$id": "182",
-                    "methodId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned",
-                    "kind": "Update",
+                    "methodId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get",
+                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
                     "scope": {
                       "$id": "183",
@@ -2844,10 +2844,22 @@
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
+                  },
+                  {
+                    "$id": "184",
+                    "methodId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
+                    "scope": {
+                      "$id": "185",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
                   }
                 ],
                 "scope": {
-                  "$id": "184",
+                  "$id": "186",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -2868,21 +2880,9 @@
                 "resourceType": "Azure.ResourceManager.CommonProperties/confidentialResources",
                 "methods": [
                   {
-                    "$id": "185",
+                    "$id": "187",
                     "methodId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError",
                     "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
-                    "scope": {
-                      "$id": "186",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "187",
-                    "methodId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError",
-                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
                     "scope": {
                       "$id": "188",
@@ -2890,10 +2890,22 @@
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
+                  },
+                  {
+                    "$id": "189",
+                    "methodId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
+                    "scope": {
+                      "$id": "190",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
                   }
                 ],
                 "scope": {
-                  "$id": "189",
+                  "$id": "191",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -2914,21 +2926,9 @@
                 "resourceType": "Azure.ResourceManager.CommonProperties/armResourceIdentifierResources",
                 "methods": [
                   {
-                    "$id": "190",
+                    "$id": "192",
                     "methodId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.createOrReplace",
                     "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/{armResourceIdentifierResourceName}",
-                    "scope": {
-                      "$id": "191",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/{armResourceIdentifierResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "192",
-                    "methodId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.get",
-                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/{armResourceIdentifierResourceName}",
                     "scope": {
                       "$id": "193",
@@ -2936,10 +2936,22 @@
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/{armResourceIdentifierResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
+                  },
+                  {
+                    "$id": "194",
+                    "methodId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/{armResourceIdentifierResourceName}",
+                    "scope": {
+                      "$id": "195",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/{armResourceIdentifierResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
                   }
                 ],
                 "scope": {
-                  "$id": "194",
+                  "$id": "196",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -2965,14 +2977,14 @@
       ],
       "children": [
         {
-          "$id": "195",
+          "$id": "197",
           "kind": "client",
           "name": "ManagedIdentity",
           "isExactName": false,
           "namespace": "Azure.ResourceManager.CommonProperties",
           "methods": [
             {
-              "$id": "196",
+              "$id": "198",
               "kind": "basic",
               "name": "get",
               "isExactName": false,
@@ -2982,20 +2994,20 @@
               ],
               "doc": "Get a ManagedIdentityTrackedResource",
               "operation": {
-                "$id": "197",
+                "$id": "199",
                 "name": "get",
                 "isExactName": false,
                 "doc": "Get a ManagedIdentityTrackedResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "198",
+                    "$id": "200",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "199",
+                      "$id": "201",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3005,7 +3017,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "200",
+                        "$id": "202",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3028,22 +3040,29 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "175"
+                        "$ref": "177"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "201",
+                    "$id": "203",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "202",
+                      "$id": "204",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "205",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -3067,16 +3086,23 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "203",
+                        "$id": "206",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "204",
+                          "$id": "207",
                           "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "208",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
                           "decorators": []
                         },
                         "location": "",
@@ -3102,13 +3128,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "205",
+                    "$id": "209",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "206",
+                      "$id": "210",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3149,13 +3175,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "207",
+                        "$id": "211",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "208",
+                          "$id": "212",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3198,13 +3224,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "209",
+                    "$id": "213",
                     "kind": "path",
                     "name": "managedIdentityTrackedResourceName",
                     "serializedName": "managedIdentityTrackedResourceName",
                     "doc": "arm resource name for path",
                     "type": {
-                      "$id": "210",
+                      "$id": "214",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3229,13 +3255,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.managedIdentityTrackedResourceName",
                     "methodParameterSegments": [
                       {
-                        "$id": "211",
+                        "$id": "215",
                         "kind": "method",
                         "name": "managedIdentityTrackedResourceName",
                         "serializedName": "managedIdentityTrackedResourceName",
                         "doc": "arm resource name for path",
                         "type": {
-                          "$id": "212",
+                          "$id": "216",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3262,7 +3288,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "213",
+                    "$id": "217",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -3278,7 +3304,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "214",
+                        "$id": "218",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -3336,21 +3362,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "207"
-                },
-                {
                   "$ref": "211"
                 },
                 {
-                  "$ref": "214"
+                  "$ref": "215"
                 },
                 {
-                  "$id": "215",
+                  "$ref": "218"
+                },
+                {
+                  "$id": "219",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "202"
+                    "$ref": "204"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -3372,7 +3398,7 @@
               "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get"
             },
             {
-              "$id": "216",
+              "$id": "220",
               "kind": "basic",
               "name": "createWithSystemAssigned",
               "isExactName": false,
@@ -3382,20 +3408,20 @@
               ],
               "doc": "Create a ManagedIdentityTrackedResource",
               "operation": {
-                "$id": "217",
+                "$id": "221",
                 "name": "createWithSystemAssigned",
                 "isExactName": false,
                 "doc": "Create a ManagedIdentityTrackedResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "218",
+                    "$id": "222",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "219",
+                      "$id": "223",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3405,7 +3431,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "220",
+                        "$id": "224",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3428,22 +3454,29 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "175"
+                        "$ref": "177"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "221",
+                    "$id": "225",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "222",
+                      "$id": "226",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "227",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -3467,19 +3500,19 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "203"
+                        "$ref": "206"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "223",
+                    "$id": "228",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "224",
+                      "$id": "229",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3520,13 +3553,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "225",
+                        "$id": "230",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "226",
+                          "$id": "231",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3569,13 +3602,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "227",
+                    "$id": "232",
                     "kind": "path",
                     "name": "managedIdentityTrackedResourceName",
                     "serializedName": "managedIdentityTrackedResourceName",
                     "doc": "arm resource name for path",
                     "type": {
-                      "$id": "228",
+                      "$id": "233",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3600,13 +3633,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.managedIdentityTrackedResourceName",
                     "methodParameterSegments": [
                       {
-                        "$id": "229",
+                        "$id": "234",
                         "kind": "method",
                         "name": "managedIdentityTrackedResourceName",
                         "serializedName": "managedIdentityTrackedResourceName",
                         "doc": "arm resource name for path",
                         "type": {
-                          "$id": "230",
+                          "$id": "235",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3633,7 +3666,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "231",
+                    "$id": "236",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -3650,7 +3683,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "232",
+                        "$id": "237",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -3672,7 +3705,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "233",
+                    "$id": "238",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -3688,7 +3721,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "234",
+                        "$id": "239",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -3709,7 +3742,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "235",
+                    "$id": "240",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
@@ -3729,7 +3762,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.resource",
                     "methodParameterSegments": [
                       {
-                        "$id": "236",
+                        "$id": "241",
                         "kind": "method",
                         "name": "resource",
                         "serializedName": "resource",
@@ -3814,27 +3847,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "225"
-                },
-                {
-                  "$ref": "229"
-                },
-                {
-                  "$ref": "236"
-                },
-                {
-                  "$ref": "232"
+                  "$ref": "230"
                 },
                 {
                   "$ref": "234"
                 },
                 {
-                  "$id": "237",
+                  "$ref": "241"
+                },
+                {
+                  "$ref": "237"
+                },
+                {
+                  "$ref": "239"
+                },
+                {
+                  "$id": "242",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "222"
+                    "$ref": "226"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -3856,7 +3889,7 @@
               "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned"
             },
             {
-              "$id": "238",
+              "$id": "243",
               "kind": "basic",
               "name": "updateWithUserAssignedAndSystemAssigned",
               "isExactName": false,
@@ -3866,20 +3899,20 @@
               ],
               "doc": "Update a ManagedIdentityTrackedResource",
               "operation": {
-                "$id": "239",
+                "$id": "244",
                 "name": "updateWithUserAssignedAndSystemAssigned",
                 "isExactName": false,
                 "doc": "Update a ManagedIdentityTrackedResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "240",
+                    "$id": "245",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "241",
+                      "$id": "246",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3889,7 +3922,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "242",
+                        "$id": "247",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3912,22 +3945,29 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "175"
+                        "$ref": "177"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "243",
+                    "$id": "248",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "244",
+                      "$id": "249",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "250",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -3951,19 +3991,19 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "203"
+                        "$ref": "206"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "245",
+                    "$id": "251",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "246",
+                      "$id": "252",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4004,13 +4044,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "247",
+                        "$id": "253",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "248",
+                          "$id": "254",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4053,13 +4093,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "249",
+                    "$id": "255",
                     "kind": "path",
                     "name": "managedIdentityTrackedResourceName",
                     "serializedName": "managedIdentityTrackedResourceName",
                     "doc": "arm resource name for path",
                     "type": {
-                      "$id": "250",
+                      "$id": "256",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4084,13 +4124,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.managedIdentityTrackedResourceName",
                     "methodParameterSegments": [
                       {
-                        "$id": "251",
+                        "$id": "257",
                         "kind": "method",
                         "name": "managedIdentityTrackedResourceName",
                         "serializedName": "managedIdentityTrackedResourceName",
                         "doc": "arm resource name for path",
                         "type": {
-                          "$id": "252",
+                          "$id": "258",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4117,7 +4157,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "253",
+                    "$id": "259",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -4134,7 +4174,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "254",
+                        "$id": "260",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -4156,7 +4196,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "255",
+                    "$id": "261",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -4172,7 +4212,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "256",
+                        "$id": "262",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -4193,7 +4233,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "257",
+                    "$id": "263",
                     "kind": "body",
                     "name": "properties",
                     "serializedName": "properties",
@@ -4213,7 +4253,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.properties",
                     "methodParameterSegments": [
                       {
-                        "$id": "258",
+                        "$id": "264",
                         "kind": "method",
                         "name": "properties",
                         "serializedName": "properties",
@@ -4280,27 +4320,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "247"
+                  "$ref": "253"
                 },
                 {
-                  "$ref": "251"
+                  "$ref": "257"
                 },
                 {
-                  "$ref": "258"
+                  "$ref": "264"
                 },
                 {
-                  "$ref": "254"
+                  "$ref": "260"
                 },
                 {
-                  "$ref": "256"
+                  "$ref": "262"
                 },
                 {
-                  "$id": "259",
+                  "$id": "265",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "244"
+                    "$ref": "249"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -4324,13 +4364,13 @@
           ],
           "parameters": [
             {
-              "$id": "260",
+              "$id": "266",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "261",
+                "$id": "267",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -4341,7 +4381,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "262",
+                  "$id": "268",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4355,7 +4395,7 @@
               "isExactName": false
             },
             {
-              "$ref": "175"
+              "$ref": "177"
             }
           ],
           "initializedBy": 0,
@@ -4370,19 +4410,19 @@
             "2023-12-01-preview"
           ],
           "parent": {
-            "$ref": "171"
+            "$ref": "173"
           },
           "isMultiServiceClient": false
         },
         {
-          "$id": "263",
+          "$id": "269",
           "kind": "client",
           "name": "Error",
           "isExactName": false,
           "namespace": "Azure.ResourceManager.CommonProperties",
           "methods": [
             {
-              "$id": "264",
+              "$id": "270",
               "kind": "basic",
               "name": "getForPredefinedError",
               "isExactName": false,
@@ -4392,20 +4432,20 @@
               ],
               "doc": "Get a ConfidentialResource",
               "operation": {
-                "$id": "265",
+                "$id": "271",
                 "name": "getForPredefinedError",
                 "isExactName": false,
                 "doc": "Get a ConfidentialResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "266",
+                    "$id": "272",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "267",
+                      "$id": "273",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4415,7 +4455,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "268",
+                        "$id": "274",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4438,13 +4478,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "269",
+                        "$id": "275",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "270",
+                          "$id": "276",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4454,7 +4494,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "271",
+                            "$id": "277",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4482,16 +4522,23 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "272",
+                    "$id": "278",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "273",
+                      "$id": "279",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "280",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -4515,16 +4562,23 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "274",
+                        "$id": "281",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "275",
+                          "$id": "282",
                           "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "283",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
                           "decorators": []
                         },
                         "location": "",
@@ -4550,13 +4604,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "276",
+                    "$id": "284",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "277",
+                      "$id": "285",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4597,13 +4651,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "278",
+                        "$id": "286",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "279",
+                          "$id": "287",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4646,13 +4700,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "280",
+                    "$id": "288",
                     "kind": "path",
                     "name": "confidentialResourceName",
                     "serializedName": "confidentialResourceName",
                     "doc": "The name of the ConfidentialResource",
                     "type": {
-                      "$id": "281",
+                      "$id": "289",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4677,13 +4731,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.confidentialResourceName",
                     "methodParameterSegments": [
                       {
-                        "$id": "282",
+                        "$id": "290",
                         "kind": "method",
                         "name": "confidentialResourceName",
                         "serializedName": "confidentialResourceName",
                         "doc": "The name of the ConfidentialResource",
                         "type": {
-                          "$id": "283",
+                          "$id": "291",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4710,7 +4764,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "284",
+                    "$id": "292",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -4726,7 +4780,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "285",
+                        "$id": "293",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -4753,7 +4807,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "117"
+                      "$ref": "119"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -4784,21 +4838,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "278"
+                  "$ref": "286"
                 },
                 {
-                  "$ref": "282"
+                  "$ref": "290"
                 },
                 {
-                  "$ref": "285"
+                  "$ref": "293"
                 },
                 {
-                  "$id": "286",
+                  "$id": "294",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "273"
+                    "$ref": "279"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -4811,7 +4865,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "117"
+                  "$ref": "119"
                 }
               },
               "isOverride": false,
@@ -4820,7 +4874,7 @@
               "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError"
             },
             {
-              "$id": "287",
+              "$id": "295",
               "kind": "basic",
               "name": "createForUserDefinedError",
               "isExactName": false,
@@ -4830,20 +4884,20 @@
               ],
               "doc": "Create a ConfidentialResource",
               "operation": {
-                "$id": "288",
+                "$id": "296",
                 "name": "createForUserDefinedError",
                 "isExactName": false,
                 "doc": "Create a ConfidentialResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "289",
+                    "$id": "297",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "290",
+                      "$id": "298",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4853,7 +4907,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "291",
+                        "$id": "299",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4876,22 +4930,29 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "269"
+                        "$ref": "275"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "292",
+                    "$id": "300",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "293",
+                      "$id": "301",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "302",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -4915,19 +4976,19 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "274"
+                        "$ref": "281"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "294",
+                    "$id": "303",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "295",
+                      "$id": "304",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4968,13 +5029,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "296",
+                        "$id": "305",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "297",
+                          "$id": "306",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5017,13 +5078,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "298",
+                    "$id": "307",
                     "kind": "path",
                     "name": "confidentialResourceName",
                     "serializedName": "confidentialResourceName",
                     "doc": "The name of the ConfidentialResource",
                     "type": {
-                      "$id": "299",
+                      "$id": "308",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5048,13 +5109,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.confidentialResourceName",
                     "methodParameterSegments": [
                       {
-                        "$id": "300",
+                        "$id": "309",
                         "kind": "method",
                         "name": "confidentialResourceName",
                         "serializedName": "confidentialResourceName",
                         "doc": "The name of the ConfidentialResource",
                         "type": {
-                          "$id": "301",
+                          "$id": "310",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5081,7 +5142,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "302",
+                    "$id": "311",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -5098,7 +5159,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "303",
+                        "$id": "312",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -5120,7 +5181,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "304",
+                    "$id": "313",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -5136,7 +5197,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "305",
+                        "$id": "314",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -5157,13 +5218,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "306",
+                    "$id": "315",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "117"
+                      "$ref": "119"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -5177,13 +5238,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.resource",
                     "methodParameterSegments": [
                       {
-                        "$id": "307",
+                        "$id": "316",
                         "kind": "method",
                         "name": "resource",
                         "serializedName": "resource",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "117"
+                          "$ref": "119"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -5210,7 +5271,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "117"
+                      "$ref": "119"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -5228,7 +5289,7 @@
                       201
                     ],
                     "bodyType": {
-                      "$ref": "117"
+                      "$ref": "119"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -5262,27 +5323,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "296"
-                },
-                {
-                  "$ref": "300"
-                },
-                {
-                  "$ref": "307"
-                },
-                {
-                  "$ref": "303"
-                },
-                {
                   "$ref": "305"
                 },
                 {
-                  "$id": "308",
+                  "$ref": "309"
+                },
+                {
+                  "$ref": "316"
+                },
+                {
+                  "$ref": "312"
+                },
+                {
+                  "$ref": "314"
+                },
+                {
+                  "$id": "317",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "293"
+                    "$ref": "301"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -5295,7 +5356,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "117"
+                  "$ref": "119"
                 }
               },
               "isOverride": false,
@@ -5306,13 +5367,13 @@
           ],
           "parameters": [
             {
-              "$id": "309",
+              "$id": "318",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "310",
+                "$id": "319",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -5323,7 +5384,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "311",
+                  "$id": "320",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5337,7 +5398,7 @@
               "isExactName": false
             },
             {
-              "$ref": "269"
+              "$ref": "275"
             }
           ],
           "initializedBy": 0,
@@ -5352,19 +5413,19 @@
             "2023-12-01-preview"
           ],
           "parent": {
-            "$ref": "171"
+            "$ref": "173"
           },
           "isMultiServiceClient": false
         },
         {
-          "$id": "312",
+          "$id": "321",
           "kind": "client",
           "name": "ArmResourceIdentifiers",
           "isExactName": false,
           "namespace": "Azure.ResourceManager.CommonProperties",
           "methods": [
             {
-              "$id": "313",
+              "$id": "322",
               "kind": "basic",
               "name": "get",
               "isExactName": false,
@@ -5374,20 +5435,20 @@
               ],
               "doc": "Get a ArmResourceIdentifierResource",
               "operation": {
-                "$id": "314",
+                "$id": "323",
                 "name": "get",
                 "isExactName": false,
                 "doc": "Get a ArmResourceIdentifierResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "315",
+                    "$id": "324",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "316",
+                      "$id": "325",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5397,7 +5458,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "317",
+                        "$id": "326",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5420,13 +5481,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "318",
+                        "$id": "327",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "319",
+                          "$id": "328",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5436,7 +5497,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "320",
+                            "$id": "329",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5464,16 +5525,23 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "321",
+                    "$id": "330",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "322",
+                      "$id": "331",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "332",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -5497,16 +5565,23 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "323",
+                        "$id": "333",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "324",
+                          "$id": "334",
                           "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "335",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
                           "decorators": []
                         },
                         "location": "",
@@ -5532,13 +5607,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "325",
+                    "$id": "336",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "326",
+                      "$id": "337",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5579,13 +5654,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "327",
+                        "$id": "338",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "328",
+                          "$id": "339",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5628,13 +5703,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "329",
+                    "$id": "340",
                     "kind": "path",
                     "name": "armResourceIdentifierResourceName",
                     "serializedName": "armResourceIdentifierResourceName",
                     "doc": "arm resource name for path",
                     "type": {
-                      "$id": "330",
+                      "$id": "341",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5659,13 +5734,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.get.armResourceIdentifierResourceName",
                     "methodParameterSegments": [
                       {
-                        "$id": "331",
+                        "$id": "342",
                         "kind": "method",
                         "name": "armResourceIdentifierResourceName",
                         "serializedName": "armResourceIdentifierResourceName",
                         "doc": "arm resource name for path",
                         "type": {
-                          "$id": "332",
+                          "$id": "343",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5692,7 +5767,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "333",
+                    "$id": "344",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -5708,7 +5783,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "334",
+                        "$id": "345",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -5735,7 +5810,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "150"
+                      "$ref": "152"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -5766,21 +5841,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "327"
+                  "$ref": "338"
                 },
                 {
-                  "$ref": "331"
+                  "$ref": "342"
                 },
                 {
-                  "$ref": "334"
+                  "$ref": "345"
                 },
                 {
-                  "$id": "335",
+                  "$id": "346",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "322"
+                    "$ref": "331"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -5793,7 +5868,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "150"
+                  "$ref": "152"
                 }
               },
               "isOverride": false,
@@ -5802,7 +5877,7 @@
               "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.get"
             },
             {
-              "$id": "336",
+              "$id": "347",
               "kind": "basic",
               "name": "createOrReplace",
               "isExactName": false,
@@ -5812,20 +5887,20 @@
               ],
               "doc": "Create a ArmResourceIdentifierResource",
               "operation": {
-                "$id": "337",
+                "$id": "348",
                 "name": "createOrReplace",
                 "isExactName": false,
                 "doc": "Create a ArmResourceIdentifierResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "338",
+                    "$id": "349",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "339",
+                      "$id": "350",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5835,7 +5910,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "340",
+                        "$id": "351",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5858,22 +5933,29 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "318"
+                        "$ref": "327"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "341",
+                    "$id": "352",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "342",
+                      "$id": "353",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "354",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -5897,19 +5979,19 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.createOrReplace.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "323"
+                        "$ref": "333"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "343",
+                    "$id": "355",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "344",
+                      "$id": "356",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5950,13 +6032,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.createOrReplace.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "345",
+                        "$id": "357",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "346",
+                          "$id": "358",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5999,13 +6081,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "347",
+                    "$id": "359",
                     "kind": "path",
                     "name": "armResourceIdentifierResourceName",
                     "serializedName": "armResourceIdentifierResourceName",
                     "doc": "arm resource name for path",
                     "type": {
-                      "$id": "348",
+                      "$id": "360",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6030,13 +6112,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.createOrReplace.armResourceIdentifierResourceName",
                     "methodParameterSegments": [
                       {
-                        "$id": "349",
+                        "$id": "361",
                         "kind": "method",
                         "name": "armResourceIdentifierResourceName",
                         "serializedName": "armResourceIdentifierResourceName",
                         "doc": "arm resource name for path",
                         "type": {
-                          "$id": "350",
+                          "$id": "362",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6063,7 +6145,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "351",
+                    "$id": "363",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -6080,7 +6162,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.createOrReplace.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "352",
+                        "$id": "364",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -6102,7 +6184,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "353",
+                    "$id": "365",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -6118,7 +6200,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.createOrReplace.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "354",
+                        "$id": "366",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -6139,13 +6221,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "355",
+                    "$id": "367",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "150"
+                      "$ref": "152"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -6159,13 +6241,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ArmResourceIdentifiers.createOrReplace.resource",
                     "methodParameterSegments": [
                       {
-                        "$id": "356",
+                        "$id": "368",
                         "kind": "method",
                         "name": "resource",
                         "serializedName": "resource",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "150"
+                          "$ref": "152"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -6192,7 +6274,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "150"
+                      "$ref": "152"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6210,7 +6292,7 @@
                       201
                     ],
                     "bodyType": {
-                      "$ref": "150"
+                      "$ref": "152"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6244,27 +6326,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "345"
+                  "$ref": "357"
                 },
                 {
-                  "$ref": "349"
+                  "$ref": "361"
                 },
                 {
-                  "$ref": "356"
+                  "$ref": "368"
                 },
                 {
-                  "$ref": "352"
+                  "$ref": "364"
                 },
                 {
-                  "$ref": "354"
+                  "$ref": "366"
                 },
                 {
-                  "$id": "357",
+                  "$id": "369",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "342"
+                    "$ref": "353"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -6277,7 +6359,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "150"
+                  "$ref": "152"
                 }
               },
               "isOverride": false,
@@ -6288,13 +6370,13 @@
           ],
           "parameters": [
             {
-              "$id": "358",
+              "$id": "370",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "359",
+                "$id": "371",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -6305,7 +6387,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "360",
+                  "$id": "372",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6319,7 +6401,7 @@
               "isExactName": false
             },
             {
-              "$ref": "318"
+              "$ref": "327"
             }
           ],
           "initializedBy": 0,
@@ -6334,7 +6416,7 @@
             "2023-12-01-preview"
           ],
           "parent": {
-            "$ref": "171"
+            "$ref": "173"
           },
           "isMultiServiceClient": false
         }

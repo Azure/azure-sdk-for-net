@@ -4,10 +4,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.ResourceManager.ResourceGraph.Mocking;
+using Azure.Core;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.Resources;
 
@@ -16,6 +17,30 @@ namespace Azure.ResourceManager.ResourceGraph
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceGraph. </summary>
     public static partial class ResourceGraphExtensions
     {
+        /// <summary> Lists all snapshots of a resource for a given time interval. </summary>
+        /// <param name="tenantResource"> The tenant resource on which to execute the request. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use GetResourcesHistoryAsync with ResourcesHistoryContent instead. The replacement returns the response body as BinaryData.")]
+        public static async Task<Response<IDictionary<string, BinaryData>>> GetResourcesHistoryAsync(this TenantResource tenantResource, ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            return await GetMockableResourceGraphTenantResource(tenantResource).GetResourcesHistoryAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Lists all snapshots of a resource for a given time interval. </summary>
+        /// <param name="tenantResource"> The tenant resource on which to execute the request. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use GetResourcesHistory with ResourcesHistoryContent instead. The replacement returns the response body as BinaryData.")]
+        public static Response<IDictionary<string, BinaryData>> GetResourcesHistory(this TenantResource tenantResource, ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            return GetMockableResourceGraphTenantResource(tenantResource).GetResourcesHistory(content, cancellationToken);
+        }
+
         /// <summary>
         /// List all snapshots of a resource for a given time interval.
         /// <list type="bullet">

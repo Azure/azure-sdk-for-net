@@ -20,6 +20,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private readonly ProcessSessionMessageEventArgs _sessionEventArgs;
 
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> SettledMessages { get; } = new();
+        internal Action<ServiceBusReceivedMessage> MessageSettled { get; set; }
 
         internal ServiceBusMessageActions(ProcessSessionMessageEventArgs sessionEventArgs)
         {
@@ -265,6 +266,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
 
         private void TrackMessageAsSettled(ServiceBusReceivedMessage message)
-            => SettledMessages[message] = 0;
+        {
+            SettledMessages[message] = 0;
+            MessageSettled?.Invoke(message);
+        }
     }
 }

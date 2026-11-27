@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.ManagedServiceIdentities;
@@ -42,11 +45,16 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
+            if (TestContext.CurrentContext.Test.Properties["Category"].Contains("Unit"))
+            {
+                return;
+            }
             // Currently our pipeline will run this test project with project reference
             // And we jsut upgraded the version of ManagedServiceIdentities, therefore the related tests will fail
             // Use the version override as a work around because we lack the test resource now.
             ArmClientOptions options = new ArmClientOptions();
             options.SetApiVersion(UserAssignedIdentityResource.ResourceType, "2018-11-30");
+            options.AddPolicy(new ResponseStatusPolicy(), HttpPipelinePosition.PerCall);
 
             Client = GetArmClient(options);
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
@@ -61,10 +69,76 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 {
                     Tags =
                     {
-                        { "test", "env" }
+                        { "test", "env" },
+                        { "azsdk-test-class", GetType().Name }
                     }
                 });
             return operation.Value;
+        }
+
+        protected static void AssertStatus(Response response, params int[] expected)
+        {
+            TestContext.WriteLine($"HTTP {response.Status}");
+            Assert.That(expected, Does.Contain(response.Status));
+        }
+
+        protected static async Task<T> CompleteAsync<T>(ArmOperation<T> operation)
+        {
+            AssertStatus(operation.GetRawResponse(), 200, 201, 202);
+            await operation.WaitForCompletionResponseAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            AssertStatus(operation.GetRawResponse(), 200, 201);
+            return operation.Value;
+        }
+
+        protected static async Task CompleteAsync(ArmOperation operation)
+        {
+            AssertStatus(operation.GetRawResponse(), 200, 202, 204);
+            await operation.WaitForCompletionResponseAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            AssertStatus(operation.GetRawResponse(), 200, 204);
+        }
+
+        protected async Task<EventHubsNamespaceResource> CreateNamespaceAsync(ResourceGroupResource group, string name, EventHubsSkuName? sku = null, AzureLocation? location = null)
+        {
+            var data = new EventHubsNamespaceData(location ?? DefaultLocation)
+            {
+                DisableLocalAuth = true,
+                Sku = new EventHubsSku(sku ?? EventHubsSkuName.Standard) { Capacity = 1 }
+            };
+            if (sku == EventHubsSkuName.Premium)
+            {
+                data.Sku.Tier = EventHubsSkuTier.Premium;
+            }
+            EventHubsNamespaceResource resource = await CompleteAsync(
+                await group.GetEventHubsNamespaces().CreateOrUpdateAsync(WaitUntil.Started, name, data));
+            Assert.AreEqual("Succeeded", resource.Data.ProvisioningState);
+            Assert.IsTrue(resource.Data.DisableLocalAuth);
+            return resource;
+        }
+
+        protected static async Task<List<T>> ReadAllAsync<T>(AsyncPageable<T> values)
+        {
+            var result = new List<T>();
+            await foreach (Page<T> page in values.AsPages())
+            {
+                AssertStatus(page.GetRawResponse(), 200);
+                result.AddRange(page.Values);
+            }
+            return result;
+        }
+
+        private sealed class ResponseStatusPolicy : HttpPipelineSynchronousPolicy
+        {
+            public override void OnReceivedResponse(HttpMessage message)
+            {
+                TestContext.WriteLine($"{message.Request.Method} {message.Request.Uri.Path} -> HTTP {message.Response.Status}");
+                if (message.Response.Status < 400)
+                {
+                    AssertStatus(message.Response, 200, 201, 202, 204);
+                }
+            }
         }
 
         public static string GenerateRandomKey()

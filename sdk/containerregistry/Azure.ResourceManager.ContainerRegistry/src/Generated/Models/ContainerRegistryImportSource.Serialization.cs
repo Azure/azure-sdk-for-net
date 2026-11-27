@@ -85,11 +85,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(RegistryUri))
             {
                 writer.WritePropertyName("registryUri"u8);
                 writer.WriteStringValue(RegistryUri.AbsoluteUri);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);

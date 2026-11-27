@@ -363,6 +363,16 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <param name="limit"> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </param>
+        /// <param name="value"> Resource name. </param>
+        /// <param name="localizedValue"> Resource display name. </param>
+        /// <param name="region"> The location for which the subscription is allocated. </param>
+        /// <returns> A new <see cref="Models.QuotaAllocationRequestBase"/> instance for mocking. </returns>
+        public static QuotaAllocationRequestBase QuotaAllocationRequestBase(long? limit = default, string value = default, string localizedValue = default, string region = default)
+        {
+            return new QuotaAllocationRequestBase(limit is null && value is null && localizedValue is null && region is null ? default : new QuotaAllocationRequestBaseProperties(limit, value is null && localizedValue is null ? default : new QuotaAllocationRequestBasePropertiesName(value, localizedValue, default), region, default), default);
+        }
+
         /// <summary> The GroupQuota Enforcement status for a Azure Location/Region. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

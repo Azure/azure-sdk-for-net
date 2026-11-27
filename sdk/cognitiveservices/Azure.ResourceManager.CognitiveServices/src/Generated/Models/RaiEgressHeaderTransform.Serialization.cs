@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(ValueRef))
+            if (Optional.IsDefined(ValueReference))
             {
                 writer.WritePropertyName("valueRef"u8);
-                writer.WriteObjectValue(ValueRef, options);
+                writer.WriteObjectValue(ValueReference, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             RaiEgressHeaderOperation operation = default;
             string name = default;
             string value = default;
-            RaiEgressHeaderValueRef valueRef = default;
+            RaiEgressHeaderValueReference valueReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    valueRef = RaiEgressHeaderValueRef.DeserializeRaiEgressHeaderValueRef(prop.Value, options);
+                    valueReference = RaiEgressHeaderValueReference.DeserializeRaiEgressHeaderValueReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RaiEgressHeaderTransform(operation, name, value, valueRef, additionalBinaryDataProperties);
+            return new RaiEgressHeaderTransform(operation, name, value, valueReference, additionalBinaryDataProperties);
         }
     }
 }

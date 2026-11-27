@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             {
                 return string.Equals(Hub, key.Hub, StringComparison.InvariantCultureIgnoreCase)
                     && string.Equals(EventName, key.EventName, StringComparison.InvariantCultureIgnoreCase)
-                    && string.Equals(Namespace, key.Namespace, StringComparison.InvariantCultureIgnoreCase)
+                    && string.Equals(Namespace, key.Namespace, StringComparison.Ordinal)
                     && EventType == key.EventType;
             }
             return false;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                 // Suitable nullity checks etc, of course :)
                 hash = hash * 23 + (Hub != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(Hub) : 0);
                 hash = hash * 23 + (EventName != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(EventName) : 0);
-                hash = hash * 23 + (Namespace != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(Namespace) : 0);
+                hash = hash * 23 + (Namespace != null ? StringComparer.Ordinal.GetHashCode(Namespace) : 0);
                 hash = hash * 23 + EventType.GetHashCode();
                 return hash;
             }

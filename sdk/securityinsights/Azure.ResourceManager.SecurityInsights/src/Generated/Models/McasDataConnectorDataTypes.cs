@@ -15,11 +15,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class McasDataConnectorDataTypes : SecurityInsightsAlertsDataTypeOfDataConnector
     {
         /// <summary> Initializes a new instance of <see cref="McasDataConnectorDataTypes"/>. </summary>
-        /// <param name="alerts"> Alerts data type connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alerts"/> is null. </exception>
-        public McasDataConnectorDataTypes(DataConnectorDataTypeCommon alerts) : base(alerts)
+        /// <param name="alertsState"> Describe whether this data type connection is enabled or not. </param>
+        public McasDataConnectorDataTypes(SecurityInsightsDataTypeConnectionState alertsState) : base(alertsState)
         {
-            Argument.AssertNotNull(alerts, nameof(alerts));
 
         }
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 12.29.0-beta.2 (Unreleased)
+## 12.29.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,24 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 12.29.0-beta.2 (2026-11-19)
+
+### Bugs Fixed
+
 - Fixed SAS builder/client queue-name validation to use ordinal comparisons in `QueueClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
 
-### Other Changes
+## 12.28.2 (2026-11-19)
+
+### Bugs Fixed
+
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `QueueClient.GenerateSasUri(...)`
+  - `QueueClient.GenerateUserDelegationSasUri(...)`
+  - `QueueServiceClient.GenerateAccountSasUri(...)`
+  - `QueueSasBuilder`
+- Fixed SAS builder/client queue-name validation to use ordinal comparisons in `QueueClient`, so culture-equivalent but service-distinct Unicode names are rejected when generating SAS URIs.
 
 ## 12.29.0-beta.1 (2026-11-05)
 

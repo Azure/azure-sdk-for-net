@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0-beta.1 (2026-11-17)
+
+### Features Added
+
+- Upgraded the API version to `2026-10-01-preview`.
+- Added network security perimeter configuration operations and models.
+- Added support for managed identities, token binding, cross-tenant access protection, and external protection-key wrapping.
 
 ## 1.5.0 (2026-10-15)
 

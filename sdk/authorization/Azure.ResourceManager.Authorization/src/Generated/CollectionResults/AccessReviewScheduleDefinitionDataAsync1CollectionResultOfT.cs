@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _filter, _context) : _client.CreateGetAllRequest(_filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAccessReviewScheduleDefinitionsAssignedForMyApprovalRequest(nextLink, _filter, _context) : _client.CreateGetAccessReviewScheduleDefinitionsAssignedForMyApprovalRequest(_filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

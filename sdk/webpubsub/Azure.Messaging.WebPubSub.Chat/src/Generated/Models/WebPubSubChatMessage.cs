@@ -18,11 +18,6 @@ namespace Azure.Messaging.WebPubSub.Chat
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubChatMessage"/>. </summary>
-        public WebPubSubChatMessage()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebPubSubChatMessage"/>. </summary>
         /// <param name="id"> Message identifier. </param>
         /// <param name="createdBy"> User who created the message. </param>
         /// <param name="content"> Message content. </param>

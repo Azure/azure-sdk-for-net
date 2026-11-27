@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The ProgramToolCallCallerParam. </summary>
-    public partial class ProgramToolCallCallerParam : ToolCallCallerParam, IJsonModel<ProgramToolCallCallerParam>
+    internal partial class ProgramToolCallCallerParam : ToolCallCallerParam, IJsonModel<ProgramToolCallCallerParam>
     {
         /// <summary> Initializes a new instance of <see cref="ProgramToolCallCallerParam"/> for deserialization. </summary>
         internal ProgramToolCallCallerParam()

@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 
 namespace Azure.AI.AgentServer.Core.Storage
 {
     /// <summary>Raised when an <c>If-Match</c> precondition fails (HTTP 412).</summary>
+    [Experimental("AAAS004")]
     public class FoundryStoragePreconditionException : FoundryStorageException
     {
         /// <summary>Initializes a new instance of the <see cref="FoundryStoragePreconditionException"/> class.</summary>

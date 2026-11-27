@@ -202,6 +202,40 @@ Describe 'CI failure analysis original behavior' -Tag 'Original' {
         (Get-CiTestOutputs $Fixture).eligible | Should -BeExactly 'false'
     }
 
+    It 'starts and completes the analysis when GitHub replaces the claim details URL' {
+        $prepared = New-CiPrepared $Fixture
+        $Fixture.State.claims[0].details_url = 'https://github.com/Azure/azure-sdk-for-net/runs/900'
+
+        Start-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared | Should -BeTrue
+        Add-CiPublishedReport $Fixture $prepared
+        Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults $script:SuccessfulJobs
+        $Fixture.State.claims[0].status | Should -BeExactly 'completed'
+        $Fixture.State.claims[0].conclusion | Should -BeExactly 'success'
+        $Fixture.State.claims[0].output.text | Should -BeExactly 'ci-failure-analysis-owner:1000:1'
+        Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults $script:SuccessfulJobs
+        @($Fixture.State.calls | Where-Object name -CEQ 'checks.update').Count | Should -Be 1
+    }
+
+    It 'finalizes a failed analysis when GitHub replaces the claim details URL' {
+        $prepared = New-CiPrepared $Fixture
+        $Fixture.State.claims[0].details_url = 'https://github.com/Azure/azure-sdk-for-net/runs/900'
+        { Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults @{ analyze = 'failure' } } |
+            Should -Throw '*CI failure analysis failed*'
+        $Fixture.State.claims[0].status | Should -BeExactly 'completed'
+        $Fixture.State.claims[0].conclusion | Should -BeExactly 'failure'
+        $Fixture.State.claims[0].output.text | Should -BeExactly 'ci-failure-analysis-owner:1000:1'
+    }
+
+    It 'finalizes a stale analysis when GitHub replaces the claim details URL' {
+        $prepared = New-CiPrepared $Fixture
+        $Fixture.State.claims[0].details_url = 'https://github.com/Azure/azure-sdk-for-net/runs/900'
+        $Fixture.State.prs[0].head.sha = 'b' * 40
+        Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults $script:SuccessfulJobs
+        $Fixture.State.claims[0].status | Should -BeExactly 'completed'
+        $Fixture.State.claims[0].conclusion | Should -BeExactly 'skipped'
+        $Fixture.State.claims[0].output.text | Should -BeExactly 'ci-failure-analysis-owner:1000:1'
+    }
+
     It '[G36] backend startup skips a head that advanced after the trigger prepared it' {
         $prepared = New-CiPrepared $Fixture
         $Fixture.State.prs[0].head.sha = 'b' * 40

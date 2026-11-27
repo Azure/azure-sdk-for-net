@@ -65,6 +65,101 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
+  - name: management-parameters-replacement-follows-payload-role
+    prompt: >-
+      First invoke the code-review skill. Review these synthetic API additions and return findings
+      only. The owning package is Azure.ResourceManager.Compute. VirtualMachineUpdateParameters
+      is a dedicated PATCH partial-update body; VirtualMachineRestartParameters is a dedicated
+      POST request body. Neither is resource data or a reusable domain model. Both are newly
+      introduced, and no analyzer checks their names. All other requirements are satisfied.
+      For each finding, include a separate line in the exact format
+      `RECOMMEND: original-name -> replacement-name`, without backticks; explanations may follow.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: VirtualMachineUpdateParameters -> VirtualMachine(?:Update)?Patch\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: VirtualMachineRestartParameters -> VirtualMachineRestartContent\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^RECOMMEND: (?:VirtualMachine(?:Update)?Patch|VirtualMachineRestartContent) ->'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: management-parameters-replacement-preserves-domain-role
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic API addition and return findings
+      only. Azure.ResourceManager.Compute introduces ConnectionParameters, a reusable domain model
+      representing connection configuration, nested in resource responses and multiple POST and
+      PATCH bodies. It is not a dedicated request wrapper or a partial-update model. Connection is
+      too vague; ConnectionConfiguration accurately describes the concept and does not collide.
+      No analyzer checks its name. All other API and generation requirements are satisfied.
+      Include a separate line in the exact format `RECOMMEND: original-name -> replacement-name`,
+      without backticks; explanations may follow and may discuss rejected alternatives.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: ConnectionParameters -> ConnectionConfiguration\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^RECOMMEND: (?:ConnectionParameters -> Connection(?:Content|Patch)|ConnectionConfiguration -> ConnectionParameters)\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: preserve-parameter-domain-concept
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic API addition and return findings
+      only. Azure.ResourceManager.Compute introduces RunCommandInputParameter, a domain model
+      representing one command input parameter with a name and a value, not a request wrapper or
+      a general configuration object. A RunCommandInput has an InputParameters property containing
+      a list of these command parameters. Both names describe the actual domain concepts. All other
+      API and generation requirements are satisfied; no enabled analyzer flags these names. If
+      there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: management-patch-options-use-patch-before-config
+    prompt: >-
+      First invoke the code-review skill. Review these synthetic API additions and return findings
+      only. Azure.ResourceManager.Compute introduces VirtualMachineUpdateOptions, a serialized
+      model used solely as a PATCH partial-update body, and VirtualMachineRestartOptions, a
+      serialized model used solely as a POST request body. Neither is a client options type,
+      method options bag, resource-data type, or reusable domain model. Both are newly introduced,
+      and no enabled analyzer checks their names. All other requirements are satisfied.
+      For each finding, include a separate line in the exact format
+      `RECOMMEND: original-name -> replacement-name`, without backticks; explanations may follow
+      and may discuss rejected alternatives.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: VirtualMachineUpdateOptions -> VirtualMachine(?:Update)?Patch\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: VirtualMachineRestartOptions -> VirtualMachineRestartConfig\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^RECOMMEND: (?:VirtualMachineUpdateOptions -> VirtualMachineUpdateConfig|VirtualMachineRestartOptions -> VirtualMachineRestartContent|VirtualMachine(?:Update)?Patch -> VirtualMachineUpdateOptions|VirtualMachineRestartConfig -> VirtualMachineRestartOptions)\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
   - name: management-patch-wrapper-needs-patch-name
     prompt: >-
       First invoke the code-review skill. Review this synthetic API addition
@@ -182,6 +277,46 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
+  - name: prefer-timespan-for-fixed-unit-numeric-duration
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic TypeSpec change and its
+      generated public property and return findings only. A data-plane model adds
+      `ttlInSeconds: int32` in TypeSpec, generating `public int TtlInSeconds { get; set; }`.
+      The service accepts any whole number of seconds as the item's time to live. Nothing
+      about the API benefits from callers choosing the value in seconds specifically. The
+      current generator supports TypeSpec `duration` with
+      `@encode(DurationKnownEncoding.seconds, int32)`, mapping to TimeSpan with the same wire
+      format. Serialization, validation and documentation are otherwise correct.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:TimeSpan)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:TimeSpan))'
+      - type: output-matches
+        config:
+          pattern: '(?i)@encode|DurationKnownEncoding'
+
+  - name: allow-fixed-unit-duration-when-it-improves-ux
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic new public property and return
+      findings only. A data-plane model adds `public int RetentionInDays { get; set; }`. The
+      service accepts only whole days from 1 to 365, and the documentation explains that users
+      choose a retention period as a number of days. A TimeSpan would allow hours, minutes and
+      fractional days that the service rejects. The contract, serialization, validation and
+      documentation are correct. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
   - name: use-guid-for-contractually-guaranteed-uuid
     prompt: >-
       First invoke the code-review skill. Review this synthetic new public API
@@ -277,12 +412,12 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
-  - name: allow-id-vm-and-a-singular-flags-name
+  - name: allow-id-vm-and-a-plural-flags-name
     prompt: >-
       First invoke the code-review skill. Review this synthetic API addition
       and return findings only. A model has a string VmId containing opaque virtual-machine
-      identifiers, not UUIDs or ARM resource IDs. A closed flags enum named StorageFileAccess follows
-      the established domain convention and declares None = 0, Read = 1 and Write = 2 with FlagsAttribute.
+      identifiers, not UUIDs or ARM resource IDs. A closed flags enum named StorageFilePermissions
+      declares None = 0, Read = 1 and Write = 2 with FlagsAttribute.
       Its values are genuinely combinable. All other API requirements are satisfied. If there
       is no finding, return exactly `No findings.`
     graders:
@@ -292,6 +427,31 @@ stimuli:
       - type: output-matches
         config:
           pattern: '^\s*No findings\.\s*$'
+
+  - name: flags-enum-name-must-be-plural
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic new enum and return findings only.
+      StorageFilePermission is a closed enum with FlagsAttribute and declares None = 0, Read = 1
+      and Write = 2. Its values are genuinely combinable. All other API and generation requirements
+      are satisfied. No enabled analyzer checks enum-name plurality. Include a separate line in
+      the exact format `SEVERITY RECOMMEND: original-name -> replacement-name`, using the actual
+      severity marker and no backticks; explanations may follow.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^🔴 RECOMMEND: StorageFilePermission -> StorageFilePermissions\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)singular|plural'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(?:🟡|ℹ️) RECOMMEND:|^(?:🔴|🟡|ℹ️) RECOMMEND: StorageFilePermissions -> StorageFilePermission\s*$'
 
   - name: power-of-two-values-do-not-establish-flags-semantics
     prompt: >-

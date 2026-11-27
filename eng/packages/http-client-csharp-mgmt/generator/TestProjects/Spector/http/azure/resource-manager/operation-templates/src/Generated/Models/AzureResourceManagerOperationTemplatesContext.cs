@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.OperationTemplates
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ActionRequest))]
+    [ModelReaderWriterBuildable(typeof(ActionContent))]
     [ModelReaderWriterBuildable(typeof(ActionResult))]
-    [ModelReaderWriterBuildable(typeof(ChangeAllowanceRequest))]
+    [ModelReaderWriterBuildable(typeof(ChangeAllowanceContent))]
     [ModelReaderWriterBuildable(typeof(ChangeAllowanceResult))]
-    [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityRequest))]
+    [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(Collection))]
     [ModelReaderWriterBuildable(typeof(Configuration))]
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.OperationTemplates
     [ModelReaderWriterBuildable(typeof(CostReportProperties))]
     [ModelReaderWriterBuildable(typeof(CostReportResource))]
     [ModelReaderWriterBuildable(typeof(DiagnosticInfo))]
-    [ModelReaderWriterBuildable(typeof(ExportRequest))]
+    [ModelReaderWriterBuildable(typeof(ExportContent))]
     [ModelReaderWriterBuildable(typeof(ExportResult))]
-    [ModelReaderWriterBuildable(typeof(LogStatusRequest))]
+    [ModelReaderWriterBuildable(typeof(LogStatusContent))]
     [ModelReaderWriterBuildable(typeof(MonitorData))]
     [ModelReaderWriterBuildable(typeof(MonitoredResource))]
     [ModelReaderWriterBuildable(typeof(MonitorProperties))]

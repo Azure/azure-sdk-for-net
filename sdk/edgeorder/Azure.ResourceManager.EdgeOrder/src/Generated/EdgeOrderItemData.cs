@@ -54,8 +54,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemDetails"> Represents order item details. </param>
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressDetails"/> is null. </exception>
         public EdgeOrderItemData(AzureLocation location, EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, ResourceIdentifier orderId) : this(location, orderItemDetails, orderId)
         {
+            Argument.AssertNotNull(addressDetails, nameof(addressDetails));
+
             AddressDetails = addressDetails;
         }
 

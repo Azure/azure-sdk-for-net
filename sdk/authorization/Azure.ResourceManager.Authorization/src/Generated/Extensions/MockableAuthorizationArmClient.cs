@@ -683,6 +683,15 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return await GetDenyAssignments(scope).GetAsync(denyAssignmentId, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="PrivilegedResourceFavoriteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivilegedResourceFavoriteResource"/> object. </returns>
+        public virtual PrivilegedResourceFavoriteResource GetPrivilegedResourceFavoriteResource(ResourceIdentifier id)
+        {
+            PrivilegedResourceFavoriteResource.ValidateResourceId(id);
+            return new PrivilegedResourceFavoriteResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="RoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleAssignmentResource"/> object. </returns>
