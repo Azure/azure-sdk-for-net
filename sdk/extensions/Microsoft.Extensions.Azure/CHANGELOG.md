@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Reduced the overhead of `AzureEventSourceLogForwarder` when it is created by `AddAzureClientsCore()` with the default `ILoggerFactory`, by only enabling each Azure SDK event source at the most verbose level that the logging filter rules (such as the `Logging:LogLevel` configuration) allow for any logging provider, instead of always enabling all events. The levels are re-evaluated if the logging filter rules change. In all other cases all events remain enabled, as before.
+
 ## 1.14.1 (2026-09-08)
 
 ### Other Changes
