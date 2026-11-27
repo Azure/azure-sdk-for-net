@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <returns> Returns a <see cref="ContainerGroupResource"/> object. </returns>
         public virtual ContainerGroupResource GetContainerGroupResource(ResourceIdentifier id)
         {
-            ContainerGroupResource.ValidateResourceId(id);
             return new ContainerGroupResource(Client, id);
         }
 
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <returns> Returns a <see cref="NGroupResource"/> object. </returns>
         public virtual NGroupResource GetNGroupResource(ResourceIdentifier id)
         {
-            NGroupResource.ValidateResourceId(id);
             return new NGroupResource(Client, id);
         }
 
@@ -61,7 +59,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <returns> Returns a <see cref="ContainerGroupProfileRevisionResource"/> object. </returns>
         public virtual ContainerGroupProfileRevisionResource GetContainerGroupProfileRevisionResource(ResourceIdentifier id)
         {
-            ContainerGroupProfileRevisionResource.ValidateResourceId(id);
             return new ContainerGroupProfileRevisionResource(Client, id);
         }
 
@@ -70,7 +67,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <returns> Returns a <see cref="ContainerGroupProfileResource"/> object. </returns>
         public virtual ContainerGroupProfileResource GetContainerGroupProfileResource(ResourceIdentifier id)
         {
-            ContainerGroupProfileResource.ValidateResourceId(id);
             return new ContainerGroupProfileResource(Client, id);
         }
 
@@ -79,7 +75,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <returns> Returns a <see cref="ContainerGroupSandboxResource"/> object. </returns>
         public virtual ContainerGroupSandboxResource GetContainerGroupSandboxResource(ResourceIdentifier id)
         {
-            ContainerGroupSandboxResource.ValidateResourceId(id);
             return new ContainerGroupSandboxResource(Client, id);
         }
 

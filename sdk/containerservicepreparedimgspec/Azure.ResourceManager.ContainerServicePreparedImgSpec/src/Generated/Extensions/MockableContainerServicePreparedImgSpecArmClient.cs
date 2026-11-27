@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Mocking
         /// <returns> Returns a <see cref="PreparedImageSpecificationResource"/> object. </returns>
         public virtual PreparedImageSpecificationResource GetPreparedImageSpecificationResource(ResourceIdentifier id)
         {
-            PreparedImageSpecificationResource.ValidateResourceId(id);
             return new PreparedImageSpecificationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Mocking
         /// <returns> Returns a <see cref="PreparedImageSpecificationVersionResource"/> object. </returns>
         public virtual PreparedImageSpecificationVersionResource GetPreparedImageSpecificationVersionResource(ResourceIdentifier id)
         {
-            PreparedImageSpecificationVersionResource.ValidateResourceId(id);
             return new PreparedImageSpecificationVersionResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServiceAgentPoolResource"/> object. </returns>
         public virtual ContainerServiceAgentPoolResource GetContainerServiceAgentPoolResource(ResourceIdentifier id)
         {
-            ContainerServiceAgentPoolResource.ValidateResourceId(id);
             return new ContainerServiceAgentPoolResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServiceManagedClusterResource"/> object. </returns>
         public virtual ContainerServiceManagedClusterResource GetContainerServiceManagedClusterResource(ResourceIdentifier id)
         {
-            ContainerServiceManagedClusterResource.ValidateResourceId(id);
             return new ContainerServiceManagedClusterResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource"/> object. </returns>
         public virtual ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(ResourceIdentifier id)
         {
-            ManagedClusterUpgradeProfileResource.ValidateResourceId(id);
             return new ManagedClusterUpgradeProfileResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> object. </returns>
         public virtual ContainerServiceGuardrailsAvailableVersionResource GetContainerServiceGuardrailsAvailableVersionResource(ResourceIdentifier id)
         {
-            ContainerServiceGuardrailsAvailableVersionResource.ValidateResourceId(id);
             return new ContainerServiceGuardrailsAvailableVersionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> object. </returns>
         public virtual ContainerServiceSafeguardsAvailableVersionResource GetContainerServiceSafeguardsAvailableVersionResource(ResourceIdentifier id)
         {
-            ContainerServiceSafeguardsAvailableVersionResource.ValidateResourceId(id);
             return new ContainerServiceSafeguardsAvailableVersionResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="MeshRevisionProfileResource"/> object. </returns>
         public virtual MeshRevisionProfileResource GetMeshRevisionProfileResource(ResourceIdentifier id)
         {
-            MeshRevisionProfileResource.ValidateResourceId(id);
             return new MeshRevisionProfileResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="MeshUpgradeProfileResource"/> object. </returns>
         public virtual MeshUpgradeProfileResource GetMeshUpgradeProfileResource(ResourceIdentifier id)
         {
-            MeshUpgradeProfileResource.ValidateResourceId(id);
             return new MeshUpgradeProfileResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource"/> object. </returns>
         public virtual ContainerServiceMaintenanceConfigurationResource GetContainerServiceMaintenanceConfigurationResource(ResourceIdentifier id)
         {
-            ContainerServiceMaintenanceConfigurationResource.ValidateResourceId(id);
             return new ContainerServiceMaintenanceConfigurationResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServiceManagedMaintenanceWindowResource"/> object. </returns>
         public virtual ContainerServiceManagedMaintenanceWindowResource GetContainerServiceManagedMaintenanceWindowResource(ResourceIdentifier id)
         {
-            ContainerServiceManagedMaintenanceWindowResource.ValidateResourceId(id);
             return new ContainerServiceManagedMaintenanceWindowResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ManagedClusterNamespaceResource"/> object. </returns>
         public virtual ManagedClusterNamespaceResource GetManagedClusterNamespaceResource(ResourceIdentifier id)
         {
-            ManagedClusterNamespaceResource.ValidateResourceId(id);
             return new ManagedClusterNamespaceResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource"/> object. </returns>
         public virtual AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfileResource(ResourceIdentifier id)
         {
-            AgentPoolUpgradeProfileResource.ValidateResourceId(id);
             return new AgentPoolUpgradeProfileResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServiceMachineResource"/> object. </returns>
         public virtual ContainerServiceMachineResource GetContainerServiceMachineResource(ResourceIdentifier id)
         {
-            ContainerServiceMachineResource.ValidateResourceId(id);
             return new ContainerServiceMachineResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServicePrivateEndpointConnectionResource"/> object. </returns>
         public virtual ContainerServicePrivateEndpointConnectionResource GetContainerServicePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ContainerServicePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ContainerServicePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="AgentPoolSnapshotResource"/> object. </returns>
         public virtual AgentPoolSnapshotResource GetAgentPoolSnapshotResource(ResourceIdentifier id)
         {
-            AgentPoolSnapshotResource.ValidateResourceId(id);
             return new AgentPoolSnapshotResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ManagedClusterSnapshotResource"/> object. </returns>
         public virtual ManagedClusterSnapshotResource GetManagedClusterSnapshotResource(ResourceIdentifier id)
         {
-            ManagedClusterSnapshotResource.ValidateResourceId(id);
             return new ManagedClusterSnapshotResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> object. </returns>
         public virtual ContainerServiceTrustedAccessRoleBindingResource GetContainerServiceTrustedAccessRoleBindingResource(ResourceIdentifier id)
         {
-            ContainerServiceTrustedAccessRoleBindingResource.ValidateResourceId(id);
             return new ContainerServiceTrustedAccessRoleBindingResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ManagedClusterLoadBalancerResource"/> object. </returns>
         public virtual ManagedClusterLoadBalancerResource GetManagedClusterLoadBalancerResource(ResourceIdentifier id)
         {
-            ManagedClusterLoadBalancerResource.ValidateResourceId(id);
             return new ManagedClusterLoadBalancerResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ManagedClusterIdentityBindingResource"/> object. </returns>
         public virtual ManagedClusterIdentityBindingResource GetManagedClusterIdentityBindingResource(ResourceIdentifier id)
         {
-            ManagedClusterIdentityBindingResource.ValidateResourceId(id);
             return new ManagedClusterIdentityBindingResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ManagedClusterJwtAuthenticatorResource"/> object. </returns>
         public virtual ManagedClusterJwtAuthenticatorResource GetManagedClusterJwtAuthenticatorResource(ResourceIdentifier id)
         {
-            ManagedClusterJwtAuthenticatorResource.ValidateResourceId(id);
             return new ManagedClusterJwtAuthenticatorResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ManagedClusterMeshMembershipResource"/> object. </returns>
         public virtual ManagedClusterMeshMembershipResource GetManagedClusterMeshMembershipResource(ResourceIdentifier id)
         {
-            ManagedClusterMeshMembershipResource.ValidateResourceId(id);
             return new ManagedClusterMeshMembershipResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="AgentFabricMembershipResource"/> object. </returns>
         public virtual AgentFabricMembershipResource GetAgentFabricMembershipResource(ResourceIdentifier id)
         {
-            AgentFabricMembershipResource.ValidateResourceId(id);
             return new AgentFabricMembershipResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ContainerServiceAlertConfigurationResource"/> object. </returns>
         public virtual ContainerServiceAlertConfigurationResource GetContainerServiceAlertConfigurationResource(ResourceIdentifier id)
         {
-            ContainerServiceAlertConfigurationResource.ValidateResourceId(id);
             return new ContainerServiceAlertConfigurationResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="UpgradeInsightResource"/> object. </returns>
         public virtual UpgradeInsightResource GetUpgradeInsightResource(ResourceIdentifier id)
         {
-            UpgradeInsightResource.ValidateResourceId(id);
             return new UpgradeInsightResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBAccountResource"/> object. </returns>
         public virtual CosmosDBAccountResource GetCosmosDBAccountResource(ResourceIdentifier id)
         {
-            CosmosDBAccountResource.ValidateResourceId(id);
             return new CosmosDBAccountResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBCopyJobResource"/> object. </returns>
         public virtual CosmosDBCopyJobResource GetCosmosDBCopyJobResource(ResourceIdentifier id)
         {
-            CosmosDBCopyJobResource.ValidateResourceId(id);
             return new CosmosDBCopyJobResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBGraphResource"/> object. </returns>
         public virtual CosmosDBGraphResource GetCosmosDBGraphResource(ResourceIdentifier id)
         {
-            CosmosDBGraphResource.ValidateResourceId(id);
             return new CosmosDBGraphResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseResource"/> object. </returns>
         public virtual CosmosDBSqlDatabaseResource GetCosmosDBSqlDatabaseResource(ResourceIdentifier id)
         {
-            CosmosDBSqlDatabaseResource.ValidateResourceId(id);
             return new CosmosDBSqlDatabaseResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/> object. </returns>
         public virtual CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
-            CosmosDBSqlDatabaseThroughputSettingResource.ValidateResourceId(id);
             return new CosmosDBSqlDatabaseThroughputSettingResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource"/> object. </returns>
         public virtual CosmosDBSqlContainerThroughputSettingResource GetCosmosDBSqlContainerThroughputSettingResource(ResourceIdentifier id)
         {
-            CosmosDBSqlContainerThroughputSettingResource.ValidateResourceId(id);
             return new CosmosDBSqlContainerThroughputSettingResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlClientEncryptionKeyResource"/> object. </returns>
         public virtual CosmosDBSqlClientEncryptionKeyResource GetCosmosDBSqlClientEncryptionKeyResource(ResourceIdentifier id)
         {
-            CosmosDBSqlClientEncryptionKeyResource.ValidateResourceId(id);
             return new CosmosDBSqlClientEncryptionKeyResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlContainerResource"/> object. </returns>
         public virtual CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(ResourceIdentifier id)
         {
-            CosmosDBSqlContainerResource.ValidateResourceId(id);
             return new CosmosDBSqlContainerResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlStoredProcedureResource"/> object. </returns>
         public virtual CosmosDBSqlStoredProcedureResource GetCosmosDBSqlStoredProcedureResource(ResourceIdentifier id)
         {
-            CosmosDBSqlStoredProcedureResource.ValidateResourceId(id);
             return new CosmosDBSqlStoredProcedureResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlUserDefinedFunctionResource"/> object. </returns>
         public virtual CosmosDBSqlUserDefinedFunctionResource GetCosmosDBSqlUserDefinedFunctionResource(ResourceIdentifier id)
         {
-            CosmosDBSqlUserDefinedFunctionResource.ValidateResourceId(id);
             return new CosmosDBSqlUserDefinedFunctionResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlTriggerResource"/> object. </returns>
         public virtual CosmosDBSqlTriggerResource GetCosmosDBSqlTriggerResource(ResourceIdentifier id)
         {
-            CosmosDBSqlTriggerResource.ValidateResourceId(id);
             return new CosmosDBSqlTriggerResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlRoleDefinitionResource"/> object. </returns>
         public virtual CosmosDBSqlRoleDefinitionResource GetCosmosDBSqlRoleDefinitionResource(ResourceIdentifier id)
         {
-            CosmosDBSqlRoleDefinitionResource.ValidateResourceId(id);
             return new CosmosDBSqlRoleDefinitionResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlRoleAssignmentResource"/> object. </returns>
         public virtual CosmosDBSqlRoleAssignmentResource GetCosmosDBSqlRoleAssignmentResource(ResourceIdentifier id)
         {
-            CosmosDBSqlRoleAssignmentResource.ValidateResourceId(id);
             return new CosmosDBSqlRoleAssignmentResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBDatabaseThroughputSettingResource"/> object. </returns>
         public virtual MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
-            MongoDBDatabaseThroughputSettingResource.ValidateResourceId(id);
             return new MongoDBDatabaseThroughputSettingResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBCollectionThroughputSettingResource"/> object. </returns>
         public virtual MongoDBCollectionThroughputSettingResource GetMongoDBCollectionThroughputSettingResource(ResourceIdentifier id)
         {
-            MongoDBCollectionThroughputSettingResource.ValidateResourceId(id);
             return new MongoDBCollectionThroughputSettingResource(Client, id);
         }
 
@@ -166,7 +151,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBDatabaseResource"/> object. </returns>
         public virtual MongoDBDatabaseResource GetMongoDBDatabaseResource(ResourceIdentifier id)
         {
-            MongoDBDatabaseResource.ValidateResourceId(id);
             return new MongoDBDatabaseResource(Client, id);
         }
 
@@ -175,7 +159,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBCollectionResource"/> object. </returns>
         public virtual MongoDBCollectionResource GetMongoDBCollectionResource(ResourceIdentifier id)
         {
-            MongoDBCollectionResource.ValidateResourceId(id);
             return new MongoDBCollectionResource(Client, id);
         }
 
@@ -184,7 +167,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBRoleDefinitionResource"/> object. </returns>
         public virtual MongoDBRoleDefinitionResource GetMongoDBRoleDefinitionResource(ResourceIdentifier id)
         {
-            MongoDBRoleDefinitionResource.ValidateResourceId(id);
             return new MongoDBRoleDefinitionResource(Client, id);
         }
 
@@ -193,7 +175,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBUserDefinitionResource"/> object. </returns>
         public virtual MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(ResourceIdentifier id)
         {
-            MongoDBUserDefinitionResource.ValidateResourceId(id);
             return new MongoDBUserDefinitionResource(Client, id);
         }
 
@@ -202,7 +183,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource"/> object. </returns>
         public virtual CosmosTableThroughputSettingResource GetCosmosTableThroughputSettingResource(ResourceIdentifier id)
         {
-            CosmosTableThroughputSettingResource.ValidateResourceId(id);
             return new CosmosTableThroughputSettingResource(Client, id);
         }
 
@@ -211,7 +191,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBTableResource"/> object. </returns>
         public virtual CosmosDBTableResource GetCosmosDBTableResource(ResourceIdentifier id)
         {
-            CosmosDBTableResource.ValidateResourceId(id);
             return new CosmosDBTableResource(Client, id);
         }
 
@@ -220,7 +199,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBTableRoleDefinitionResource"/> object. </returns>
         public virtual CosmosDBTableRoleDefinitionResource GetCosmosDBTableRoleDefinitionResource(ResourceIdentifier id)
         {
-            CosmosDBTableRoleDefinitionResource.ValidateResourceId(id);
             return new CosmosDBTableRoleDefinitionResource(Client, id);
         }
 
@@ -229,7 +207,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBTableRoleAssignmentResource"/> object. </returns>
         public virtual CosmosDBTableRoleAssignmentResource GetCosmosDBTableRoleAssignmentResource(ResourceIdentifier id)
         {
-            CosmosDBTableRoleAssignmentResource.ValidateResourceId(id);
             return new CosmosDBTableRoleAssignmentResource(Client, id);
         }
 
@@ -238,7 +215,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource"/> object. </returns>
         public virtual CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSettingResource(ResourceIdentifier id)
         {
-            CassandraKeyspaceThroughputSettingResource.ValidateResourceId(id);
             return new CassandraKeyspaceThroughputSettingResource(Client, id);
         }
 
@@ -247,7 +223,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource"/> object. </returns>
         public virtual CassandraTableThroughputSettingResource GetCassandraTableThroughputSettingResource(ResourceIdentifier id)
         {
-            CassandraTableThroughputSettingResource.ValidateResourceId(id);
             return new CassandraTableThroughputSettingResource(Client, id);
         }
 
@@ -256,7 +231,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource"/> object. </returns>
         public virtual CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(ResourceIdentifier id)
         {
-            CassandraViewThroughputSettingResource.ValidateResourceId(id);
             return new CassandraViewThroughputSettingResource(Client, id);
         }
 
@@ -265,7 +239,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraKeyspaceResource"/> object. </returns>
         public virtual CassandraKeyspaceResource GetCassandraKeyspaceResource(ResourceIdentifier id)
         {
-            CassandraKeyspaceResource.ValidateResourceId(id);
             return new CassandraKeyspaceResource(Client, id);
         }
 
@@ -274,7 +247,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraTableResource"/> object. </returns>
         public virtual CassandraTableResource GetCassandraTableResource(ResourceIdentifier id)
         {
-            CassandraTableResource.ValidateResourceId(id);
             return new CassandraTableResource(Client, id);
         }
 
@@ -283,7 +255,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraViewResource"/> object. </returns>
         public virtual CassandraViewResource GetCassandraViewResource(ResourceIdentifier id)
         {
-            CassandraViewResource.ValidateResourceId(id);
             return new CassandraViewResource(Client, id);
         }
 
@@ -292,7 +263,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraRoleDefinitionResource"/> object. </returns>
         public virtual CassandraRoleDefinitionResource GetCassandraRoleDefinitionResource(ResourceIdentifier id)
         {
-            CassandraRoleDefinitionResource.ValidateResourceId(id);
             return new CassandraRoleDefinitionResource(Client, id);
         }
 
@@ -301,7 +271,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraRoleAssignmentResource"/> object. </returns>
         public virtual CassandraRoleAssignmentResource GetCassandraRoleAssignmentResource(ResourceIdentifier id)
         {
-            CassandraRoleAssignmentResource.ValidateResourceId(id);
             return new CassandraRoleAssignmentResource(Client, id);
         }
 
@@ -310,7 +279,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinDatabaseThroughputSettingResource"/> object. </returns>
         public virtual GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
-            GremlinDatabaseThroughputSettingResource.ValidateResourceId(id);
             return new GremlinDatabaseThroughputSettingResource(Client, id);
         }
 
@@ -319,7 +287,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource"/> object. </returns>
         public virtual GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSettingResource(ResourceIdentifier id)
         {
-            GremlinGraphThroughputSettingResource.ValidateResourceId(id);
             return new GremlinGraphThroughputSettingResource(Client, id);
         }
 
@@ -328,7 +295,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinDatabaseResource"/> object. </returns>
         public virtual GremlinDatabaseResource GetGremlinDatabaseResource(ResourceIdentifier id)
         {
-            GremlinDatabaseResource.ValidateResourceId(id);
             return new GremlinDatabaseResource(Client, id);
         }
 
@@ -337,7 +303,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinGraphResource"/> object. </returns>
         public virtual GremlinGraphResource GetGremlinGraphResource(ResourceIdentifier id)
         {
-            GremlinGraphResource.ValidateResourceId(id);
             return new GremlinGraphResource(Client, id);
         }
 
@@ -346,7 +311,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinRoleDefinitionResource"/> object. </returns>
         public virtual GremlinRoleDefinitionResource GetGremlinRoleDefinitionResource(ResourceIdentifier id)
         {
-            GremlinRoleDefinitionResource.ValidateResourceId(id);
             return new GremlinRoleDefinitionResource(Client, id);
         }
 
@@ -355,7 +319,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinRoleAssignmentResource"/> object. </returns>
         public virtual GremlinRoleAssignmentResource GetGremlinRoleAssignmentResource(ResourceIdentifier id)
         {
-            GremlinRoleAssignmentResource.ValidateResourceId(id);
             return new GremlinRoleAssignmentResource(Client, id);
         }
 
@@ -364,7 +327,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="DataTransferJobResource"/> object. </returns>
         public virtual DataTransferJobResource GetDataTransferJobResource(ResourceIdentifier id)
         {
-            DataTransferJobResource.ValidateResourceId(id);
             return new DataTransferJobResource(Client, id);
         }
 
@@ -373,7 +335,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GarnetClusterResource"/> object. </returns>
         public virtual GarnetClusterResource GetGarnetClusterResource(ResourceIdentifier id)
         {
-            GarnetClusterResource.ValidateResourceId(id);
             return new GarnetClusterResource(Client, id);
         }
 
@@ -382,7 +343,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -391,7 +351,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="NotebookWorkspaceResource"/> object. </returns>
         public virtual NotebookWorkspaceResource GetNotebookWorkspaceResource(ResourceIdentifier id)
         {
-            NotebookWorkspaceResource.ValidateResourceId(id);
             return new NotebookWorkspaceResource(Client, id);
         }
 
@@ -400,7 +359,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBPrivateEndpointConnectionResource"/> object. </returns>
         public virtual CosmosDBPrivateEndpointConnectionResource GetCosmosDBPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            CosmosDBPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new CosmosDBPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -409,7 +367,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBPrivateLinkResource"/> object. </returns>
         public virtual CosmosDBPrivateLinkResource GetCosmosDBPrivateLinkResource(ResourceIdentifier id)
         {
-            CosmosDBPrivateLinkResource.ValidateResourceId(id);
             return new CosmosDBPrivateLinkResource(Client, id);
         }
 
@@ -418,7 +375,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="SoftDeletedDatabaseAccountGetResultResource"/> object. </returns>
         public virtual SoftDeletedDatabaseAccountGetResultResource GetSoftDeletedDatabaseAccountGetResultResource(ResourceIdentifier id)
         {
-            SoftDeletedDatabaseAccountGetResultResource.ValidateResourceId(id);
             return new SoftDeletedDatabaseAccountGetResultResource(Client, id);
         }
 
@@ -427,7 +383,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="SoftDeletedSqlDatabaseGetResultResource"/> object. </returns>
         public virtual SoftDeletedSqlDatabaseGetResultResource GetSoftDeletedSqlDatabaseGetResultResource(ResourceIdentifier id)
         {
-            SoftDeletedSqlDatabaseGetResultResource.ValidateResourceId(id);
             return new SoftDeletedSqlDatabaseGetResultResource(Client, id);
         }
 
@@ -436,7 +391,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="SoftDeletedSqlContainerGetResultResource"/> object. </returns>
         public virtual SoftDeletedSqlContainerGetResultResource GetSoftDeletedSqlContainerGetResultResource(ResourceIdentifier id)
         {
-            SoftDeletedSqlContainerGetResultResource.ValidateResourceId(id);
             return new SoftDeletedSqlContainerGetResultResource(Client, id);
         }
 
@@ -445,7 +399,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="ChaosFaultResource"/> object. </returns>
         public virtual ChaosFaultResource GetChaosFaultResource(ResourceIdentifier id)
         {
-            ChaosFaultResource.ValidateResourceId(id);
             return new ChaosFaultResource(Client, id);
         }
 
@@ -454,7 +407,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBLocationResource"/> object. </returns>
         public virtual CosmosDBLocationResource GetCosmosDBLocationResource(ResourceIdentifier id)
         {
-            CosmosDBLocationResource.ValidateResourceId(id);
             return new CosmosDBLocationResource(Client, id);
         }
 
@@ -463,7 +415,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraClusterResource"/> object. </returns>
         public virtual CassandraClusterResource GetCassandraClusterResource(ResourceIdentifier id)
         {
-            CassandraClusterResource.ValidateResourceId(id);
             return new CassandraClusterResource(Client, id);
         }
 
@@ -472,7 +423,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraDataCenterResource"/> object. </returns>
         public virtual CassandraDataCenterResource GetCassandraDataCenterResource(ResourceIdentifier id)
         {
-            CassandraDataCenterResource.ValidateResourceId(id);
             return new CassandraDataCenterResource(Client, id);
         }
 
@@ -481,7 +431,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="RestorableCosmosDBAccountResource"/> object. </returns>
         public virtual RestorableCosmosDBAccountResource GetRestorableCosmosDBAccountResource(ResourceIdentifier id)
         {
-            RestorableCosmosDBAccountResource.ValidateResourceId(id);
             return new RestorableCosmosDBAccountResource(Client, id);
         }
 
@@ -490,7 +439,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBServiceResource"/> object. </returns>
         public virtual CosmosDBServiceResource GetCosmosDBServiceResource(ResourceIdentifier id)
         {
-            CosmosDBServiceResource.ValidateResourceId(id);
             return new CosmosDBServiceResource(Client, id);
         }
 
@@ -499,7 +447,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBThroughputPoolResource"/> object. </returns>
         public virtual CosmosDBThroughputPoolResource GetCosmosDBThroughputPoolResource(ResourceIdentifier id)
         {
-            CosmosDBThroughputPoolResource.ValidateResourceId(id);
             return new CosmosDBThroughputPoolResource(Client, id);
         }
 
@@ -508,7 +455,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBThroughputPoolAccountResource"/> object. </returns>
         public virtual CosmosDBThroughputPoolAccountResource GetCosmosDBThroughputPoolAccountResource(ResourceIdentifier id)
         {
-            CosmosDBThroughputPoolAccountResource.ValidateResourceId(id);
             return new CosmosDBThroughputPoolAccountResource(Client, id);
         }
 
@@ -517,7 +463,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoMIRoleDefinitionResource"/> object. </returns>
         public virtual MongoMIRoleDefinitionResource GetMongoMIRoleDefinitionResource(ResourceIdentifier id)
         {
-            MongoMIRoleDefinitionResource.ValidateResourceId(id);
             return new MongoMIRoleDefinitionResource(Client, id);
         }
 
@@ -526,7 +471,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoMIRoleAssignmentResource"/> object. </returns>
         public virtual MongoMIRoleAssignmentResource GetMongoMIRoleAssignmentResource(ResourceIdentifier id)
         {
-            MongoMIRoleAssignmentResource.ValidateResourceId(id);
             return new MongoMIRoleAssignmentResource(Client, id);
         }
 
@@ -535,7 +479,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBFleetResource"/> object. </returns>
         public virtual CosmosDBFleetResource GetCosmosDBFleetResource(ResourceIdentifier id)
         {
-            CosmosDBFleetResource.ValidateResourceId(id);
             return new CosmosDBFleetResource(Client, id);
         }
 
@@ -544,7 +487,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="FleetAnalyticsResource"/> object. </returns>
         public virtual FleetAnalyticsResource GetFleetAnalyticsResource(ResourceIdentifier id)
         {
-            FleetAnalyticsResource.ValidateResourceId(id);
             return new FleetAnalyticsResource(Client, id);
         }
 
@@ -553,7 +495,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBFleetspaceResource"/> object. </returns>
         public virtual CosmosDBFleetspaceResource GetCosmosDBFleetspaceResource(ResourceIdentifier id)
         {
-            CosmosDBFleetspaceResource.ValidateResourceId(id);
             return new CosmosDBFleetspaceResource(Client, id);
         }
 
@@ -562,7 +503,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBFleetspaceAccountResource"/> object. </returns>
         public virtual CosmosDBFleetspaceAccountResource GetCosmosDBFleetspaceAccountResource(ResourceIdentifier id)
         {
-            CosmosDBFleetspaceAccountResource.ValidateResourceId(id);
             return new CosmosDBFleetspaceAccountResource(Client, id);
         }
     }
