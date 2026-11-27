@@ -7,7 +7,7 @@
 - Added serverless authentication refresh support through the `[SignalRRefresh]` input binding so a Function App can extend a live SignalR client connection's authentication and application claims without reconnecting.
 - `[SignalRRefresh]` can bind to `SignalRRefreshResult` so a function can distinguish a missing resolved connection token, authentication rejection, a user mismatch, and an unavailable connection.
 - Added authentication-refresh options to negotiation bindings, including refresh opt-in, close-on-expiration, and the maximum service access-token lifetime.
-- Token validation now exposes the validated application-authentication expiration so negotiate and refresh can preserve the app-token security boundary.
+- Added `AuthenticationExpiresOn` to negotiate and refresh bindings so apps can explicitly set the authentication deadline instead of deriving it from the bearer token.
 
 ### Breaking Changes
 

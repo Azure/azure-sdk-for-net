@@ -22,6 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public async Task<NegotiationContext> ConvertAsync(
             SignalRNegotiationAttribute input, CancellationToken cancellationToken)
         {
+            var authenticationExpiresOn = input.ResolveAuthenticationExpiresOn();
             var serviceHubContext = await _serviceManagerStore
                 .GetOrAddByConnectionStringKey(input.ConnectionStringSetting)
                 .GetAsync(input.HubName).ConfigureAwait(false) as ServiceHubContext;
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 var connectionInfo = await azureSignalRClient.GetClientConnectionInfoAsync(
                     input.UserId, input.IdToken, input.ClaimTypeList, httpContext: null,
                     input.EnableAuthenticationRefresh, input.TokenLifetimeSeconds,
-                    authenticationExpiresOn: null, input.CloseOnAuthenticationExpiration,
+                    authenticationExpiresOn, input.CloseOnAuthenticationExpiration,
                     cancellationToken).ConfigureAwait(false);
                 return new EndpointConnectionInfo(e) { ConnectionInfo = connectionInfo };
             })).ConfigureAwait(false);

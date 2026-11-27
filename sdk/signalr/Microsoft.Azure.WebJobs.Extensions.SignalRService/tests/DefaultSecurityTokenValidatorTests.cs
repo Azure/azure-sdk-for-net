@@ -61,93 +61,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
             Assert.Equal(expectedStatus, securityTokenResult.Status);
         }
 
-        [Fact]
-        public void ValidateToken_ValidToken_ReturnsTokenExpiration()
-        {
-            var tokenString = GenerateJwtToken(IssuerToken, "issuer", "audience", DateTime.UtcNow.AddMinutes(10));
-            var expectedExpiresOn = new DateTimeOffset(new JwtSecurityTokenHandler().ReadJwtToken(tokenString).ValidTo);
-            var ctx = new DefaultHttpContext();
-            ctx.Request.Headers.Append("Authorization", new StringValues($"Bearer {tokenString}"));
-            var securityTokenValidator = new DefaultSecurityTokenValidator(parameters =>
-            {
-                parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IssuerToken));
-                parameters.RequireSignedTokens = true;
-                parameters.ValidateIssuerSigningKey = true;
-                parameters.ValidateLifetime = true;
-                parameters.ValidIssuer = "issuer";
-                parameters.ValidAudience = "audience";
-            });
-
-            var result = securityTokenValidator.ValidateToken(ctx.Request);
-
-            Assert.Equal(SecurityTokenStatus.Valid, result.Status);
-            Assert.Equal(expectedExpiresOn, result.ExpiresOn);
-        }
-
-        [Fact]
-        public void ValidateToken_ExpiredTokenWithinClockSkew_ReturnsValidWithActualExpiration()
-        {
-            var tokenString = GenerateJwtToken(IssuerToken, "issuer", "audience", DateTime.UtcNow.AddMinutes(-1));
-            var ctx = new DefaultHttpContext();
-            ctx.Request.Headers.Append("Authorization", new StringValues($"Bearer {tokenString}"));
-            var securityTokenValidator = new DefaultSecurityTokenValidator(parameters =>
-            {
-                parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IssuerToken));
-                parameters.RequireSignedTokens = true;
-                parameters.ValidateIssuerSigningKey = true;
-                parameters.ValidateLifetime = true;
-                parameters.ClockSkew = TimeSpan.FromMinutes(5);
-                parameters.ValidIssuer = "issuer";
-                parameters.ValidAudience = "audience";
-            });
-
-            var result = securityTokenValidator.ValidateToken(ctx.Request);
-
-            Assert.Equal(SecurityTokenStatus.Valid, result.Status);
-            Assert.Equal(new DateTimeOffset(new JwtSecurityTokenHandler().ReadJwtToken(tokenString).ValidTo), result.ExpiresOn);
-        }
-
-        [Theory]
-        [InlineData(true, typeof(SecurityTokenInvalidIssuerException))]
-        [InlineData(false, typeof(SecurityTokenSignatureKeyNotFoundException))]
-        public void ValidateToken_UntrustedIssuerOrUnresolvedSigningKey_PreservesLegacyResult(bool rejectIssuer, Type expectedExceptionType)
-        {
-            var token = GenerateJwtToken(IssuerToken, "issuer", "audience", 10);
-            var request = new DefaultHttpContext().Request;
-            request.Headers.Append("Authorization", new StringValues($"Bearer {token}"));
-            var validator = new DefaultSecurityTokenValidator(parameters =>
-            {
-                parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IssuerToken));
-                parameters.TryAllIssuerSigningKeys = rejectIssuer;
-                parameters.ValidIssuer = rejectIssuer ? "another-issuer" : "issuer";
-                parameters.ValidAudience = "audience";
-            });
-
-            if (rejectIssuer)
-            {
-                Assert.Throws(expectedExceptionType, () => validator.ValidateToken(request));
-            }
-            else
-            {
-                var legacyResult = validator.ValidateToken(request);
-                Assert.Equal(SecurityTokenStatus.Error, legacyResult.Status);
-                Assert.IsType(expectedExceptionType, legacyResult.Exception);
-            }
-        }
-
         public static string GenerateJwtToken(string secretKey, string issuer, string audience, int expireMinutes)
-        {
-            return GenerateJwtToken(secretKey, issuer, audience, DateTime.UtcNow.AddMinutes(expireMinutes));
-        }
-
-        public static string GenerateJwtToken(string secretKey, string issuer, string audience, DateTime expiresOn)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 issuer: issuer,
                 audience: audience,
-                expires: expiresOn,
+                expires: DateTime.UtcNow.AddMinutes(expireMinutes),
                 signingCredentials: credentials
             );
 

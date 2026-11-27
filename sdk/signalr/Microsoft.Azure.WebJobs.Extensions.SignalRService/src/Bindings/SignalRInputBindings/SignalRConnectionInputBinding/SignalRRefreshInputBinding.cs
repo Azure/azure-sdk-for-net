@@ -70,19 +70,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                     return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
                 }
 
-                if (tokenResult.Status != SecurityTokenStatus.Valid || tokenResult.ExpiresOn <= DateTimeOffset.UtcNow)
+                if (tokenResult.Status != SecurityTokenStatus.Valid)
                 {
                     return CreateValueProvider(SignalRRefreshStatus.Unauthorized);
                 }
             }
 
+            var authenticationExpiresOn = attrResolved.ResolveAuthenticationExpiresOn();
             var azureSignalRClient = await Utils.GetAzureSignalRClientAsync(attrResolved.ConnectionStringSetting, attrResolved.HubName, _managerStore).ConfigureAwait(false);
             var customClaims = azureSignalRClient.GetCustomClaims(attrResolved.IdToken, attrResolved.ClaimTypeList);
             var signalRConnectionDetail = new SignalRConnectionDetail
             {
                 UserId = attrResolved.UserId,
                 Claims = customClaims.Count > 0 ? customClaims : null,
-                AuthenticationExpiresOn = tokenResult?.ExpiresOn,
+                AuthenticationExpiresOn = authenticationExpiresOn,
             };
             if (tokenResult != null)
             {

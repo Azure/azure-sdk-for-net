@@ -59,6 +59,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public abstract partial class NegotiationBaseAttribute : System.Attribute
     {
         protected NegotiationBaseAttribute() { }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
+        public string AuthenticationExpiresOn { get { throw null; } set { } }
         public string[] ClaimTypeList { get { throw null; } set { } }
         public string ConnectionStringSetting { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
@@ -73,15 +75,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         internal SecurityTokenResult() { }
         [Newtonsoft.Json.JsonPropertyAttribute("exception")]
         public System.Exception Exception { get { throw null; } }
-        [Newtonsoft.Json.JsonPropertyAttribute("expiresOn")]
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.Security.Claims.ClaimsPrincipal Principal { get { throw null; } }
         [Newtonsoft.Json.JsonPropertyAttribute("status")]
         public Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenStatus Status { get { throw null; } }
         public static Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult Empty() { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult Error(System.Exception ex) { throw null; }
         public static Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult Success(System.Security.Claims.ClaimsPrincipal principal) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult Success(System.Security.Claims.ClaimsPrincipal principal, System.DateTimeOffset? expiresOn) { throw null; }
     }
     public enum SecurityTokenStatus
     {

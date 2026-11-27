@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -18,9 +17,7 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
-using DefaultSecurityTokenValidatorTests = Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests.DefaultSecurityTokenValidatorTests;
 using SecurityTokenValidationException = Microsoft.IdentityModel.Tokens.SecurityTokenValidationException;
-using SymmetricSecurityKey = Microsoft.IdentityModel.Tokens.SymmetricSecurityKey;
 
 namespace SignalRServiceExtension.Tests
 {
@@ -49,46 +46,21 @@ namespace SignalRServiceExtension.Tests
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public async Task BuildAsync_BearerExpiredWithinClockSkew_RejectsOnlyWhenRefreshIsEnabled(bool enableAuthenticationRefresh)
+        public async Task BuildAsync_ExplicitDeadline_ForwardsDeadlineWithOrWithoutValidator(bool useValidator)
         {
-            const string issuer = "issuer";
-            const string audience = "audience";
-            const string key = "1234567812345678912345678123456789";
-            var token = DefaultSecurityTokenValidatorTests.GenerateJwtToken(key, issuer, audience, expireMinutes: -1);
-            var request = new DefaultHttpContext().Request;
-            request.Headers["Authorization"] = $"Bearer {token}";
-            var validator = new DefaultSecurityTokenValidator(parameters =>
-            {
-                parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-                parameters.ValidIssuer = issuer;
-                parameters.ValidAudience = audience;
-                parameters.ClockSkew = TimeSpan.FromMinutes(5);
-            });
-            Assert.Equal(SecurityTokenStatus.Valid, validator.ValidateToken(request).Status);
-            var configurer = new Mock<ISignalRConnectionInfoConfigurer>();
-            var (binding, capturedOptions) = CreateBinding(configurer.Object, default, validator);
+            var (binding, capturedOptions) = CreateBinding(null, useValidator);
             var attr = new SignalRConnectionInfoAttribute
             {
                 HubName = HubName,
                 ConnectionStringSetting = ConnectionStringSetting,
-                EnableAuthenticationRefresh = enableAuthenticationRefresh,
+                CloseOnAuthenticationExpiration = true,
+                AuthenticationExpiresOn = "2030-01-02T03:04:05+02:00",
             };
 
-            var provider = await binding.InvokeBuildAsync(attr, new Dictionary<string, object> { [HttpRequestName] = request });
-            var value = await provider.GetValueAsync();
+            var provider = await binding.InvokeBuildAsync(attr, CreateBindingData());
 
-            if (enableAuthenticationRefresh)
-            {
-                Assert.Null(value);
-                configurer.VerifyNoOtherCalls();
-                Assert.Null(capturedOptions.Value);
-            }
-            else
-            {
-                Assert.IsType<SignalRConnectionInfo>(value);
-                Assert.NotNull(capturedOptions.Value);
-                Assert.Null(capturedOptions.Value.AuthenticationExpiresOn);
-            }
+            Assert.IsType<SignalRConnectionInfo>(await provider.GetValueAsync());
+            Assert.Equal(new DateTimeOffset(2030, 1, 2, 1, 4, 5, TimeSpan.Zero), capturedOptions.Value.AuthenticationExpiresOn);
         }
 
         [Fact]
@@ -104,9 +76,10 @@ namespace SignalRServiceExtension.Tests
             };
             var configurer = new Mock<ISignalRConnectionInfoConfigurer>();
             configurer.SetupGet(c => c.Configure).Returns((_, _, _) => replacement);
-            var (binding, capturedOptions) = CreateBinding(configurer.Object, originalExpiresOn);
+            var (binding, capturedOptions) = CreateBinding(configurer.Object);
             var attr = new SignalRConnectionInfoAttribute
             {
+                AuthenticationExpiresOn = originalExpiresOn.ToString("O"),
                 HubName = HubName,
                 ConnectionStringSetting = ConnectionStringSetting,
                 UserId = "original-user",
@@ -127,12 +100,11 @@ namespace SignalRServiceExtension.Tests
         }
 
         [Fact]
-        public async Task BuildAsync_NoRefreshAndConfigurerReturnsNull_RetainsUserClaimsWithoutBearerDeadline()
+        public async Task BuildAsync_NoDeadlineAndConfigurerReturnsNull_RetainsUserClaims()
         {
-            var originalExpiresOn = new DateTimeOffset(2030, 1, 2, 3, 4, 5, TimeSpan.Zero);
             var configurer = new Mock<ISignalRConnectionInfoConfigurer>();
             configurer.SetupGet(c => c.Configure).Returns((_, _, _) => null);
-            var (binding, capturedOptions) = CreateBinding(configurer.Object, originalExpiresOn);
+            var (binding, capturedOptions) = CreateBinding(configurer.Object);
             var attr = new SignalRConnectionInfoAttribute
             {
                 HubName = HubName,
@@ -163,7 +135,7 @@ namespace SignalRServiceExtension.Tests
                 : new InvalidOperationException("Configuration error.");
             var configurer = new Mock<ISignalRConnectionInfoConfigurer>();
             configurer.SetupGet(c => c.Configure).Returns((_, _, _) => throw failure);
-            var (binding, capturedOptions) = CreateBinding(configurer.Object, DateTimeOffset.UtcNow.AddMinutes(10));
+            var (binding, capturedOptions) = CreateBinding(configurer.Object);
             var attr = new SignalRConnectionInfoAttribute { HubName = HubName, ConnectionStringSetting = ConnectionStringSetting };
 
             if (rejectsIdentity)
@@ -181,8 +153,7 @@ namespace SignalRServiceExtension.Tests
 
         private static (TestableConnectionBinding Binding, StrongBox<NegotiationOptions> CapturedOptions) CreateBinding(
             ISignalRConnectionInfoConfigurer configurer,
-            DateTimeOffset expiresOn,
-            ISecurityTokenValidator securityTokenValidator = null)
+            bool useValidator = true)
         {
             var capturedOptions = new StrongBox<NegotiationOptions>();
             var hubContext = new Mock<ServiceHubContext>(MockBehavior.Strict);
@@ -204,9 +175,9 @@ namespace SignalRServiceExtension.Tests
             var context = new BindingProviderContext(parameter, new Dictionary<string, Type>(), CancellationToken.None);
             var validator = new Mock<ISecurityTokenValidator>();
             validator.Setup(v => v.ValidateToken(It.IsAny<HttpRequest>()))
-                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity()), expiresOn));
+                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity())));
 
-            return (new TestableConnectionBinding(context, configuration, Mock.Of<INameResolver>(), securityTokenValidator ?? validator.Object, configurer), capturedOptions);
+            return (new TestableConnectionBinding(context, configuration, Mock.Of<INameResolver>(), useValidator ? validator.Object : null, configurer), capturedOptions);
         }
 
         private static IReadOnlyDictionary<string, object> CreateBindingData() =>

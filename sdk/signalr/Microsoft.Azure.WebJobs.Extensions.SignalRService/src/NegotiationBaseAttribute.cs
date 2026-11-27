@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
@@ -40,5 +41,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// Gets or sets the claim type list used to filter the claims in the <see cref="IdToken"/>.
         /// </summary>
         public string[] ClaimTypeList { get; set; }
+
+        /// <summary>
+        /// Gets or sets the application authentication deadline as a timestamp parsed using the invariant culture.
+        /// A timestamp without a time zone offset is interpreted as UTC.
+        /// During refresh, omitting this value preserves the existing deadline.
+        /// </summary>
+        [AutoResolve]
+        public string AuthenticationExpiresOn { get; set; }
+
+        internal DateTimeOffset? ResolveAuthenticationExpiresOn()
+        {
+            if (AuthenticationExpiresOn is null)
+            {
+                return null;
+            }
+
+            if (!DateTimeOffset.TryParse(AuthenticationExpiresOn, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var expiresOn))
+            {
+                throw new FormatException($"{nameof(AuthenticationExpiresOn)} must be a valid timestamp in the invariant culture.");
+            }
+            return expiresOn;
+        }
     }
 }

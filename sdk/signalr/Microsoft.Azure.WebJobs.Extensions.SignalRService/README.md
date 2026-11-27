@@ -112,6 +112,8 @@ public static SignalRConnectionInfo Negotiate(
 
 Set `EnableAuthenticationRefresh = true` on the negotiate binding for the same hub. The refresh binding reads the client's connection token from the `X-SignalR-Connection-Token` header. If your app requires additional authorization, enforce it before the input binding runs.
 
+Set `AuthenticationExpiresOn` on negotiate or refresh to supply an application-controlled deadline, for example `2030-01-02T03:04:05Z`. Timestamps are parsed using the invariant culture and are interpreted as UTC if no offset is supplied. A binding expression must resolve to a trusted timestamp; do not bind it directly to an untrusted client value. If neither the refresh binding nor the application configurer supplies a deadline, the existing deadline is preserved.
+
 ```csharp
 [FunctionName("Refresh")]
 public static SignalRConnectionInfo Refresh(
