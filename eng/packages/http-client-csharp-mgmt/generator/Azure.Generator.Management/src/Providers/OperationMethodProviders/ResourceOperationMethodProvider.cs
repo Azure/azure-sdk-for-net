@@ -48,7 +48,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly MethodBodyStatement[] _bodyStatements;
 
         private readonly string _methodName;
-        private readonly ResourceOperationKind _resourceOperationKind;
+        protected readonly ResourceOperationKind _resourceOperationKind;
         private readonly bool _hasTypedResultForPublicSurface;
         private protected readonly CSharpType? _originalBodyType;
         private protected readonly CSharpType? _returnBodyType;
