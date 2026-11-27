@@ -47,7 +47,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Converts a string to a <see cref="QuotaName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QuotaName?(string value) => value == null ? null : new QuotaName(value);
+        public static implicit operator QuotaName?(string value) => value == null ? (QuotaName?)null : new QuotaName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

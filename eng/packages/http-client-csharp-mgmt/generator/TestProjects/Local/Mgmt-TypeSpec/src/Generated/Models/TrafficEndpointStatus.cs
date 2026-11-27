@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Converts a string to a <see cref="TrafficEndpointStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficEndpointStatus?(string value) => value == null ? null : new TrafficEndpointStatus(value);
+        public static implicit operator TrafficEndpointStatus?(string value) => value == null ? (TrafficEndpointStatus?)null : new TrafficEndpointStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

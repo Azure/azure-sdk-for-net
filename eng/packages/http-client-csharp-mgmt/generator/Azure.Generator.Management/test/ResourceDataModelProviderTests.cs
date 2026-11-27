@@ -6,6 +6,8 @@ using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
 using Azure.Generator.Management;
+using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -13,11 +15,58 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 
 namespace Azure.Generator.Mgmt.Tests
 {
     public class ResourceDataModelProviderTests
     {
+        [TestCase("J")]
+        [TestCase("W")]
+        public void GeneratedArmModelsPreserveInheritedIdentity(string format)
+        {
+            VerifyInheritedIdentityRoundTrip<PrivateLink>(format);
+            VerifyInheritedIdentityRoundTrip<SampleData>(format);
+        }
+
+        private static void VerifyInheritedIdentityRoundTrip<T>(string format)
+            where T : ResourceData, IPersistableModel<T>
+        {
+            const string id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.Test/widgets/widget";
+            var payload = BinaryData.FromString($$"""
+                {
+                    "id": "{{id}}",
+                    "name": "widget",
+                    "type": "Microsoft.Test/widgets",
+                    "systemData": { "createdBy": "test" },
+                    "location": "westus",
+                    "tags": { "key": "value" }
+                }
+                """);
+            var model = ModelReaderWriter.Read<T>(payload, new ModelReaderWriterOptions(format))!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.Id.ToString(), Is.EqualTo(id));
+                Assert.That(model.Name, Is.EqualTo("widget"));
+                Assert.That(model.ResourceType.ToString(), Is.EqualTo("Microsoft.Test/widgets"));
+                Assert.That(model.SystemData.CreatedBy, Is.EqualTo("test"));
+            });
+
+            using var persistent = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("J")));
+            Assert.That(persistent.RootElement.GetProperty("id").GetString(), Is.EqualTo(id));
+            Assert.That(persistent.RootElement.GetProperty("name").GetString(), Is.EqualTo("widget"));
+            Assert.That(persistent.RootElement.GetProperty("type").GetString(), Is.EqualTo("Microsoft.Test/widgets"));
+            Assert.That(persistent.RootElement.GetProperty("systemData").GetProperty("createdBy").GetString(), Is.EqualTo("test"));
+
+            using var wire = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("W")));
+            foreach (var name in new[] { "id", "name", "type", "systemData" })
+            {
+                Assert.That(wire.RootElement.TryGetProperty(name, out _), Is.False, name);
+            }
+        }
+
         [Test]
         public void DiscriminatedArmModelRetainsUnknownVariantBaseDuringFactoryRegistration()
         {
@@ -229,7 +278,6 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames, Does.Contain("Properties"));
 
             var serialization = result.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
-            SerializationVisitor.UpdateBaseJsonModelWriteCore(result);
             var jsonModelWriteCore = serialization.Methods.Single(m => m.Signature.Name == "JsonModelWriteCore");
             Assert.That(jsonModelWriteCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override), Is.True);
 
