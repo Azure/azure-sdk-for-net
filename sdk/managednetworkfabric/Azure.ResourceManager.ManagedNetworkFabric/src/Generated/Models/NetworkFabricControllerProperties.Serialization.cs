@@ -175,6 +175,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(OperationalState))
+            {
+                writer.WritePropertyName("operationalState"u8);
+                writer.WriteStringValue(OperationalState.Value.ToString());
+            }
+            if (Optional.IsDefined(VmProfile))
+            {
+                writer.WritePropertyName("vmProfile"u8);
+                writer.WriteObjectValue(VmProfile, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -231,6 +241,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricControllerSKU? nfcSku = default;
             LastOperationProperties lastOperation = default;
             NetworkFabricProvisioningState? provisioningState = default;
+            OperationalState? operationalState = default;
+            VmProfile vmProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -382,6 +394,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     provisioningState = new NetworkFabricProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("operationalState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operationalState = new OperationalState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("vmProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmProfile = VmProfile.DeserializeVmProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -402,6 +432,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 nfcSku,
                 lastOperation,
                 provisioningState,
+                operationalState,
+                vmProfile,
                 additionalBinaryDataProperties);
         }
     }

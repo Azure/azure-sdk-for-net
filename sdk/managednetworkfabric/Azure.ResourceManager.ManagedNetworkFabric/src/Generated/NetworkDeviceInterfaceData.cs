@@ -171,6 +171,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> Operational state of networkInterface indicating if the interface is reachable. </summary>
+        public OperationalState? OperationalState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationalState;
+            }
+        }
+
         /// <summary> Details status of the last operation performed on the resource. </summary>
         public string LastOperationDetails
         {

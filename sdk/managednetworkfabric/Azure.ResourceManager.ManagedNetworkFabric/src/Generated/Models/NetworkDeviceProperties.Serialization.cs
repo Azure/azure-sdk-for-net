@@ -153,6 +153,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(OperationalState))
+            {
+                writer.WritePropertyName("operationalState"u8);
+                writer.WriteStringValue(OperationalState.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(SecretRotationStatus))
             {
                 writer.WritePropertyName("secretRotationStatus"u8);
@@ -235,6 +240,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
+            OperationalState? operationalState = default;
             IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus = default;
             IReadOnlyList<NetworkFabricCertificateRotationStatus> certificateRotationStatus = default;
             ResourceIdentifier networkFabricId = default;
@@ -348,6 +354,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     administrativeState = new NetworkFabricAdministrativeState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("operationalState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operationalState = new OperationalState(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("secretRotationStatus"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -406,6 +421,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 configurationState,
                 provisioningState,
                 administrativeState,
+                operationalState,
                 secretRotationStatus ?? new ChangeTrackingList<NetworkFabricSecretRotationStatus>(),
                 certificateRotationStatus ?? new ChangeTrackingList<NetworkFabricCertificateRotationStatus>(),
                 networkFabricId,

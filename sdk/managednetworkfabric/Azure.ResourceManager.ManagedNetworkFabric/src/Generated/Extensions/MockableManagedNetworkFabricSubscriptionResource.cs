@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         private NetworkMonitors _networkMonitorsRestClient;
         private ClientDiagnostics _networkBootstrapDevicesClientDiagnostics;
         private NetworkBootstrapDevices _networkBootstrapDevicesRestClient;
+        private ClientDiagnostics _edgeConnectorsClientDiagnostics;
+        private EdgeConnectors _edgeConnectorsRestClient;
+        private ClientDiagnostics _fabricsClientDiagnostics;
+        private Fabrics _fabricsRestClient;
 
         /// <summary> Initializes a new instance of MockableManagedNetworkFabricSubscriptionResource for mocking. </summary>
         protected MockableManagedNetworkFabricSubscriptionResource()
@@ -73,79 +77,87 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
 
         private ClientDiagnostics AccessControlListsClientDiagnostics => _accessControlListsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AccessControlLists AccessControlListsRestClient => _accessControlListsRestClient ??= new AccessControlLists(AccessControlListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/accessControlLists", out string apiVersion) ? apiVersion : "2025-07-15");
+        private AccessControlLists AccessControlListsRestClient => _accessControlListsRestClient ??= new AccessControlLists(AccessControlListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/accessControlLists", out string apiVersion) ? apiVersion : "2026-01-15-preview");
 
         private ClientDiagnostics InternetGatewayRulesClientDiagnostics => _internetGatewayRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InternetGatewayRules InternetGatewayRulesRestClient => _internetGatewayRulesRestClient ??= new InternetGatewayRules(InternetGatewayRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/internetGatewayRules", out string apiVersion0) ? apiVersion0 : "2025-07-15");
+        private InternetGatewayRules InternetGatewayRulesRestClient => _internetGatewayRulesRestClient ??= new InternetGatewayRules(InternetGatewayRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/internetGatewayRules", out string apiVersion0) ? apiVersion0 : "2026-01-15-preview");
 
         private ClientDiagnostics InternetGatewaysClientDiagnostics => _internetGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InternetGateways InternetGatewaysRestClient => _internetGatewaysRestClient ??= new InternetGateways(InternetGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/internetGateways", out string apiVersion1) ? apiVersion1 : "2025-07-15");
+        private InternetGateways InternetGatewaysRestClient => _internetGatewaysRestClient ??= new InternetGateways(InternetGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/internetGateways", out string apiVersion1) ? apiVersion1 : "2026-01-15-preview");
 
         private ClientDiagnostics IPCommunitiesClientDiagnostics => _ipCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IPCommunities IPCommunitiesRestClient => _ipCommunitiesRestClient ??= new IPCommunities(IPCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/ipCommunities", out string apiVersion2) ? apiVersion2 : "2025-07-15");
+        private IPCommunities IPCommunitiesRestClient => _ipCommunitiesRestClient ??= new IPCommunities(IPCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/ipCommunities", out string apiVersion2) ? apiVersion2 : "2026-01-15-preview");
 
         private ClientDiagnostics IPExtendedCommunitiesClientDiagnostics => _ipExtendedCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IPExtendedCommunities IPExtendedCommunitiesRestClient => _ipExtendedCommunitiesRestClient ??= new IPExtendedCommunities(IPExtendedCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/ipExtendedCommunities", out string apiVersion3) ? apiVersion3 : "2025-07-15");
+        private IPExtendedCommunities IPExtendedCommunitiesRestClient => _ipExtendedCommunitiesRestClient ??= new IPExtendedCommunities(IPExtendedCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/ipExtendedCommunities", out string apiVersion3) ? apiVersion3 : "2026-01-15-preview");
 
         private ClientDiagnostics IPPrefixesClientDiagnostics => _ipPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IPPrefixes IPPrefixesRestClient => _ipPrefixesRestClient ??= new IPPrefixes(IPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/ipPrefixes", out string apiVersion4) ? apiVersion4 : "2025-07-15");
+        private IPPrefixes IPPrefixesRestClient => _ipPrefixesRestClient ??= new IPPrefixes(IPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/ipPrefixes", out string apiVersion4) ? apiVersion4 : "2026-01-15-preview");
 
         private ClientDiagnostics L2IsolationDomainsClientDiagnostics => _l2IsolationDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L2IsolationDomains L2IsolationDomainsRestClient => _l2IsolationDomainsRestClient ??= new L2IsolationDomains(L2IsolationDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/l2IsolationDomains", out string apiVersion5) ? apiVersion5 : "2025-07-15");
+        private L2IsolationDomains L2IsolationDomainsRestClient => _l2IsolationDomainsRestClient ??= new L2IsolationDomains(L2IsolationDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/l2IsolationDomains", out string apiVersion5) ? apiVersion5 : "2026-01-15-preview");
 
         private ClientDiagnostics L3IsolationDomainsClientDiagnostics => _l3IsolationDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L3IsolationDomains L3IsolationDomainsRestClient => _l3IsolationDomainsRestClient ??= new L3IsolationDomains(L3IsolationDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/l3IsolationDomains", out string apiVersion6) ? apiVersion6 : "2025-07-15");
+        private L3IsolationDomains L3IsolationDomainsRestClient => _l3IsolationDomainsRestClient ??= new L3IsolationDomains(L3IsolationDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/l3IsolationDomains", out string apiVersion6) ? apiVersion6 : "2026-01-15-preview");
 
         private ClientDiagnostics NeighborGroupsClientDiagnostics => _neighborGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NeighborGroups NeighborGroupsRestClient => _neighborGroupsRestClient ??= new NeighborGroups(NeighborGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/neighborGroups", out string apiVersion7) ? apiVersion7 : "2025-07-15");
+        private NeighborGroups NeighborGroupsRestClient => _neighborGroupsRestClient ??= new NeighborGroups(NeighborGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/neighborGroups", out string apiVersion7) ? apiVersion7 : "2026-01-15-preview");
 
         private ClientDiagnostics NetworkDevicesClientDiagnostics => _networkDevicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkDevices NetworkDevicesRestClient => _networkDevicesRestClient ??= new NetworkDevices(NetworkDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkDevices", out string apiVersion8) ? apiVersion8 : "2025-07-15");
+        private NetworkDevices NetworkDevicesRestClient => _networkDevicesRestClient ??= new NetworkDevices(NetworkDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkDevices", out string apiVersion8) ? apiVersion8 : "2026-01-15-preview");
 
         private ClientDiagnostics NetworkFabricControllersClientDiagnostics => _networkFabricControllersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkFabricControllers NetworkFabricControllersRestClient => _networkFabricControllersRestClient ??= new NetworkFabricControllers(NetworkFabricControllersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkFabricControllers", out string apiVersion9) ? apiVersion9 : "2025-07-15");
+        private NetworkFabricControllers NetworkFabricControllersRestClient => _networkFabricControllersRestClient ??= new NetworkFabricControllers(NetworkFabricControllersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkFabricControllers", out string apiVersion9) ? apiVersion9 : "2026-01-15-preview");
 
         private ClientDiagnostics NetworkFabricsClientDiagnostics => _networkFabricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkFabrics NetworkFabricsRestClient => _networkFabricsRestClient ??= new NetworkFabrics(NetworkFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkFabrics", out string apiVersion10) ? apiVersion10 : "2025-07-15");
+        private NetworkFabrics NetworkFabricsRestClient => _networkFabricsRestClient ??= new NetworkFabrics(NetworkFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkFabrics", out string apiVersion10) ? apiVersion10 : "2026-01-15-preview");
 
         private ClientDiagnostics NetworkPacketBrokersClientDiagnostics => _networkPacketBrokersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkPacketBrokers NetworkPacketBrokersRestClient => _networkPacketBrokersRestClient ??= new NetworkPacketBrokers(NetworkPacketBrokersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkPacketBrokers", out string apiVersion11) ? apiVersion11 : "2025-07-15");
+        private NetworkPacketBrokers NetworkPacketBrokersRestClient => _networkPacketBrokersRestClient ??= new NetworkPacketBrokers(NetworkPacketBrokersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkPacketBrokers", out string apiVersion11) ? apiVersion11 : "2026-01-15-preview");
 
         private ClientDiagnostics NetworkRacksClientDiagnostics => _networkRacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkRacks NetworkRacksRestClient => _networkRacksRestClient ??= new NetworkRacks(NetworkRacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkRacks", out string apiVersion12) ? apiVersion12 : "2025-07-15");
+        private NetworkRacks NetworkRacksRestClient => _networkRacksRestClient ??= new NetworkRacks(NetworkRacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkRacks", out string apiVersion12) ? apiVersion12 : "2026-01-15-preview");
 
         private ClientDiagnostics NetworkTapRulesClientDiagnostics => _networkTapRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkTapRules NetworkTapRulesRestClient => _networkTapRulesRestClient ??= new NetworkTapRules(NetworkTapRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkTapRules", out string apiVersion13) ? apiVersion13 : "2025-07-15");
+        private NetworkTapRules NetworkTapRulesRestClient => _networkTapRulesRestClient ??= new NetworkTapRules(NetworkTapRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkTapRules", out string apiVersion13) ? apiVersion13 : "2026-01-15-preview");
 
         private ClientDiagnostics NetworkTapsClientDiagnostics => _networkTapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkTaps NetworkTapsRestClient => _networkTapsRestClient ??= new NetworkTaps(NetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkTaps", out string apiVersion14) ? apiVersion14 : "2025-07-15");
+        private NetworkTaps NetworkTapsRestClient => _networkTapsRestClient ??= new NetworkTaps(NetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkTaps", out string apiVersion14) ? apiVersion14 : "2026-01-15-preview");
 
         private ClientDiagnostics RoutePoliciesClientDiagnostics => _routePoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoutePolicies RoutePoliciesRestClient => _routePoliciesRestClient ??= new RoutePolicies(RoutePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/routePolicies", out string apiVersion15) ? apiVersion15 : "2025-07-15");
+        private RoutePolicies RoutePoliciesRestClient => _routePoliciesRestClient ??= new RoutePolicies(RoutePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/routePolicies", out string apiVersion15) ? apiVersion15 : "2026-01-15-preview");
 
         private ClientDiagnostics NetworkMonitorsClientDiagnostics => _networkMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkMonitors NetworkMonitorsRestClient => _networkMonitorsRestClient ??= new NetworkMonitors(NetworkMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkMonitors", out string apiVersion16) ? apiVersion16 : "2025-07-15");
+        private NetworkMonitors NetworkMonitorsRestClient => _networkMonitorsRestClient ??= new NetworkMonitors(NetworkMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkMonitors", out string apiVersion16) ? apiVersion16 : "2026-01-15-preview");
 
         private ClientDiagnostics NetworkBootstrapDevicesClientDiagnostics => _networkBootstrapDevicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkBootstrapDevices NetworkBootstrapDevicesRestClient => _networkBootstrapDevicesRestClient ??= new NetworkBootstrapDevices(NetworkBootstrapDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkBootstrapDevices", out string apiVersion17) ? apiVersion17 : "2025-07-15");
+        private NetworkBootstrapDevices NetworkBootstrapDevicesRestClient => _networkBootstrapDevicesRestClient ??= new NetworkBootstrapDevices(NetworkBootstrapDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkBootstrapDevices", out string apiVersion17) ? apiVersion17 : "2026-01-15-preview");
+
+        private ClientDiagnostics EdgeConnectorsClientDiagnostics => _edgeConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EdgeConnectors EdgeConnectorsRestClient => _edgeConnectorsRestClient ??= new EdgeConnectors(EdgeConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/edgeConnectors", out string apiVersion18) ? apiVersion18 : "2026-01-15-preview");
+
+        private ClientDiagnostics FabricsClientDiagnostics => _fabricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Fabrics FabricsRestClient => _fabricsRestClient ??= new Fabrics(FabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/fabrics", out string apiVersion19) ? apiVersion19 : "2026-01-15-preview");
 
         /// <summary> Gets a collection of NetworkDeviceSkus in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of NetworkDeviceSkus and their operations over a NetworkDeviceSkuResource. </returns>
@@ -167,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,7 +208,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +244,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +273,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +302,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +330,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,7 +358,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,7 +386,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,7 +414,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,7 +442,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -458,7 +470,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -486,7 +498,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -514,7 +526,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -542,7 +554,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -570,7 +582,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -598,7 +610,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,7 +638,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -654,7 +666,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -682,7 +694,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -710,7 +722,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -738,7 +750,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -766,7 +778,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -794,7 +806,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -822,7 +834,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -850,7 +862,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -878,7 +890,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -906,7 +918,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -934,7 +946,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -962,7 +974,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -990,7 +1002,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1018,7 +1030,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1046,7 +1058,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1074,7 +1086,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1102,7 +1114,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1130,7 +1142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1158,7 +1170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1186,7 +1198,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1214,7 +1226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1242,7 +1254,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1270,7 +1282,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1298,7 +1310,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1326,7 +1338,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1339,6 +1351,118 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<NetworkBootstrapDeviceData, NetworkBootstrapDeviceResource>(new NetworkBootstrapDeviceData0CollectionResultOfT(NetworkBootstrapDevicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkBootstrapDevices"), data => new NetworkBootstrapDeviceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists EdgeConnectors by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/edgeConnectors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeConnectors_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeConnectorResource> GetEdgeConnectorsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeConnectorData, EdgeConnectorResource>(new EdgeConnectorDataAsync0CollectionResultOfT(EdgeConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetEdgeConnectors"), data => new EdgeConnectorResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists EdgeConnectors by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/edgeConnectors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeConnectors_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeConnectorResource> GetEdgeConnectors(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeConnectorData, EdgeConnectorResource>(new EdgeConnectorData0CollectionResultOfT(EdgeConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetEdgeConnectors"), data => new EdgeConnectorResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists Fabrics by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/fabrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Fabrics_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FabricResource> GetFabricsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FabricData, FabricResource>(new FabricDataAsync0CollectionResultOfT(FabricsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetFabrics"), data => new FabricResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists Fabrics by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/fabrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Fabrics_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FabricResource> GetFabrics(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FabricData, FabricResource>(new FabricData0CollectionResultOfT(FabricsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetFabrics"), data => new FabricResource(Client, data));
         }
     }
 }

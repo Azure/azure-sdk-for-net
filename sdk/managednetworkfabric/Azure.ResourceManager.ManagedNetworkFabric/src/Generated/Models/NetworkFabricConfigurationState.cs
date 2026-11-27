@@ -41,6 +41,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string PendingCommitValue = "PendingCommit";
         /// <summary> PendingAdministrativeUpdate State. </summary>
         private const string PendingAdministrativeUpdateValue = "PendingAdministrativeUpdate";
+        /// <summary> Updated configuration is pushed to the selected CE device during staged commit operation. </summary>
+        private const string CommitStagedValue = "CommitStaged";
+        /// <summary> Pushing the updated configuration to the selected CE device failed during staged commit operation. </summary>
+        private const string CommitStageFailedValue = "CommitStageFailed";
+        /// <summary> Rollback of configuration failed during staged commit rollback operation. </summary>
+        private const string CommitRollbackFailedValue = "CommitRollbackFailed";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricConfigurationState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -90,6 +96,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> PendingAdministrativeUpdate State. </summary>
         public static NetworkFabricConfigurationState PendingAdministrativeUpdate { get; } = new NetworkFabricConfigurationState(PendingAdministrativeUpdateValue);
+
+        /// <summary> Updated configuration is pushed to the selected CE device during staged commit operation. </summary>
+        public static NetworkFabricConfigurationState CommitStaged { get; } = new NetworkFabricConfigurationState(CommitStagedValue);
+
+        /// <summary> Pushing the updated configuration to the selected CE device failed during staged commit operation. </summary>
+        public static NetworkFabricConfigurationState CommitStageFailed { get; } = new NetworkFabricConfigurationState(CommitStageFailedValue);
+
+        /// <summary> Rollback of configuration failed during staged commit rollback operation. </summary>
+        public static NetworkFabricConfigurationState CommitRollbackFailed { get; } = new NetworkFabricConfigurationState(CommitRollbackFailedValue);
 
         /// <summary> Determines if two <see cref="NetworkFabricConfigurationState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
