@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsClusterResource"/> object. </returns>
         public virtual EventHubsClusterResource GetEventHubsClusterResource(ResourceIdentifier id)
         {
-            EventHubsClusterResource.ValidateResourceId(id);
             return new EventHubsClusterResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
         public virtual EventHubsDisasterRecoveryAuthorizationRuleResource GetEventHubsDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier id)
         {
-            EventHubsDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
             return new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsDisasterRecoveryResource"/> object. </returns>
         public virtual EventHubsDisasterRecoveryResource GetEventHubsDisasterRecoveryResource(ResourceIdentifier id)
         {
-            EventHubsDisasterRecoveryResource.ValidateResourceId(id);
             return new EventHubsDisasterRecoveryResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsNamespaceAuthorizationRuleResource"/> object. </returns>
         public virtual EventHubsNamespaceAuthorizationRuleResource GetEventHubsNamespaceAuthorizationRuleResource(ResourceIdentifier id)
         {
-            EventHubsNamespaceAuthorizationRuleResource.ValidateResourceId(id);
             return new EventHubsNamespaceAuthorizationRuleResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubAuthorizationRuleResource"/> object. </returns>
         public virtual EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(ResourceIdentifier id)
         {
-            EventHubAuthorizationRuleResource.ValidateResourceId(id);
             return new EventHubAuthorizationRuleResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubResource"/> object. </returns>
         public virtual EventHubResource GetEventHubResource(ResourceIdentifier id)
         {
-            EventHubResource.ValidateResourceId(id);
             return new EventHubResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsPrivateEndpointConnectionResource"/> object. </returns>
         public virtual EventHubsPrivateEndpointConnectionResource GetEventHubsPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            EventHubsPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new EventHubsPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual EventHubsNetworkSecurityPerimeterConfigurationResource GetEventHubsNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            EventHubsNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsConsumerGroupResource"/> object. </returns>
         public virtual EventHubsConsumerGroupResource GetEventHubsConsumerGroupResource(ResourceIdentifier id)
         {
-            EventHubsConsumerGroupResource.ValidateResourceId(id);
             return new EventHubsConsumerGroupResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsFabricShortcutResource"/> object. </returns>
         public virtual EventHubsFabricShortcutResource GetEventHubsFabricShortcutResource(ResourceIdentifier id)
         {
-            EventHubsFabricShortcutResource.ValidateResourceId(id);
             return new EventHubsFabricShortcutResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsUpgradePreferencesResource"/> object. </returns>
         public virtual EventHubsUpgradePreferencesResource GetEventHubsUpgradePreferencesResource(ResourceIdentifier id)
         {
-            EventHubsUpgradePreferencesResource.ValidateResourceId(id);
             return new EventHubsUpgradePreferencesResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsNamespaceResource"/> object. </returns>
         public virtual EventHubsNamespaceResource GetEventHubsNamespaceResource(ResourceIdentifier id)
         {
-            EventHubsNamespaceResource.ValidateResourceId(id);
             return new EventHubsNamespaceResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsNetworkRuleSetResource"/> object. </returns>
         public virtual EventHubsNetworkRuleSetResource GetEventHubsNetworkRuleSetResource(ResourceIdentifier id)
         {
-            EventHubsNetworkRuleSetResource.ValidateResourceId(id);
             return new EventHubsNetworkRuleSetResource(Client, id);
         }
 
@@ -148,7 +135,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsSchemaGroupResource"/> object. </returns>
         public virtual EventHubsSchemaGroupResource GetEventHubsSchemaGroupResource(ResourceIdentifier id)
         {
-            EventHubsSchemaGroupResource.ValidateResourceId(id);
             return new EventHubsSchemaGroupResource(Client, id);
         }
 
@@ -157,7 +143,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsApplicationGroupResource"/> object. </returns>
         public virtual EventHubsApplicationGroupResource GetEventHubsApplicationGroupResource(ResourceIdentifier id)
         {
-            EventHubsApplicationGroupResource.ValidateResourceId(id);
             return new EventHubsApplicationGroupResource(Client, id);
         }
     }

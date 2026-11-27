@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <returns> Returns a <see cref="FrontDoorResource"/> object. </returns>
         public virtual FrontDoorResource GetFrontDoorResource(ResourceIdentifier id)
         {
-            FrontDoorResource.ValidateResourceId(id);
             return new FrontDoorResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <returns> Returns a <see cref="FrontendEndpointResource"/> object. </returns>
         public virtual FrontendEndpointResource GetFrontendEndpointResource(ResourceIdentifier id)
         {
-            FrontendEndpointResource.ValidateResourceId(id);
             return new FrontendEndpointResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <returns> Returns a <see cref="FrontDoorRulesEngineResource"/> object. </returns>
         public virtual FrontDoorRulesEngineResource GetFrontDoorRulesEngineResource(ResourceIdentifier id)
         {
-            FrontDoorRulesEngineResource.ValidateResourceId(id);
             return new FrontDoorRulesEngineResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <returns> Returns a <see cref="FrontDoorExperimentResource"/> object. </returns>
         public virtual FrontDoorExperimentResource GetFrontDoorExperimentResource(ResourceIdentifier id)
         {
-            FrontDoorExperimentResource.ValidateResourceId(id);
             return new FrontDoorExperimentResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <returns> Returns a <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> object. </returns>
         public virtual FrontDoorWebApplicationFirewallPolicyResource GetFrontDoorWebApplicationFirewallPolicyResource(ResourceIdentifier id)
         {
-            FrontDoorWebApplicationFirewallPolicyResource.ValidateResourceId(id);
             return new FrontDoorWebApplicationFirewallPolicyResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <returns> Returns a <see cref="FrontDoorNetworkExperimentProfileResource"/> object. </returns>
         public virtual FrontDoorNetworkExperimentProfileResource GetFrontDoorNetworkExperimentProfileResource(ResourceIdentifier id)
         {
-            FrontDoorNetworkExperimentProfileResource.ValidateResourceId(id);
             return new FrontDoorNetworkExperimentProfileResource(Client, id);
         }
     }

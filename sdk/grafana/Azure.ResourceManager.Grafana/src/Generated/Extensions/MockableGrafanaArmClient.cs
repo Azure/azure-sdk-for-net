@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <returns> Returns a <see cref="ManagedGrafanaResource"/> object. </returns>
         public virtual ManagedGrafanaResource GetManagedGrafanaResource(ResourceIdentifier id)
         {
-            ManagedGrafanaResource.ValidateResourceId(id);
             return new ManagedGrafanaResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource"/> object. </returns>
         public virtual GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            GrafanaPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new GrafanaPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <returns> Returns a <see cref="GrafanaPrivateLinkResource"/> object. </returns>
         public virtual GrafanaPrivateLinkResource GetGrafanaPrivateLinkResource(ResourceIdentifier id)
         {
-            GrafanaPrivateLinkResource.ValidateResourceId(id);
             return new GrafanaPrivateLinkResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <returns> Returns a <see cref="ManagedPrivateEndpointModelResource"/> object. </returns>
         public virtual ManagedPrivateEndpointModelResource GetManagedPrivateEndpointModelResource(ResourceIdentifier id)
         {
-            ManagedPrivateEndpointModelResource.ValidateResourceId(id);
             return new ManagedPrivateEndpointModelResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <returns> Returns a <see cref="GrafanaIntegrationFabricResource"/> object. </returns>
         public virtual GrafanaIntegrationFabricResource GetGrafanaIntegrationFabricResource(ResourceIdentifier id)
         {
-            GrafanaIntegrationFabricResource.ValidateResourceId(id);
             return new GrafanaIntegrationFabricResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <returns> Returns a <see cref="ManagedDashboardResource"/> object. </returns>
         public virtual ManagedDashboardResource GetManagedDashboardResource(ResourceIdentifier id)
         {
-            ManagedDashboardResource.ValidateResourceId(id);
             return new ManagedDashboardResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <returns> Returns a <see cref="DashboardDefinitionResource"/> object. </returns>
         public virtual DashboardDefinitionResource GetDashboardDefinitionResource(ResourceIdentifier id)
         {
-            DashboardDefinitionResource.ValidateResourceId(id);
             return new DashboardDefinitionResource(Client, id);
         }
     }

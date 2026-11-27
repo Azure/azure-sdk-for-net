@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <returns> Returns a <see cref="ClusterMeshProfileResource"/> object. </returns>
         public virtual ClusterMeshProfileResource GetClusterMeshProfileResource(ResourceIdentifier id)
         {
-            ClusterMeshProfileResource.ValidateResourceId(id);
             return new ClusterMeshProfileResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <returns> Returns a <see cref="ContainerServiceFleetResource"/> object. </returns>
         public virtual ContainerServiceFleetResource GetContainerServiceFleetResource(ResourceIdentifier id)
         {
-            ContainerServiceFleetResource.ValidateResourceId(id);
             return new ContainerServiceFleetResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <returns> Returns a <see cref="ContainerServiceFleetMemberResource"/> object. </returns>
         public virtual ContainerServiceFleetMemberResource GetContainerServiceFleetMemberResource(ResourceIdentifier id)
         {
-            ContainerServiceFleetMemberResource.ValidateResourceId(id);
             return new ContainerServiceFleetMemberResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <returns> Returns a <see cref="ContainerServiceFleetManagedNamespaceResource"/> object. </returns>
         public virtual ContainerServiceFleetManagedNamespaceResource GetContainerServiceFleetManagedNamespaceResource(ResourceIdentifier id)
         {
-            ContainerServiceFleetManagedNamespaceResource.ValidateResourceId(id);
             return new ContainerServiceFleetManagedNamespaceResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <returns> Returns a <see cref="ContainerServiceFleetGateResource"/> object. </returns>
         public virtual ContainerServiceFleetGateResource GetContainerServiceFleetGateResource(ResourceIdentifier id)
         {
-            ContainerServiceFleetGateResource.ValidateResourceId(id);
             return new ContainerServiceFleetGateResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <returns> Returns a <see cref="IdentityBindingProfileResource"/> object. </returns>
         public virtual IdentityBindingProfileResource GetIdentityBindingProfileResource(ResourceIdentifier id)
         {
-            IdentityBindingProfileResource.ValidateResourceId(id);
             return new IdentityBindingProfileResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <returns> Returns a <see cref="ContainerServiceFleetUpdateRunResource"/> object. </returns>
         public virtual ContainerServiceFleetUpdateRunResource GetContainerServiceFleetUpdateRunResource(ResourceIdentifier id)
         {
-            ContainerServiceFleetUpdateRunResource.ValidateResourceId(id);
             return new ContainerServiceFleetUpdateRunResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <returns> Returns a <see cref="FleetUpdateStrategyResource"/> object. </returns>
         public virtual FleetUpdateStrategyResource GetFleetUpdateStrategyResource(ResourceIdentifier id)
         {
-            FleetUpdateStrategyResource.ValidateResourceId(id);
             return new FleetUpdateStrategyResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <returns> Returns a <see cref="AutoUpgradeProfileResource"/> object. </returns>
         public virtual AutoUpgradeProfileResource GetAutoUpgradeProfileResource(ResourceIdentifier id)
         {
-            AutoUpgradeProfileResource.ValidateResourceId(id);
             return new AutoUpgradeProfileResource(Client, id);
         }
     }

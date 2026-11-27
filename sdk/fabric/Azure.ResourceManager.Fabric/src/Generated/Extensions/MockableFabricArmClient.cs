@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// <returns> Returns a <see cref="FabricCapacityResource"/> object. </returns>
         public virtual FabricCapacityResource GetFabricCapacityResource(ResourceIdentifier id)
         {
-            FabricCapacityResource.ValidateResourceId(id);
             return new FabricCapacityResource(Client, id);
         }
     }
