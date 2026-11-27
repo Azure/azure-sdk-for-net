@@ -1497,19 +1497,6 @@
       ]
     },
     {
-      "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
-      "words": [
-        "cves",
-        "diffie",
-        "iotfirmwaredefense",
-        "ocsp",
-        "relro",
-        "rpath",
-        "runpath",
-        "sbom"
-      ]
-    },
-    {
       "filename": "**/sdk/hybridnetwork/**/*.cs",
       "words": [
         "nfvi",

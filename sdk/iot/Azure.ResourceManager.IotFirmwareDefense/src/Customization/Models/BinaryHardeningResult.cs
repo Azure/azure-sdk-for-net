@@ -12,11 +12,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> binary hardening analysis result resource. </summary>
     public partial class BinaryHardeningResult
     {
-        /// <summary> Initializes a new instance of <see cref="BinaryHardeningResult"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public BinaryHardeningResult()
-        {
-        }
         /// <summary>
         /// The architecture of the binary being reported on.
         /// Serialized Name: BinaryHardeningResource.properties.architecture

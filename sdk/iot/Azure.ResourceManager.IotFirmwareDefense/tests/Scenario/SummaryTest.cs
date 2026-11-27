@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.IotFirmwareDefense.Models;
 using Azure.ResourceManager.Resources;
 using FluentAssertions;
-using NUnit.Framework;
-using Azure.ResourceManager.IotFirmwareDefense.Models;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 {

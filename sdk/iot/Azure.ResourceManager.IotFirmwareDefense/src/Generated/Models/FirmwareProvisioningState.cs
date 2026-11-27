@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -14,50 +15,81 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public readonly partial struct FirmwareProvisioningState : IEquatable<FirmwareProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The request has successfully completed. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> There was an error during the request. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The request was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The request is queued and awaiting execution. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> The Firmware is currently being extracted. </summary>
+        private const string ExtractingValue = "Extracting";
+        /// <summary> Analysis is being run on the firmware. </summary>
+        private const string AnalyzingValue = "Analyzing";
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="FirmwareProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirmwareProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string PendingValue = "Pending";
-        private const string ExtractingValue = "Extracting";
-        private const string AnalyzingValue = "Analyzing";
+            _value = value;
+        }
 
         /// <summary> The request has successfully completed. </summary>
         public static FirmwareProvisioningState Succeeded { get; } = new FirmwareProvisioningState(SucceededValue);
+
         /// <summary> There was an error during the request. </summary>
         public static FirmwareProvisioningState Failed { get; } = new FirmwareProvisioningState(FailedValue);
+
         /// <summary> The request was canceled. </summary>
         public static FirmwareProvisioningState Canceled { get; } = new FirmwareProvisioningState(CanceledValue);
+
         /// <summary> The request is queued and awaiting execution. </summary>
         public static FirmwareProvisioningState Pending { get; } = new FirmwareProvisioningState(PendingValue);
+
         /// <summary> The Firmware is currently being extracted. </summary>
         public static FirmwareProvisioningState Extracting { get; } = new FirmwareProvisioningState(ExtractingValue);
+
         /// <summary> Analysis is being run on the firmware. </summary>
         public static FirmwareProvisioningState Analyzing { get; } = new FirmwareProvisioningState(AnalyzingValue);
+
+        /// <summary> Gets the Accepted. </summary>
+        public static FirmwareProvisioningState Accepted { get; } = new FirmwareProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="FirmwareProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirmwareProvisioningState left, FirmwareProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirmwareProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirmwareProvisioningState left, FirmwareProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirmwareProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirmwareProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirmwareProvisioningState(string value) => new FirmwareProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirmwareProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirmwareProvisioningState?(string value) => value == null ? null : new FirmwareProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirmwareProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirmwareProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
