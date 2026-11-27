@@ -17,6 +17,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -205,9 +206,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private bool HasTypedResultForPublicSurface =>
             _hasTypedResultForPublicSurface;
 
+        private bool IsHeadResponseAsBool => !ShouldApplyLroHandling
+            && _serviceMethod is InputBasicServiceMethod
+            && _serviceMethod.Operation is { HttpMethod: "HEAD", ResponseAsBool: true };
+
         protected virtual CSharpType BuildReturnType()
         {
-            var effectiveReturnBodyType = HasTypedResultForPublicSurface ? _returnBodyType : null;
+            var effectiveReturnBodyType = IsHeadResponseAsBool ? typeof(bool)
+                : HasTypedResultForPublicSurface ? _returnBodyType : null;
             return effectiveReturnBodyType.WrapResponse(IsLongRunningOperation || IsFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
@@ -360,6 +366,23 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
+            if (IsHeadResponseAsBool)
+            {
+                // Use the operation's status contract before sending so pipeline diagnostics
+                // and the returned raw response agree about which statuses are errors.
+                var successCodes = _serviceMethod.Operation.Responses
+                    .Where(response => !response.IsErrorResponse)
+                    .SelectMany(response => response.StatusCodes)
+                    .Where(code => code is 404 or (>= 200 and < 300))
+                    .Distinct()
+                    .OrderBy(code => code);
+                var classifier = ManagementClientGenerator.Instance.TypeFactory.StatusCodeClassifierApi.ToExpression().Create(successCodes);
+                var statements = SendForStatus(messageVariable, contextVariable, out var result);
+                statements.Insert(0, messageVariable.Property(nameof(HttpMessage.ResponseClassifier)).Assign(classifier).Terminate());
+                responseVariable = result.As<Response>();
+                return statements;
+            }
+
             // Use generic response pipeline only when the body type is actually surfaced on the public API.
             // For delete LRO operations, the final result is suppressed from the public surface, so we must
             // use non-generic pipeline processing to produce a plain Response that matches the non-generic
@@ -383,6 +406,17 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
         }
 
+        private List<MethodBodyStatement> SendForStatus(
+            VariableExpression messageVariable,
+            VariableExpression contextVariable,
+            out VariableExpression result)
+        {
+            var sendMethod = _isAsync ? "SendAsync" : "Send";
+            var sendArguments = new ValueExpression[] { messageVariable, contextVariable.Property(nameof(RequestContext.CancellationToken)) };
+            var send = This.Property("Pipeline").Invoke(sendMethod, sendArguments, null, _isAsync).Terminate();
+            return [send, Declare("result", typeof(Response), messageVariable.Property("Response"), out result)];
+        }
+
         /// <summary>
         /// Builds client pipeline handling with status code switch logic for exists/get-if-exists operations.
         /// Handles 200 (success) and 404 (not found) status codes specifically.
@@ -392,23 +426,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            var statements = new List<MethodBodyStatement>();
-
-            var sendMethod = _isAsync ? "SendAsync" : "Send";
-            var sendArguments = new ValueExpression[] { messageVariable, contextVariable.Property(nameof(RequestContext.CancellationToken)) };
-
-            var sendStatement = _isAsync
-                ? This.Property("Pipeline").Invoke(sendMethod, sendArguments, null, _isAsync).Terminate()
-                : This.Property("Pipeline").Invoke(sendMethod, sendArguments).Terminate();
-            statements.Add(sendStatement);
-
-            var resultDeclaration = Declare(
-                "result",
-                typeof(Response),
-                messageVariable.Property("Response"),
-                out var resultVariable);
-            statements.Add(resultDeclaration);
-
+            var statements = SendForStatus(messageVariable, contextVariable, out var resultVariable);
             var responseDeclaration = Declare(
                 "response",
                 new CSharpType(typeof(Response<>), _originalBodyType!),
@@ -587,6 +605,18 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         // TODO: re-examine if this method need to be virtual or not after tags related method providers are implmented.
         protected virtual IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
         {
+            if (IsHeadResponseAsBool)
+            {
+                return
+                [
+                    new IfStatement(responseVariable.Property(nameof(Response.IsError)))
+                    {
+                        Throw(New.Instance(typeof(RequestFailedException), responseVariable))
+                    },
+                    Return(ResponseSnippets.FromValue(responseVariable.Property(nameof(Response.Status)).NotEqual(Literal(404)), responseVariable))
+                ];
+            }
+
             var nullCheckStatement = new IfStatement(
                 responseVariable.Value().Equal(Null))
             {

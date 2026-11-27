@@ -66,5 +66,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             request.Content = content;
             return message;
         }
+
+        internal HttpMessage CreateCheckConfigurationNameRequest(string name, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/MgmtTypeSpec/configurationNames/", false);
+            uri.AppendPath(name, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Head;
+            _userAgent.Apply(message);
+            return message;
+        }
     }
 }
