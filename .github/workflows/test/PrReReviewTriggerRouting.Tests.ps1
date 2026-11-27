@@ -238,6 +238,51 @@ Describe 'pr-re-review trigger routing' {
         }
     }
 
+    It 'skips activation and the agent only for an explicitly verified README-only gate' {
+        $context = New-PushContext -EventName 'pull_request' -FromFork $false -Draft $false
+        $context.needs.pre_activation.outputs.eligible = 'false'
+        $context.needs.activation = @{ outputs = @{ daily_ai_credits_exceeded = 'false' } }
+        Test-WorkflowCondition (Get-JobCondition 'activation') $context | Should -BeFalse
+        Test-WorkflowCondition (Get-JobCondition 'agent') $context | Should -BeFalse
+        $context.needs.pre_activation.outputs.eligible = 'true'
+        Test-WorkflowCondition (Get-JobCondition 'activation') $context | Should -BeTrue
+        Test-WorkflowCondition (Get-JobCondition 'agent') $context | Should -BeTrue
+        $context.needs.pre_activation.outputs.Remove('eligible')
+        Test-WorkflowCondition (Get-JobCondition 'activation') $context | Should -BeTrue
+        Test-WorkflowCondition (Get-JobCondition 'agent') $context | Should -BeTrue
+    }
+
+    It 'only runs the pre-activation gate for authorized default-branch PRs using default-branch helpers' {
+        $job = Get-YamlSection (Get-YamlSection $LockLines 'jobs' 0) 'pre_activation' 2
+        $text = $job -join "`n"
+        @($job | Where-Object { $_ -match "if: steps\.check_membership\.outputs\.is_team_member == 'true' && github\.event\.pull_request\.base\.ref == github\.event\.repository\.default_branch" }).Count | Should -Be 3
+        $text | Should -Match 'ref: \$\{\{ github\.event\.repository\.default_branch \}\}'
+    }
+
+    It 'fetches PR objects without checking out untrusted code under pull_request_target' {
+        $job = Get-YamlSection (Get-YamlSection $LockLines 'jobs' 0) 'pre_activation' 2
+        $text = $job -join "`n"
+        $text | Should -Match 'git init --bare'
+        $text | Should -Match 'fetch --no-tags --depth=100 --filter=blob:none'
+        $text | Should -Not -Match 'ref: refs/pull/'
+        $text | Should -Match '\$global:LASTEXITCODE = 0'
+    }
+
+    It 'requires successful publication and validation before creating a baseline' {
+        $job = Get-YamlSection (Get-YamlSection $LockLines 'jobs' 0) 'baseline-receipt' 2
+        $text = $job -join "`n"
+        $text | Should -Match '(?m)^      - validate_agent_output$'
+        $text | Should -Match "needs\.safe_outputs\.outputs\.process_safe_outputs_status == 'success'"
+        $text | Should -Match "needs\.safe_outputs\.outputs\.process_safe_outputs_items_applied != '0'"
+        $text | Should -Match "needs\.detection\.outputs\.detection_conclusion == 'success'"
+        $text | Should -Match 'github\.run_attempt == 1'
+        $text | Should -Match "!contains\(needs\.agent\.outputs\.output_types, 'unresolve_review_thread'\)"
+        $text | Should -Match "if: steps\.receipt\.outputs\.created == 'true'"
+        $text | Should -Match "if: steps\.baseline-upload\.outcome == 'success'"
+        $text | Should -Match 'continue-on-error: true'
+        $text | Should -Match '\$global:LASTEXITCODE = 0'
+    }
+
     It 'keys workflow concurrency by event so the skipped twin run never queues behind the real run' {
         $group = (Get-YamlSection $LockLines 'concurrency' 0) -cmatch '^  group: '
         $group | Should -HaveCount 1
