@@ -75,6 +75,11 @@ namespace Azure.Data.Tables.Queryable
             return WebConvert.TryKeyPrimitiveToString(value, out result);
         }
 
+        internal static bool IsKnownType(Type type)
+        {
+            return IndexOfStorage(type) >= 0;
+        }
+
         private static Type[] CreateKnownPrimitives()
         {
             Type[] types = new Type[1 + (int)StorageType.Binary];

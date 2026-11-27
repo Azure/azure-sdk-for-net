@@ -12,6 +12,7 @@ namespace Azure.Data.Tables.Queryable
         public const string ALinqCantCastToUnsupportedPrimitive = "Can't cast to unsupported type '{0}'";
         public const string ALinqCantTranslateExpression = "The expression {0} is not supported.";
         public const string ALinqCantReferToPublicField = "Referencing public field '{0}' not supported in query option expression.  Use public property instead.";
+        public const string ALinqCantTranslateMember = "The member '{0}' in {1} is not supported. Table query filters can only compare entity properties with constant values.";
         public const string IQueryableExtensionObjectMustBeTableQuery = "Query must be a TableQuery<T>";
     }
 }
