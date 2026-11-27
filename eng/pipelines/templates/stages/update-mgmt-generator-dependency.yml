@@ -1,0 +1,292 @@
+parameters:
+  - name: Pool
+    type: object
+  - name: InitializationSteps
+    type: stepList
+  - name: SeedBaseline
+    type: boolean
+    default: false
+  - name: RetryApprovedVersion
+    type: boolean
+    default: false
+
+stages:
+  - stage: UpdateMgmtGeneratorDependency
+    displayName: Update management generator dependency
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    pool: ${{ parameters.Pool }}
+    jobs:
+      - job: ReadApproval
+        displayName: Compare approved emitter pin
+        steps:
+          - checkout: self
+            fetchDepth: 2
+            fetchTags: false
+          - pwsh: |
+              $ErrorActionPreference = 'Stop'
+              if ($env:SEED_BASELINE -eq 'True' -and $env:RETRY_APPROVED_VERSION -eq 'True') { throw 'A run cannot seed and retry at the same time.' }
+              $project = [uri]::EscapeDataString($env:SYSTEM_TEAMPROJECT)
+              $endpoint = "$($env:SYSTEM_COLLECTIONURI)$project/_apis/build/builds?definitions=$($env:SYSTEM_DEFINITIONID)&branchName=refs%2Fheads%2Fmain"
+              $headers = @{ Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN" }
+              # Any successful run establishes a baseline; the original seed may
+              # eventually expire under Azure Pipelines retention policies.
+              $seeds = Invoke-RestMethod -Uri "$endpoint&reasonFilter=manual%2CindividualCI%2CbatchedCI&resultFilter=succeeded&statusFilter=completed&%24top=1&api-version=7.1" -Headers $headers
+              if ($null -eq $seeds.value) { throw 'The pipeline baseline history response is invalid.' }
+              if ($env:SEED_BASELINE -eq 'True') {
+                if ($env:BUILD_REASON -ne 'Manual') { throw 'The baseline can only be seeded by a manual run on main.' }
+                if (@($seeds.value).Count -ne 0) { throw 'A baseline has already been seeded.' }
+                & ./eng/scripts/mgmt-dependency/Get-ApprovedEmitterChange.ps1 -RepoRoot $env:BUILD_SOURCESDIRECTORY -SourceVersion $env:BUILD_SOURCEVERSION -PreviousVersion $env:BUILD_SOURCEVERSION
+                return
+              }
+              if (@($seeds.value).Count -eq 0) { throw 'Register this pipeline and run it manually on main with SeedBaseline=true before enabling CI.' }
+              if ($env:RETRY_APPROVED_VERSION -eq 'True') {
+                if ($env:BUILD_REASON -ne 'Manual') { throw 'An approved version can only be retried by a manual run on main.' }
+                & ./eng/scripts/mgmt-dependency/Get-ApprovedEmitterChange.ps1 -RepoRoot $env:BUILD_SOURCESDIRECTORY -SourceVersion $env:BUILD_SOURCEVERSION -PreviousVersion $env:BUILD_SOURCEVERSION -ForceUpdate
+                return
+              }
+              $url = "$endpoint&reasonFilter=individualCI%2CbatchedCI%2Cmanual&queryOrder=queueTimeDescending&%24top=100&api-version=7.1"
+              $builds = Invoke-RestMethod -Uri $url -Headers $headers
+              if ($null -eq $builds.value) { throw 'The pipeline run history response is invalid.' }
+              $previous = @($builds.value | Where-Object { $_.id -lt [int]$env:BUILD_BUILDID -and $_.sourceVersion -and ($_.reason -ne 'manual' -or $_.result -eq 'succeeded') } | Sort-Object id -Descending | Select-Object -First 1)
+              if ($previous.Count -ne 1) { throw 'No previous pipeline source version was found.' }
+              $base = $previous[0].sourceVersion
+              if ($base -notmatch '^[0-9a-f]{40}$') { throw 'Previous pipeline run has an invalid source version.' }
+              git fetch --no-tags --depth=1 origin $base
+              if ($LASTEXITCODE -ne 0) { throw 'Failed to fetch the previous pipeline source version.' }
+              & ./eng/scripts/mgmt-dependency/Get-ApprovedEmitterChange.ps1 -RepoRoot $env:BUILD_SOURCESDIRECTORY -SourceVersion $env:BUILD_SOURCEVERSION -PreviousVersion $base
+            name: approval
+            displayName: Compare approved emitter versions
+            workingDirectory: $(Build.SourcesDirectory)
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+              SEED_BASELINE: ${{ parameters.SeedBaseline }}
+              RETRY_APPROVED_VERSION: ${{ parameters.RetryApprovedVersion }}
+      - job: UpdateManagement
+        dependsOn: ReadApproval
+        condition: and(succeeded(), eq(dependencies.ReadApproval.outputs['approval.pinChanged'], 'True'))
+        timeoutInMinutes: 120
+        variables:
+          emitterVersion: $[ dependencies.ReadApproval.outputs['approval.emitterVersion'] ]
+          dependencyBranch: typespec/update-mgmt-branded-$(emitterVersion)
+          mgmtNpmrcPath: $(Agent.TempDirectory)/mgmt-dependency/.npmrc
+          MgmtDependencyUpdateNeeded: 'false'
+          MgmtDependencyFailed: 'false'
+          ReuseExistingDependencyPR: 'false'
+          HasChanges: 'false'
+        steps:
+          - checkout: self
+            fetchDepth: 1
+            fetchTags: false
+
+          # Start from current main and refuse obsolete runs.
+          - pwsh: |
+              git fetch --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+              if ($LASTEXITCODE -ne 0) { throw 'Failed to fetch main.' }
+              git checkout --detach origin/main
+              if ($LASTEXITCODE -ne 0) { throw 'Failed to check out main.' }
+              $approved = (Get-Content 'eng/azure-typespec-http-client-csharp-emitter-package.json' -Raw | ConvertFrom-Json -AsHashtable).dependencies['@azure-typespec/http-client-csharp']
+              if ($approved -cne '$(emitterVersion)') { throw 'The approved emitter pin changed after this run was queued; refusing the obsolete update.' }
+            displayName: Check out latest main
+            workingDirectory: $(Build.SourcesDirectory)
+
+          # An earlier attempt may already have pushed its branch. Reuse it as-is,
+          # including its success/failure status; never overwrite maintainer edits.
+          - pwsh: |
+              $branch = '$(dependencyBranch)'
+              $version = '$(emitterVersion)'
+              $remote = git ls-remote --heads origin "refs/heads/$branch"
+              if ($LASTEXITCODE -ne 0) { throw 'Failed to inspect the existing update branch.' }
+              if ($remote) {
+                git fetch --no-tags --depth=1 origin "refs/heads/$branch"
+                if ($LASTEXITCODE -ne 0) { throw 'Failed to fetch the existing update branch.' }
+                $subject = git log -1 --format=%s FETCH_HEAD
+                if ($LASTEXITCODE -ne 0) { throw 'Failed to inspect the existing update commit.' }
+                $expected = "Update management generator branded dependency to $version"
+                $failed = "Failed: Update management generator branded dependency to $version"
+                if ($subject -ne $expected -and $subject -ne $failed) {
+                  throw 'The existing update branch has an unexpected head; refusing to overwrite it.'
+                }
+                Write-Host '##vso[task.setvariable variable=ReuseExistingDependencyPR]true'
+                Write-Host '##vso[task.setvariable variable=MgmtDependencyUpdateNeeded]true'
+                if ($subject -eq $failed) { Write-Host '##vso[task.setvariable variable=MgmtDependencyFailed]true' }
+              }
+            displayName: Detect previous update attempt
+            workingDirectory: $(Build.SourcesDirectory)
+
+          - ${{ parameters.InitializationSteps }}
+
+          - pwsh: |
+              $PSNativeCommandUseErrorActionPreference = $false
+              $metadata = npm view "@azure-typespec/http-client-csharp@$(emitterVersion)" name version dependencies --json --registry=https://registry.npmjs.org --@azure-typespec:registry=https://registry.npmjs.org
+              if ($LASTEXITCODE -ne 0) { throw 'Failed to retrieve the approved npm package metadata.' }
+              $package = ($metadata -join "`n") | ConvertFrom-Json -AsHashtable
+              if ($package -is [array]) {
+                if ($package.Count -ne 1) { throw 'Expected exactly one approved npm package.' }
+                $package = $package[0]
+              }
+              $json = $package | ConvertTo-Json -Depth 20
+              [System.IO.File]::WriteAllText('$(Agent.TempDirectory)/approved-emitter.json', $json, [System.Text.UTF8Encoding]::new($false))
+            displayName: Retrieve exact approved npm package metadata
+            condition: and(succeeded(), eq(variables['ReuseExistingDependencyPR'], 'false'))
+
+          - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+            parameters:
+              npmrcPath: $(mgmtNpmrcPath)
+
+          # Record failures explicitly instead of depending on Agent.JobStatus:
+          # unrelated optional steps (for example, the NuGet cache) can also warn.
+          # The job is failed after a draft PR is created, if there are changes.
+          - pwsh: |
+              $PSNativeCommandUseErrorActionPreference = $false
+              & pwsh -NoLogo -NoProfile -File '$(Build.SourcesDirectory)/eng/scripts/mgmt-dependency/Update-MgmtGeneratorDependency.ps1' `
+                -RepoRoot '$(Build.SourcesDirectory)' `
+                -PublishedPackageJson '$(Agent.TempDirectory)/approved-emitter.json' `
+                -Version '$(emitterVersion)'
+              if ($LASTEXITCODE -ne 0) {
+                Write-Warning 'Management dependency update failed.'
+                Write-Host '##vso[task.setvariable variable=MgmtDependencyFailed]true'
+                $global:LASTEXITCODE = 0
+              }
+            displayName: Update management dependencies
+            condition: and(succeeded(), eq(variables['ReuseExistingDependencyPR'], 'false'))
+            env:
+              npm_config_userconfig: $(mgmtNpmrcPath)
+
+          - pwsh: |
+              try {
+                $index = Invoke-RestMethod 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
+                $flat = @($index.resources | Where-Object { $_.'@type' -eq 'PackageBaseAddress/3.0.0' } | Select-Object -First 1)[0].'@id'
+                if (-not $flat) { throw 'PackageBaseAddress is absent from the NuGet feed.' }
+                $versions = Invoke-RestMethod "${flat}azure.generator/index.json"
+                if ('$(emitterVersion)' -cnotin $versions.versions) { throw 'Matching Azure.Generator package is not available in the NuGet feed.' }
+              } catch {
+                Write-Warning "Could not verify the matching NuGet package: $_"
+                Write-Host '##vso[task.setvariable variable=MgmtDependencyFailed]true'
+              }
+            displayName: Verify matching NuGet publication
+            condition: and(succeeded(), eq(variables['MgmtDependencyUpdateNeeded'], 'true'), eq(variables['ReuseExistingDependencyPR'], 'false'))
+
+          - pwsh: |
+              $PSNativeCommandUseErrorActionPreference = $false
+              npm ci
+              if ($LASTEXITCODE -ne 0) {
+                Write-Warning 'Installing locked management dependencies failed.'
+                Write-Host '##vso[task.setvariable variable=MgmtDependencyFailed]true'
+                $global:LASTEXITCODE = 0
+              }
+            displayName: Install locked management dependencies
+            condition: and(succeeded(), eq(variables['MgmtDependencyFailed'], 'false'), eq(variables['MgmtDependencyUpdateNeeded'], 'true'), eq(variables['ReuseExistingDependencyPR'], 'false'))
+            workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp-mgmt
+            env:
+              npm_config_userconfig: $(mgmtNpmrcPath)
+
+          - pwsh: |
+              $PSNativeCommandUseErrorActionPreference = $false
+              & pwsh -NoLogo -NoProfile -Command '$ErrorActionPreference = "Stop"; $global:LASTEXITCODE = 0; & $env:MGMT_GENERATE_SCRIPT; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }'
+              if ($LASTEXITCODE -ne 0) {
+                Write-Warning 'Management test-project regeneration failed.'
+                Write-Host '##vso[task.setvariable variable=MgmtDependencyFailed]true'
+                $global:LASTEXITCODE = 0
+              }
+            displayName: Regenerate management test projects
+            condition: and(succeeded(), eq(variables['MgmtDependencyFailed'], 'false'), eq(variables['MgmtDependencyUpdateNeeded'], 'true'), eq(variables['ReuseExistingDependencyPR'], 'false'))
+            env:
+              MGMT_GENERATE_SCRIPT: $(Build.SourcesDirectory)/eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1
+              npm_config_userconfig: $(mgmtNpmrcPath)
+
+          # The branded descriptor is updated by a separate SDK regeneration PR.
+          # Keep this update draft until the currently approved version permits it.
+          - pwsh: |
+              $PSNativeCommandUseErrorActionPreference = $false
+              & pwsh -NoLogo -NoProfile -Command '$ErrorActionPreference = "Stop"; $global:LASTEXITCODE = 0; & $env:MGMT_APPROVAL_SCRIPT -RepoRoot $env:MGMT_APPROVAL_REPO -ValidateOnly; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }'
+              if ($LASTEXITCODE -ne 0) {
+                Write-Warning 'Management dependency approval validation failed.'
+                Write-Host '##vso[task.setvariable variable=MgmtDependencyFailed]true'
+                $global:LASTEXITCODE = 0
+              }
+            displayName: Validate approved management versions
+            condition: and(succeeded(), eq(variables['MgmtDependencyFailed'], 'false'), eq(variables['MgmtDependencyUpdateNeeded'], 'true'), eq(variables['ReuseExistingDependencyPR'], 'false'))
+            env:
+              MGMT_APPROVAL_SCRIPT: $(Build.SourcesDirectory)/doc/GeneratorVersions/Emitter_Version_Dashboard.ps1
+              MGMT_APPROVAL_REPO: $(Build.SourcesDirectory)
+
+          # Do not publish an update if another approved pin landed during regeneration.
+          - pwsh: |
+              git fetch --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+              if ($LASTEXITCODE -ne 0) { throw 'Failed to refresh main.' }
+              $descriptor = git show origin/main:eng/azure-typespec-http-client-csharp-emitter-package.json
+              if ($LASTEXITCODE -ne 0) { throw 'Failed to read the current approved descriptor.' }
+              $approved = ($descriptor -join "`n" | ConvertFrom-Json -AsHashtable).dependencies['@azure-typespec/http-client-csharp']
+              if ($approved -cne '$(emitterVersion)') { throw 'The approved emitter pin changed during regeneration; refusing the obsolete update.' }
+            displayName: Recheck approved emitter version
+            condition: and(succeeded(), eq(variables['MgmtDependencyUpdateNeeded'], 'true'))
+            workingDirectory: $(Build.SourcesDirectory)
+
+          # Mint the short-lived token only after the potentially long regeneration.
+          - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+            parameters:
+              TokenOwners:
+                - Azure
+
+          - pwsh: |
+              if ('$(ReuseExistingDependencyPR)' -eq 'true' -and (git status --porcelain)) {
+                throw 'Unexpected working tree changes while reusing an existing branch.'
+              }
+            displayName: Check reused branch
+
+          - pwsh: |
+              git add -A -- eng/packages/http-client-csharp-mgmt eng/centralpackagemanagement/Directory.Generation.Packages.props
+              if ($LASTEXITCODE -ne 0) { throw 'Failed to stage generated changes.' }
+            displayName: Stage management changes
+            condition: and(succeeded(), eq(variables['MgmtDependencyUpdateNeeded'], 'true'), eq(variables['ReuseExistingDependencyPR'], 'false'))
+            workingDirectory: $(Build.SourcesDirectory)
+
+          - pwsh: |
+              & ./eng/scripts/mgmt-dependency/Push-MgmtDependencyBranch.ps1 `
+                -RepoRoot '$(Build.SourcesDirectory)' -Branch '$(dependencyBranch)' `
+                -Version '$(emitterVersion)' -GitUrl 'https://github.com/Azure/azure-sdk-for-net.git' `
+                -Failed:('$(MgmtDependencyFailed)' -eq 'true') -AuthToken $env:GH_TOKEN
+            displayName: Create update branch
+            condition: and(succeeded(), eq(variables['MgmtDependencyUpdateNeeded'], 'true'), eq(variables['ReuseExistingDependencyPR'], 'false'))
+            workingDirectory: $(Build.SourcesDirectory)
+            env:
+              GH_TOKEN: $(GH_TOKEN)
+
+          - pwsh: |
+              $failed = '$(MgmtDependencyFailed)' -eq 'true'
+              $prefix = if ($failed) { 'Failed: ' } else { '' }
+              $title = "${prefix}Update management generator branded dependency to $(emitterVersion)"
+              $run = "$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
+              $body = "Update the management generator to branded C# emitter $(emitterVersion) and its matching unbranded emitter.`n`nPipeline run: $run"
+              if ($failed) { $body += "`n`nThis draft requires review of the run logs before it can be merged. If the branded version exceeds the approved emitter descriptor, wait for that descriptor update, update this branch from main, and rerun validation. If installation or regeneration failed, repair it and run full local management regeneration." }
+              $global:LASTEXITCODE = 0
+              . ./eng/common/scripts/common.ps1
+              $head = 'Azure:$(dependencyBranch)'
+              $existing = @(Get-GitHubPullRequests -RepoOwner Azure -RepoName azure-sdk-for-net -State all -Head $head -Base main -AuthToken $env:GH_TOKEN)
+              $pr = $existing | Where-Object state -eq 'open' | Select-Object -First 1
+              if (-not $pr -and ($existing | Where-Object state -eq 'closed')) {
+                Write-Host 'The update PR was already closed; not creating another.'
+                return
+              }
+              if (-not $pr) {
+                try {
+                  $pr = New-GitHubPullRequest -RepoOwner Azure -RepoName azure-sdk-for-net -Title $title -Head $head -Base main -Body $body -Maintainer_Can_Modify $true -Draft $failed -AuthToken $env:GH_TOKEN
+                } catch {
+                  # A competing attempt can create the PR after our lookup. Only
+                  # suppress the failure if that exact branch now has an open PR.
+                  $creationError = $_
+                  $pr = @(Get-GitHubPullRequests -RepoOwner Azure -RepoName azure-sdk-for-net -State open -Head $head -Base main -AuthToken $env:GH_TOKEN) | Select-Object -First 1
+                  if (-not $pr) { throw $creationError }
+                }
+              }
+              Write-Host "Management dependency PR: $($pr.html_url)"
+              Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($pr.number)"
+            displayName: Create dependency update pull request
+            condition: and(succeeded(), eq(variables['MgmtDependencyUpdateNeeded'], 'true'), or(eq(variables['HasChanges'], 'true'), eq(variables['ReuseExistingDependencyPR'], 'true')))
+            workingDirectory: $(Build.SourcesDirectory)
+            env:
+              GH_TOKEN: $(GH_TOKEN)
+
+          - pwsh: throw 'Management dependency update failed; see earlier logs and the draft PR if created.'
+            displayName: Report failed update
+            condition: and(succeeded(), eq(variables['MgmtDependencyFailed'], 'true'))

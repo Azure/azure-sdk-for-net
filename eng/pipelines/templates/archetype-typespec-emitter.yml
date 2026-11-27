@@ -485,8 +485,11 @@ extends:
               BaseRepoOwner: Azure
               TargetRepoName: $(Build.Repository.Name)
               BaseRepoBranch: $(branchName)
-              # Squash merges include commit messages, so the marker skips post-merge CI.
-              CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber) [skip ci]
+              # Branded descriptor merges must trigger the management dependency updater.
+              ${{ if eq(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp') }}:
+                CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber)
+              ${{ else }}:
+                CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber) [skip ci]
               WorkingDirectory: $(Build.SourcesDirectory)
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
               # To accomodate scheduled runs and retries, we want to overwrite any existing changes on the branch
@@ -723,6 +726,24 @@ extends:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
             parameters:
               Paths: ${{ parameters.SparseCheckoutPaths }}
+
+          # Management validation needs the dashboard script in its sparse checkout.
+          - ${{ if eq(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp-mgmt') }}:
+            - pwsh: |
+                git sparse-checkout add '/doc/GeneratorVersions/Emitter_Version_Dashboard.ps1'
+                if ($LASTEXITCODE -ne 0) { throw 'Failed to include the emitter version validator.' }
+              displayName: Include emitter version validator
+              workingDirectory: $(Build.SourcesDirectory)
+
+          # Management dependency bumps must not exceed the descriptor approved on
+          # the PR's merge ref, including after a draft is manually marked ready.
+          - ${{ if eq(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp-mgmt') }}:
+            - pwsh: |
+                $ErrorActionPreference = 'Stop'
+                & ./doc/GeneratorVersions/Emitter_Version_Dashboard.ps1 -RepoRoot '$(Build.SourcesDirectory)' -ValidateOnly
+                $global:LASTEXITCODE = 0
+              displayName: Validate approved management versions
+              workingDirectory: $(Build.SourcesDirectory)
 
           - download: current
             artifact: build_artifacts
