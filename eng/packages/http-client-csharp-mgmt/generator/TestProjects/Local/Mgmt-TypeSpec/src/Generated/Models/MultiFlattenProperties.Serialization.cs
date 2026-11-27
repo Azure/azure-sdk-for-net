@@ -109,6 +109,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("independentInternal"u8);
                 writer.WriteObjectValue(IndependentInternal, options);
             }
+            if (Optional.IsDefined(DeepMiddle) && !Patch.Contains("$.deepMiddle"u8))
+            {
+                writer.WritePropertyName("deepMiddle"u8);
+                writer.WriteObjectValue(DeepMiddle, options);
+            }
 
             Patch.WriteTo(writer);
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
@@ -144,6 +149,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             SafeFlattenInner inner = default;
             bool? disabled = default;
             IndependentInternalPropertyModel independentInternal = default;
+            DeepFlattenMiddle deepMiddle = default;
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
@@ -181,9 +187,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     independentInternal = IndependentInternalPropertyModel.DeserializeIndependentInternalPropertyModel(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
+                if (prop.NameEquals("deepMiddle"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deepMiddle = DeepFlattenMiddle.DeserializeDeepFlattenMiddle(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    continue;
+                }
                 patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
-            return new MultiFlattenProperties(channel, inner, disabled, independentInternal, patch);
+            return new MultiFlattenProperties(
+                channel,
+                inner,
+                disabled,
+                independentInternal,
+                deepMiddle,
+                patch);
         }
 
         /// <summary></summary>
@@ -211,6 +232,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     return false;
                 }
                 return IndependentInternal.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("independentInternal"u8.Length)], out value);
+            }
+            if (local.StartsWith("deepMiddle"u8))
+            {
+                if (DeepMiddle == null)
+                {
+                    return false;
+                }
+                return DeepMiddle.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("deepMiddle"u8.Length)], out value);
             }
             return false;
         }
@@ -241,6 +270,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     return false;
                 }
                 IndependentInternal.Patch.Set([.. "$"u8, .. local.Slice("independentInternal"u8.Length)], value);
+                return true;
+            }
+            if (local.StartsWith("deepMiddle"u8))
+            {
+                if (DeepMiddle == null)
+                {
+                    return false;
+                }
+                DeepMiddle.Patch.Set([.. "$"u8, .. local.Slice("deepMiddle"u8.Length)], value);
                 return true;
             }
             return false;

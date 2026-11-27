@@ -33,14 +33,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="inner"> Property whose type has a single public property, triggering safe-flatten. </param>
         /// <param name="disabled"> Additional property after inner to verify it is not skipped. </param>
         /// <param name="independentInternal"> Must not safe-flatten because its model also has an independent internal property. </param>
+        /// <param name="deepMiddle"> Explicitly flattened wrapper: its safe-flattened child is forwarded through two levels, its plain `mode` leaf is the explicit-flatten control. </param>
         /// <param name="patch"></param>
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        internal MultiFlattenProperties(FlattenChannel? channel, SafeFlattenInner inner, bool? disabled, IndependentInternalPropertyModel independentInternal, in JsonPatch patch)
+        internal MultiFlattenProperties(FlattenChannel? channel, SafeFlattenInner inner, bool? disabled, IndependentInternalPropertyModel independentInternal, DeepFlattenMiddle deepMiddle, in JsonPatch patch)
         {
             Channel = channel;
             Inner = inner;
             Disabled = disabled;
             IndependentInternal = independentInternal;
+            DeepMiddle = deepMiddle;
             _patch = patch;
             _patch.SetPropagators(PropagateSet, PropagateGet);
         }
@@ -64,6 +66,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         [WirePath("independentInternal")]
         public IndependentInternalPropertyModel IndependentInternal { get; set; }
 
+        /// <summary> Explicitly flattened wrapper: its safe-flattened child is forwarded through two levels, its plain `mode` leaf is the explicit-flatten control. </summary>
+        [WirePath("deepMiddle")]
+        internal DeepFlattenMiddle DeepMiddle { get; set; }
+
         /// <summary> Gets or sets the SelectionType. </summary>
         [WirePath("inner.selectionType")]
         public string InnerSelectionType
@@ -74,7 +80,65 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             set
             {
-                Inner = new SafeFlattenInner(value);
+                Inner = value is null ? default : new SafeFlattenInner(value);
+            }
+        }
+
+        /// <summary> Required plain reference leaf; explicit flatten keeps lazy-create-and-assign semantics (control). </summary>
+        [WirePath("deepMiddle.mode")]
+        public string Mode
+        {
+            get
+            {
+                return DeepMiddle is null ? default : DeepMiddle.Mode;
+            }
+            set
+            {
+                if (DeepMiddle is null)
+                {
+                    DeepMiddle = new DeepFlattenMiddle();
+                }
+                DeepMiddle.Mode = value;
+            }
+        }
+
+        /// <summary> Optional sibling that must survive clearing the deep leaf. </summary>
+        [WirePath("deepMiddle.deepNote")]
+        public string DeepNote
+        {
+            get
+            {
+                return DeepMiddle is null ? default : DeepMiddle.DeepNote;
+            }
+            set
+            {
+                if (DeepMiddle is null)
+                {
+                    DeepMiddle = new DeepFlattenMiddle();
+                }
+                DeepMiddle.DeepNote = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SelectionType. </summary>
+        [WirePath("deepMiddle.deepInner.selectionType")]
+        public string DeepInnerSelectionType
+        {
+            get
+            {
+                return DeepMiddle is null ? default : DeepMiddle.DeepInnerSelectionType;
+            }
+            set
+            {
+                if (DeepMiddle is null)
+                {
+                    if (value is null)
+                    {
+                        return;
+                    }
+                    DeepMiddle = new DeepFlattenMiddle();
+                }
+                DeepMiddle.DeepInnerSelectionType = value;
             }
         }
     }
