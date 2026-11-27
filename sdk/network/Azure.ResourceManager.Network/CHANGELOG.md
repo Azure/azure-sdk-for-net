@@ -1,5 +1,15 @@
 # Release History
 
+## 1.19.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.18.0 (2026-11-24)
 
 This release ensures no breaking API changes compared with version 1.15.0 only. Versions 1.16.x and 1.17.x have been retracted; compatibility with those versions or previous preview releases is not guaranteed.
