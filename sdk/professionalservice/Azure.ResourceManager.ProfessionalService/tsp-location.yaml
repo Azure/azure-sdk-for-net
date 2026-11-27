@@ -1,5 +1,5 @@
 directory: specification/professionalservice/resource-manager/Microsoft.ProfessionalService/ProfessionalService
-commit: d63c945b6424f3150609cb9ca136cd561e3234a8
+commit: 8ebbe47450d4431a1264a9dc2e166159bfadbaf7
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
