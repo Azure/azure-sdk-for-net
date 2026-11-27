@@ -20,6 +20,11 @@
         "Pool": "env:LINUXPOOL",
         "TestTargetFramework": "net10.0"
       },
+      "Ubuntu-24.04_NET11.0": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net11.0"
+      },
       "Windows2022_NET462": {
         "OSVmImage": "env:WINDOWSVMIMAGE",
         "Pool": "env:WINDOWSPOOL",
@@ -40,6 +45,11 @@
         "Pool": "env:WINDOWSPOOL",
         "TestTargetFramework": "net10.0"
       },
+      "Windows2022_NET11.0": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net11.0"
+      },
       "MacOS_NET8.0": {
         "OSVmImage": "env:MACVMIMAGE",
         "Pool": "env:MACPOOL",
@@ -54,6 +64,11 @@
         "OSVmImage": "env:MACVMIMAGE",
         "Pool": "env:MACPOOL",
         "TestTargetFramework": "net10.0"
+      },
+      "MacOS_NET11.0": {
+        "OSVmImage": "env:MACVMIMAGE",
+        "Pool": "env:MACPOOL",
+        "TestTargetFramework": "net11.0"
       }
     },
     "AdditionalTestArguments": [
