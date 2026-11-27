@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DnsPrivateViewsLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsPrivateViewsLifecycleState?(string value) => value == null ? null : new DnsPrivateViewsLifecycleState(value);
+        public static implicit operator DnsPrivateViewsLifecycleState?(string value) => value == null ? (DnsPrivateViewsLifecycleState?)null : new DnsPrivateViewsLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

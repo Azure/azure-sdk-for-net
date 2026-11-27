@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerPatchStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerPatchStrategy?(string value) => value == null ? null : new MySqlFlexibleServerPatchStrategy(value);
+        public static implicit operator MySqlFlexibleServerPatchStrategy?(string value) => value == null ? (MySqlFlexibleServerPatchStrategy?)null : new MySqlFlexibleServerPatchStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

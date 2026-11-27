@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="HybridAksIpamEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridAksIpamEnabled?(string value) => value == null ? null : new HybridAksIpamEnabled(value);
+        public static implicit operator HybridAksIpamEnabled?(string value) => value == null ? (HybridAksIpamEnabled?)null : new HybridAksIpamEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

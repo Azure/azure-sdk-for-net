@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineSchedulingExecution"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineSchedulingExecution?(string value) => value == null ? null : new VirtualMachineSchedulingExecution(value);
+        public static implicit operator VirtualMachineSchedulingExecution?(string value) => value == null ? (VirtualMachineSchedulingExecution?)null : new VirtualMachineSchedulingExecution(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

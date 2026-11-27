@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkHttpConfigurationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkHttpConfigurationMethod?(string value) => value == null ? null : new NetworkHttpConfigurationMethod(value);
+        public static implicit operator NetworkHttpConfigurationMethod?(string value) => value == null ? (NetworkHttpConfigurationMethod?)null : new NetworkHttpConfigurationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

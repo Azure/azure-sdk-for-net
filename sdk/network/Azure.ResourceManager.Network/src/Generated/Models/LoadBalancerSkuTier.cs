@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="LoadBalancerSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadBalancerSkuTier?(string value) => value == null ? null : new LoadBalancerSkuTier(value);
+        public static implicit operator LoadBalancerSkuTier?(string value) => value == null ? (LoadBalancerSkuTier?)null : new LoadBalancerSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

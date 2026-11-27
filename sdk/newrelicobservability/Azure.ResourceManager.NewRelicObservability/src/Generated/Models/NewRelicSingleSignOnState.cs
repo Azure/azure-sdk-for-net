@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="NewRelicSingleSignOnState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicSingleSignOnState?(string value) => value == null ? null : new NewRelicSingleSignOnState(value);
+        public static implicit operator NewRelicSingleSignOnState?(string value) => value == null ? (NewRelicSingleSignOnState?)null : new NewRelicSingleSignOnState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="SyntaxFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyntaxFormatType?(string value) => value == null ? null : new SyntaxFormatType(value);
+        public static implicit operator SyntaxFormatType?(string value) => value == null ? (SyntaxFormatType?)null : new SyntaxFormatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

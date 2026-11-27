@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="AllowDnsProxyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllowDnsProxyType?(string value) => value == null ? null : new AllowDnsProxyType(value);
+        public static implicit operator AllowDnsProxyType?(string value) => value == null ? (AllowDnsProxyType?)null : new AllowDnsProxyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

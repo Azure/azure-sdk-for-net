@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkAccess?(string value) => value == null ? null : new NetworkAccess(value);
+        public static implicit operator NetworkAccess?(string value) => value == null ? (NetworkAccess?)null : new NetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

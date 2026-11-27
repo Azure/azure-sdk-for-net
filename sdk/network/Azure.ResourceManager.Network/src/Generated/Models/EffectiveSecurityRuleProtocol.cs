@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="EffectiveSecurityRuleProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EffectiveSecurityRuleProtocol?(string value) => value == null ? null : new EffectiveSecurityRuleProtocol(value);
+        public static implicit operator EffectiveSecurityRuleProtocol?(string value) => value == null ? (EffectiveSecurityRuleProtocol?)null : new EffectiveSecurityRuleProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

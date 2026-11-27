@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
 
         /// <summary> Converts a string to a <see cref="NapsterSingleSignOnType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NapsterSingleSignOnType?(string value) => value == null ? null : new NapsterSingleSignOnType(value);
+        public static implicit operator NapsterSingleSignOnType?(string value) => value == null ? (NapsterSingleSignOnType?)null : new NapsterSingleSignOnType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

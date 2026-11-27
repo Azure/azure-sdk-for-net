@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppKeyVaultStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppKeyVaultStatus?(string value) => value == null ? null : new NetAppKeyVaultStatus(value);
+        public static implicit operator NetAppKeyVaultStatus?(string value) => value == null ? (NetAppKeyVaultStatus?)null : new NetAppKeyVaultStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

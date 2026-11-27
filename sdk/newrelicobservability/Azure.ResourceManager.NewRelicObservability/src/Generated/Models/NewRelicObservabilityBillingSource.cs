@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="NewRelicObservabilityBillingSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicObservabilityBillingSource?(string value) => value == null ? null : new NewRelicObservabilityBillingSource(value);
+        public static implicit operator NewRelicObservabilityBillingSource?(string value) => value == null ? (NewRelicObservabilityBillingSource?)null : new NewRelicObservabilityBillingSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

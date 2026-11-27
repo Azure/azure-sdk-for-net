@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VpnType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VpnType?(string value) => value == null ? null : new VpnType(value);
+        public static implicit operator VpnType?(string value) => value == null ? (VpnType?)null : new VpnType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

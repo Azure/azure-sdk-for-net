@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="MultiAdStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MultiAdStatus?(string value) => value == null ? null : new MultiAdStatus(value);
+        public static implicit operator MultiAdStatus?(string value) => value == null ? (MultiAdStatus?)null : new MultiAdStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

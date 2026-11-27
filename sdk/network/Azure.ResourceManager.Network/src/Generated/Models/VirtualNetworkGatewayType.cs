@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkGatewayType?(string value) => value == null ? null : new VirtualNetworkGatewayType(value);
+        public static implicit operator VirtualNetworkGatewayType?(string value) => value == null ? (VirtualNetworkGatewayType?)null : new VirtualNetworkGatewayType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

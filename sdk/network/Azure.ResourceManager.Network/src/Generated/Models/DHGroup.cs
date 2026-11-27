@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="DHGroup"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DHGroup?(string value) => value == null ? null : new DHGroup(value);
+        public static implicit operator DHGroup?(string value) => value == null ? (DHGroup?)null : new DHGroup(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="SessionRecordingIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionRecordingIdentityType?(string value) => value == null ? null : new SessionRecordingIdentityType(value);
+        public static implicit operator SessionRecordingIdentityType?(string value) => value == null ? (SessionRecordingIdentityType?)null : new SessionRecordingIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

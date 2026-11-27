@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RoutingRuleDestinationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutingRuleDestinationType?(string value) => value == null ? null : new RoutingRuleDestinationType(value);
+        public static implicit operator RoutingRuleDestinationType?(string value) => value == null ? (RoutingRuleDestinationType?)null : new RoutingRuleDestinationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
 
         /// <summary> Converts a string to a <see cref="NapsterMarketplaceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NapsterMarketplaceSubscriptionStatus?(string value) => value == null ? null : new NapsterMarketplaceSubscriptionStatus(value);
+        public static implicit operator NapsterMarketplaceSubscriptionStatus?(string value) => value == null ? (NapsterMarketplaceSubscriptionStatus?)null : new NapsterMarketplaceSubscriptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="FlexComponentHardwareType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FlexComponentHardwareType?(string value) => value == null ? null : new FlexComponentHardwareType(value);
+        public static implicit operator FlexComponentHardwareType?(string value) => value == null ? (FlexComponentHardwareType?)null : new FlexComponentHardwareType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

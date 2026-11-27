@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ScopeConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScopeConnectionState?(string value) => value == null ? null : new ScopeConnectionState(value);
+        public static implicit operator ScopeConnectionState?(string value) => value == null ? (ScopeConnectionState?)null : new ScopeConnectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

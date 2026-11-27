@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineDeviceModelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineDeviceModelType?(string value) => value == null ? null : new VirtualMachineDeviceModelType(value);
+        public static implicit operator VirtualMachineDeviceModelType?(string value) => value == null ? (VirtualMachineDeviceModelType?)null : new VirtualMachineDeviceModelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="RansomwareReportState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RansomwareReportState?(string value) => value == null ? null : new RansomwareReportState(value);
+        public static implicit operator RansomwareReportState?(string value) => value == null ? (RansomwareReportState?)null : new RansomwareReportState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

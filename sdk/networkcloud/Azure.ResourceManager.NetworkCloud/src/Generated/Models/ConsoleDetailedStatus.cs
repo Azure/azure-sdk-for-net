@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ConsoleDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConsoleDetailedStatus?(string value) => value == null ? null : new ConsoleDetailedStatus(value);
+        public static implicit operator ConsoleDetailedStatus?(string value) => value == null ? (ConsoleDetailedStatus?)null : new ConsoleDetailedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

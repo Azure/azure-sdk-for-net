@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="NetworkCloudDeploymentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkCloudDeploymentType?(string value) => value == null ? null : new NetworkCloudDeploymentType(value);
+        public static implicit operator NetworkCloudDeploymentType?(string value) => value == null ? (NetworkCloudDeploymentType?)null : new NetworkCloudDeploymentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

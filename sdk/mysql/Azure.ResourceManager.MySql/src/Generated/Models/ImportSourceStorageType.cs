@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="ImportSourceStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImportSourceStorageType?(string value) => value == null ? null : new ImportSourceStorageType(value);
+        public static implicit operator ImportSourceStorageType?(string value) => value == null ? (ImportSourceStorageType?)null : new ImportSourceStorageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

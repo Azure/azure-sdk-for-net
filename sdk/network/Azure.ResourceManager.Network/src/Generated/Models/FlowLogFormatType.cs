@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="FlowLogFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FlowLogFormatType?(string value) => value == null ? null : new FlowLogFormatType(value);
+        public static implicit operator FlowLogFormatType?(string value) => value == null ? (FlowLogFormatType?)null : new FlowLogFormatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppOnCertificateConflictAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppOnCertificateConflictAction?(string value) => value == null ? null : new NetAppOnCertificateConflictAction(value);
+        public static implicit operator NetAppOnCertificateConflictAction?(string value) => value == null ? (NetAppOnCertificateConflictAction?)null : new NetAppOnCertificateConflictAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

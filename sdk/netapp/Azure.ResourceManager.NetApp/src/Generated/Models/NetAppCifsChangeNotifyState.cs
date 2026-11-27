@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppCifsChangeNotifyState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppCifsChangeNotifyState?(string value) => value == null ? null : new NetAppCifsChangeNotifyState(value);
+        public static implicit operator NetAppCifsChangeNotifyState?(string value) => value == null ? (NetAppCifsChangeNotifyState?)null : new NetAppCifsChangeNotifyState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

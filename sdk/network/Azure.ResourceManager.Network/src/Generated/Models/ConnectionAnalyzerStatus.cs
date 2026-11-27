@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionAnalyzerStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionAnalyzerStatus?(string value) => value == null ? null : new ConnectionAnalyzerStatus(value);
+        public static implicit operator ConnectionAnalyzerStatus?(string value) => value == null ? (ConnectionAnalyzerStatus?)null : new ConnectionAnalyzerStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VolumeProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VolumeProvisioningState?(string value) => value == null ? null : new VolumeProvisioningState(value);
+        public static implicit operator VolumeProvisioningState?(string value) => value == null ? (VolumeProvisioningState?)null : new VolumeProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

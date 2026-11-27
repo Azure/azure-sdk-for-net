@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsDataExportDestinationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsDataExportDestinationType?(string value) => value == null ? null : new OperationalInsightsDataExportDestinationType(value);
+        public static implicit operator OperationalInsightsDataExportDestinationType?(string value) => value == null ? (OperationalInsightsDataExportDestinationType?)null : new OperationalInsightsDataExportDestinationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

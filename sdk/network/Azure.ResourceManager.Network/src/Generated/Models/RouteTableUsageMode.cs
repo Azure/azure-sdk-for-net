@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RouteTableUsageMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouteTableUsageMode?(string value) => value == null ? null : new RouteTableUsageMode(value);
+        public static implicit operator RouteTableUsageMode?(string value) => value == null ? (RouteTableUsageMode?)null : new RouteTableUsageMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

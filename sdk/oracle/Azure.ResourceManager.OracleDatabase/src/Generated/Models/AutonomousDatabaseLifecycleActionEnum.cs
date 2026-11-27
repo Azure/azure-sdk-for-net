@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AutonomousDatabaseLifecycleActionEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutonomousDatabaseLifecycleActionEnum?(string value) => value == null ? null : new AutonomousDatabaseLifecycleActionEnum(value);
+        public static implicit operator AutonomousDatabaseLifecycleActionEnum?(string value) => value == null ? (AutonomousDatabaseLifecycleActionEnum?)null : new AutonomousDatabaseLifecycleActionEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

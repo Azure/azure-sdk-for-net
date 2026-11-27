@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerAdministratorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerAdministratorType?(string value) => value == null ? null : new MySqlFlexibleServerAdministratorType(value);
+        public static implicit operator MySqlFlexibleServerAdministratorType?(string value) => value == null ? (MySqlFlexibleServerAdministratorType?)null : new MySqlFlexibleServerAdministratorType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

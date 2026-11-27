@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteGatewayAdminState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteGatewayAdminState?(string value) => value == null ? null : new ExpressRouteGatewayAdminState(value);
+        public static implicit operator ExpressRouteGatewayAdminState?(string value) => value == null ? (ExpressRouteGatewayAdminState?)null : new ExpressRouteGatewayAdminState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

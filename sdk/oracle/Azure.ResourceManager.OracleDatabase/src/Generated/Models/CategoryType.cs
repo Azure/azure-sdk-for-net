@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="CategoryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CategoryType?(string value) => value == null ? null : new CategoryType(value);
+        public static implicit operator CategoryType?(string value) => value == null ? (CategoryType?)null : new CategoryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

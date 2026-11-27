@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="OwaspCrsExclusionEntrySelectorMatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OwaspCrsExclusionEntrySelectorMatchOperator?(string value) => value == null ? null : new OwaspCrsExclusionEntrySelectorMatchOperator(value);
+        public static implicit operator OwaspCrsExclusionEntrySelectorMatchOperator?(string value) => value == null ? (OwaspCrsExclusionEntrySelectorMatchOperator?)null : new OwaspCrsExclusionEntrySelectorMatchOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsTableSubType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsTableSubType?(string value) => value == null ? null : new OperationalInsightsTableSubType(value);
+        public static implicit operator OperationalInsightsTableSubType?(string value) => value == null ? (OperationalInsightsTableSubType?)null : new OperationalInsightsTableSubType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

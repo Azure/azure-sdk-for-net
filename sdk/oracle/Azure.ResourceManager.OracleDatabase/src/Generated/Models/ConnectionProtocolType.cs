@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionProtocolType?(string value) => value == null ? null : new ConnectionProtocolType(value);
+        public static implicit operator ConnectionProtocolType?(string value) => value == null ? (ConnectionProtocolType?)null : new ConnectionProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

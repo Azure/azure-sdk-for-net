@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="EnabledDnsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnabledDnsType?(string value) => value == null ? null : new EnabledDnsType(value);
+        public static implicit operator EnabledDnsType?(string value) => value == null ? (EnabledDnsType?)null : new EnabledDnsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

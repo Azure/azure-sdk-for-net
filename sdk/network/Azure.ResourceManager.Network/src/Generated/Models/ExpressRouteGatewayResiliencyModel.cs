@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteGatewayResiliencyModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteGatewayResiliencyModel?(string value) => value == null ? null : new ExpressRouteGatewayResiliencyModel(value);
+        public static implicit operator ExpressRouteGatewayResiliencyModel?(string value) => value == null ? (ExpressRouteGatewayResiliencyModel?)null : new ExpressRouteGatewayResiliencyModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

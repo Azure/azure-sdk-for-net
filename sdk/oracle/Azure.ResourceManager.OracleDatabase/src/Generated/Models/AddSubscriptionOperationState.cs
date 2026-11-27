@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AddSubscriptionOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AddSubscriptionOperationState?(string value) => value == null ? null : new AddSubscriptionOperationState(value);
+        public static implicit operator AddSubscriptionOperationState?(string value) => value == null ? (AddSubscriptionOperationState?)null : new AddSubscriptionOperationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

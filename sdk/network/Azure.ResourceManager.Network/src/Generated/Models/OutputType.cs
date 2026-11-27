@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="OutputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OutputType?(string value) => value == null ? null : new OutputType(value);
+        public static implicit operator OutputType?(string value) => value == null ? (OutputType?)null : new OutputType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

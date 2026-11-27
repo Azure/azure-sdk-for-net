@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="NetworkCloudAgentPoolMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkCloudAgentPoolMode?(string value) => value == null ? null : new NetworkCloudAgentPoolMode(value);
+        public static implicit operator NetworkCloudAgentPoolMode?(string value) => value == null ? (NetworkCloudAgentPoolMode?)null : new NetworkCloudAgentPoolMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

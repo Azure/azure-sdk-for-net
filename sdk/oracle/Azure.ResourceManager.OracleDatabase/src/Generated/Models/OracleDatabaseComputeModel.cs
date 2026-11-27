@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="OracleDatabaseComputeModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OracleDatabaseComputeModel?(string value) => value == null ? null : new OracleDatabaseComputeModel(value);
+        public static implicit operator OracleDatabaseComputeModel?(string value) => value == null ? (OracleDatabaseComputeModel?)null : new OracleDatabaseComputeModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

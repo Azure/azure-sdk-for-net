@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineIPAllocationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineIPAllocationMethod?(string value) => value == null ? null : new VirtualMachineIPAllocationMethod(value);
+        public static implicit operator VirtualMachineIPAllocationMethod?(string value) => value == null ? (VirtualMachineIPAllocationMethod?)null : new VirtualMachineIPAllocationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerSkuTier?(string value) => value == null ? null : new MySqlFlexibleServerSkuTier(value);
+        public static implicit operator MySqlFlexibleServerSkuTier?(string value) => value == null ? (MySqlFlexibleServerSkuTier?)null : new MySqlFlexibleServerSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NicTypeInResponse"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NicTypeInResponse?(string value) => value == null ? null : new NicTypeInResponse(value);
+        public static implicit operator NicTypeInResponse?(string value) => value == null ? (NicTypeInResponse?)null : new NicTypeInResponse(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

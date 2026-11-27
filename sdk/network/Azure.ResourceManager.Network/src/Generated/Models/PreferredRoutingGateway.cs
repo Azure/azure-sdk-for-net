@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PreferredRoutingGateway"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PreferredRoutingGateway?(string value) => value == null ? null : new PreferredRoutingGateway(value);
+        public static implicit operator PreferredRoutingGateway?(string value) => value == null ? (PreferredRoutingGateway?)null : new PreferredRoutingGateway(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

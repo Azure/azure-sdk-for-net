@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="MonitoredSubscriptionConfigurationName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitoredSubscriptionConfigurationName?(string value) => value == null ? null : new MonitoredSubscriptionConfigurationName(value);
+        public static implicit operator MonitoredSubscriptionConfigurationName?(string value) => value == null ? (MonitoredSubscriptionConfigurationName?)null : new MonitoredSubscriptionConfigurationName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

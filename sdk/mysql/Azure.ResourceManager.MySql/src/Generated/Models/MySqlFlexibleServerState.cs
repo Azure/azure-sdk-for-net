@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerState?(string value) => value == null ? null : new MySqlFlexibleServerState(value);
+        public static implicit operator MySqlFlexibleServerState?(string value) => value == null ? (MySqlFlexibleServerState?)null : new MySqlFlexibleServerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="ProximityPlacementGroupEntityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProximityPlacementGroupEntityType?(string value) => value == null ? null : new ProximityPlacementGroupEntityType(value);
+        public static implicit operator ProximityPlacementGroupEntityType?(string value) => value == null ? (ProximityPlacementGroupEntityType?)null : new ProximityPlacementGroupEntityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

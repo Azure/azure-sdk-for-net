@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ClusterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterType?(string value) => value == null ? null : new ClusterType(value);
+        public static implicit operator ClusterType?(string value) => value == null ? (ClusterType?)null : new ClusterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="LoadBalancerSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadBalancerSkuName?(string value) => value == null ? null : new LoadBalancerSkuName(value);
+        public static implicit operator LoadBalancerSkuName?(string value) => value == null ? (LoadBalancerSkuName?)null : new LoadBalancerSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

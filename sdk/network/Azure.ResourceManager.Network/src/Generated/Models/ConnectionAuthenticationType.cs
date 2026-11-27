@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionAuthenticationType?(string value) => value == null ? null : new ConnectionAuthenticationType(value);
+        public static implicit operator ConnectionAuthenticationType?(string value) => value == null ? (ConnectionAuthenticationType?)null : new ConnectionAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppVolumeLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppVolumeLanguage?(string value) => value == null ? null : new NetAppVolumeLanguage(value);
+        public static implicit operator NetAppVolumeLanguage?(string value) => value == null ? (NetAppVolumeLanguage?)null : new NetAppVolumeLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="RuleCreationDefaultMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleCreationDefaultMode?(string value) => value == null ? null : new RuleCreationDefaultMode(value);
+        public static implicit operator RuleCreationDefaultMode?(string value) => value == null ? (RuleCreationDefaultMode?)null : new RuleCreationDefaultMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

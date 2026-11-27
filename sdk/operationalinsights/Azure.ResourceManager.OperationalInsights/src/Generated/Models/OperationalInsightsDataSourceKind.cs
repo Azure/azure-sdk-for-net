@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsDataSourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsDataSourceKind?(string value) => value == null ? null : new OperationalInsightsDataSourceKind(value);
+        public static implicit operator OperationalInsightsDataSourceKind?(string value) => value == null ? (OperationalInsightsDataSourceKind?)null : new OperationalInsightsDataSourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

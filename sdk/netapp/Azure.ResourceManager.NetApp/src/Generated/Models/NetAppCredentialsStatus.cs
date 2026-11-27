@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppCredentialsStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppCredentialsStatus?(string value) => value == null ? null : new NetAppCredentialsStatus(value);
+        public static implicit operator NetAppCredentialsStatus?(string value) => value == null ? (NetAppCredentialsStatus?)null : new NetAppCredentialsStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

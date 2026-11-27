@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayRuleSetStatusOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayRuleSetStatusOption?(string value) => value == null ? null : new ApplicationGatewayRuleSetStatusOption(value);
+        public static implicit operator ApplicationGatewayRuleSetStatusOption?(string value) => value == null ? (ApplicationGatewayRuleSetStatusOption?)null : new ApplicationGatewayRuleSetStatusOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

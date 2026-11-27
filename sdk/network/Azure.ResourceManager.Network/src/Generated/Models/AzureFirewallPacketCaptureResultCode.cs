@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AzureFirewallPacketCaptureResultCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureFirewallPacketCaptureResultCode?(string value) => value == null ? null : new AzureFirewallPacketCaptureResultCode(value);
+        public static implicit operator AzureFirewallPacketCaptureResultCode?(string value) => value == null ? (AzureFirewallPacketCaptureResultCode?)null : new AzureFirewallPacketCaptureResultCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

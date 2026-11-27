@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="DisablePeeringRoute"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisablePeeringRoute?(string value) => value == null ? null : new DisablePeeringRoute(value);
+        public static implicit operator DisablePeeringRoute?(string value) => value == null ? (DisablePeeringRoute?)null : new DisablePeeringRoute(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

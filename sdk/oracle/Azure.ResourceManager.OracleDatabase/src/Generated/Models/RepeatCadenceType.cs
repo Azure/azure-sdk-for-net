@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="RepeatCadenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RepeatCadenceType?(string value) => value == null ? null : new RepeatCadenceType(value);
+        public static implicit operator RepeatCadenceType?(string value) => value == null ? (RepeatCadenceType?)null : new RepeatCadenceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

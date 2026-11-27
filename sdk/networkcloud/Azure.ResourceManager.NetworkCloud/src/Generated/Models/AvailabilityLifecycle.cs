@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="AvailabilityLifecycle"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvailabilityLifecycle?(string value) => value == null ? null : new AvailabilityLifecycle(value);
+        public static implicit operator AvailabilityLifecycle?(string value) => value == null ? (AvailabilityLifecycle?)null : new AvailabilityLifecycle(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

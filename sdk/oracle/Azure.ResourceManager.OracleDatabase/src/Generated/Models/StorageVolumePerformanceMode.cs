@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="StorageVolumePerformanceMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageVolumePerformanceMode?(string value) => value == null ? null : new StorageVolumePerformanceMode(value);
+        public static implicit operator StorageVolumePerformanceMode?(string value) => value == null ? (StorageVolumePerformanceMode?)null : new StorageVolumePerformanceMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

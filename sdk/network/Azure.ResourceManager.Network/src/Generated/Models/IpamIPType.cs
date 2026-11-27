@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="IpamIPType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IpamIPType?(string value) => value == null ? null : new IpamIPType(value);
+        public static implicit operator IpamIPType?(string value) => value == null ? (IpamIPType?)null : new IpamIPType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

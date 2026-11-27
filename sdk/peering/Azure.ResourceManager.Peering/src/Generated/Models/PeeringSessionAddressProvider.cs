@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeeringSessionAddressProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringSessionAddressProvider?(string value) => value == null ? null : new PeeringSessionAddressProvider(value);
+        public static implicit operator PeeringSessionAddressProvider?(string value) => value == null ? (PeeringSessionAddressProvider?)null : new PeeringSessionAddressProvider(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

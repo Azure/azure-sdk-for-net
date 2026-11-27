@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppKerberosState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppKerberosState?(string value) => value == null ? null : new NetAppKerberosState(value);
+        public static implicit operator NetAppKerberosState?(string value) => value == null ? (NetAppKerberosState?)null : new NetAppKerberosState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

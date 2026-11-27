@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsSkuName?(string value) => value == null ? null : new OperationalInsightsSkuName(value);
+        public static implicit operator OperationalInsightsSkuName?(string value) => value == null ? (OperationalInsightsSkuName?)null : new OperationalInsightsSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

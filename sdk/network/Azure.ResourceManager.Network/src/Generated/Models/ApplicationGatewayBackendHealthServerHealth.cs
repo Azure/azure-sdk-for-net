@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayBackendHealthServerHealth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayBackendHealthServerHealth?(string value) => value == null ? null : new ApplicationGatewayBackendHealthServerHealth(value);
+        public static implicit operator ApplicationGatewayBackendHealthServerHealth?(string value) => value == null ? (ApplicationGatewayBackendHealthServerHealth?)null : new ApplicationGatewayBackendHealthServerHealth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

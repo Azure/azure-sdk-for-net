@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="WebApplicationFirewallTransform"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebApplicationFirewallTransform?(string value) => value == null ? null : new WebApplicationFirewallTransform(value);
+        public static implicit operator WebApplicationFirewallTransform?(string value) => value == null ? (WebApplicationFirewallTransform?)null : new WebApplicationFirewallTransform(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

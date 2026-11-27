@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExceptionEntryValueMatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExceptionEntryValueMatchOperator?(string value) => value == null ? null : new ExceptionEntryValueMatchOperator(value);
+        public static implicit operator ExceptionEntryValueMatchOperator?(string value) => value == null ? (ExceptionEntryValueMatchOperator?)null : new ExceptionEntryValueMatchOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

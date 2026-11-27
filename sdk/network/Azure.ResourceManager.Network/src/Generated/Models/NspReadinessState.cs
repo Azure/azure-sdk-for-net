@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NspReadinessState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NspReadinessState?(string value) => value == null ? null : new NspReadinessState(value);
+        public static implicit operator NspReadinessState?(string value) => value == null ? (NspReadinessState?)null : new NspReadinessState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

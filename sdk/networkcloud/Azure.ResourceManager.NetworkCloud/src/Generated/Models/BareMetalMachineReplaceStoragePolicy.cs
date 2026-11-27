@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BareMetalMachineReplaceStoragePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachineReplaceStoragePolicy?(string value) => value == null ? null : new BareMetalMachineReplaceStoragePolicy(value);
+        public static implicit operator BareMetalMachineReplaceStoragePolicy?(string value) => value == null ? (BareMetalMachineReplaceStoragePolicy?)null : new BareMetalMachineReplaceStoragePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppBackupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppBackupType?(string value) => value == null ? null : new NetAppBackupType(value);
+        public static implicit operator NetAppBackupType?(string value) => value == null ? (NetAppBackupType?)null : new NetAppBackupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

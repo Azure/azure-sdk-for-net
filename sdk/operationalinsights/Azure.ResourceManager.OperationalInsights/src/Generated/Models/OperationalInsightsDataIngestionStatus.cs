@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsDataIngestionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsDataIngestionStatus?(string value) => value == null ? null : new OperationalInsightsDataIngestionStatus(value);
+        public static implicit operator OperationalInsightsDataIngestionStatus?(string value) => value == null ? (OperationalInsightsDataIngestionStatus?)null : new OperationalInsightsDataIngestionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

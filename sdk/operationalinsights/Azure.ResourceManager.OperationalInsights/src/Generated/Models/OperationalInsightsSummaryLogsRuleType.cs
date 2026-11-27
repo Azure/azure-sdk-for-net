@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsSummaryLogsRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsSummaryLogsRuleType?(string value) => value == null ? null : new OperationalInsightsSummaryLogsRuleType(value);
+        public static implicit operator OperationalInsightsSummaryLogsRuleType?(string value) => value == null ? (OperationalInsightsSummaryLogsRuleType?)null : new OperationalInsightsSummaryLogsRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

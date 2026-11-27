@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VnetLocalRouteOverrideCriterion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VnetLocalRouteOverrideCriterion?(string value) => value == null ? null : new VnetLocalRouteOverrideCriterion(value);
+        public static implicit operator VnetLocalRouteOverrideCriterion?(string value) => value == null ? (VnetLocalRouteOverrideCriterion?)null : new VnetLocalRouteOverrideCriterion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

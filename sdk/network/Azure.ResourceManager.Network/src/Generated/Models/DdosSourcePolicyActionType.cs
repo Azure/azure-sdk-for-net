@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="DdosSourcePolicyActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DdosSourcePolicyActionType?(string value) => value == null ? null : new DdosSourcePolicyActionType(value);
+        public static implicit operator DdosSourcePolicyActionType?(string value) => value == null ? (DdosSourcePolicyActionType?)null : new DdosSourcePolicyActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

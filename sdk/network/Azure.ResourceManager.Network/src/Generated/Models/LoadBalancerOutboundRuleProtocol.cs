@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="LoadBalancerOutboundRuleProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadBalancerOutboundRuleProtocol?(string value) => value == null ? null : new LoadBalancerOutboundRuleProtocol(value);
+        public static implicit operator LoadBalancerOutboundRuleProtocol?(string value) => value == null ? (LoadBalancerOutboundRuleProtocol?)null : new LoadBalancerOutboundRuleProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayLoadDistributionAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayLoadDistributionAlgorithm?(string value) => value == null ? null : new ApplicationGatewayLoadDistributionAlgorithm(value);
+        public static implicit operator ApplicationGatewayLoadDistributionAlgorithm?(string value) => value == null ? (ApplicationGatewayLoadDistributionAlgorithm?)null : new ApplicationGatewayLoadDistributionAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

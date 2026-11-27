@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerBackupFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerBackupFormat?(string value) => value == null ? null : new MySqlFlexibleServerBackupFormat(value);
+        public static implicit operator MySqlFlexibleServerBackupFormat?(string value) => value == null ? (MySqlFlexibleServerBackupFormat?)null : new MySqlFlexibleServerBackupFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

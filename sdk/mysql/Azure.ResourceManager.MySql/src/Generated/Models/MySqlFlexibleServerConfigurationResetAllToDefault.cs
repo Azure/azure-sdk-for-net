@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigurationResetAllToDefault"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerConfigurationResetAllToDefault?(string value) => value == null ? null : new MySqlFlexibleServerConfigurationResetAllToDefault(value);
+        public static implicit operator MySqlFlexibleServerConfigurationResetAllToDefault?(string value) => value == null ? (MySqlFlexibleServerConfigurationResetAllToDefault?)null : new MySqlFlexibleServerConfigurationResetAllToDefault(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

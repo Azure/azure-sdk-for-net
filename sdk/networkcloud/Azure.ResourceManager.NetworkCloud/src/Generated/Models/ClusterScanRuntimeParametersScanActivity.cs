@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ClusterScanRuntimeParametersScanActivity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterScanRuntimeParametersScanActivity?(string value) => value == null ? null : new ClusterScanRuntimeParametersScanActivity(value);
+        public static implicit operator ClusterScanRuntimeParametersScanActivity?(string value) => value == null ? (ClusterScanRuntimeParametersScanActivity?)null : new ClusterScanRuntimeParametersScanActivity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

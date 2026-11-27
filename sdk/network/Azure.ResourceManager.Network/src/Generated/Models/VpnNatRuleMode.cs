@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VpnNatRuleMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VpnNatRuleMode?(string value) => value == null ? null : new VpnNatRuleMode(value);
+        public static implicit operator VpnNatRuleMode?(string value) => value == null ? (VpnNatRuleMode?)null : new VpnNatRuleMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

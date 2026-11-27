@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AutonomousDatabaseLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutonomousDatabaseLifecycleState?(string value) => value == null ? null : new AutonomousDatabaseLifecycleState(value);
+        public static implicit operator AutonomousDatabaseLifecycleState?(string value) => value == null ? (AutonomousDatabaseLifecycleState?)null : new AutonomousDatabaseLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

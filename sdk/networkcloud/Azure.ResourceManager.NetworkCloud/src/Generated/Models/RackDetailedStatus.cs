@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="RackDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RackDetailedStatus?(string value) => value == null ? null : new RackDetailedStatus(value);
+        public static implicit operator RackDetailedStatus?(string value) => value == null ? (RackDetailedStatus?)null : new RackDetailedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

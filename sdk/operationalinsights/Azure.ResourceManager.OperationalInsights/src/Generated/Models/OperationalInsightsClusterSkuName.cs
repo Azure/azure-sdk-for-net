@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsClusterSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsClusterSkuName?(string value) => value == null ? null : new OperationalInsightsClusterSkuName(value);
+        public static implicit operator OperationalInsightsClusterSkuName?(string value) => value == null ? (OperationalInsightsClusterSkuName?)null : new OperationalInsightsClusterSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

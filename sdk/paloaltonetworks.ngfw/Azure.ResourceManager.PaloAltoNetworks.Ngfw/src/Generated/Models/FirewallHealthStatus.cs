@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="FirewallHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallHealthStatus?(string value) => value == null ? null : new FirewallHealthStatus(value);
+        public static implicit operator FirewallHealthStatus?(string value) => value == null ? (FirewallHealthStatus?)null : new FirewallHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

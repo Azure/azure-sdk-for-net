@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppEndpointType?(string value) => value == null ? null : new NetAppEndpointType(value);
+        public static implicit operator NetAppEndpointType?(string value) => value == null ? (NetAppEndpointType?)null : new NetAppEndpointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

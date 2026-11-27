@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="BackupDestinationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupDestinationType?(string value) => value == null ? null : new BackupDestinationType(value);
+        public static implicit operator BackupDestinationType?(string value) => value == null ? (BackupDestinationType?)null : new BackupDestinationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

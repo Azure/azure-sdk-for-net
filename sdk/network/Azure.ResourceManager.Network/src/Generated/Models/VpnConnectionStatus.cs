@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VpnConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VpnConnectionStatus?(string value) => value == null ? null : new VpnConnectionStatus(value);
+        public static implicit operator VpnConnectionStatus?(string value) => value == null ? (VpnConnectionStatus?)null : new VpnConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

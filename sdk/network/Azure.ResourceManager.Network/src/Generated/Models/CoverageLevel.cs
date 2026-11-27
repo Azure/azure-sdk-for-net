@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="CoverageLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CoverageLevel?(string value) => value == null ? null : new CoverageLevel(value);
+        public static implicit operator CoverageLevel?(string value) => value == null ? (CoverageLevel?)null : new CoverageLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppCacheFileAccessLogs"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppCacheFileAccessLogs?(string value) => value == null ? null : new NetAppCacheFileAccessLogs(value);
+        public static implicit operator NetAppCacheFileAccessLogs?(string value) => value == null ? (NetAppCacheFileAccessLogs?)null : new NetAppCacheFileAccessLogs(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

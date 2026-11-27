@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewaySslPolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewaySslPolicyName?(string value) => value == null ? null : new ApplicationGatewaySslPolicyName(value);
+        public static implicit operator ApplicationGatewaySslPolicyName?(string value) => value == null ? (ApplicationGatewaySslPolicyName?)null : new ApplicationGatewaySslPolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

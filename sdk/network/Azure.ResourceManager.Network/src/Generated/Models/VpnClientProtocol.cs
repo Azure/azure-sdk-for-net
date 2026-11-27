@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VpnClientProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VpnClientProtocol?(string value) => value == null ? null : new VpnClientProtocol(value);
+        public static implicit operator VpnClientProtocol?(string value) => value == null ? (VpnClientProtocol?)null : new VpnClientProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

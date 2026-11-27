@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="L3NetworkDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator L3NetworkDetailedStatus?(string value) => value == null ? null : new L3NetworkDetailedStatus(value);
+        public static implicit operator L3NetworkDetailedStatus?(string value) => value == null ? (L3NetworkDetailedStatus?)null : new L3NetworkDetailedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

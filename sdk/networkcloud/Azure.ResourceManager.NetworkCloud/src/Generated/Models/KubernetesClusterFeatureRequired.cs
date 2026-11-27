@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesClusterFeatureRequired"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesClusterFeatureRequired?(string value) => value == null ? null : new KubernetesClusterFeatureRequired(value);
+        public static implicit operator KubernetesClusterFeatureRequired?(string value) => value == null ? (KubernetesClusterFeatureRequired?)null : new KubernetesClusterFeatureRequired(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

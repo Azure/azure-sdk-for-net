@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BareMetalMachinePowerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachinePowerState?(string value) => value == null ? null : new BareMetalMachinePowerState(value);
+        public static implicit operator BareMetalMachinePowerState?(string value) => value == null ? (BareMetalMachinePowerState?)null : new BareMetalMachinePowerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

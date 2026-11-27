@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="CloudExadataInfrastructureLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudExadataInfrastructureLifecycleState?(string value) => value == null ? null : new CloudExadataInfrastructureLifecycleState(value);
+        public static implicit operator CloudExadataInfrastructureLifecycleState?(string value) => value == null ? (CloudExadataInfrastructureLifecycleState?)null : new CloudExadataInfrastructureLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

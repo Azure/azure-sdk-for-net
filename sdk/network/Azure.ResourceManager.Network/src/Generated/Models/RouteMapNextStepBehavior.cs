@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RouteMapNextStepBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouteMapNextStepBehavior?(string value) => value == null ? null : new RouteMapNextStepBehavior(value);
+        public static implicit operator RouteMapNextStepBehavior?(string value) => value == null ? (RouteMapNextStepBehavior?)null : new RouteMapNextStepBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

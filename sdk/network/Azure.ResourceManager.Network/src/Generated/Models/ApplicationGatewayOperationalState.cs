@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayOperationalState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayOperationalState?(string value) => value == null ? null : new ApplicationGatewayOperationalState(value);
+        public static implicit operator ApplicationGatewayOperationalState?(string value) => value == null ? (ApplicationGatewayOperationalState?)null : new ApplicationGatewayOperationalState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

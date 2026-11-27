@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="IPsecIntegrity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPsecIntegrity?(string value) => value == null ? null : new IPsecIntegrity(value);
+        public static implicit operator IPsecIntegrity?(string value) => value == null ? (IPsecIntegrity?)null : new IPsecIntegrity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

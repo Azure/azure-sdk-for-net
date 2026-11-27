@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsSummaryTimeSelector"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsSummaryTimeSelector?(string value) => value == null ? null : new OperationalInsightsSummaryTimeSelector(value);
+        public static implicit operator OperationalInsightsSummaryTimeSelector?(string value) => value == null ? (OperationalInsightsSummaryTimeSelector?)null : new OperationalInsightsSummaryTimeSelector(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

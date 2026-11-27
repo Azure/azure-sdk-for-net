@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="CloudServicesNetworkStorageMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudServicesNetworkStorageMode?(string value) => value == null ? null : new CloudServicesNetworkStorageMode(value);
+        public static implicit operator CloudServicesNetworkStorageMode?(string value) => value == null ? (CloudServicesNetworkStorageMode?)null : new CloudServicesNetworkStorageMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

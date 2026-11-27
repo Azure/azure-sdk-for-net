@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="CustomIPPrefixType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomIPPrefixType?(string value) => value == null ? null : new CustomIPPrefixType(value);
+        public static implicit operator CustomIPPrefixType?(string value) => value == null ? (CustomIPPrefixType?)null : new CustomIPPrefixType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

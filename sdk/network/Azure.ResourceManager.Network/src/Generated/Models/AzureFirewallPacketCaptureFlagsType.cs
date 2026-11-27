@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AzureFirewallPacketCaptureFlagsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureFirewallPacketCaptureFlagsType?(string value) => value == null ? null : new AzureFirewallPacketCaptureFlagsType(value);
+        public static implicit operator AzureFirewallPacketCaptureFlagsType?(string value) => value == null ? (AzureFirewallPacketCaptureFlagsType?)null : new AzureFirewallPacketCaptureFlagsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="HubRoutingPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HubRoutingPreference?(string value) => value == null ? null : new HubRoutingPreference(value);
+        public static implicit operator HubRoutingPreference?(string value) => value == null ? (HubRoutingPreference?)null : new HubRoutingPreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

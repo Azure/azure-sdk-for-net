@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         /// <summary> Converts a string to a <see cref="CollectorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CollectorProvisioningState?(string value) => value == null ? null : new CollectorProvisioningState(value);
+        public static implicit operator CollectorProvisioningState?(string value) => value == null ? (CollectorProvisioningState?)null : new CollectorProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VpnGatewayGeneration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VpnGatewayGeneration?(string value) => value == null ? null : new VpnGatewayGeneration(value);
+        public static implicit operator VpnGatewayGeneration?(string value) => value == null ? (VpnGatewayGeneration?)null : new VpnGatewayGeneration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

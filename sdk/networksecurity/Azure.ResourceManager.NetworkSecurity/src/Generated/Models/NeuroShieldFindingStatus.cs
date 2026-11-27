@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <summary> Converts a string to a <see cref="NeuroShieldFindingStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NeuroShieldFindingStatus?(string value) => value == null ? null : new NeuroShieldFindingStatus(value);
+        public static implicit operator NeuroShieldFindingStatus?(string value) => value == null ? (NeuroShieldFindingStatus?)null : new NeuroShieldFindingStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

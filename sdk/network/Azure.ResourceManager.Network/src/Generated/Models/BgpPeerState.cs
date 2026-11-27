@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="BgpPeerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BgpPeerState?(string value) => value == null ? null : new BgpPeerState(value);
+        public static implicit operator BgpPeerState?(string value) => value == null ? (BgpPeerState?)null : new BgpPeerState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

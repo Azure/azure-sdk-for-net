@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="LoadDistribution"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadDistribution?(string value) => value == null ? null : new LoadDistribution(value);
+        public static implicit operator LoadDistribution?(string value) => value == null ? (LoadDistribution?)null : new LoadDistribution(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

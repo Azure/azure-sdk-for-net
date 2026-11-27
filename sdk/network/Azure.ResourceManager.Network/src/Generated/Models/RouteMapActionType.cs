@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RouteMapActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouteMapActionType?(string value) => value == null ? null : new RouteMapActionType(value);
+        public static implicit operator RouteMapActionType?(string value) => value == null ? (RouteMapActionType?)null : new RouteMapActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

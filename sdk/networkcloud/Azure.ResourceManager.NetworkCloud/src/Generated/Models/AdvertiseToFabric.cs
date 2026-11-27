@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="AdvertiseToFabric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvertiseToFabric?(string value) => value == null ? null : new AdvertiseToFabric(value);
+        public static implicit operator AdvertiseToFabric?(string value) => value == null ? (AdvertiseToFabric?)null : new AdvertiseToFabric(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

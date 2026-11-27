@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsTableProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsTableProvisioningState?(string value) => value == null ? null : new OperationalInsightsTableProvisioningState(value);
+        public static implicit operator OperationalInsightsTableProvisioningState?(string value) => value == null ? (OperationalInsightsTableProvisioningState?)null : new OperationalInsightsTableProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

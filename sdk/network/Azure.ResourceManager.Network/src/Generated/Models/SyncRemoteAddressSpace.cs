@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="SyncRemoteAddressSpace"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncRemoteAddressSpace?(string value) => value == null ? null : new SyncRemoteAddressSpace(value);
+        public static implicit operator SyncRemoteAddressSpace?(string value) => value == null ? (SyncRemoteAddressSpace?)null : new SyncRemoteAddressSpace(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

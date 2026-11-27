@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NvaNicType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NvaNicType?(string value) => value == null ? null : new NvaNicType(value);
+        public static implicit operator NvaNicType?(string value) => value == null ? (NvaNicType?)null : new NvaNicType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

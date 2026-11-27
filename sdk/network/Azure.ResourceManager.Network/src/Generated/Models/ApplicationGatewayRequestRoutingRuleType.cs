@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayRequestRoutingRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayRequestRoutingRuleType?(string value) => value == null ? null : new ApplicationGatewayRequestRoutingRuleType(value);
+        public static implicit operator ApplicationGatewayRequestRoutingRuleType?(string value) => value == null ? (ApplicationGatewayRequestRoutingRuleType?)null : new ApplicationGatewayRequestRoutingRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

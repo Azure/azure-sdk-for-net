@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="MaintenancePatchingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MaintenancePatchingMode?(string value) => value == null ? null : new MaintenancePatchingMode(value);
+        public static implicit operator MaintenancePatchingMode?(string value) => value == null ? (MaintenancePatchingMode?)null : new MaintenancePatchingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

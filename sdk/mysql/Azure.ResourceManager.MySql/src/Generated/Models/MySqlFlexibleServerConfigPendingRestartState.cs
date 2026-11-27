@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigPendingRestartState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerConfigPendingRestartState?(string value) => value == null ? null : new MySqlFlexibleServerConfigPendingRestartState(value);
+        public static implicit operator MySqlFlexibleServerConfigPendingRestartState?(string value) => value == null ? (MySqlFlexibleServerConfigPendingRestartState?)null : new MySqlFlexibleServerConfigPendingRestartState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

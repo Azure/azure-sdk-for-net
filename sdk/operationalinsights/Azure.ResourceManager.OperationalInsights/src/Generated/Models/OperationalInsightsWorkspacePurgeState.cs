@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsWorkspacePurgeState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsWorkspacePurgeState?(string value) => value == null ? null : new OperationalInsightsWorkspacePurgeState(value);
+        public static implicit operator OperationalInsightsWorkspacePurgeState?(string value) => value == null ? (OperationalInsightsWorkspacePurgeState?)null : new OperationalInsightsWorkspacePurgeState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

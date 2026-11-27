@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineProvisioningState?(string value) => value == null ? null : new VirtualMachineProvisioningState(value);
+        public static implicit operator VirtualMachineProvisioningState?(string value) => value == null ? (VirtualMachineProvisioningState?)null : new VirtualMachineProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

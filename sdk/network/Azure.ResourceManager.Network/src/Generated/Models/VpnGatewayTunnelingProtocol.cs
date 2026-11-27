@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VpnGatewayTunnelingProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VpnGatewayTunnelingProtocol?(string value) => value == null ? null : new VpnGatewayTunnelingProtocol(value);
+        public static implicit operator VpnGatewayTunnelingProtocol?(string value) => value == null ? (VpnGatewayTunnelingProtocol?)null : new VpnGatewayTunnelingProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigReadOnlyState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerConfigReadOnlyState?(string value) => value == null ? null : new MySqlFlexibleServerConfigReadOnlyState(value);
+        public static implicit operator MySqlFlexibleServerConfigReadOnlyState?(string value) => value == null ? (MySqlFlexibleServerConfigReadOnlyState?)null : new MySqlFlexibleServerConfigReadOnlyState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

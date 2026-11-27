@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="IkeEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IkeEncryption?(string value) => value == null ? null : new IkeEncryption(value);
+        public static implicit operator IkeEncryption?(string value) => value == null ? (IkeEncryption?)null : new IkeEncryption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

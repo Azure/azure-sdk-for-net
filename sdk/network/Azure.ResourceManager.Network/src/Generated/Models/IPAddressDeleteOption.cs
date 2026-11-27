@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="IPAddressDeleteOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPAddressDeleteOption?(string value) => value == null ? null : new IPAddressDeleteOption(value);
+        public static implicit operator IPAddressDeleteOption?(string value) => value == null ? (IPAddressDeleteOption?)null : new IPAddressDeleteOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

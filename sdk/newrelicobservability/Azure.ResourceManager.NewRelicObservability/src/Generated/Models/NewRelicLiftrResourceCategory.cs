@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="NewRelicLiftrResourceCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicLiftrResourceCategory?(string value) => value == null ? null : new NewRelicLiftrResourceCategory(value);
+        public static implicit operator NewRelicLiftrResourceCategory?(string value) => value == null ? (NewRelicLiftrResourceCategory?)null : new NewRelicLiftrResourceCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

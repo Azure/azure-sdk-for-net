@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
 
         /// <summary> Converts a string to a <see cref="PublicNetworkAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublicNetworkAccessType?(string value) => value == null ? null : new PublicNetworkAccessType(value);
+        public static implicit operator PublicNetworkAccessType?(string value) => value == null ? (PublicNetworkAccessType?)null : new PublicNetworkAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

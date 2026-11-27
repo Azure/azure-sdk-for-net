@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="CapacityPoolEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapacityPoolEncryptionType?(string value) => value == null ? null : new CapacityPoolEncryptionType(value);
+        public static implicit operator CapacityPoolEncryptionType?(string value) => value == null ? (CapacityPoolEncryptionType?)null : new CapacityPoolEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

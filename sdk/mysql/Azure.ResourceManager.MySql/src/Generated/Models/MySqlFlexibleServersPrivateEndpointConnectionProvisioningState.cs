@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServersPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServersPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new MySqlFlexibleServersPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator MySqlFlexibleServersPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (MySqlFlexibleServersPrivateEndpointConnectionProvisioningState?)null : new MySqlFlexibleServersPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

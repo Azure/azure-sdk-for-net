@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="CoolAccessTieringPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CoolAccessTieringPolicy?(string value) => value == null ? null : new CoolAccessTieringPolicy(value);
+        public static implicit operator CoolAccessTieringPolicy?(string value) => value == null ? (CoolAccessTieringPolicy?)null : new CoolAccessTieringPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

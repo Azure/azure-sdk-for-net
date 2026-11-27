@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRoutePeeringType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRoutePeeringType?(string value) => value == null ? null : new ExpressRoutePeeringType(value);
+        public static implicit operator ExpressRoutePeeringType?(string value) => value == null ? (ExpressRoutePeeringType?)null : new ExpressRoutePeeringType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DBSystemLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DBSystemLifecycleState?(string value) => value == null ? null : new DBSystemLifecycleState(value);
+        public static implicit operator DBSystemLifecycleState?(string value) => value == null ? (DBSystemLifecycleState?)null : new DBSystemLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

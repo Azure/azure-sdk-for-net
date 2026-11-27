@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="OracleDnsPrivateZoneType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OracleDnsPrivateZoneType?(string value) => value == null ? null : new OracleDnsPrivateZoneType(value);
+        public static implicit operator OracleDnsPrivateZoneType?(string value) => value == null ? (OracleDnsPrivateZoneType?)null : new OracleDnsPrivateZoneType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

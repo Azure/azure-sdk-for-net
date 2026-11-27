@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppLdapState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppLdapState?(string value) => value == null ? null : new NetAppLdapState(value);
+        public static implicit operator NetAppLdapState?(string value) => value == null ? (NetAppLdapState?)null : new NetAppLdapState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

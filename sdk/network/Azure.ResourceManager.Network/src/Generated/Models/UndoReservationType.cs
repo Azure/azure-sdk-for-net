@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="UndoReservationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UndoReservationType?(string value) => value == null ? null : new UndoReservationType(value);
+        public static implicit operator UndoReservationType?(string value) => value == null ? (UndoReservationType?)null : new UndoReservationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

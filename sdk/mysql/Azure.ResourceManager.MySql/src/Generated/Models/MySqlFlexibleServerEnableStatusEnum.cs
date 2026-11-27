@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerEnableStatusEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerEnableStatusEnum?(string value) => value == null ? null : new MySqlFlexibleServerEnableStatusEnum(value);
+        public static implicit operator MySqlFlexibleServerEnableStatusEnum?(string value) => value == null ? (MySqlFlexibleServerEnableStatusEnum?)null : new MySqlFlexibleServerEnableStatusEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

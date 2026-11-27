@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ClusterManagerConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterManagerConnectionStatus?(string value) => value == null ? null : new ClusterManagerConnectionStatus(value);
+        public static implicit operator ClusterManagerConnectionStatus?(string value) => value == null ? (ClusterManagerConnectionStatus?)null : new ClusterManagerConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

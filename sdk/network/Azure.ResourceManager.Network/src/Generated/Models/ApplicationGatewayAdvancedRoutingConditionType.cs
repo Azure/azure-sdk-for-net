@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayAdvancedRoutingConditionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayAdvancedRoutingConditionType?(string value) => value == null ? null : new ApplicationGatewayAdvancedRoutingConditionType(value);
+        public static implicit operator ApplicationGatewayAdvancedRoutingConditionType?(string value) => value == null ? (ApplicationGatewayAdvancedRoutingConditionType?)null : new ApplicationGatewayAdvancedRoutingConditionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

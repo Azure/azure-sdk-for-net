@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="RegionStorageToNetworkProximity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegionStorageToNetworkProximity?(string value) => value == null ? null : new RegionStorageToNetworkProximity(value);
+        public static implicit operator RegionStorageToNetworkProximity?(string value) => value == null ? (RegionStorageToNetworkProximity?)null : new RegionStorageToNetworkProximity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

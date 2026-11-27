@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AddressSpaceAggregationOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AddressSpaceAggregationOption?(string value) => value == null ? null : new AddressSpaceAggregationOption(value);
+        public static implicit operator AddressSpaceAggregationOption?(string value) => value == null ? (AddressSpaceAggregationOption?)null : new AddressSpaceAggregationOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

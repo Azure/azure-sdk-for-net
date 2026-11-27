@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
 
         /// <summary> Converts a string to a <see cref="OnlineExperimentationWorkspaceSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnlineExperimentationWorkspaceSkuTier?(string value) => value == null ? null : new OnlineExperimentationWorkspaceSkuTier(value);
+        public static implicit operator OnlineExperimentationWorkspaceSkuTier?(string value) => value == null ? (OnlineExperimentationWorkspaceSkuTier?)null : new OnlineExperimentationWorkspaceSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

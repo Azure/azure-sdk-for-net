@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppAccountActiveDirectoryStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppAccountActiveDirectoryStatus?(string value) => value == null ? null : new NetAppAccountActiveDirectoryStatus(value);
+        public static implicit operator NetAppAccountActiveDirectoryStatus?(string value) => value == null ? (NetAppAccountActiveDirectoryStatus?)null : new NetAppAccountActiveDirectoryStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

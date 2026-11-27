@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DisasterRecoveryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DisasterRecoveryType?(string value) => value == null ? null : new DisasterRecoveryType(value);
+        public static implicit operator DisasterRecoveryType?(string value) => value == null ? (DisasterRecoveryType?)null : new DisasterRecoveryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

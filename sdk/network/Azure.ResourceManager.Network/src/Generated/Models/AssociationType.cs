@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AssociationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssociationType?(string value) => value == null ? null : new AssociationType(value);
+        public static implicit operator AssociationType?(string value) => value == null ? (AssociationType?)null : new AssociationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

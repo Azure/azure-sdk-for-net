@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="FreeTrialEnableStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FreeTrialEnableStatus?(string value) => value == null ? null : new FreeTrialEnableStatus(value);
+        public static implicit operator FreeTrialEnableStatus?(string value) => value == null ? (FreeTrialEnableStatus?)null : new FreeTrialEnableStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

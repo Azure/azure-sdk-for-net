@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppReplicationSchedule"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppReplicationSchedule?(string value) => value == null ? null : new NetAppReplicationSchedule(value);
+        public static implicit operator NetAppReplicationSchedule?(string value) => value == null ? (NetAppReplicationSchedule?)null : new NetAppReplicationSchedule(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

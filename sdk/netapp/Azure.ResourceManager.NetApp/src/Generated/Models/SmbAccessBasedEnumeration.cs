@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="SmbAccessBasedEnumeration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SmbAccessBasedEnumeration?(string value) => value == null ? null : new SmbAccessBasedEnumeration(value);
+        public static implicit operator SmbAccessBasedEnumeration?(string value) => value == null ? (SmbAccessBasedEnumeration?)null : new SmbAccessBasedEnumeration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

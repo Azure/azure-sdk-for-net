@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteCircuitResiliencyLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteCircuitResiliencyLevel?(string value) => value == null ? null : new ExpressRouteCircuitResiliencyLevel(value);
+        public static implicit operator ExpressRouteCircuitResiliencyLevel?(string value) => value == null ? (ExpressRouteCircuitResiliencyLevel?)null : new ExpressRouteCircuitResiliencyLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

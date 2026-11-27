@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppReplicationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetAppReplicationType?(string value) => value == null ? null : new NetAppReplicationType(value);
+        public static implicit operator NetAppReplicationType?(string value) => value == null ? (NetAppReplicationType?)null : new NetAppReplicationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="CloudVmClusterDiskRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudVmClusterDiskRedundancy?(string value) => value == null ? null : new CloudVmClusterDiskRedundancy(value);
+        public static implicit operator CloudVmClusterDiskRedundancy?(string value) => value == null ? (CloudVmClusterDiskRedundancy?)null : new CloudVmClusterDiskRedundancy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

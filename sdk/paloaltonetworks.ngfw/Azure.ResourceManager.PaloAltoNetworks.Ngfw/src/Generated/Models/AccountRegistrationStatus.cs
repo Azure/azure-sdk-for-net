@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="AccountRegistrationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccountRegistrationStatus?(string value) => value == null ? null : new AccountRegistrationStatus(value);
+        public static implicit operator AccountRegistrationStatus?(string value) => value == null ? (AccountRegistrationStatus?)null : new AccountRegistrationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

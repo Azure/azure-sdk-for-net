@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualWanSecurityProviderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualWanSecurityProviderType?(string value) => value == null ? null : new VirtualWanSecurityProviderType(value);
+        public static implicit operator VirtualWanSecurityProviderType?(string value) => value == null ? (VirtualWanSecurityProviderType?)null : new VirtualWanSecurityProviderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

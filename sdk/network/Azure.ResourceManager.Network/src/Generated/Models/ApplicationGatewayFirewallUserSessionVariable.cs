@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallUserSessionVariable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayFirewallUserSessionVariable?(string value) => value == null ? null : new ApplicationGatewayFirewallUserSessionVariable(value);
+        public static implicit operator ApplicationGatewayFirewallUserSessionVariable?(string value) => value == null ? (ApplicationGatewayFirewallUserSessionVariable?)null : new ApplicationGatewayFirewallUserSessionVariable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DataSafeStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataSafeStatusType?(string value) => value == null ? null : new DataSafeStatusType(value);
+        public static implicit operator DataSafeStatusType?(string value) => value == null ? (DataSafeStatusType?)null : new DataSafeStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

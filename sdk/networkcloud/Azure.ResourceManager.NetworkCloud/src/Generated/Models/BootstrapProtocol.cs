@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BootstrapProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BootstrapProtocol?(string value) => value == null ? null : new BootstrapProtocol(value);
+        public static implicit operator BootstrapProtocol?(string value) => value == null ? (BootstrapProtocol?)null : new BootstrapProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

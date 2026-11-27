@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BareMetalMachineSkipShutdown"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachineSkipShutdown?(string value) => value == null ? null : new BareMetalMachineSkipShutdown(value);
+        public static implicit operator BareMetalMachineSkipShutdown?(string value) => value == null ? (BareMetalMachineSkipShutdown?)null : new BareMetalMachineSkipShutdown(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

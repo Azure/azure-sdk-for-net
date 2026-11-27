@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteCircuitPeeringAdvertisedPublicPrefixState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteCircuitPeeringAdvertisedPublicPrefixState?(string value) => value == null ? null : new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(value);
+        public static implicit operator ExpressRouteCircuitPeeringAdvertisedPublicPrefixState?(string value) => value == null ? (ExpressRouteCircuitPeeringAdvertisedPublicPrefixState?)null : new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

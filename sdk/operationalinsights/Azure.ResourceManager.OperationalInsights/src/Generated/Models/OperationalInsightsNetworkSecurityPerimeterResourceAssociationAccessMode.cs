@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Converts a string to a <see cref="OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode?(string value) => value == null ? null : new OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode(value);
+        public static implicit operator OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode?(string value) => value == null ? (OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode?)null : new OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

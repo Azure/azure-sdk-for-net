@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ServiceGatewaySkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceGatewaySkuTier?(string value) => value == null ? null : new ServiceGatewaySkuTier(value);
+        public static implicit operator ServiceGatewaySkuTier?(string value) => value == null ? (ServiceGatewaySkuTier?)null : new ServiceGatewaySkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="ValidationThresholdGrouping"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ValidationThresholdGrouping?(string value) => value == null ? null : new ValidationThresholdGrouping(value);
+        public static implicit operator ValidationThresholdGrouping?(string value) => value == null ? (ValidationThresholdGrouping?)null : new ValidationThresholdGrouping(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

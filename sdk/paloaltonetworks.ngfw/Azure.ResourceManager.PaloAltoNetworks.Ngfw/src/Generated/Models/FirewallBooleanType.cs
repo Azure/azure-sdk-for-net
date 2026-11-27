@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="FirewallBooleanType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallBooleanType?(string value) => value == null ? null : new FirewallBooleanType(value);
+        public static implicit operator FirewallBooleanType?(string value) => value == null ? (FirewallBooleanType?)null : new FirewallBooleanType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DBNodeMaintenanceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DBNodeMaintenanceType?(string value) => value == null ? null : new DBNodeMaintenanceType(value);
+        public static implicit operator DBNodeMaintenanceType?(string value) => value == null ? (DBNodeMaintenanceType?)null : new DBNodeMaintenanceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="HubBgpConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HubBgpConnectionStatus?(string value) => value == null ? null : new HubBgpConnectionStatus(value);
+        public static implicit operator HubBgpConnectionStatus?(string value) => value == null ? (HubBgpConnectionStatus?)null : new HubBgpConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

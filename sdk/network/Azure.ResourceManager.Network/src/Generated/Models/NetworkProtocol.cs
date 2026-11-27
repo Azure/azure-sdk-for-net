@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkProtocol?(string value) => value == null ? null : new NetworkProtocol(value);
+        public static implicit operator NetworkProtocol?(string value) => value == null ? (NetworkProtocol?)null : new NetworkProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

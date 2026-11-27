@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="WalletGenerateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WalletGenerateType?(string value) => value == null ? null : new WalletGenerateType(value);
+        public static implicit operator WalletGenerateType?(string value) => value == null ? (WalletGenerateType?)null : new WalletGenerateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

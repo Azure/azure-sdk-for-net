@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="RackSkuProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RackSkuProvisioningState?(string value) => value == null ? null : new RackSkuProvisioningState(value);
+        public static implicit operator RackSkuProvisioningState?(string value) => value == null ? (RackSkuProvisioningState?)null : new RackSkuProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

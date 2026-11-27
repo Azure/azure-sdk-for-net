@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BgpMultiHop"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BgpMultiHop?(string value) => value == null ? null : new BgpMultiHop(value);
+        public static implicit operator BgpMultiHop?(string value) => value == null ? (BgpMultiHop?)null : new BgpMultiHop(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

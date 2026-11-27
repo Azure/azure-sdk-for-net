@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ConnectivityTopology"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectivityTopology?(string value) => value == null ? null : new ConnectivityTopology(value);
+        public static implicit operator ConnectivityTopology?(string value) => value == null ? (ConnectivityTopology?)null : new ConnectivityTopology(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

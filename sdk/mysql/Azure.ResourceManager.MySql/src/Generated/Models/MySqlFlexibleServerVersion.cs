@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Converts a string to a <see cref="MySqlFlexibleServerVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerVersion?(string value) => value == null ? null : new MySqlFlexibleServerVersion(value);
+        public static implicit operator MySqlFlexibleServerVersion?(string value) => value == null ? (MySqlFlexibleServerVersion?)null : new MySqlFlexibleServerVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

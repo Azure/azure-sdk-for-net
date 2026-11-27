@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="LoadBalancerDetailLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadBalancerDetailLevel?(string value) => value == null ? null : new LoadBalancerDetailLevel(value);
+        public static implicit operator LoadBalancerDetailLevel?(string value) => value == null ? (LoadBalancerDetailLevel?)null : new LoadBalancerDetailLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

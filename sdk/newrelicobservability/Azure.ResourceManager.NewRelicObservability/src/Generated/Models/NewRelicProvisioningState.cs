@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="NewRelicProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicProvisioningState?(string value) => value == null ? null : new NewRelicProvisioningState(value);
+        public static implicit operator NewRelicProvisioningState?(string value) => value == null ? (NewRelicProvisioningState?)null : new NewRelicProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

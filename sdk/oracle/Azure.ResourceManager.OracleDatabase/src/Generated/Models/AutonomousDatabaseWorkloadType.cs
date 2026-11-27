@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AutonomousDatabaseWorkloadType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutonomousDatabaseWorkloadType?(string value) => value == null ? null : new AutonomousDatabaseWorkloadType(value);
+        public static implicit operator AutonomousDatabaseWorkloadType?(string value) => value == null ? (AutonomousDatabaseWorkloadType?)null : new AutonomousDatabaseWorkloadType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

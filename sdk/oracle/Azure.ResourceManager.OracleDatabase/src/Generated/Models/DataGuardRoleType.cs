@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DataGuardRoleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataGuardRoleType?(string value) => value == null ? null : new DataGuardRoleType(value);
+        public static implicit operator DataGuardRoleType?(string value) => value == null ? (DataGuardRoleType?)null : new DataGuardRoleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

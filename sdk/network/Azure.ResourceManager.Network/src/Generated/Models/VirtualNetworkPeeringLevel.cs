@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkPeeringLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkPeeringLevel?(string value) => value == null ? null : new VirtualNetworkPeeringLevel(value);
+        public static implicit operator VirtualNetworkPeeringLevel?(string value) => value == null ? (VirtualNetworkPeeringLevel?)null : new VirtualNetworkPeeringLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="SkipShutdown"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SkipShutdown?(string value) => value == null ? null : new SkipShutdown(value);
+        public static implicit operator SkipShutdown?(string value) => value == null ? (SkipShutdown?)null : new SkipShutdown(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

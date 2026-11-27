@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="EffectiveAdminRuleKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EffectiveAdminRuleKind?(string value) => value == null ? null : new EffectiveAdminRuleKind(value);
+        public static implicit operator EffectiveAdminRuleKind?(string value) => value == null ? (EffectiveAdminRuleKind?)null : new EffectiveAdminRuleKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetworkSiblingSetProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSiblingSetProvisioningState?(string value) => value == null ? null : new NetworkSiblingSetProvisioningState(value);
+        public static implicit operator NetworkSiblingSetProvisioningState?(string value) => value == null ? (NetworkSiblingSetProvisioningState?)null : new NetworkSiblingSetProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

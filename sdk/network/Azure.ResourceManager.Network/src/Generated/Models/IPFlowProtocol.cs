@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="IPFlowProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPFlowProtocol?(string value) => value == null ? null : new IPFlowProtocol(value);
+        public static implicit operator IPFlowProtocol?(string value) => value == null ? (IPFlowProtocol?)null : new IPFlowProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

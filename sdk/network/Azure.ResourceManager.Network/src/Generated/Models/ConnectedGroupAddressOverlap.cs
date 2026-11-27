@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ConnectedGroupAddressOverlap"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedGroupAddressOverlap?(string value) => value == null ? null : new ConnectedGroupAddressOverlap(value);
+        public static implicit operator ConnectedGroupAddressOverlap?(string value) => value == null ? (ConnectedGroupAddressOverlap?)null : new ConnectedGroupAddressOverlap(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

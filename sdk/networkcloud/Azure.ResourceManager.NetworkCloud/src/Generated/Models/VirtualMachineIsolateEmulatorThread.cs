@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="VirtualMachineIsolateEmulatorThread"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineIsolateEmulatorThread?(string value) => value == null ? null : new VirtualMachineIsolateEmulatorThread(value);
+        public static implicit operator VirtualMachineIsolateEmulatorThread?(string value) => value == null ? (VirtualMachineIsolateEmulatorThread?)null : new VirtualMachineIsolateEmulatorThread(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

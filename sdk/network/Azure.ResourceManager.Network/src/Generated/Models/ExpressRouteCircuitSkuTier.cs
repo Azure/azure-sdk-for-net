@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ExpressRouteCircuitSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressRouteCircuitSkuTier?(string value) => value == null ? null : new ExpressRouteCircuitSkuTier(value);
+        public static implicit operator ExpressRouteCircuitSkuTier?(string value) => value == null ? (ExpressRouteCircuitSkuTier?)null : new ExpressRouteCircuitSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="OracleLicenseModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OracleLicenseModel?(string value) => value == null ? null : new OracleLicenseModel(value);
+        public static implicit operator OracleLicenseModel?(string value) => value == null ? (OracleLicenseModel?)null : new OracleLicenseModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

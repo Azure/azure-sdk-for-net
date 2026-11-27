@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkWatcherHttpMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkWatcherHttpMethod?(string value) => value == null ? null : new NetworkWatcherHttpMethod(value);
+        public static implicit operator NetworkWatcherHttpMethod?(string value) => value == null ? (NetworkWatcherHttpMethod?)null : new NetworkWatcherHttpMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

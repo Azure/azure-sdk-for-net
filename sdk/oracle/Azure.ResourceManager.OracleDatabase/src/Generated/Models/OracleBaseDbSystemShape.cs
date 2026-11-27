@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="OracleBaseDbSystemShape"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OracleBaseDbSystemShape?(string value) => value == null ? null : new OracleBaseDbSystemShape(value);
+        public static implicit operator OracleBaseDbSystemShape?(string value) => value == null ? (OracleBaseDbSystemShape?)null : new OracleBaseDbSystemShape(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

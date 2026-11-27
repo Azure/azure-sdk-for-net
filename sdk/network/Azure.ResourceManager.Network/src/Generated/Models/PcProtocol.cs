@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="PcProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PcProtocol?(string value) => value == null ? null : new PcProtocol(value);
+        public static implicit operator PcProtocol?(string value) => value == null ? (PcProtocol?)null : new PcProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

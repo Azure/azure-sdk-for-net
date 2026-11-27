@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetPrivilegeLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachineKeySetPrivilegeLevel?(string value) => value == null ? null : new BareMetalMachineKeySetPrivilegeLevel(value);
+        public static implicit operator BareMetalMachineKeySetPrivilegeLevel?(string value) => value == null ? (BareMetalMachineKeySetPrivilegeLevel?)null : new BareMetalMachineKeySetPrivilegeLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="InterconnectGroupScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InterconnectGroupScope?(string value) => value == null ? null : new InterconnectGroupScope(value);
+        public static implicit operator InterconnectGroupScope?(string value) => value == null ? (InterconnectGroupScope?)null : new InterconnectGroupScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

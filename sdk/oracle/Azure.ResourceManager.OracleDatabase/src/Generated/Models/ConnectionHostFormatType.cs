@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionHostFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionHostFormatType?(string value) => value == null ? null : new ConnectionHostFormatType(value);
+        public static implicit operator ConnectionHostFormatType?(string value) => value == null ? (ConnectionHostFormatType?)null : new ConnectionHostFormatType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

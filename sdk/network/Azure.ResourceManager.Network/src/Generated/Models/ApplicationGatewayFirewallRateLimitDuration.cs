@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallRateLimitDuration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationGatewayFirewallRateLimitDuration?(string value) => value == null ? null : new ApplicationGatewayFirewallRateLimitDuration(value);
+        public static implicit operator ApplicationGatewayFirewallRateLimitDuration?(string value) => value == null ? (ApplicationGatewayFirewallRateLimitDuration?)null : new ApplicationGatewayFirewallRateLimitDuration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkGroupMemberType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkGroupMemberType?(string value) => value == null ? null : new NetworkGroupMemberType(value);
+        public static implicit operator NetworkGroupMemberType?(string value) => value == null ? (NetworkGroupMemberType?)null : new NetworkGroupMemberType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

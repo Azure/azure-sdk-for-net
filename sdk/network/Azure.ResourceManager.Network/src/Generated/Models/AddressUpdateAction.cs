@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AddressUpdateAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AddressUpdateAction?(string value) => value == null ? null : new AddressUpdateAction(value);
+        public static implicit operator AddressUpdateAction?(string value) => value == null ? (AddressUpdateAction?)null : new AddressUpdateAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ProcessorArchitecture"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProcessorArchitecture?(string value) => value == null ? null : new ProcessorArchitecture(value);
+        public static implicit operator ProcessorArchitecture?(string value) => value == null ? (ProcessorArchitecture?)null : new ProcessorArchitecture(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

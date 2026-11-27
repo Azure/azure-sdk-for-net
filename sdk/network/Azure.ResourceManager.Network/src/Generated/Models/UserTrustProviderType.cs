@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="UserTrustProviderType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UserTrustProviderType?(string value) => value == null ? null : new UserTrustProviderType(value);
+        public static implicit operator UserTrustProviderType?(string value) => value == null ? (UserTrustProviderType?)null : new UserTrustProviderType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

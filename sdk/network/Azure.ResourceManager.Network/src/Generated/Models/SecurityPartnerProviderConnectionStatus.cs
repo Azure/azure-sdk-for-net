@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="SecurityPartnerProviderConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityPartnerProviderConnectionStatus?(string value) => value == null ? null : new SecurityPartnerProviderConnectionStatus(value);
+        public static implicit operator SecurityPartnerProviderConnectionStatus?(string value) => value == null ? (SecurityPartnerProviderConnectionStatus?)null : new SecurityPartnerProviderConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

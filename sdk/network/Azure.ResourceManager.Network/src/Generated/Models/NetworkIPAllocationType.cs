@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkIPAllocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkIPAllocationType?(string value) => value == null ? null : new NetworkIPAllocationType(value);
+        public static implicit operator NetworkIPAllocationType?(string value) => value == null ? (NetworkIPAllocationType?)null : new NetworkIPAllocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

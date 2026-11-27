@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RouteFilterRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouteFilterRuleType?(string value) => value == null ? null : new RouteFilterRuleType(value);
+        public static implicit operator RouteFilterRuleType?(string value) => value == null ? (RouteFilterRuleType?)null : new RouteFilterRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

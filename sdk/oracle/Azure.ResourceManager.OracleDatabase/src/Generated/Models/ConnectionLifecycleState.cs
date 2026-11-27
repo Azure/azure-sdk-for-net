@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="ConnectionLifecycleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionLifecycleState?(string value) => value == null ? null : new ConnectionLifecycleState(value);
+        public static implicit operator ConnectionLifecycleState?(string value) => value == null ? (ConnectionLifecycleState?)null : new ConnectionLifecycleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

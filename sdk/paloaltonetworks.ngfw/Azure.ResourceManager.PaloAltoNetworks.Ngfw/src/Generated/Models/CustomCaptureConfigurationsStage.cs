@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="CustomCaptureConfigurationsStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomCaptureConfigurationsStage?(string value) => value == null ? null : new CustomCaptureConfigurationsStage(value);
+        public static implicit operator CustomCaptureConfigurationsStage?(string value) => value == null ? (CustomCaptureConfigurationsStage?)null : new CustomCaptureConfigurationsStage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

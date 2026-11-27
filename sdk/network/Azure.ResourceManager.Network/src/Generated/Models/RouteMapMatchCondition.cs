@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="RouteMapMatchCondition"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouteMapMatchCondition?(string value) => value == null ? null : new RouteMapMatchCondition(value);
+        public static implicit operator RouteMapMatchCondition?(string value) => value == null ? (RouteMapMatchCondition?)null : new RouteMapMatchCondition(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

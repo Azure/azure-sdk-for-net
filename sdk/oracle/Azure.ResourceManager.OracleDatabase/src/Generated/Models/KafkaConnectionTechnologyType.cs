@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="KafkaConnectionTechnologyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KafkaConnectionTechnologyType?(string value) => value == null ? null : new KafkaConnectionTechnologyType(value);
+        public static implicit operator KafkaConnectionTechnologyType?(string value) => value == null ? (KafkaConnectionTechnologyType?)null : new KafkaConnectionTechnologyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

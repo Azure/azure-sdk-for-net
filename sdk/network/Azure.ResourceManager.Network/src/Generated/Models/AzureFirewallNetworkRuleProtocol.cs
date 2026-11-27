@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="AzureFirewallNetworkRuleProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureFirewallNetworkRuleProtocol?(string value) => value == null ? null : new AzureFirewallNetworkRuleProtocol(value);
+        public static implicit operator AzureFirewallNetworkRuleProtocol?(string value) => value == null ? (AzureFirewallNetworkRuleProtocol?)null : new AzureFirewallNetworkRuleProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

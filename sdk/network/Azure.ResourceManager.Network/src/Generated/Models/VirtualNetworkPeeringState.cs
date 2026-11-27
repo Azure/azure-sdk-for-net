@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VirtualNetworkPeeringState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkPeeringState?(string value) => value == null ? null : new VirtualNetworkPeeringState(value);
+        public static implicit operator VirtualNetworkPeeringState?(string value) => value == null ? (VirtualNetworkPeeringState?)null : new VirtualNetworkPeeringState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkWatcherProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkWatcherProtocol?(string value) => value == null ? null : new NetworkWatcherProtocol(value);
+        public static implicit operator NetworkWatcherProtocol?(string value) => value == null ? (NetworkWatcherProtocol?)null : new NetworkWatcherProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

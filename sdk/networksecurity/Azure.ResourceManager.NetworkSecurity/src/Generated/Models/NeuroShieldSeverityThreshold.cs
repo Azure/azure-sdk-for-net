@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
 
         /// <summary> Converts a string to a <see cref="NeuroShieldSeverityThreshold"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NeuroShieldSeverityThreshold?(string value) => value == null ? null : new NeuroShieldSeverityThreshold(value);
+        public static implicit operator NeuroShieldSeverityThreshold?(string value) => value == null ? (NeuroShieldSeverityThreshold?)null : new NeuroShieldSeverityThreshold(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

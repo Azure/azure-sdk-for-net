@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="NetworkVirtualApplianceLoadDistribution"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkVirtualApplianceLoadDistribution?(string value) => value == null ? null : new NetworkVirtualApplianceLoadDistribution(value);
+        public static implicit operator NetworkVirtualApplianceLoadDistribution?(string value) => value == null ? (NetworkVirtualApplianceLoadDistribution?)null : new NetworkVirtualApplianceLoadDistribution(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

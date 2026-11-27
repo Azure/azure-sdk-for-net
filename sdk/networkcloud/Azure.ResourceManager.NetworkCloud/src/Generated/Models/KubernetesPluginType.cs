@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesPluginType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesPluginType?(string value) => value == null ? null : new KubernetesPluginType(value);
+        public static implicit operator KubernetesPluginType?(string value) => value == null ? (KubernetesPluginType?)null : new KubernetesPluginType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

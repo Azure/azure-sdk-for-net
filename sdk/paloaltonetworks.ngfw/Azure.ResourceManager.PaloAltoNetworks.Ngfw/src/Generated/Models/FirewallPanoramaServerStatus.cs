@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="FirewallPanoramaServerStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallPanoramaServerStatus?(string value) => value == null ? null : new FirewallPanoramaServerStatus(value);
+        public static implicit operator FirewallPanoramaServerStatus?(string value) => value == null ? (FirewallPanoramaServerStatus?)null : new FirewallPanoramaServerStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

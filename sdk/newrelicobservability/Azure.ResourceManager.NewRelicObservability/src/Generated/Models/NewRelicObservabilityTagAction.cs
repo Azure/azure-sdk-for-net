@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Converts a string to a <see cref="NewRelicObservabilityTagAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicObservabilityTagAction?(string value) => value == null ? null : new NewRelicObservabilityTagAction(value);
+        public static implicit operator NewRelicObservabilityTagAction?(string value) => value == null ? (NewRelicObservabilityTagAction?)null : new NewRelicObservabilityTagAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

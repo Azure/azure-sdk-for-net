@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="FailoverTestType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverTestType?(string value) => value == null ? null : new FailoverTestType(value);
+        public static implicit operator FailoverTestType?(string value) => value == null ? (FailoverTestType?)null : new FailoverTestType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

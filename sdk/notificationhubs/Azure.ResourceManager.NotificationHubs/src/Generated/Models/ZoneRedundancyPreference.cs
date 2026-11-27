@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         /// <summary> Converts a string to a <see cref="ZoneRedundancyPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ZoneRedundancyPreference?(string value) => value == null ? null : new ZoneRedundancyPreference(value);
+        public static implicit operator ZoneRedundancyPreference?(string value) => value == null ? (ZoneRedundancyPreference?)null : new ZoneRedundancyPreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="VpnAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VpnAuthenticationType?(string value) => value == null ? null : new VpnAuthenticationType(value);
+        public static implicit operator VpnAuthenticationType?(string value) => value == null ? (VpnAuthenticationType?)null : new VpnAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

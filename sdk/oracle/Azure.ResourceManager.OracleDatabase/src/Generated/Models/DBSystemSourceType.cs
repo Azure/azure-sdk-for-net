@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="DBSystemSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DBSystemSourceType?(string value) => value == null ? null : new DBSystemSourceType(value);
+        public static implicit operator DBSystemSourceType?(string value) => value == null ? (DBSystemSourceType?)null : new DBSystemSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

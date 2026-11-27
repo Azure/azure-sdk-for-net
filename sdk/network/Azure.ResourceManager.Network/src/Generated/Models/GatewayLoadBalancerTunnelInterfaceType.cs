@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="GatewayLoadBalancerTunnelInterfaceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GatewayLoadBalancerTunnelInterfaceType?(string value) => value == null ? null : new GatewayLoadBalancerTunnelInterfaceType(value);
+        public static implicit operator GatewayLoadBalancerTunnelInterfaceType?(string value) => value == null ? (GatewayLoadBalancerTunnelInterfaceType?)null : new GatewayLoadBalancerTunnelInterfaceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

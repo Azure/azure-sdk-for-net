@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="FirewallPolicyIdpsQuerySortOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallPolicyIdpsQuerySortOrder?(string value) => value == null ? null : new FirewallPolicyIdpsQuerySortOrder(value);
+        public static implicit operator FirewallPolicyIdpsQuerySortOrder?(string value) => value == null ? (FirewallPolicyIdpsQuerySortOrder?)null : new FirewallPolicyIdpsQuerySortOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

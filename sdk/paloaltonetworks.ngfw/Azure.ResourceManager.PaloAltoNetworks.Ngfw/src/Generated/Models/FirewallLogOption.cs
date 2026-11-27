@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Converts a string to a <see cref="FirewallLogOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FirewallLogOption?(string value) => value == null ? null : new FirewallLogOption(value);
+        public static implicit operator FirewallLogOption?(string value) => value == null ? (FirewallLogOption?)null : new FirewallLogOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

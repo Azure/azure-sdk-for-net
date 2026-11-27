@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="UnauthenticatedRequestAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UnauthenticatedRequestAction?(string value) => value == null ? null : new UnauthenticatedRequestAction(value);
+        public static implicit operator UnauthenticatedRequestAction?(string value) => value == null ? (UnauthenticatedRequestAction?)null : new UnauthenticatedRequestAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

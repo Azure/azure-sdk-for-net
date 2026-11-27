@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Converts a string to a <see cref="PeeringLearnedType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PeeringLearnedType?(string value) => value == null ? null : new PeeringLearnedType(value);
+        public static implicit operator PeeringLearnedType?(string value) => value == null ? (PeeringLearnedType?)null : new PeeringLearnedType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

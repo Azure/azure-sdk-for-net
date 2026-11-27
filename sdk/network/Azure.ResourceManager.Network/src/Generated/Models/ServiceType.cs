@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="ServiceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServiceType?(string value) => value == null ? null : new ServiceType(value);
+        public static implicit operator ServiceType?(string value) => value == null ? (ServiceType?)null : new ServiceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

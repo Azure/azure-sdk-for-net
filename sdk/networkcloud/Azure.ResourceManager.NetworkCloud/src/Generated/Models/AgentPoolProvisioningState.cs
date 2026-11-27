@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="AgentPoolProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolProvisioningState?(string value) => value == null ? null : new AgentPoolProvisioningState(value);
+        public static implicit operator AgentPoolProvisioningState?(string value) => value == null ? (AgentPoolProvisioningState?)null : new AgentPoolProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

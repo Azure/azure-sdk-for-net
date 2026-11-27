@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Converts a string to a <see cref="TrunkedNetworkProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrunkedNetworkProvisioningState?(string value) => value == null ? null : new TrunkedNetworkProvisioningState(value);
+        public static implicit operator TrunkedNetworkProvisioningState?(string value) => value == null ? (TrunkedNetworkProvisioningState?)null : new TrunkedNetworkProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

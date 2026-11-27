@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Converts a string to a <see cref="WebApplicationFirewallMatchVariable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebApplicationFirewallMatchVariable?(string value) => value == null ? null : new WebApplicationFirewallMatchVariable(value);
+        public static implicit operator WebApplicationFirewallMatchVariable?(string value) => value == null ? (WebApplicationFirewallMatchVariable?)null : new WebApplicationFirewallMatchVariable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

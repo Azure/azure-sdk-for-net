@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         /// <summary> Converts a string to a <see cref="NotificationHubPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NotificationHubPublicNetworkAccess?(string value) => value == null ? null : new NotificationHubPublicNetworkAccess(value);
+        public static implicit operator NotificationHubPublicNetworkAccess?(string value) => value == null ? (NotificationHubPublicNetworkAccess?)null : new NotificationHubPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

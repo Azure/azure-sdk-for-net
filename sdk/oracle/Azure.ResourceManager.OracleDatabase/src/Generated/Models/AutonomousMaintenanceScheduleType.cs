@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Converts a string to a <see cref="AutonomousMaintenanceScheduleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutonomousMaintenanceScheduleType?(string value) => value == null ? null : new AutonomousMaintenanceScheduleType(value);
+        public static implicit operator AutonomousMaintenanceScheduleType?(string value) => value == null ? (AutonomousMaintenanceScheduleType?)null : new AutonomousMaintenanceScheduleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

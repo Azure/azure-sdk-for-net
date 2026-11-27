@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
 
         /// <summary> Converts a string to a <see cref="OnlineExperimentationPrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnlineExperimentationPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new OnlineExperimentationPrivateEndpointServiceConnectionStatus(value);
+        public static implicit operator OnlineExperimentationPrivateEndpointServiceConnectionStatus?(string value) => value == null ? (OnlineExperimentationPrivateEndpointServiceConnectionStatus?)null : new OnlineExperimentationPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
