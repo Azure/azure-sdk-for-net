@@ -271,7 +271,7 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetMultivariateModels(int? skip, int? maxCount, RequestContext context)
         {
-            return new MultivariateDetectorGetMultivariateModelsCollectionResult(this, skip, maxCount, context, "MultivariateDetector.GetMultivariateModels");
+            return new GetMultivariateModelsCollectionResult(this, skip, maxCount, context, "MultivariateDetector.GetMultivariateModels");
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetMultivariateModelsAsync(int? skip, int? maxCount, RequestContext context)
         {
-            return new MultivariateDetectorGetMultivariateModelsAsyncCollectionResult(this, skip, maxCount, context, "MultivariateDetector.GetMultivariateModels");
+            return new GetMultivariateModelsAsyncCollectionResult(this, skip, maxCount, context, "MultivariateDetector.GetMultivariateModels");
         }
 
         /// <summary> List models of a resource. </summary>
@@ -299,7 +299,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<AnomalyDetectionModel> GetMultivariateModels(int? skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
-            return new MultivariateDetectorGetMultivariateModelsCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext(), "MultivariateDetector.GetMultivariateModels");
+            return new GetMultivariateModelsCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext(), "MultivariateDetector.GetMultivariateModels");
         }
 
         /// <summary> List models of a resource. </summary>
@@ -309,7 +309,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelsAsync(int? skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
-            return new MultivariateDetectorGetMultivariateModelsAsyncCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext(), "MultivariateDetector.GetMultivariateModels");
+            return new GetMultivariateModelsAsyncCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext(), "MultivariateDetector.GetMultivariateModels");
         }
 
         /// <summary>

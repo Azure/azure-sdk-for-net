@@ -697,7 +697,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return new LoadTestAdministrationClientGetTestFilesCollectionResult(this, testId, context, "LoadTestAdministrationClient.GetTestFiles");
+            return new GetTestFilesCollectionResult(this, testId, context, "LoadTestAdministrationClient.GetTestFiles");
         }
 
         /// <summary>
@@ -718,7 +718,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResult(this, testId, context, "LoadTestAdministrationClient.GetTestFiles");
+            return new GetTestFilesAsyncCollectionResult(this, testId, context, "LoadTestAdministrationClient.GetTestFiles");
         }
 
         /// <summary> Get all test files. </summary>
@@ -731,7 +731,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return new LoadTestAdministrationClientGetTestFilesCollectionResultOfT(this, testId, cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestFiles");
+            return new GetTestFilesCollectionResultOfT(this, testId, cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestFiles");
         }
 
         /// <summary> Get all test files. </summary>
@@ -744,7 +744,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResultOfT(this, testId, cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestFiles");
+            return new GetTestFilesAsyncCollectionResultOfT(this, testId, cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestFiles");
         }
 
         /// <summary>
@@ -1565,7 +1565,7 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTriggers(string testIds, string states, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, int? maxpagesize, RequestContext context)
         {
-            return new LoadTestAdministrationClientGetTriggersCollectionResult(
+            return new GetTriggersCollectionResult(
                 this,
                 testIds,
                 states,
@@ -1594,7 +1594,7 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTriggersAsync(string testIds, string states, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, int? maxpagesize, RequestContext context)
         {
-            return new LoadTestAdministrationClientGetTriggersAsyncCollectionResult(
+            return new GetTriggersAsyncCollectionResult(
                 this,
                 testIds,
                 states,
@@ -1615,7 +1615,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<LoadTestingTrigger> GetTriggers(string testIds = default, TriggerState? states = default, DateTimeOffset? lastModifiedStartsOn = default, DateTimeOffset? lastModifiedEndsOn = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new LoadTestAdministrationClientGetTriggersCollectionResultOfT(
+            return new GetTriggersCollectionResultOfT(
                 this,
                 testIds,
                 states?.ToString(),
@@ -1636,7 +1636,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<LoadTestingTrigger> GetTriggersAsync(string testIds = default, TriggerState? states = default, DateTimeOffset? lastModifiedStartsOn = default, DateTimeOffset? lastModifiedEndsOn = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new LoadTestAdministrationClientGetTriggersAsyncCollectionResultOfT(
+            return new GetTriggersAsyncCollectionResultOfT(
                 this,
                 testIds,
                 states?.ToString(),
@@ -1915,7 +1915,7 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetNotificationRules(string testIds, string scopes, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, int? maxpagesize, RequestContext context)
         {
-            return new LoadTestAdministrationClientGetNotificationRulesCollectionResult(
+            return new GetNotificationRulesCollectionResult(
                 this,
                 testIds,
                 scopes,
@@ -1944,7 +1944,7 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetNotificationRulesAsync(string testIds, string scopes, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, int? maxpagesize, RequestContext context)
         {
-            return new LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResult(
+            return new GetNotificationRulesAsyncCollectionResult(
                 this,
                 testIds,
                 scopes,
@@ -1965,7 +1965,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<NotificationRule> GetNotificationRules(string testIds = default, string scopes = default, DateTimeOffset? lastModifiedStartsOn = default, DateTimeOffset? lastModifiedEndsOn = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new LoadTestAdministrationClientGetNotificationRulesCollectionResultOfT(
+            return new GetNotificationRulesCollectionResultOfT(
                 this,
                 testIds,
                 scopes,
@@ -1986,7 +1986,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<NotificationRule> GetNotificationRulesAsync(string testIds = default, string scopes = default, DateTimeOffset? lastModifiedStartsOn = default, DateTimeOffset? lastModifiedEndsOn = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResultOfT(
+            return new GetNotificationRulesAsyncCollectionResultOfT(
                 this,
                 testIds,
                 scopes,

@@ -569,7 +569,7 @@ namespace Azure.AI.ContentSafety
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new BlocklistClientGetTextBlocklistItemsCollectionResult(
+            return new GetTextBlocklistItemsCollectionResult(
                 this,
                 name,
                 maxCount,
@@ -600,7 +600,7 @@ namespace Azure.AI.ContentSafety
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new BlocklistClientGetTextBlocklistItemsAsyncCollectionResult(
+            return new GetTextBlocklistItemsAsyncCollectionResult(
                 this,
                 name,
                 maxCount,
@@ -623,7 +623,7 @@ namespace Azure.AI.ContentSafety
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new BlocklistClientGetTextBlocklistItemsCollectionResultOfT(
+            return new GetTextBlocklistItemsCollectionResultOfT(
                 this,
                 name,
                 maxCount,
@@ -646,7 +646,7 @@ namespace Azure.AI.ContentSafety
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new BlocklistClientGetTextBlocklistItemsAsyncCollectionResultOfT(
+            return new GetTextBlocklistItemsAsyncCollectionResultOfT(
                 this,
                 name,
                 maxCount,
@@ -669,7 +669,7 @@ namespace Azure.AI.ContentSafety
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTextBlocklists(RequestContext context)
         {
-            return new BlocklistClientGetTextBlocklistsCollectionResult(this, context, "BlocklistClient.GetTextBlocklists");
+            return new GetTextBlocklistsCollectionResult(this, context, "BlocklistClient.GetTextBlocklists");
         }
 
         /// <summary>
@@ -685,7 +685,7 @@ namespace Azure.AI.ContentSafety
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTextBlocklistsAsync(RequestContext context)
         {
-            return new BlocklistClientGetTextBlocklistsAsyncCollectionResult(this, context, "BlocklistClient.GetTextBlocklists");
+            return new GetTextBlocklistsAsyncCollectionResult(this, context, "BlocklistClient.GetTextBlocklists");
         }
 
         /// <summary> Get all text blocklists details. </summary>
@@ -693,7 +693,7 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TextBlocklist> GetTextBlocklists(CancellationToken cancellationToken = default)
         {
-            return new BlocklistClientGetTextBlocklistsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BlocklistClient.GetTextBlocklists");
+            return new GetTextBlocklistsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BlocklistClient.GetTextBlocklists");
         }
 
         /// <summary> Get all text blocklists details. </summary>
@@ -701,7 +701,7 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TextBlocklist> GetTextBlocklistsAsync(CancellationToken cancellationToken = default)
         {
-            return new BlocklistClientGetTextBlocklistsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BlocklistClient.GetTextBlocklists");
+            return new GetTextBlocklistsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BlocklistClient.GetTextBlocklists");
         }
 
         /// <summary>

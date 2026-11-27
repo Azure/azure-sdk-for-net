@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetCertificates(int? maxresults, bool? includePending, RequestContext context)
         {
-            return new KeyVaultCertificatesClientGetCertificatesCollectionResult(this, maxresults, includePending, context, "KeyVaultCertificatesClient.GetCertificates");
+            return new GetCertificatesCollectionResult(this, maxresults, includePending, context, "KeyVaultCertificatesClient.GetCertificates");
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetCertificatesAsync(int? maxresults, bool? includePending, RequestContext context)
         {
-            return new KeyVaultCertificatesClientGetCertificatesAsyncCollectionResult(this, maxresults, includePending, context, "KeyVaultCertificatesClient.GetCertificates");
+            return new GetCertificatesAsyncCollectionResult(this, maxresults, includePending, context, "KeyVaultCertificatesClient.GetCertificates");
         }
 
         /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
@@ -113,7 +113,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<CertificateItem> GetCertificates(int? maxresults = default, bool? includePending = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultCertificatesClientGetCertificatesCollectionResultOfT(this, maxresults, includePending, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificates");
+            return new GetCertificatesCollectionResultOfT(this, maxresults, includePending, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificates");
         }
 
         /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
@@ -123,7 +123,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<CertificateItem> GetCertificatesAsync(int? maxresults = default, bool? includePending = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultCertificatesClientGetCertificatesAsyncCollectionResultOfT(this, maxresults, includePending, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificates");
+            return new GetCertificatesAsyncCollectionResultOfT(this, maxresults, includePending, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificates");
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetCertificateIssuers(int? maxresults, RequestContext context)
         {
-            return new KeyVaultCertificatesClientGetCertificateIssuersCollectionResult(this, maxresults, context, "KeyVaultCertificatesClient.GetCertificateIssuers");
+            return new GetCertificateIssuersCollectionResult(this, maxresults, context, "KeyVaultCertificatesClient.GetCertificateIssuers");
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetCertificateIssuersAsync(int? maxresults, RequestContext context)
         {
-            return new KeyVaultCertificatesClientGetCertificateIssuersAsyncCollectionResult(this, maxresults, context, "KeyVaultCertificatesClient.GetCertificateIssuers");
+            return new GetCertificateIssuersAsyncCollectionResult(this, maxresults, context, "KeyVaultCertificatesClient.GetCertificateIssuers");
         }
 
         /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
@@ -462,7 +462,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<CertificateIssuerItem> GetCertificateIssuers(int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultCertificatesClientGetCertificateIssuersCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificateIssuers");
+            return new GetCertificateIssuersCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificateIssuers");
         }
 
         /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
@@ -471,7 +471,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<CertificateIssuerItem> GetCertificateIssuersAsync(int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultCertificatesClientGetCertificateIssuersAsyncCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificateIssuers");
+            return new GetCertificateIssuersAsyncCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificateIssuers");
         }
 
         /// <summary>
@@ -939,7 +939,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetCertificateVersions(string certificateName, int? maxresults, RequestContext context)
         {
-            return new KeyVaultCertificatesClientGetCertificateVersionsCollectionResult(this, certificateName, maxresults, context, "KeyVaultCertificatesClient.GetCertificateVersions");
+            return new GetCertificateVersionsCollectionResult(this, certificateName, maxresults, context, "KeyVaultCertificatesClient.GetCertificateVersions");
         }
 
         /// <summary>
@@ -957,7 +957,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetCertificateVersionsAsync(string certificateName, int? maxresults, RequestContext context)
         {
-            return new KeyVaultCertificatesClientGetCertificateVersionsAsyncCollectionResult(this, certificateName, maxresults, context, "KeyVaultCertificatesClient.GetCertificateVersions");
+            return new GetCertificateVersionsAsyncCollectionResult(this, certificateName, maxresults, context, "KeyVaultCertificatesClient.GetCertificateVersions");
         }
 
         /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
@@ -967,7 +967,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<CertificateItem> GetCertificateVersions(string certificateName, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultCertificatesClientGetCertificateVersionsCollectionResultOfT(this, certificateName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificateVersions");
+            return new GetCertificateVersionsCollectionResultOfT(this, certificateName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificateVersions");
         }
 
         /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
@@ -977,7 +977,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<CertificateItem> GetCertificateVersionsAsync(string certificateName, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultCertificatesClientGetCertificateVersionsAsyncCollectionResultOfT(this, certificateName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificateVersions");
+            return new GetCertificateVersionsAsyncCollectionResultOfT(this, certificateName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetCertificateVersions");
         }
 
         /// <summary>
@@ -1711,7 +1711,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetDeletedCertificates(int? maxresults, bool? includePending, RequestContext context)
         {
-            return new KeyVaultCertificatesClientGetDeletedCertificatesCollectionResult(this, maxresults, includePending, context, "KeyVaultCertificatesClient.GetDeletedCertificates");
+            return new GetDeletedCertificatesCollectionResult(this, maxresults, includePending, context, "KeyVaultCertificatesClient.GetDeletedCertificates");
         }
 
         /// <summary>
@@ -1729,7 +1729,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetDeletedCertificatesAsync(int? maxresults, bool? includePending, RequestContext context)
         {
-            return new KeyVaultCertificatesClientGetDeletedCertificatesAsyncCollectionResult(this, maxresults, includePending, context, "KeyVaultCertificatesClient.GetDeletedCertificates");
+            return new GetDeletedCertificatesAsyncCollectionResult(this, maxresults, includePending, context, "KeyVaultCertificatesClient.GetDeletedCertificates");
         }
 
         /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
@@ -1739,7 +1739,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeletedCertificateItem> GetDeletedCertificates(int? maxresults = default, bool? includePending = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultCertificatesClientGetDeletedCertificatesCollectionResultOfT(this, maxresults, includePending, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetDeletedCertificates");
+            return new GetDeletedCertificatesCollectionResultOfT(this, maxresults, includePending, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetDeletedCertificates");
         }
 
         /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
@@ -1749,7 +1749,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeletedCertificateItem> GetDeletedCertificatesAsync(int? maxresults = default, bool? includePending = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultCertificatesClientGetDeletedCertificatesAsyncCollectionResultOfT(this, maxresults, includePending, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetDeletedCertificates");
+            return new GetDeletedCertificatesAsyncCollectionResultOfT(this, maxresults, includePending, cancellationToken.ToRequestContext(), "KeyVaultCertificatesClient.GetDeletedCertificates");
         }
 
         /// <summary>

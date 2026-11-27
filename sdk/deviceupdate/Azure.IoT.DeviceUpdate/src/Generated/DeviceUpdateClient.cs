@@ -102,7 +102,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetUpdates(string search = default, string filter = default, RequestContext context = null)
         {
-            return new DeviceUpdateClientGetUpdatesCollectionResult(this, search, filter, context, "DeviceUpdateClient.GetUpdates");
+            return new GetUpdatesCollectionResult(this, search, filter, context, "DeviceUpdateClient.GetUpdates");
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search = default, string filter = default, RequestContext context = null)
         {
-            return new DeviceUpdateClientGetUpdatesAsyncCollectionResult(this, search, filter, context, "DeviceUpdateClient.GetUpdates");
+            return new GetUpdatesAsyncCollectionResult(this, search, filter, context, "DeviceUpdateClient.GetUpdates");
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
         {
-            return new DeviceUpdateClientGetProvidersCollectionResult(this, context, "DeviceUpdateClient.GetProviders");
+            return new GetProvidersCollectionResult(this, context, "DeviceUpdateClient.GetProviders");
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
         {
-            return new DeviceUpdateClientGetProvidersAsyncCollectionResult(this, context, "DeviceUpdateClient.GetProviders");
+            return new GetProvidersAsyncCollectionResult(this, context, "DeviceUpdateClient.GetProviders");
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new DeviceUpdateClientGetNamesCollectionResult(this, provider, context, "DeviceUpdateClient.GetNames");
+            return new GetNamesCollectionResult(this, provider, context, "DeviceUpdateClient.GetNames");
         }
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new DeviceUpdateClientGetNamesAsyncCollectionResult(this, provider, context, "DeviceUpdateClient.GetNames");
+            return new GetNamesAsyncCollectionResult(this, provider, context, "DeviceUpdateClient.GetNames");
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DeviceUpdateClientGetVersionsCollectionResult(
+            return new GetVersionsCollectionResult(
                 this,
                 provider,
                 name,
@@ -448,7 +448,7 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DeviceUpdateClientGetVersionsAsyncCollectionResult(
+            return new GetVersionsAsyncCollectionResult(
                 this,
                 provider,
                 name,
@@ -479,7 +479,7 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new DeviceUpdateClientGetFilesCollectionResult(
+            return new GetFilesCollectionResult(
                 this,
                 provider,
                 name,
@@ -510,7 +510,7 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new DeviceUpdateClientGetFilesAsyncCollectionResult(
+            return new GetFilesAsyncCollectionResult(
                 this,
                 provider,
                 name,
@@ -627,7 +627,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetOperationStatuses(string filter = default, int? top = default, RequestContext context = null)
         {
-            return new DeviceUpdateClientGetOperationStatusesCollectionResult(this, filter, top, context, "DeviceUpdateClient.GetOperationStatuses");
+            return new GetOperationStatusesCollectionResult(this, filter, top, context, "DeviceUpdateClient.GetOperationStatuses");
         }
 
         /// <summary>
@@ -654,7 +654,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = default, int? top = default, RequestContext context = null)
         {
-            return new DeviceUpdateClientGetOperationStatusesAsyncCollectionResult(this, filter, top, context, "DeviceUpdateClient.GetOperationStatuses");
+            return new GetOperationStatusesAsyncCollectionResult(this, filter, top, context, "DeviceUpdateClient.GetOperationStatuses");
         }
 
         /// <summary>

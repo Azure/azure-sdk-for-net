@@ -156,7 +156,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetConsortiumMembers(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetConsortiumMembersCollectionResult(this, context, "ConfidentialLedgerClient.GetConsortiumMembers");
+            return new GetConsortiumMembersCollectionResult(this, context, "ConfidentialLedgerClient.GetConsortiumMembers");
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetConsortiumMembersAsync(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetConsortiumMembersAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetConsortiumMembers");
+            return new GetConsortiumMembersAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetConsortiumMembers");
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
@@ -180,7 +180,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ConsortiumMember> GetConsortiumMembers(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetConsortiumMembersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetConsortiumMembers");
+            return new GetConsortiumMembersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetConsortiumMembers");
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
@@ -188,7 +188,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ConsortiumMember> GetConsortiumMembersAsync(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetConsortiumMembersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetConsortiumMembers");
+            return new GetConsortiumMembersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetConsortiumMembers");
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetCollections(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetCollectionsCollectionResult(this, context, "ConfidentialLedgerClient.GetCollections");
+            return new GetCollectionsCollectionResult(this, context, "ConfidentialLedgerClient.GetCollections");
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetCollectionsAsync(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetCollectionsAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetCollections");
+            return new GetCollectionsAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetCollections");
         }
 
         /// <summary> Collection ids are user-created collections of ledger entries. </summary>
@@ -308,7 +308,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<LedgerCollectionInfo> GetCollections(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetCollectionsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetCollections");
+            return new GetCollectionsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetCollections");
         }
 
         /// <summary> Collection ids are user-created collections of ledger entries. </summary>
@@ -316,7 +316,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<LedgerCollectionInfo> GetCollectionsAsync(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetCollectionsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetCollections");
+            return new GetCollectionsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetCollections");
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTags(string collectionId, RequestContext context)
         {
-            return new ConfidentialLedgerClientGetTagsCollectionResult(this, collectionId, context, "ConfidentialLedgerClient.GetTags");
+            return new GetTagsCollectionResult(this, collectionId, context, "ConfidentialLedgerClient.GetTags");
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTagsAsync(string collectionId, RequestContext context)
         {
-            return new ConfidentialLedgerClientGetTagsAsyncCollectionResult(this, collectionId, context, "ConfidentialLedgerClient.GetTags");
+            return new GetTagsAsyncCollectionResult(this, collectionId, context, "ConfidentialLedgerClient.GetTags");
         }
 
         /// <summary> Retrieves the tags associated with a collection. </summary>
@@ -359,7 +359,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<string> GetTags(string collectionId = default, CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetTagsCollectionResultOfT(this, collectionId, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetTags");
+            return new GetTagsCollectionResultOfT(this, collectionId, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetTags");
         }
 
         /// <summary> Retrieves the tags associated with a collection. </summary>
@@ -368,7 +368,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<string> GetTagsAsync(string collectionId = default, CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetTagsAsyncCollectionResultOfT(this, collectionId, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetTags");
+            return new GetTagsAsyncCollectionResultOfT(this, collectionId, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetTags");
         }
 
         /// <summary>
@@ -389,7 +389,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetLedgerEntries(string collectionId, string fromTransactionId, string toTransactionId, string tag, RequestContext context)
         {
-            return new ConfidentialLedgerClientGetLedgerEntriesCollectionResult(
+            return new GetLedgerEntriesCollectionResult(
                 this,
                 collectionId,
                 fromTransactionId,
@@ -417,7 +417,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string collectionId, string fromTransactionId, string toTransactionId, string tag, RequestContext context)
         {
-            return new ConfidentialLedgerClientGetLedgerEntriesAsyncCollectionResult(
+            return new GetLedgerEntriesAsyncCollectionResult(
                 this,
                 collectionId,
                 fromTransactionId,
@@ -439,7 +439,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<LedgerEntry> GetLedgerEntries(string collectionId = default, string fromTransactionId = default, string toTransactionId = default, string tag = default, CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetLedgerEntriesCollectionResultOfT(
+            return new GetLedgerEntriesCollectionResultOfT(
                 this,
                 collectionId,
                 fromTransactionId,
@@ -461,7 +461,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<LedgerEntry> GetLedgerEntriesAsync(string collectionId = default, string fromTransactionId = default, string toTransactionId = default, string tag = default, CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetLedgerEntriesAsyncCollectionResultOfT(
+            return new GetLedgerEntriesAsyncCollectionResultOfT(
                 this,
                 collectionId,
                 fromTransactionId,
@@ -904,7 +904,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetUsers(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetUsersCollectionResult(this, context, "ConfidentialLedgerClient.GetUsers");
+            return new GetUsersCollectionResult(this, context, "ConfidentialLedgerClient.GetUsers");
         }
 
         /// <summary>
@@ -920,7 +920,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetUsersAsync(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetUsersAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetUsers");
+            return new GetUsersAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetUsers");
         }
 
         /// <summary> All users' object IDs and single role per user will be returned. </summary>
@@ -928,7 +928,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<LedgerUser> GetUsers(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetUsersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetUsers");
+            return new GetUsersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetUsers");
         }
 
         /// <summary> All users' object IDs and single role per user will be returned. </summary>
@@ -936,7 +936,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<LedgerUser> GetUsersAsync(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetUsersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetUsers");
+            return new GetUsersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetUsers");
         }
 
         /// <summary>
@@ -952,7 +952,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetLedgerUsers(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetLedgerUsersCollectionResult(this, context, "ConfidentialLedgerClient.GetLedgerUsers");
+            return new GetLedgerUsersCollectionResult(this, context, "ConfidentialLedgerClient.GetLedgerUsers");
         }
 
         /// <summary>
@@ -968,7 +968,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetLedgerUsersAsync(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetLedgerUsersAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetLedgerUsers");
+            return new GetLedgerUsersAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetLedgerUsers");
         }
 
         /// <summary> All users' object IDs and multiple roles will be returned. </summary>
@@ -976,7 +976,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<LedgerUserMultipleRoles> GetLedgerUsers(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetLedgerUsersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetLedgerUsers");
+            return new GetLedgerUsersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetLedgerUsers");
         }
 
         /// <summary> All users' object IDs and multiple roles will be returned. </summary>
@@ -984,7 +984,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<LedgerUserMultipleRoles> GetLedgerUsersAsync(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetLedgerUsersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetLedgerUsers");
+            return new GetLedgerUsersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetLedgerUsers");
         }
 
         /// <summary>
@@ -1884,7 +1884,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetUserDefinedFunctions(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetUserDefinedFunctionsCollectionResult(this, context, "ConfidentialLedgerClient.GetUserDefinedFunctions");
+            return new GetUserDefinedFunctionsCollectionResult(this, context, "ConfidentialLedgerClient.GetUserDefinedFunctions");
         }
 
         /// <summary>
@@ -1900,7 +1900,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetUserDefinedFunctionsAsync(RequestContext context)
         {
-            return new ConfidentialLedgerClientGetUserDefinedFunctionsAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetUserDefinedFunctions");
+            return new GetUserDefinedFunctionsAsyncCollectionResult(this, context, "ConfidentialLedgerClient.GetUserDefinedFunctions");
         }
 
         /// <summary> User defined functions stored in the Confidential Ledger. </summary>
@@ -1908,7 +1908,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<UserDefinedFunction> GetUserDefinedFunctions(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetUserDefinedFunctionsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetUserDefinedFunctions");
+            return new GetUserDefinedFunctionsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetUserDefinedFunctions");
         }
 
         /// <summary> User defined functions stored in the Confidential Ledger. </summary>
@@ -1916,7 +1916,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<UserDefinedFunction> GetUserDefinedFunctionsAsync(CancellationToken cancellationToken = default)
         {
-            return new ConfidentialLedgerClientGetUserDefinedFunctionsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetUserDefinedFunctions");
+            return new GetUserDefinedFunctionsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ConfidentialLedgerClient.GetUserDefinedFunctions");
         }
 
         /// <summary>

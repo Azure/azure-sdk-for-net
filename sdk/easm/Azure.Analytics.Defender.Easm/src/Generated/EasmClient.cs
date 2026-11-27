@@ -102,7 +102,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAssetResources(string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
-            return new EasmClientGetAssetResourcesCollectionResult(
+            return new GetAssetResourcesCollectionResult(
                 this,
                 filter,
                 @orderby,
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAssetResourcesAsync(string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
-            return new EasmClientGetAssetResourcesAsyncCollectionResult(
+            return new GetAssetResourcesAsyncCollectionResult(
                 this,
                 filter,
                 @orderby,
@@ -164,7 +164,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<AssetResource> GetAssetResources(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetAssetResourcesCollectionResultOfT(
+            return new GetAssetResourcesCollectionResultOfT(
                 this,
                 filter,
                 @orderby,
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<AssetResource> GetAssetResourcesAsync(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetAssetResourcesAsyncCollectionResultOfT(
+            return new GetAssetResourcesAsyncCollectionResultOfT(
                 this,
                 filter,
                 @orderby,
@@ -620,7 +620,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return new EasmClientGetDeltaDetailsCollectionResult(
+            return new GetDeltaDetailsCollectionResult(
                 this,
                 content,
                 skip,
@@ -648,7 +648,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return new EasmClientGetDeltaDetailsAsyncCollectionResult(
+            return new GetDeltaDetailsAsyncCollectionResult(
                 this,
                 content,
                 skip,
@@ -668,7 +668,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return new EasmClientGetDeltaDetailsCollectionResultOfT(
+            return new GetDeltaDetailsCollectionResultOfT(
                 this,
                 body,
                 skip,
@@ -688,7 +688,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return new EasmClientGetDeltaDetailsAsyncCollectionResultOfT(
+            return new GetDeltaDetailsAsyncCollectionResultOfT(
                 this,
                 body,
                 skip,
@@ -800,7 +800,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDataConnections(int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetDataConnectionsCollectionResult(this, skip, maxPageSize, context, "EasmClient.GetDataConnections");
+            return new GetDataConnectionsCollectionResult(this, skip, maxPageSize, context, "EasmClient.GetDataConnections");
         }
 
         /// <summary>
@@ -818,7 +818,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDataConnectionsAsync(int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetDataConnectionsAsyncCollectionResult(this, skip, maxPageSize, context, "EasmClient.GetDataConnections");
+            return new GetDataConnectionsAsyncCollectionResult(this, skip, maxPageSize, context, "EasmClient.GetDataConnections");
         }
 
         /// <summary> Retrieve a list of data connections. </summary>
@@ -828,7 +828,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DataConnection> GetDataConnections(int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetDataConnectionsCollectionResultOfT(this, skip, maxPageSize, cancellationToken.ToRequestContext(), "EasmClient.GetDataConnections");
+            return new GetDataConnectionsCollectionResultOfT(this, skip, maxPageSize, cancellationToken.ToRequestContext(), "EasmClient.GetDataConnections");
         }
 
         /// <summary> Retrieve a list of data connections. </summary>
@@ -838,7 +838,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DataConnection> GetDataConnectionsAsync(int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetDataConnectionsAsyncCollectionResultOfT(this, skip, maxPageSize, cancellationToken.ToRequestContext(), "EasmClient.GetDataConnections");
+            return new GetDataConnectionsAsyncCollectionResultOfT(this, skip, maxPageSize, cancellationToken.ToRequestContext(), "EasmClient.GetDataConnections");
         }
 
         /// <summary>
@@ -1227,7 +1227,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDiscoveryGroups(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetDiscoveryGroupsCollectionResult(
+            return new GetDiscoveryGroupsCollectionResult(
                 this,
                 filter,
                 skip,
@@ -1252,7 +1252,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDiscoveryGroupsAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetDiscoveryGroupsAsyncCollectionResult(
+            return new GetDiscoveryGroupsAsyncCollectionResult(
                 this,
                 filter,
                 skip,
@@ -1269,7 +1269,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DiscoveryGroup> GetDiscoveryGroups(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetDiscoveryGroupsCollectionResultOfT(
+            return new GetDiscoveryGroupsCollectionResultOfT(
                 this,
                 filter,
                 skip,
@@ -1286,7 +1286,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DiscoveryGroup> GetDiscoveryGroupsAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetDiscoveryGroupsAsyncCollectionResultOfT(
+            return new GetDiscoveryGroupsAsyncCollectionResultOfT(
                 this,
                 filter,
                 skip,
@@ -1776,7 +1776,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return new EasmClientGetDiscoveryGroupRunsCollectionResult(
+            return new GetDiscoveryGroupRunsCollectionResult(
                 this,
                 groupName,
                 filter,
@@ -1807,7 +1807,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return new EasmClientGetDiscoveryGroupRunsAsyncCollectionResult(
+            return new GetDiscoveryGroupRunsAsyncCollectionResult(
                 this,
                 groupName,
                 filter,
@@ -1830,7 +1830,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return new EasmClientGetDiscoveryGroupRunsCollectionResultOfT(
+            return new GetDiscoveryGroupRunsCollectionResultOfT(
                 this,
                 groupName,
                 filter,
@@ -1853,7 +1853,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return new EasmClientGetDiscoveryGroupRunsAsyncCollectionResultOfT(
+            return new GetDiscoveryGroupRunsAsyncCollectionResultOfT(
                 this,
                 groupName,
                 filter,
@@ -2055,7 +2055,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDiscoveryTemplates(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetDiscoveryTemplatesCollectionResult(
+            return new GetDiscoveryTemplatesCollectionResult(
                 this,
                 filter,
                 skip,
@@ -2080,7 +2080,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDiscoveryTemplatesAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetDiscoveryTemplatesAsyncCollectionResult(
+            return new GetDiscoveryTemplatesAsyncCollectionResult(
                 this,
                 filter,
                 skip,
@@ -2097,7 +2097,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DiscoveryTemplate> GetDiscoveryTemplates(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetDiscoveryTemplatesCollectionResultOfT(
+            return new GetDiscoveryTemplatesCollectionResultOfT(
                 this,
                 filter,
                 skip,
@@ -2114,7 +2114,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DiscoveryTemplate> GetDiscoveryTemplatesAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetDiscoveryTemplatesAsyncCollectionResultOfT(
+            return new GetDiscoveryTemplatesAsyncCollectionResultOfT(
                 this,
                 filter,
                 skip,
@@ -2567,7 +2567,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSavedFilters(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetSavedFiltersCollectionResult(
+            return new GetSavedFiltersCollectionResult(
                 this,
                 filter,
                 skip,
@@ -2592,7 +2592,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetSavedFiltersAsyncCollectionResult(
+            return new GetSavedFiltersAsyncCollectionResult(
                 this,
                 filter,
                 skip,
@@ -2609,7 +2609,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<SavedFilter> GetSavedFilters(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetSavedFiltersCollectionResultOfT(
+            return new GetSavedFiltersCollectionResultOfT(
                 this,
                 filter,
                 skip,
@@ -2626,7 +2626,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<SavedFilter> GetSavedFiltersAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetSavedFiltersAsyncCollectionResultOfT(
+            return new GetSavedFiltersAsyncCollectionResultOfT(
                 this,
                 filter,
                 skip,
@@ -2934,7 +2934,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTasks(string filter, string @orderby, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetTasksCollectionResult(
+            return new GetTasksCollectionResult(
                 this,
                 filter,
                 @orderby,
@@ -2961,7 +2961,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTasksAsync(string filter, string @orderby, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetTasksAsyncCollectionResult(
+            return new GetTasksAsyncCollectionResult(
                 this,
                 filter,
                 @orderby,
@@ -2980,7 +2980,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TaskResource> GetTasks(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetTasksCollectionResultOfT(
+            return new GetTasksCollectionResultOfT(
                 this,
                 filter,
                 @orderby,
@@ -2999,7 +2999,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TaskResource> GetTasksAsync(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetTasksAsyncCollectionResultOfT(
+            return new GetTasksAsyncCollectionResultOfT(
                 this,
                 filter,
                 @orderby,
@@ -3390,7 +3390,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetCisaCves(RequestContext context)
         {
-            return new EasmClientGetCisaCvesCollectionResult(this, context, "EasmClient.GetCisaCves");
+            return new GetCisaCvesCollectionResult(this, context, "EasmClient.GetCisaCves");
         }
 
         /// <summary>
@@ -3406,7 +3406,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetCisaCvesAsync(RequestContext context)
         {
-            return new EasmClientGetCisaCvesAsyncCollectionResult(this, context, "EasmClient.GetCisaCves");
+            return new GetCisaCvesAsyncCollectionResult(this, context, "EasmClient.GetCisaCves");
         }
 
         /// <summary> Retrieve a list of CisaCves for the provided search parameters. </summary>
@@ -3414,7 +3414,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<CisaCveResult> GetCisaCves(CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetCisaCvesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "EasmClient.GetCisaCves");
+            return new GetCisaCvesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "EasmClient.GetCisaCves");
         }
 
         /// <summary> Retrieve a list of CisaCves for the provided search parameters. </summary>
@@ -3422,7 +3422,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<CisaCveResult> GetCisaCvesAsync(CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetCisaCvesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "EasmClient.GetCisaCves");
+            return new GetCisaCvesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "EasmClient.GetCisaCves");
         }
 
         /// <summary>
@@ -3533,7 +3533,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetPolicies(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetPoliciesCollectionResult(
+            return new GetPoliciesCollectionResult(
                 this,
                 filter,
                 skip,
@@ -3558,7 +3558,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetPoliciesAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new EasmClientGetPoliciesAsyncCollectionResult(
+            return new GetPoliciesAsyncCollectionResult(
                 this,
                 filter,
                 skip,
@@ -3575,7 +3575,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<EasmPolicy> GetPolicies(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetPoliciesCollectionResultOfT(
+            return new GetPoliciesCollectionResultOfT(
                 this,
                 filter,
                 skip,
@@ -3592,7 +3592,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<EasmPolicy> GetPoliciesAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetPoliciesAsyncCollectionResultOfT(
+            return new GetPoliciesAsyncCollectionResultOfT(
                 this,
                 filter,
                 skip,

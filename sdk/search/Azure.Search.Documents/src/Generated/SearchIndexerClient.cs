@@ -326,7 +326,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAllDataSourceConnections(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetAllDataSourceConnectionsCollectionResult(
+            return new GetAllDataSourceConnectionsCollectionResult(
                 this,
                 @select,
                 search,
@@ -353,7 +353,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAllDataSourceConnectionsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetAllDataSourceConnectionsAsyncCollectionResult(
+            return new GetAllDataSourceConnectionsAsyncCollectionResult(
                 this,
                 @select,
                 search,
@@ -372,7 +372,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<SearchIndexerDataSourceConnection> GetAllDataSourceConnections(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetAllDataSourceConnectionsCollectionResultOfT(
+            return new GetAllDataSourceConnectionsCollectionResultOfT(
                 this,
                 @select,
                 search,
@@ -391,7 +391,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<SearchIndexerDataSourceConnection> GetAllDataSourceConnectionsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetAllDataSourceConnectionsAsyncCollectionResultOfT(
+            return new GetAllDataSourceConnectionsAsyncCollectionResultOfT(
                 this,
                 @select,
                 search,
@@ -1054,7 +1054,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAllIndexers(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetAllIndexersCollectionResult(
+            return new GetAllIndexersCollectionResult(
                 this,
                 @select,
                 search,
@@ -1081,7 +1081,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAllIndexersAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetAllIndexersAsyncCollectionResult(
+            return new GetAllIndexersAsyncCollectionResult(
                 this,
                 @select,
                 search,
@@ -1100,7 +1100,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<SearchIndexer> GetAllIndexers(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetAllIndexersCollectionResultOfT(
+            return new GetAllIndexersCollectionResultOfT(
                 this,
                 @select,
                 search,
@@ -1119,7 +1119,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<SearchIndexer> GetAllIndexersAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetAllIndexersAsyncCollectionResultOfT(
+            return new GetAllIndexersAsyncCollectionResultOfT(
                 this,
                 @select,
                 search,
@@ -1596,7 +1596,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAllSkillsets(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetAllSkillsetsCollectionResult(
+            return new GetAllSkillsetsCollectionResult(
                 this,
                 @select,
                 search,
@@ -1623,7 +1623,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAllSkillsetsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetAllSkillsetsAsyncCollectionResult(
+            return new GetAllSkillsetsAsyncCollectionResult(
                 this,
                 @select,
                 search,
@@ -1642,7 +1642,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<SearchIndexerSkillset> GetAllSkillsets(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetAllSkillsetsCollectionResultOfT(
+            return new GetAllSkillsetsCollectionResultOfT(
                 this,
                 @select,
                 search,
@@ -1661,7 +1661,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<SearchIndexerSkillset> GetAllSkillsetsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetAllSkillsetsAsyncCollectionResultOfT(
+            return new GetAllSkillsetsAsyncCollectionResultOfT(
                 this,
                 @select,
                 search,

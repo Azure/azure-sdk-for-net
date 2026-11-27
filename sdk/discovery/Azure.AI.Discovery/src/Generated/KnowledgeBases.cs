@@ -149,7 +149,7 @@ namespace Azure.AI.Discovery
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAll(RequestContext context)
         {
-            return new KnowledgeBasesGetAllCollectionResult(this, context, "KnowledgeBases.GetAll");
+            return new GetAllCollectionResult(this, context, "KnowledgeBases.GetAll");
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.AI.Discovery
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAllAsync(RequestContext context)
         {
-            return new KnowledgeBasesGetAllAsyncCollectionResult(this, context, "KnowledgeBases.GetAll");
+            return new GetAllAsyncCollectionResult(this, context, "KnowledgeBases.GetAll");
         }
 
         /// <summary> List KnowledgeBase resources. </summary>
@@ -173,7 +173,7 @@ namespace Azure.AI.Discovery
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<KnowledgeBase> GetAll(CancellationToken cancellationToken = default)
         {
-            return new KnowledgeBasesGetAllCollectionResultOfT(this, cancellationToken.ToRequestContext(), "KnowledgeBases.GetAll");
+            return new GetAllCollectionResultOfT(this, cancellationToken.ToRequestContext(), "KnowledgeBases.GetAll");
         }
 
         /// <summary> List KnowledgeBase resources. </summary>
@@ -181,7 +181,7 @@ namespace Azure.AI.Discovery
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<KnowledgeBase> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return new KnowledgeBasesGetAllAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "KnowledgeBases.GetAll");
+            return new GetAllAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "KnowledgeBases.GetAll");
         }
 
         /// <summary>

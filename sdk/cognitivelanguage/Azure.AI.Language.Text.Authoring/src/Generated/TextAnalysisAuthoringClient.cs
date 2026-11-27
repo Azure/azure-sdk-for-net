@@ -102,7 +102,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetProjectsCollectionResult(
+            return new GetProjectsCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -127,7 +127,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetProjectsAsyncCollectionResult(
+            return new GetProjectsAsyncCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -144,7 +144,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TextAuthoringProjectMetadata> GetProjects(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetProjectsCollectionResultOfT(
+            return new GetProjectsCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -161,7 +161,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TextAuthoringProjectMetadata> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetProjectsAsyncCollectionResultOfT(
+            return new GetProjectsAsyncCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -191,7 +191,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetDeploymentsCollectionResult(
+            return new GetDeploymentsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -222,7 +222,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetDeploymentsAsyncCollectionResult(
+            return new GetDeploymentsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -245,7 +245,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetDeploymentsCollectionResultOfT(
+            return new GetDeploymentsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -268,7 +268,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetDeploymentsAsyncCollectionResultOfT(
+            return new GetDeploymentsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -299,7 +299,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetExportedModelsCollectionResult(
+            return new GetExportedModelsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -330,7 +330,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetExportedModelsAsyncCollectionResult(
+            return new GetExportedModelsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -353,7 +353,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetExportedModelsCollectionResultOfT(
+            return new GetExportedModelsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -376,7 +376,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetExportedModelsAsyncCollectionResultOfT(
+            return new GetExportedModelsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -407,7 +407,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetTrainedModelsCollectionResult(
+            return new GetTrainedModelsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -438,7 +438,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetTrainedModelsAsyncCollectionResult(
+            return new GetTrainedModelsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -461,7 +461,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetTrainedModelsCollectionResultOfT(
+            return new GetTrainedModelsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -484,7 +484,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetTrainedModelsAsyncCollectionResultOfT(
+            return new GetTrainedModelsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -515,7 +515,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetDeploymentResourcesCollectionResult(
+            return new GetDeploymentResourcesCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -546,7 +546,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetDeploymentResourcesAsyncCollectionResult(
+            return new GetDeploymentResourcesAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -569,7 +569,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetDeploymentResourcesCollectionResultOfT(
+            return new GetDeploymentResourcesCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -592,7 +592,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetDeploymentResourcesAsyncCollectionResultOfT(
+            return new GetDeploymentResourcesAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -623,7 +623,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetTrainingJobsCollectionResult(
+            return new GetTrainingJobsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -654,7 +654,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetTrainingJobsAsyncCollectionResult(
+            return new GetTrainingJobsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -677,7 +677,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetTrainingJobsCollectionResultOfT(
+            return new GetTrainingJobsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -700,7 +700,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new TextAnalysisAuthoringClientGetTrainingJobsAsyncCollectionResultOfT(
+            return new GetTrainingJobsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -726,7 +726,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAssignedResourceDeployments(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsCollectionResult(
+            return new GetAssignedResourceDeploymentsCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -751,7 +751,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResult(
+            return new GetAssignedResourceDeploymentsAsyncCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -768,7 +768,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsCollectionResultOfT(
+            return new GetAssignedResourceDeploymentsCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -785,7 +785,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT(
+            return new GetAssignedResourceDeploymentsAsyncCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -811,7 +811,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSupportedLanguages(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetSupportedLanguagesCollectionResult(
+            return new GetSupportedLanguagesCollectionResult(
                 this,
                 projectKind,
                 maxCount,
@@ -838,7 +838,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSupportedLanguagesAsync(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetSupportedLanguagesAsyncCollectionResult(
+            return new GetSupportedLanguagesAsyncCollectionResult(
                 this,
                 projectKind,
                 maxCount,
@@ -857,7 +857,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TextAuthoringSupportedLanguage> GetSupportedLanguages(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetSupportedLanguagesCollectionResultOfT(
+            return new GetSupportedLanguagesCollectionResultOfT(
                 this,
                 projectKind?.ToString(),
                 maxCount,
@@ -876,7 +876,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TextAuthoringSupportedLanguage> GetSupportedLanguagesAsync(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetSupportedLanguagesAsyncCollectionResultOfT(
+            return new GetSupportedLanguagesAsyncCollectionResultOfT(
                 this,
                 projectKind?.ToString(),
                 maxCount,
@@ -899,7 +899,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResult(this, context, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
+            return new GetSupportedPrebuiltEntitiesCollectionResult(this, context, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary>
@@ -915,7 +915,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResult(this, context, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
+            return new GetSupportedPrebuiltEntitiesAsyncCollectionResult(this, context, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
@@ -923,7 +923,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntities(CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
+            return new GetSupportedPrebuiltEntitiesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
@@ -931,7 +931,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
+            return new GetSupportedPrebuiltEntitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary>
@@ -951,7 +951,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetTrainingConfigVersionsCollectionResult(
+            return new GetTrainingConfigVersionsCollectionResult(
                 this,
                 projectKind,
                 maxCount,
@@ -978,7 +978,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetTrainingConfigVersionsAsyncCollectionResult(
+            return new GetTrainingConfigVersionsAsyncCollectionResult(
                 this,
                 projectKind,
                 maxCount,
@@ -997,7 +997,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TextAuthoringTrainingConfigVersion> GetTrainingConfigVersions(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetTrainingConfigVersionsCollectionResultOfT(
+            return new GetTrainingConfigVersionsCollectionResultOfT(
                 this,
                 projectKind?.ToString(),
                 maxCount,
@@ -1016,7 +1016,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TextAuthoringTrainingConfigVersion> GetTrainingConfigVersionsAsync(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetTrainingConfigVersionsAsyncCollectionResultOfT(
+            return new GetTrainingConfigVersionsAsyncCollectionResultOfT(
                 this,
                 projectKind?.ToString(),
                 maxCount,

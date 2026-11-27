@@ -550,7 +550,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            return new ConversationAuthoringTrainedModelGetModelEvaluationResultsCollectionResult(
+            return new GetModelEvaluationResultsCollectionResult(
                 this,
                 projectName,
                 trainedModelLabel,
@@ -586,7 +586,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            return new ConversationAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResult(
+            return new GetModelEvaluationResultsAsyncCollectionResult(
                 this,
                 projectName,
                 trainedModelLabel,
@@ -614,7 +614,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            return new ConversationAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT(
+            return new GetModelEvaluationResultsCollectionResultOfT(
                 this,
                 projectName,
                 trainedModelLabel,
@@ -642,7 +642,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            return new ConversationAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(
+            return new GetModelEvaluationResultsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 trainedModelLabel,

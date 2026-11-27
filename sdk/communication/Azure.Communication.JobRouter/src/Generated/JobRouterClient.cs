@@ -438,7 +438,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetJobs(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
         {
-            return new JobRouterClientGetJobsCollectionResult(
+            return new GetJobsCollectionResult(
                 this,
                 maxpagesize,
                 status,
@@ -471,7 +471,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetJobsAsync(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
         {
-            return new JobRouterClientGetJobsAsyncCollectionResult(
+            return new GetJobsAsyncCollectionResult(
                 this,
                 maxpagesize,
                 status,
@@ -496,7 +496,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<RouterJob> GetJobs(int? maxpagesize = default, RouterJobStatusSelector? status = default, string queueId = default, string channelId = default, string classificationPolicyId = default, DateTimeOffset? scheduledBefore = default, DateTimeOffset? scheduledAfter = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterClientGetJobsCollectionResultOfT(
+            return new GetJobsCollectionResultOfT(
                 this,
                 maxpagesize,
                 status?.ToString(),
@@ -521,7 +521,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<RouterJob> GetJobsAsync(int? maxpagesize = default, RouterJobStatusSelector? status = default, string queueId = default, string channelId = default, string classificationPolicyId = default, DateTimeOffset? scheduledBefore = default, DateTimeOffset? scheduledAfter = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterClientGetJobsAsyncCollectionResultOfT(
+            return new GetJobsAsyncCollectionResultOfT(
                 this,
                 maxpagesize,
                 status?.ToString(),
@@ -1144,7 +1144,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetWorkers(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
         {
-            return new JobRouterClientGetWorkersCollectionResult(
+            return new GetWorkersCollectionResult(
                 this,
                 maxpagesize,
                 state,
@@ -1173,7 +1173,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetWorkersAsync(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
         {
-            return new JobRouterClientGetWorkersAsyncCollectionResult(
+            return new GetWorkersAsyncCollectionResult(
                 this,
                 maxpagesize,
                 state,
@@ -1194,7 +1194,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<RouterWorker> GetWorkers(int? maxpagesize = default, RouterWorkerStateSelector? state = default, string channelId = default, string queueId = default, bool? hasCapacity = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterClientGetWorkersCollectionResultOfT(
+            return new GetWorkersCollectionResultOfT(
                 this,
                 maxpagesize,
                 state?.ToString(),
@@ -1215,7 +1215,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<RouterWorker> GetWorkersAsync(int? maxpagesize = default, RouterWorkerStateSelector? state = default, string channelId = default, string queueId = default, bool? hasCapacity = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterClientGetWorkersAsyncCollectionResultOfT(
+            return new GetWorkersAsyncCollectionResultOfT(
                 this,
                 maxpagesize,
                 state?.ToString(),

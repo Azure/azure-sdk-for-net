@@ -60,7 +60,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetUpdates(string search, string filter, RequestContext context)
         {
-            return new SoftwareUpdateGetUpdatesCollectionResult(this, search, filter, context, "SoftwareUpdate.GetUpdates");
+            return new GetUpdatesCollectionResult(this, search, filter, context, "SoftwareUpdate.GetUpdates");
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search, string filter, RequestContext context)
         {
-            return new SoftwareUpdateGetUpdatesAsyncCollectionResult(this, search, filter, context, "SoftwareUpdate.GetUpdates");
+            return new GetUpdatesAsyncCollectionResult(this, search, filter, context, "SoftwareUpdate.GetUpdates");
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<UpdateContent> GetUpdates(string search = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new SoftwareUpdateGetUpdatesCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetUpdates");
+            return new GetUpdatesCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetUpdates");
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<UpdateContent> GetUpdatesAsync(string search = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new SoftwareUpdateGetUpdatesAsyncCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetUpdates");
+            return new GetUpdatesAsyncCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetUpdates");
         }
 
         /// <summary>
@@ -442,7 +442,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProviders(RequestContext context)
         {
-            return new SoftwareUpdateGetProvidersCollectionResult(this, context, "SoftwareUpdate.GetProviders");
+            return new GetProvidersCollectionResult(this, context, "SoftwareUpdate.GetProviders");
         }
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context)
         {
-            return new SoftwareUpdateGetProvidersAsyncCollectionResult(this, context, "SoftwareUpdate.GetProviders");
+            return new GetProvidersAsyncCollectionResult(this, context, "SoftwareUpdate.GetProviders");
         }
 
         /// <summary>
@@ -470,7 +470,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<string> GetProviders(CancellationToken cancellationToken = default)
         {
-            return new SoftwareUpdateGetProvidersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetProviders");
+            return new GetProvidersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetProviders");
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<string> GetProvidersAsync(CancellationToken cancellationToken = default)
         {
-            return new SoftwareUpdateGetProvidersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetProviders");
+            return new GetProvidersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetProviders");
         }
 
         /// <summary>
@@ -502,7 +502,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new SoftwareUpdateGetNamesCollectionResult(this, provider, context, "SoftwareUpdate.GetNames");
+            return new GetNamesCollectionResult(this, provider, context, "SoftwareUpdate.GetNames");
         }
 
         /// <summary>
@@ -523,7 +523,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new SoftwareUpdateGetNamesAsyncCollectionResult(this, provider, context, "SoftwareUpdate.GetNames");
+            return new GetNamesAsyncCollectionResult(this, provider, context, "SoftwareUpdate.GetNames");
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
@@ -536,7 +536,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new SoftwareUpdateGetNamesCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetNames");
+            return new GetNamesCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetNames");
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
@@ -549,7 +549,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new SoftwareUpdateGetNamesAsyncCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetNames");
+            return new GetNamesAsyncCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetNames");
         }
 
         /// <summary>
@@ -573,7 +573,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new SoftwareUpdateGetVersionsCollectionResult(
+            return new GetVersionsCollectionResult(
                 this,
                 provider,
                 name,
@@ -603,7 +603,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new SoftwareUpdateGetVersionsAsyncCollectionResult(
+            return new GetVersionsAsyncCollectionResult(
                 this,
                 provider,
                 name,
@@ -625,7 +625,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new SoftwareUpdateGetVersionsCollectionResultOfT(
+            return new GetVersionsCollectionResultOfT(
                 this,
                 provider,
                 name,
@@ -647,7 +647,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new SoftwareUpdateGetVersionsAsyncCollectionResultOfT(
+            return new GetVersionsAsyncCollectionResultOfT(
                 this,
                 provider,
                 name,
@@ -678,7 +678,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new SoftwareUpdateGetFilesCollectionResult(
+            return new GetFilesCollectionResult(
                 this,
                 provider,
                 name,
@@ -709,7 +709,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new SoftwareUpdateGetFilesAsyncCollectionResult(
+            return new GetFilesAsyncCollectionResult(
                 this,
                 provider,
                 name,
@@ -732,7 +732,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new SoftwareUpdateGetFilesCollectionResultOfT(
+            return new GetFilesCollectionResultOfT(
                 this,
                 provider,
                 name,
@@ -755,7 +755,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new SoftwareUpdateGetFilesAsyncCollectionResultOfT(
+            return new GetFilesAsyncCollectionResultOfT(
                 this,
                 provider,
                 name,
@@ -920,7 +920,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetOperationStatuses(string filter, int? maxPageSize, RequestContext context)
         {
-            return new SoftwareUpdateGetOperationStatusesCollectionResult(this, filter, maxPageSize, context, "SoftwareUpdate.GetOperationStatuses");
+            return new GetOperationStatusesCollectionResult(this, filter, maxPageSize, context, "SoftwareUpdate.GetOperationStatuses");
         }
 
         /// <summary>
@@ -947,7 +947,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter, int? maxPageSize, RequestContext context)
         {
-            return new SoftwareUpdateGetOperationStatusesAsyncCollectionResult(this, filter, maxPageSize, context, "SoftwareUpdate.GetOperationStatuses");
+            return new GetOperationStatusesAsyncCollectionResult(this, filter, maxPageSize, context, "SoftwareUpdate.GetOperationStatuses");
         }
 
         /// <summary>
@@ -968,7 +968,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<UpdateOperation> GetOperationStatuses(string filter = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new SoftwareUpdateGetOperationStatusesCollectionResultOfT(this, filter, maxPageSize, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetOperationStatuses");
+            return new GetOperationStatusesCollectionResultOfT(this, filter, maxPageSize, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetOperationStatuses");
         }
 
         /// <summary>
@@ -989,7 +989,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<UpdateOperation> GetOperationStatusesAsync(string filter = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new SoftwareUpdateGetOperationStatusesAsyncCollectionResultOfT(this, filter, maxPageSize, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetOperationStatuses");
+            return new GetOperationStatusesAsyncCollectionResultOfT(this, filter, maxPageSize, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetOperationStatuses");
         }
 
         /// <summary>
