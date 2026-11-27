@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly int? _pageSize;
         private readonly bool? _isDescending;
         private readonly int? _initialSkip;
-        private readonly string _vmPath;
+        private readonly ResourceIdentifier _vmPath;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="vmPath"> The path to the VM. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SessionHostDataAsyncCollectionResultOfT(SessionHosts client, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, string vmPath, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SessionHostDataAsyncCollectionResultOfT(SessionHosts client, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, ResourceIdentifier vmPath, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

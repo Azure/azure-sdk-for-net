@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="msixPackageFamilyName"> Specifies the package family name for MSIX applications. </param>
         /// <param name="msixPackageApplicationId"> Specifies the package application Id for MSIX applications. </param>
         /// <param name="applicationType"> Resource Type of Application. </param>
+        /// <param name="shortcutsExtension"> Additional shortcut settings for the remote application. </param>
         /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
         /// <param name="commandLineArguments"> Command Line Arguments for Application. </param>
         /// <param name="showInPortal"> Specifies whether to show the RemoteApp program in the RD Web Access server. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="iconHash"> Hash of the icon. </param>
         /// <param name="iconContent"> the icon a 64 bit string as a byte array. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationProperties(string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, VirtualApplicationCommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, BinaryData iconContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationProperties(string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, ShortcutsExtension shortcutsExtension, VirtualApplicationCommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, BinaryData iconContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             Description = description;
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             MsixPackageFamilyName = msixPackageFamilyName;
             MsixPackageApplicationId = msixPackageApplicationId;
             ApplicationType = applicationType;
+            ShortcutsExtension = shortcutsExtension;
             CommandLineSetting = commandLineSetting;
             CommandLineArguments = commandLineArguments;
             ShowInPortal = showInPortal;
@@ -87,6 +89,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Resource Type of Application. </summary>
         [WirePath("applicationType")]
         public RemoteApplicationType? ApplicationType { get; set; }
+
+        /// <summary> Additional shortcut settings for the remote application. </summary>
+        [WirePath("shortcutsExtension")]
+        internal ShortcutsExtension ShortcutsExtension { get; set; }
 
         /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
         [WirePath("commandLineSetting")]
@@ -140,5 +146,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// </summary>
         [WirePath("iconContent")]
         public BinaryData IconContent { get; }
+
+        /// <summary> Indicates whether to create a desktop shortcut for the remote application. </summary>
+        [WirePath("shortcutsExtension.putShortcutOnDesktop")]
+        public bool? PutShortcutOnDesktop
+        {
+            get
+            {
+                return ShortcutsExtension is null ? default : ShortcutsExtension.PutShortcutOnDesktop;
+            }
+            set
+            {
+                if (ShortcutsExtension is null)
+                {
+                    ShortcutsExtension = new ShortcutsExtension();
+                }
+                ShortcutsExtension.PutShortcutOnDesktop = value;
+            }
+        }
     }
 }

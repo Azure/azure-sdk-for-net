@@ -74,25 +74,53 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(DesktopVirtualizationCreateDeleteProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RampUpMaximumHostPoolSize))
+            if (Optional.IsDefined(RampUpMaximumHostPoolSize, _rampUpMaximumHostPoolSizeIsDefined))
             {
-                writer.WritePropertyName("rampUpMaximumHostPoolSize"u8);
-                writer.WriteNumberValue(RampUpMaximumHostPoolSize.Value);
+                if (RampUpMaximumHostPoolSize != null)
+                {
+                    writer.WritePropertyName("rampUpMaximumHostPoolSize"u8);
+                    writer.WriteNumberValue(RampUpMaximumHostPoolSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rampUpMaximumHostPoolSize"u8);
+                }
             }
-            if (Optional.IsDefined(RampUpMinimumHostPoolSize))
+            if (Optional.IsDefined(RampUpMinimumHostPoolSize, _rampUpMinimumHostPoolSizeIsDefined))
             {
-                writer.WritePropertyName("rampUpMinimumHostPoolSize"u8);
-                writer.WriteNumberValue(RampUpMinimumHostPoolSize.Value);
+                if (RampUpMinimumHostPoolSize != null)
+                {
+                    writer.WritePropertyName("rampUpMinimumHostPoolSize"u8);
+                    writer.WriteNumberValue(RampUpMinimumHostPoolSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rampUpMinimumHostPoolSize"u8);
+                }
             }
-            if (Optional.IsDefined(RampDownMaximumHostPoolSize))
+            if (Optional.IsDefined(RampDownMaximumHostPoolSize, _rampDownMaximumHostPoolSizeIsDefined))
             {
-                writer.WritePropertyName("rampDownMaximumHostPoolSize"u8);
-                writer.WriteNumberValue(RampDownMaximumHostPoolSize.Value);
+                if (RampDownMaximumHostPoolSize != null)
+                {
+                    writer.WritePropertyName("rampDownMaximumHostPoolSize"u8);
+                    writer.WriteNumberValue(RampDownMaximumHostPoolSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rampDownMaximumHostPoolSize"u8);
+                }
             }
-            if (Optional.IsDefined(RampDownMinimumHostPoolSize))
+            if (Optional.IsDefined(RampDownMinimumHostPoolSize, _rampDownMinimumHostPoolSizeIsDefined))
             {
-                writer.WritePropertyName("rampDownMinimumHostPoolSize"u8);
-                writer.WriteNumberValue(RampDownMinimumHostPoolSize.Value);
+                if (RampDownMinimumHostPoolSize != null)
+                {
+                    writer.WritePropertyName("rampDownMinimumHostPoolSize"u8);
+                    writer.WriteNumberValue(RampDownMinimumHostPoolSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rampDownMinimumHostPoolSize"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,17 +164,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
+            bool rampUpMaximumHostPoolSizeIsDefined = false;
             int? rampUpMaximumHostPoolSize = default;
+            bool rampUpMinimumHostPoolSizeIsDefined = false;
             int? rampUpMinimumHostPoolSize = default;
+            bool rampDownMaximumHostPoolSizeIsDefined = false;
             int? rampDownMaximumHostPoolSize = default;
+            bool rampDownMinimumHostPoolSizeIsDefined = false;
             int? rampDownMinimumHostPoolSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("rampUpMaximumHostPoolSize"u8))
                 {
+                    rampUpMaximumHostPoolSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rampUpMaximumHostPoolSize = null;
                         continue;
                     }
                     rampUpMaximumHostPoolSize = prop.Value.GetInt32();
@@ -154,8 +188,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("rampUpMinimumHostPoolSize"u8))
                 {
+                    rampUpMinimumHostPoolSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rampUpMinimumHostPoolSize = null;
                         continue;
                     }
                     rampUpMinimumHostPoolSize = prop.Value.GetInt32();
@@ -163,8 +199,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("rampDownMaximumHostPoolSize"u8))
                 {
+                    rampDownMaximumHostPoolSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rampDownMaximumHostPoolSize = null;
                         continue;
                     }
                     rampDownMaximumHostPoolSize = prop.Value.GetInt32();
@@ -172,8 +210,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("rampDownMinimumHostPoolSize"u8))
                 {
+                    rampDownMinimumHostPoolSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rampDownMinimumHostPoolSize = null;
                         continue;
                     }
                     rampDownMinimumHostPoolSize = prop.Value.GetInt32();
@@ -184,7 +224,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DesktopVirtualizationCreateDeleteProperties(rampUpMaximumHostPoolSize, rampUpMinimumHostPoolSize, rampDownMaximumHostPoolSize, rampDownMinimumHostPoolSize, additionalBinaryDataProperties);
+            return new DesktopVirtualizationCreateDeleteProperties(rampUpMaximumHostPoolSize, rampUpMinimumHostPoolSize, rampDownMaximumHostPoolSize, rampDownMinimumHostPoolSize, additionalBinaryDataProperties)
+            {
+                _rampUpMaximumHostPoolSizeIsDefined = rampUpMaximumHostPoolSizeIsDefined,
+                _rampUpMinimumHostPoolSizeIsDefined = rampUpMinimumHostPoolSizeIsDefined,
+                _rampDownMaximumHostPoolSizeIsDefined = rampDownMaximumHostPoolSizeIsDefined,
+                _rampDownMinimumHostPoolSizeIsDefined = rampDownMinimumHostPoolSizeIsDefined
+            };
         }
     }
 }

@@ -11,14 +11,14 @@ using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Gets or sets specifies the ephemeral disk placement for operating system disk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise ResourceDisk is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Possible values include: 'CacheDisk', 'ResourceDisk'. </summary>
+    /// <summary> Gets or sets specifies the ephemeral disk placement for operating system disk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise TempDisk is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Possible values include: 'CacheDisk', 'TempDisk'. </summary>
     public readonly partial struct DesktopVirtualizationDiffDiskPlacement : IEquatable<DesktopVirtualizationDiffDiskPlacement>
     {
         private readonly string _value;
         /// <summary> Cache disk placement. </summary>
         private const string CacheDiskValue = "CacheDisk";
-        /// <summary> Resource disk placement. </summary>
-        private const string ResourceDiskValue = "ResourceDisk";
+        /// <summary> Temp disk placement. </summary>
+        private const string TempDiskValue = "TempDisk";
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationDiffDiskPlacement"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Cache disk placement. </summary>
         public static DesktopVirtualizationDiffDiskPlacement CacheDisk { get; } = new DesktopVirtualizationDiffDiskPlacement(CacheDiskValue);
 
-        /// <summary> Resource disk placement. </summary>
-        public static DesktopVirtualizationDiffDiskPlacement ResourceDisk { get; } = new DesktopVirtualizationDiffDiskPlacement(ResourceDiskValue);
+        /// <summary> Temp disk placement. </summary>
+        public static DesktopVirtualizationDiffDiskPlacement TempDisk { get; } = new DesktopVirtualizationDiffDiskPlacement(TempDiskValue);
 
         /// <summary> Determines if two <see cref="DesktopVirtualizationDiffDiskPlacement"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

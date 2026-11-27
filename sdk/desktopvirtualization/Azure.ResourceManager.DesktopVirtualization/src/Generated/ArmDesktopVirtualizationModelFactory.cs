@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationGroupData"/> instance for mocking. </returns>
-        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, ResourceIdentifier hostPoolId = default, ResourceIdentifier workspaceId = default, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = default, bool? showInFeed = default, string oboTenantId = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
+        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, ResourceIdentifier hostPoolId = default, ResourceIdentifier workspaceId = default, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = default, bool? showInFeed = default, string oboTenantId = default, ReadOnlyDeploymentScope? deploymentScope = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -835,6 +835,53 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new VirtualWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), description is null && friendlyName is null && applicationGroupReferences is null && publicNetworkAccess is null ? default : new WorkspacePatchProperties(description, friendlyName, (applicationGroupReferences ?? new ChangeTrackingList<string>()).ToList(), publicNetworkAccess, default), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="objectId"> ObjectId of Application. (internal use). </param>
+        /// <param name="description"> Description of Application. </param>
+        /// <param name="friendlyName"> Friendly name of Application. </param>
+        /// <param name="filePath"> Specifies a path for the executable file for the application. </param>
+        /// <param name="msixPackageFamilyName"> Specifies the package family name for MSIX applications. </param>
+        /// <param name="msixPackageApplicationId"> Specifies the package application Id for MSIX applications. </param>
+        /// <param name="applicationType"> Resource Type of Application. </param>
+        /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
+        /// <param name="commandLineArguments"> Command Line Arguments for Application. </param>
+        /// <param name="showInPortal"> Specifies whether to show the RemoteApp program in the RD Web Access server. </param>
+        /// <param name="iconPath"> Path to icon. </param>
+        /// <param name="iconIndex"> Index of the icon. </param>
+        /// <param name="iconHash"> Hash of the icon. </param>
+        /// <param name="iconContent"> the icon a 64 bit string as a byte array. </param>
+        /// <param name="putShortcutOnDesktop"> Indicates whether to create a desktop shortcut for the remote application. </param>
+        /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationData"/> instance for mocking. </returns>
+        public static VirtualApplicationData VirtualApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string objectId = default, string description = default, string friendlyName = default, string filePath = default, string msixPackageFamilyName = default, string msixPackageApplicationId = default, RemoteApplicationType? applicationType = default, VirtualApplicationCommandLineSetting commandLineSetting = default, string commandLineArguments = default, bool? showInPortal = default, string iconPath = default, int? iconIndex = default, string iconHash = default, BinaryData iconContent = default, bool? putShortcutOnDesktop = default)
+        {
+            return new VirtualApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                new ApplicationProperties(
+                    objectId,
+                    description,
+                    friendlyName,
+                    filePath,
+                    msixPackageFamilyName,
+                    msixPackageApplicationId,
+                    applicationType,
+                    putShortcutOnDesktop is null ? default : new ShortcutsExtension(putShortcutOnDesktop, default),
+                    commandLineSetting,
+                    commandLineArguments,
+                    showInPortal,
+                    iconPath,
+                    iconIndex,
+                    iconHash,
+                    iconContent,
+                    default),
+                default);
+        }
+
         /// <param name="description"> Description of Application. </param>
         /// <param name="friendlyName"> Friendly name of Application. </param>
         /// <param name="filePath"> Specifies a path for the executable file for the application. </param>
@@ -846,10 +893,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="msixPackageFamilyName"> Specifies the package family name for MSIX applications. </param>
         /// <param name="msixPackageApplicationId"> Specifies the package application Id for MSIX applications. </param>
         /// <param name="applicationType"> Resource Type of Application. </param>
+        /// <param name="putShortcutOnDesktop"> Indicates whether to create a desktop shortcut for the remote application. </param>
         /// <returns> A new <see cref="Models.VirtualApplicationPatch"/> instance for mocking. </returns>
-        public static VirtualApplicationPatch VirtualApplicationPatch(string description = default, string friendlyName = default, string filePath = default, VirtualApplicationCommandLineSetting? commandLineSetting = default, string commandLineArguments = default, bool? showInPortal = default, string iconPath = default, int? iconIndex = default, string msixPackageFamilyName = default, string msixPackageApplicationId = default, RemoteApplicationType? applicationType = default)
+        public static VirtualApplicationPatch VirtualApplicationPatch(string description = default, string friendlyName = default, string filePath = default, VirtualApplicationCommandLineSetting? commandLineSetting = default, string commandLineArguments = default, bool? showInPortal = default, string iconPath = default, int? iconIndex = default, string msixPackageFamilyName = default, string msixPackageApplicationId = default, RemoteApplicationType? applicationType = default, bool? putShortcutOnDesktop = default)
         {
-            return new VirtualApplicationPatch(description is null && friendlyName is null && filePath is null && commandLineSetting is null && commandLineArguments is null && showInPortal is null && iconPath is null && iconIndex is null && msixPackageFamilyName is null && msixPackageApplicationId is null && applicationType is null ? default : new ApplicationPatchProperties(
+            return new VirtualApplicationPatch(description is null && friendlyName is null && filePath is null && commandLineSetting is null && commandLineArguments is null && showInPortal is null && iconPath is null && iconIndex is null && msixPackageFamilyName is null && msixPackageApplicationId is null && applicationType is null && putShortcutOnDesktop is null ? default : new ApplicationPatchProperties(
                 description,
                 friendlyName,
                 filePath,
@@ -861,6 +909,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 msixPackageFamilyName,
                 msixPackageApplicationId,
                 applicationType,
+                putShortcutOnDesktop is null ? default : new ShortcutsExtension(putShortcutOnDesktop, default),
                 default), default);
         }
 
@@ -1384,7 +1433,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Specifies the ephemeral disk settings for the operating system disk used by the virtual machine. </summary>
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
-        /// <param name="placement"> Gets or sets specifies the ephemeral disk placement for operating system disk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise ResourceDisk is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Possible values include: 'CacheDisk', 'ResourceDisk'. </param>
+        /// <param name="placement"> Gets or sets specifies the ephemeral disk placement for operating system disk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise TempDisk is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Possible values include: 'CacheDisk', 'TempDisk'. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationDiffDiskProperties"/> instance for mocking. </returns>
         public static DesktopVirtualizationDiffDiskProperties DesktopVirtualizationDiffDiskProperties(DesktopVirtualizationDiffDiskOption? option = default, DesktopVirtualizationDiffDiskPlacement? placement = default)
         {

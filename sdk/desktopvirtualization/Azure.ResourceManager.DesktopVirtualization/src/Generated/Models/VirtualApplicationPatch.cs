@@ -232,5 +232,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 Properties.ApplicationType = value;
             }
         }
+
+        /// <summary> Indicates whether to create a desktop shortcut for the remote application. </summary>
+        [WirePath("properties.shortcutsExtension.putShortcutOnDesktop")]
+        public bool? PutShortcutOnDesktop
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PutShortcutOnDesktop;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.PutShortcutOnDesktop = value;
+            }
+        }
     }
 }
