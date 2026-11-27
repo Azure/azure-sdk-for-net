@@ -8,8 +8,8 @@
 
 ### Bugs Fixed
 
-- Added resource-specific `ArmClient` extension names `GetApplicableMaccs` and `GetApplicableCredits`, including their asynchronous counterparts. The previous `GetAll` and `GetApplicable` methods remain available for compatibility.
-- Added resource-specific `TenantResource` extension names `GetMaccs` and `ValidateBillingBenefitsSavingsPlanPurchase`, including their asynchronous counterparts. The previous `GetAll` and `Validate` methods remain available for compatibility.
+- Added resource-specific `ArmClient` extension names `GetApplicableMaccs` and `GetApplicableCredits`, including their asynchronous counterparts. The previous `GetAll` and `GetApplicable` methods remain available as obsolete compatibility aliases, with messages directing callers to the new methods.
+- Added resource-specific `TenantResource` extension names `GetMaccs` and `ValidateBillingBenefitsSavingsPlanPurchase`, including their asynchronous counterparts. The previous `GetAll` and `Validate` methods remain available as obsolete compatibility aliases, with messages directing callers to the new methods.
 
 ### Other Changes
 

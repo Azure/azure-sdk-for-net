@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.BillingBenefits.Tests
 {
+#pragma warning disable CS0618 // Exercise the obsolete compatibility aliases alongside their replacements.
     public class BillingBenefitsExtensionTests
     {
         private const string TenantResponse = "{\"value\":[{\"id\":\"/tenants/00000000-0000-0000-0000-000000000001\",\"tenantId\":\"00000000-0000-0000-0000-000000000001\"}]}";
@@ -127,4 +128,5 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.That(request.Uri.ToUri().Query, Does.Contain("api-version=2025-12-01-preview"));
         }
     }
+#pragma warning restore CS0618
 }
