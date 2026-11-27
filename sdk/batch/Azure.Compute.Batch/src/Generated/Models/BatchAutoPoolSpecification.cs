@@ -20,10 +20,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAutoPoolSpecification"/>. </summary>
-        /// <param name="poolLifetimeOption"> The minimum lifetime of created auto Pools, and how multiple Jobs on a schedule are assigned to Pools. </param>
-        public BatchAutoPoolSpecification(BatchPoolLifetimeOption poolLifetimeOption)
+        public BatchAutoPoolSpecification()
         {
-            PoolLifetimeOption = poolLifetimeOption;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAutoPoolSpecification"/>. </summary>
@@ -39,6 +37,13 @@ namespace Azure.Compute.Batch
             KeepAlive = keepAlive;
             Pool = pool;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchAutoPoolSpecification"/>. </summary>
+        /// <param name="poolLifetimeOption"> The minimum lifetime of created auto Pools, and how multiple Jobs on a schedule are assigned to Pools. </param>
+        public BatchAutoPoolSpecification(BatchPoolLifetimeOption poolLifetimeOption) : this()
+        {
+            PoolLifetimeOption = poolLifetimeOption;
         }
 
         /// <summary> A prefix to be added to the unique identifier when a Pool is automatically created. The Batch service assigns each auto Pool a unique identifier on creation. To distinguish between Pools created for different purposes, you can specify this element to add a prefix to the ID that is assigned. The prefix can be up to 20 characters long. </summary>

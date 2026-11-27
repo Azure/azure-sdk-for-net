@@ -15,7 +15,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.OperationTemplat
         public Task CheckGlobal() => Test(async host =>
         {
             var requests = new RequestRecorder();
-            CheckNameAvailabilityRequest request = new()
+            CheckNameAvailabilityContent request = new()
             {
                 Name = "checkName",
                 Type = "Microsoft.Web/site"
@@ -33,7 +33,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.OperationTemplat
         public Task CheckLocal() => Test(async host =>
         {
             var requests = new RequestRecorder();
-            CheckNameAvailabilityRequest request = new()
+            CheckNameAvailabilityContent request = new()
             {
                 Name = "checkName",
                 Type = "Microsoft.Web/site"

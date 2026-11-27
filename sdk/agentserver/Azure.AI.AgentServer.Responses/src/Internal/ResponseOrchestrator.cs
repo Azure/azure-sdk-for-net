@@ -10,6 +10,8 @@ using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+#pragma warning disable AAAS005 // Bind experimental attribution for handler execution only.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -18,6 +20,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// state transitions — logic previously duplicated across
 /// <see cref="ResponseEndpointHandler"/> and <see cref="SseResult"/>.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseOrchestrator
 {
     private readonly ResponseHandler _handler;
@@ -84,7 +87,7 @@ internal sealed class ResponseOrchestrator
     /// </param>
     /// <returns>
     /// An <see cref="OrchestratorResult"/> — either
-    /// <see cref="OrchestratorResult.Completed(Models.ResponseObject)"/> or
+    /// <see cref="OrchestratorResult.Completed(ResponseObject)"/> or
     /// <see cref="OrchestratorResult.Streaming(IAsyncEnumerable{ResponseStreamEvent})"/>.
     /// </returns>
     public async Task<OrchestratorResult> CreateAsync(
@@ -176,7 +179,7 @@ internal sealed class ResponseOrchestrator
     /// <param name="platformContext">The platform identity context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <returns>The Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response cannot be retrieved.</exception>
-    public async Task<Models.ResponseObject> GetAsync(string responseId, PlatformContext platformContext)
+    public async Task<ResponseObject> GetAsync(string responseId, PlatformContext platformContext)
     {
         // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, platformContext, out var execution) && execution is not null)
@@ -230,7 +233,7 @@ internal sealed class ResponseOrchestrator
     /// <returns>The cancelled Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response is not found.</exception>
     /// <exception cref="BadRequestException">If the response cannot be cancelled.</exception>
-    public async Task<Models.ResponseObject> CancelAsync(string responseId, PlatformContext platformContext)
+    public async Task<ResponseObject> CancelAsync(string responseId, PlatformContext platformContext)
     {
         if (!_tracker.TryGet(responseId, platformContext, out var execution) || execution is null)
         {
@@ -241,7 +244,7 @@ internal sealed class ResponseOrchestrator
 
             // B1: background check comes first — non-bg responses always get the
             // "synchronous" message regardless of terminal status (spec line 485).
-            if (persisted.Background != true)
+            if (persisted.BackgroundModeEnabled != true)
             {
                 throw new BadRequestException("Cannot cancel a synchronous response.");
             }
@@ -323,6 +326,51 @@ internal sealed class ResponseOrchestrator
         return execution.Response!.Snapshot();
     }
 
+    private async IAsyncEnumerable<ResponseStreamEvent> EnumerateHandlerAsync(
+        CreateResponse request,
+        ResponseContext context,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var platform = context.PlatformContext;
+        var requestContext = new FoundryAgentRequestContext
+        {
+            CallId = platform.CallId,
+            UserId = platform.UserIdKey,
+            SessionId = FoundryEnvironment.SessionId,
+            OriginalSubject = platform.OriginalSubject,
+        };
+        IAsyncEnumerator<ResponseStreamEvent> enumerator;
+        using (FoundryAgentRequestContext.BeginScope(requestContext))
+        {
+            enumerator = _handler.CreateAsync(request, context, cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
+        try
+        {
+            while (await MoveNextAsync(enumerator, requestContext).ConfigureAwait(false))
+            {
+                yield return enumerator.Current;
+            }
+        }
+        finally
+        {
+            using (FoundryAgentRequestContext.BeginScope(requestContext))
+            {
+                await enumerator.DisposeAsync().ConfigureAwait(false);
+            }
+        }
+    }
+
+    private static async ValueTask<bool> MoveNextAsync(
+        IAsyncEnumerator<ResponseStreamEvent> enumerator,
+        FoundryAgentRequestContext requestContext)
+    {
+        using (FoundryAgentRequestContext.BeginScope(requestContext))
+        {
+            return await enumerator.MoveNextAsync().ConfigureAwait(false);
+        }
+    }
+
     // --- Event Processing Pipeline (US2) ---
 
     /// <summary>
@@ -350,7 +398,7 @@ internal sealed class ResponseOrchestrator
             "Invoking handler {HandlerType} for response {ResponseId}",
             _handler.GetType().Name, execution.ResponseId);
 
-        await foreach (var evt in _handler.CreateAsync(request, context, ct)
+        await foreach (var evt in EnumerateHandlerAsync(request, context, ct)
             .WithCancellation(ct))
         {
             // F2 (FR-036): ExitForRecoveryAsync() records DeferralRequested immediately before it
@@ -386,7 +434,7 @@ internal sealed class ResponseOrchestrator
                 {
                     // S-031: Wrong first event — bad handler
                     ThrowBadHandler(execution,
-                        $"Handler did not yield response.created as its first event. Received: {evt.EventType}. Handler type: {_handler.GetType().Name}.");
+                        $"Handler did not yield response.created as its first event. Received: {evt.Kind}. Handler type: {_handler.GetType().Name}.");
                     yield break; // unreachable — satisfies compiler definite-assignment
                 }
 
@@ -408,10 +456,10 @@ internal sealed class ResponseOrchestrator
                 // re-invocation the handler legitimately re-seeds the stream with the items already
                 // emitted before the crash, so the expected count is the recovered watermark (0 on a
                 // normal invocation — behavior unchanged off the recovery path).
-                if (createdEvt.Response.Output.Count != execution.RecoveredOutputWatermark)
+                if (createdEvt.Response.OutputItems.Count != execution.RecoveredOutputWatermark)
                 {
                     ThrowBadHandler(execution,
-                        $"Handler directly modified Response.Output (found {createdEvt.Response.Output.Count} items, expected {execution.RecoveredOutputWatermark}). Use output builder events instead. Handler type: {_handler.GetType().Name}.");
+                        $"Handler directly modified Response.Output (found {createdEvt.Response.OutputItems.Count} items, expected {execution.RecoveredOutputWatermark}). Use output builder events instead. Handler type: {_handler.GetType().Name}.");
                 }
 
                 // B31: Status is a required field. Auto-stamp InProgress if the
@@ -442,7 +490,7 @@ internal sealed class ResponseOrchestrator
                         }
                         else
                         {
-                            await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds), context.PlatformContext);
+                            await _provider.CreateResponseAsync(new CreateResponsePersistRequest(execution.Response!, inputItems, historyItemIds), context.PlatformContext);
                         }
 
                         // FR-037: record the durable snapshot written at response.created so a
@@ -505,7 +553,7 @@ internal sealed class ResponseOrchestrator
 
             // B30/S-033: Detect direct Output manipulation on response.* events (after response.created)
             {
-                Models.ResponseObject? eventResponse = evt switch
+                ResponseObject? eventResponse = evt switch
                 {
                     ResponseInProgressEvent e => e.Response,
                     ResponseCompletedEvent e => e.Response,
@@ -515,14 +563,14 @@ internal sealed class ResponseOrchestrator
                     _ => null,
                 };
 
-                if (eventResponse is not null && eventResponse.Output.Count > outputItemCount)
+                if (eventResponse is not null && eventResponse.OutputItems.Count > outputItemCount)
                 {
                     _logger.LogError(
                         "Bad handler: Response.Output has {ActualCount} items but {ExpectedCount} output_item.added events were emitted. Handler: {HandlerType}",
-                        eventResponse.Output.Count, outputItemCount, _handler.GetType().FullName);
+                        eventResponse.OutputItems.Count, outputItemCount, _handler.GetType().FullName);
 
                     // Post-created error — set failed status and emit response.failed
-                    RecordBadHandlerError($"Bad handler: Output item count mismatch ({eventResponse.Output.Count} vs {outputItemCount} output_item.added events)");
+                    RecordBadHandlerError($"Bad handler: Output item count mismatch ({eventResponse.OutputItems.Count} vs {outputItemCount} output_item.added events)");
                     await EmitTerminalFailureAsync(execution, publisher);
                     yield break;
                 }
@@ -763,7 +811,7 @@ internal sealed class ResponseOrchestrator
                             else
                             {
                                 var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
-                                await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.PlatformContext ?? PlatformContext.Empty);
+                                await _provider.CreateResponseAsync(new CreateResponsePersistRequest(execution.Response, inputItems, historyItemIds), execution.Context?.PlatformContext ?? PlatformContext.Empty);
                             }
                         }
                         catch (Exception ex)
@@ -781,14 +829,13 @@ internal sealed class ResponseOrchestrator
                             // replaces it), and the client needs to know to retry.
                             // Clear output: items won't be available from the storage API
                             // post-sandbox, so returning them now creates a false expectation.
-                            execution.Response.Output.Clear();
+                            execution.Response.OutputItems.Clear();
                             execution.Response.SetFailed(
                                 new ResponseErrorCode("storage_error"),
                                 "An internal error occurred while storing the response. Subsequent retrieval is not guaranteed. Please retry the request.");
                             execution.PersistenceFailed = true;
                             execution.PersistenceException = persistException;
-                            evt = new ResponseFailedEvent(
-                                evt.SequenceNumber, execution.Response.Snapshot());
+                            evt = new ResponseFailedEvent { SequenceNumber = (int)(evt.SequenceNumber), Response = execution.Response.Snapshot() };
                         }
                     }
 
@@ -818,8 +865,7 @@ internal sealed class ResponseOrchestrator
                 if (!terminalEventYielded && execution.Response is not null
                     && IsTerminalStatus(execution.Response.Status))
                 {
-                    yield return new ResponseFailedEvent(
-                        execution.LastEmittedSequenceNumber + 1, execution.Response.Snapshot());
+                    yield return new ResponseFailedEvent { SequenceNumber = (int)(execution.LastEmittedSequenceNumber + 1), Response = execution.Response.Snapshot() };
                 }
             }
         }
@@ -928,8 +974,7 @@ internal sealed class ResponseOrchestrator
             execution.Response!.SetFailed();
         }
 
-        var failedEvent = new ResponseFailedEvent(
-            execution.LastEmittedSequenceNumber + 1, execution.Response!.Snapshot());
+        var failedEvent = new ResponseFailedEvent { SequenceNumber = (int)(execution.LastEmittedSequenceNumber + 1), Response = execution.Response!.Snapshot() };
         await publisher.OnNextAsync(failedEvent);
     }
 
@@ -943,8 +988,7 @@ internal sealed class ResponseOrchestrator
         IAsyncObserver<ResponseStreamEvent> publisher)
     {
         execution.Response!.SetCancelled();
-        var cancelledEvent = new ResponseFailedEvent(
-            execution.LastEmittedSequenceNumber + 1, execution.Response!.Snapshot());
+        var cancelledEvent = new ResponseFailedEvent { SequenceNumber = (int)(execution.LastEmittedSequenceNumber + 1), Response = execution.Response!.Snapshot() };
         await publisher.OnNextAsync(cancelledEvent);
     }
 
@@ -960,8 +1004,7 @@ internal sealed class ResponseOrchestrator
         IAsyncObserver<ResponseStreamEvent> publisher)
     {
         execution.Response!.SetCompleted();
-        var completedEvent = new ResponseCompletedEvent(
-            execution.LastEmittedSequenceNumber + 1, execution.Response!.Snapshot());
+        var completedEvent = new ResponseCompletedEvent { SequenceNumber = (int)(execution.LastEmittedSequenceNumber + 1), Response = execution.Response!.Snapshot() };
         await publisher.OnNextAsync(completedEvent);
     }
 
@@ -994,7 +1037,7 @@ internal sealed class ResponseOrchestrator
 
             if (exception is ResponsesApiException apiEx)
             {
-                var errorCode = apiEx.Error.Code ?? "server_error";
+                var errorCode = apiEx.Error.Code.ToString() ?? "server_error";
                 var errorMessage = apiEx.Error.Message;
                 currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorCode, errorCode);
                 currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorMessage, errorMessage);
@@ -1210,7 +1253,7 @@ internal sealed class ResponseOrchestrator
                     {
                         // Default mode: single persist at non-cancelled terminal state.
                         var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
-                        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.PlatformContext ?? PlatformContext.Empty);
+                        await _provider.CreateResponseAsync(new CreateResponsePersistRequest(execution.Response, inputItems, historyItemIds), execution.Context?.PlatformContext ?? PlatformContext.Empty);
                     }
                 }
             }
@@ -1226,7 +1269,7 @@ internal sealed class ResponseOrchestrator
                 {
                     // Clear output: items won't be available from the storage API
                     // post-sandbox, so returning them now creates a false expectation.
-                    execution.Response.Output.Clear();
+                    execution.Response.OutputItems.Clear();
                     execution.Response.SetFailed(
                         new ResponseErrorCode("storage_error"),
                         "An internal error occurred while storing the response. Subsequent retrieval is not guaranteed. Please retry the request.");

@@ -41,8 +41,8 @@ internal static partial class CompactionSummaryItemParamValidator
             else
             {
                 var strVal = encryptedContentProp.GetString()!;
-                if (strVal.Length > 10485760)
-                    errors.Add(new ValidationError("$.encrypted_content", $"String length {strVal.Length} exceeds maximum 10485760"));
+                if (strVal.Length > 104857600)
+                    errors.Add(new ValidationError("$.encrypted_content", $"String length {strVal.Length} exceeds maximum 104857600"));
             }
         }
 

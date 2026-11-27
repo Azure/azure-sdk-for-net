@@ -20,13 +20,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceArtifactReference"/>. </summary>
-        /// <param name="id"> The service artifact reference id of ServiceArtifactReference. The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ServiceArtifactReference(string id)
+        public ServiceArtifactReference()
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceArtifactReference"/>. </summary>
@@ -36,6 +31,16 @@ namespace Azure.Compute.Batch
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceArtifactReference"/>. </summary>
+        /// <param name="id"> The service artifact reference id of ServiceArtifactReference. The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public ServiceArtifactReference(string id) : this()
+        {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
         }
 
         /// <summary> The service artifact reference id of ServiceArtifactReference. The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </summary>

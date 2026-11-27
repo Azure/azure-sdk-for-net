@@ -4,55 +4,27 @@ Azure AI Search automatically encrypts indexed content at rest with [service-man
 
 ## Getting started
 
-To begin using Customer-Managed Keys (CMK), follow steps 1 through 5 to [configure customer-managed keys for data encryption](https://learn.microsoft.com/azure/search/search-security-manage-encryption-keys). This will guide you how to configure your Key Vault, register a service principal if necessary, and grant appropriate access to a service principal for a Key Vault key. This can be a key you created previously, or you can create a key that can wrap and unwrap service keys, including AES and RSA keys like in the following example:
+This sample uses the Search service's system-assigned managed identity for
+Key Vault access. Grant it Key Vault Crypto Service Encryption User on the
+vault. The test runner needs Key Vault Crypto Officer to create the key,
+along with Search and Storage roles specified in this document - [Configure customer-managed keys for Azure AI Search encrypted data](https://learn.microsoft.com/azure/search/search-security-manage-encryption-keys).
+Application IDs and application secrets are not required for this identity path.
 
-```bash
-# Create a resource group for your Key Vault and Azure AI Search service.
-# At this time, CMK is limited to certain regions including West US 2,
-# so we'll create everything in that location.
-az group create -n "<group-name>" -l westus2
-
-az keyvault create -g "<group-name>" -n "<vault-name>" -l westus2 --enable-purge-protection
-
-# Create a service principal for RBAC, or you can use Managed Identity.
-az ad sp create-for-rbac -n "<app-name>" --skip-assignment
-```
-
-The last command will provide output like the following:
-
-```json
-{
-    "appId": "<random-app-ID>",
-    "displayName": "<app-name>",
-    "name": "http://<app-name>",
-    "password": "<random-password>",
-    "tenant": "<tenant-ID>"
-}
-```
-
-Using that information, set up the Key Vault policy to allow specific access permissions and create a key:
-
-```bash
-az keyvault set-policy -n "<vault-name>" --spn "<generated-app-ID>" --certificate-permissions get --key-permissions get wrapKey unwrapKey --secret-permissions get
-
-# Create an RSA key that can wrap and unwrap service-managed keys.
-az keyvault key create --vault-name "<vault-name>" -n "<key-name>" --kty rsa --size 2048 --expires "<Y-m-d'T'H:M:S'Z'>" --ops wrapKey unwrapKey
-```
+Use a Basic-or-higher Search service and a Key Vault with Azure RBAC, soft delete,
+and purge protection enabled. Configure network access for both the caller and
+the Search service. See [configure customer-managed keys for data encryption](https://learn.microsoft.com/azure/search/search-security-manage-encryption-keys)
+for the service requirements.
 
 ## Using the encryption key
 
 Once you have a Key Vault key you can use for wrapping and unwrapping service keys, you can create a `SearchResourceEncryptionKey` with the information about the key and credentials for your service principal if not using Managed Identity.
 
-```C# Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Index
+```C# Snippet:Azure_Search_Tests_EncryptedIndex_CreateDoubleEncryptedIndex_Index
 // Create a credential to connect to Key Vault and use a specific key version created previously.
 SearchResourceEncryptionKey encryptionKey = new SearchResourceEncryptionKey(
     new Uri(Environment.GetEnvironmentVariable("KEYVAULT_URL")),
     Environment.GetEnvironmentVariable("KEYVAULT_KEY_NAME"),
-    Environment.GetEnvironmentVariable("KEYVAULT_KEY_VERSION"))
-{
-    ApplicationId = Environment.GetEnvironmentVariable("APPLICATION_ID"),
-    ApplicationSecret = Environment.GetEnvironmentVariable("APPLICATION_SECRET"),
-};
+    Environment.GetEnvironmentVariable("KEYVAULT_KEY_VERSION"));
 
 // Create a connection to our storage blob container using the credential.
 string dataSourceConnectionName = "hotels-data-source";
@@ -102,8 +74,7 @@ SearchIndexer indexer = new SearchIndexer(
 // Now connect to our Search service and set up the data source and indexer.
 // Documents already in the storage blob will begin indexing immediately.
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential);
 indexerClient.CreateDataSourceConnection(dataSourceConnection);
@@ -112,8 +83,8 @@ indexerClient.CreateIndexer(indexer);
 
 The data source connections, skillsets, indexers, and indexes are doubly encrypted, but querying the index works exactly the same as normally encrypted index encrypted by the service:
 
-```C# Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Query
-// Create a SearchClient and search for luxury hotels. In production, be sure to use the query key.
+```C# Snippet:Azure_Search_Tests_EncryptedIndex_CreateDoubleEncryptedIndex_Query
+// Create a SearchClient and search for luxury hotels. In production, grant only the roles needed for querying.
 SearchClient searchClient = new SearchClient(endpoint, "hotels", credential);
 Response<SearchResults<Hotel>> results = searchClient.Search<Hotel>("luxury hotels");
 foreach (SearchResult<Hotel> result in results.Value.GetResults())

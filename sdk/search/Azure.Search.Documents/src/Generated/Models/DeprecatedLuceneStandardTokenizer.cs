@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [Obsolete("LuceneStandardTokenizer is deprecated. Use LuceneStandardTokenizerV2 instead.")]
     internal partial class DeprecatedLuceneStandardTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of <see cref="DeprecatedLuceneStandardTokenizer"/>. </summary>

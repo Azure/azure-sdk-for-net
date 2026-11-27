@@ -302,7 +302,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Converts a string to a <see cref="ImageAnalysisSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageAnalysisSkillLanguage?(string value) => value == null ? null : new ImageAnalysisSkillLanguage(value);
+        public static implicit operator ImageAnalysisSkillLanguage?(string value) => value == null ? (ImageAnalysisSkillLanguage?)null : new ImageAnalysisSkillLanguage(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

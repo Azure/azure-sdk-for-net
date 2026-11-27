@@ -14,16 +14,8 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class UserRateMetricDefinition : ExperimentMetricDefinition
     {
         /// <summary> Initializes a new instance of <see cref="UserRateMetricDefinition"/>. </summary>
-        /// <param name="startEvent"> The start event to observe as the rate denominator. </param>
-        /// <param name="endEvent"> The end event to observe, which is a condition for the rate numerator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startEvent"/> or <paramref name="endEvent"/> is null. </exception>
-        public UserRateMetricDefinition(ObservedEvent startEvent, ObservedEvent endEvent) : base(ExperimentMetricType.UserRate)
+        public UserRateMetricDefinition() : base(ExperimentMetricType.UserRate)
         {
-            Argument.AssertNotNull(startEvent, nameof(startEvent));
-            Argument.AssertNotNull(endEvent, nameof(endEvent));
-
-            StartEvent = startEvent;
-            EndEvent = endEvent;
         }
 
         /// <summary> Initializes a new instance of <see cref="UserRateMetricDefinition"/>. </summary>

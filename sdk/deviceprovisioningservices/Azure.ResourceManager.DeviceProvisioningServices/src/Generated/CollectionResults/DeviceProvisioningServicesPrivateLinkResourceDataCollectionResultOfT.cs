@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateGetPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
+            HttpMessage message = _client.CreateListPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

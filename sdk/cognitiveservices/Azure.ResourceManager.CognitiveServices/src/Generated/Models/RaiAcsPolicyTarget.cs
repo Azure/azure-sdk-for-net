@@ -15,14 +15,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct RaiAcsPolicyTarget : IEquatable<RaiAcsPolicyTarget>
     {
         private readonly string _value;
+        /// <summary> Selects the agent initialization payload. </summary>
+        private const string AgentInitializationValue = "$snap.agent_init";
         /// <summary> Selects the incoming user input. </summary>
         private const string InputValue = "$snap.input";
+        /// <summary> Selects the model messages proposed for dispatch. </summary>
+        private const string ModelMessagesValue = "$snap.messages";
+        /// <summary> Selects the completed model response. </summary>
+        private const string ModelResponseValue = "$snap.response";
         /// <summary> Selects the assistant output. </summary>
         private const string OutputValue = "$snap.output";
         /// <summary> Selects tool-call arguments. </summary>
         private const string ToolArgumentsValue = "$snap.tool_call.args";
         /// <summary> Selects a tool result. </summary>
         private const string ToolResultValue = "$snap.tool_result.value";
+        /// <summary> Selects the final agent execution summary. </summary>
+        private const string AgentSummaryValue = "$snap.summary";
 
         /// <summary> Initializes a new instance of <see cref="RaiAcsPolicyTarget"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,8 +42,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _value = value;
         }
 
+        /// <summary> Selects the agent initialization payload. </summary>
+        public static RaiAcsPolicyTarget AgentInitialization { get; } = new RaiAcsPolicyTarget(AgentInitializationValue);
+
         /// <summary> Selects the incoming user input. </summary>
         public static RaiAcsPolicyTarget Input { get; } = new RaiAcsPolicyTarget(InputValue);
+
+        /// <summary> Selects the model messages proposed for dispatch. </summary>
+        public static RaiAcsPolicyTarget ModelMessages { get; } = new RaiAcsPolicyTarget(ModelMessagesValue);
+
+        /// <summary> Selects the completed model response. </summary>
+        public static RaiAcsPolicyTarget ModelResponse { get; } = new RaiAcsPolicyTarget(ModelResponseValue);
 
         /// <summary> Selects the assistant output. </summary>
         public static RaiAcsPolicyTarget Output { get; } = new RaiAcsPolicyTarget(OutputValue);
@@ -45,6 +62,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Selects a tool result. </summary>
         public static RaiAcsPolicyTarget ToolResult { get; } = new RaiAcsPolicyTarget(ToolResultValue);
+
+        /// <summary> Selects the final agent execution summary. </summary>
+        public static RaiAcsPolicyTarget AgentSummary { get; } = new RaiAcsPolicyTarget(AgentSummaryValue);
 
         /// <summary> Determines if two <see cref="RaiAcsPolicyTarget"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

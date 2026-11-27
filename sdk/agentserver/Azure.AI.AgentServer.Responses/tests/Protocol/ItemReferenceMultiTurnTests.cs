@@ -266,22 +266,21 @@ public class ItemReferenceMultiTurnTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test", Status = ResponseStatus.InProgress };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
-        var textContent = new MessageContentOutputTextContent(
-            "Echo reply", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var msg = new OutputItemMessage(
+        var textContent = ResponseContentPart.CreateOutputTextPart("Echo reply", Array.Empty<Annotation>());
+        var msg = MessageItemFactory.OutputMessage(
             $"msg_{Guid.NewGuid():N}",
             MessageStatus.Completed,
-            new MessageContent[] { textContent });
-        yield return new ResponseOutputItemAddedEvent(0, 0, msg);
-        yield return new ResponseOutputItemDoneEvent(0, 0, msg);
+            new ResponseContentPart[] { textContent });
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(0), Item = msg };
+        yield return new ResponseOutputItemDoneEvent { SequenceNumber = (int)(0), OutputIndex = (int)(0), Item = msg };
 
-        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test");
-        completedResponse.Output.Add(msg);
+        var completedResponse = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        completedResponse.OutputItems.Add(msg);
         completedResponse.SetCompleted();
-        yield return new ResponseCompletedEvent(0, completedResponse);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = completedResponse };
     }
 
     // ═══════════════════════════════════════════════════════════════════════

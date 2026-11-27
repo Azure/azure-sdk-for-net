@@ -23,6 +23,12 @@ model SafeFlattenInner {
   selectionType: string;
 }
 
+/** A public wire property plus independent internal state supplied by customization. */
+model IndependentInternalPropertyModel {
+  /** Public value that must remain nested when the model has independent internal state. */
+  value?: string;
+}
+
 /** Extensible enum type whose property will be overridden via [CodeGenMember]. */
 union FlattenChannel {
   string,
@@ -35,7 +41,7 @@ union FlattenChannel {
  * Also marked with @useSystemTextJsonConverter so the generated JsonConverter.Read
  * is verified to call the dynamic-model deserialization overload that takes the raw payload.
  */
-@TypeSpec.HttpClient.CSharp.dynamicModel
+@dynamicModel("csharp")
 @useSystemTextJsonConverter("csharp")
 model MultiFlattenProperties {
   /** Required property that will be customized via [CodeGenMember] to change its position. */
@@ -46,6 +52,9 @@ model MultiFlattenProperties {
 
   /** Additional property after inner to verify it is not skipped. */
   disabled?: boolean;
+
+  /** Must not safe-flatten because its model also has an independent internal property. */
+  independentInternal?: IndependentInternalPropertyModel;
 }
 
 @resource("multiFlatten")

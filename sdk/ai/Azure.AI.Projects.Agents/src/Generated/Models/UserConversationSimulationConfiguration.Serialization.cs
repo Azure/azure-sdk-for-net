@@ -70,20 +70,20 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(UserConversationSimulationConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MaxNumTurns))
+            if (Optional.IsDefined(MaxTurnCount))
             {
                 writer.WritePropertyName("max_num_turns"u8);
-                writer.WriteNumberValue(MaxNumTurns.Value);
+                writer.WriteNumberValue(MaxTurnCount.Value);
             }
             if (Optional.IsDefined(ConversationRepetitions))
             {
                 writer.WritePropertyName("conversation_repetitions"u8);
                 writer.WriteNumberValue(ConversationRepetitions.Value);
             }
-            if (Optional.IsDefined(DesiredNumTurns))
+            if (Optional.IsDefined(DesiredTurnCount))
             {
                 writer.WritePropertyName("desired_num_turns"u8);
-                writer.WriteNumberValue(DesiredNumTurns.Value);
+                writer.WriteNumberValue(DesiredTurnCount.Value);
             }
             if (Optional.IsDefined(AudioEffects))
             {
@@ -137,9 +137,9 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            int? maxNumTurns = default;
+            int? maxTurnCount = default;
             int? conversationRepetitions = default;
-            int? desiredNumTurns = default;
+            int? desiredTurnCount = default;
             UserConversationSimulationAudioEffectsConfiguration audioEffects = default;
             UserConversationSimulationUserBehaviorConfiguration userBehavior = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    maxNumTurns = prop.Value.GetInt32();
+                    maxTurnCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("conversation_repetitions"u8))
@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    desiredNumTurns = prop.Value.GetInt32();
+                    desiredTurnCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("audio_effects"u8))
@@ -196,9 +196,9 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return new UserConversationSimulationConfiguration(
-                maxNumTurns,
+                maxTurnCount,
                 conversationRepetitions,
-                desiredNumTurns,
+                desiredTurnCount,
                 audioEffects,
                 userBehavior,
                 additionalBinaryDataProperties);

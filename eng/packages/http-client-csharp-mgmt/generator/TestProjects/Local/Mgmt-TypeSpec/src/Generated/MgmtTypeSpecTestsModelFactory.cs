@@ -219,12 +219,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default);
         }
 
-        /// <summary> The FooActionRequest. </summary>
+        /// <summary> The FooActionContent. </summary>
         /// <param name="id"></param>
-        /// <returns> A new <see cref="Models.FooActionRequest"/> instance for mocking. </returns>
-        public static FooActionRequest FooActionRequest(string id = default)
+        /// <returns> A new <see cref="Models.FooActionContent"/> instance for mocking. </returns>
+        public static FooActionContent FooActionContent(string id = default)
         {
-            return new FooActionRequest(id, default);
+            return new FooActionContent(id, default);
         }
 
         /// <summary> The FooActionResult. </summary>
@@ -680,10 +680,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="type"> The resource type. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityRequest"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityRequest CheckNameAvailabilityRequest(string name = default, string @type = default)
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityContent"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityContent CheckNameAvailabilityContent(string name = default, string @type = default)
         {
-            return new CheckNameAvailabilityRequest(name, @type, default);
+            return new CheckNameAvailabilityContent(name, @type, default);
         }
 
         /// <summary> The CheckNameAvailabilityResult. </summary>
@@ -870,10 +870,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Request for querying network sibling set. </summary>
         /// <param name="location"> Location to query. </param>
         /// <param name="subscriptionId"> Subscription ID to query. </param>
-        /// <returns> A new <see cref="Models.QueryNetworkSiblingSetRequest"/> instance for mocking. </returns>
-        public static QueryNetworkSiblingSetRequest QueryNetworkSiblingSetRequest(string location = default, string subscriptionId = default)
+        /// <returns> A new <see cref="Models.QueryNetworkSiblingSetContent"/> instance for mocking. </returns>
+        public static QueryNetworkSiblingSetContent QueryNetworkSiblingSetContent(string location = default, string subscriptionId = default)
         {
-            return new QueryNetworkSiblingSetRequest(location, subscriptionId, default);
+            return new QueryNetworkSiblingSetContent(location, subscriptionId, default);
         }
 
         /// <summary>
@@ -966,12 +966,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default);
         }
 
-        /// <summary> The SAPAvailabilityZoneDetailsRequest. </summary>
+        /// <summary> The SAPAvailabilityZoneDetailsContent. </summary>
         /// <param name="preferredAvailabilityZone"> The preferred availability zone. </param>
-        /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsRequest"/> instance for mocking. </returns>
-        public static SAPAvailabilityZoneDetailsRequest SAPAvailabilityZoneDetailsRequest(string preferredAvailabilityZone = default)
+        /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsContent"/> instance for mocking. </returns>
+        public static SAPAvailabilityZoneDetailsContent SAPAvailabilityZoneDetailsContent(string preferredAvailabilityZone = default)
         {
-            return new SAPAvailabilityZoneDetailsRequest(preferredAvailabilityZone, default);
+            return new SAPAvailabilityZoneDetailsContent(preferredAvailabilityZone, default);
         }
 
         /// <summary> The SAPAvailabilityZoneDetailsResult. </summary>
@@ -1565,6 +1565,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static HcrpConfigurationAssignmentProperties HcrpConfigurationAssignmentProperties(string configurationName = default, HcrpConfigurationAssignmentPropertiesMachineComplianceStatus? machineComplianceStatus = default)
         {
             return new HcrpConfigurationAssignmentProperties(configurationName, machineComplianceStatus, default);
+        }
+
+        /// <summary> A public wire property plus independent internal state supplied by customization. </summary>
+        /// <param name="value"> Public value that must remain nested when the model has independent internal state. </param>
+        /// <returns> A new <see cref="Models.IndependentInternalPropertyModel"/> instance for mocking. </returns>
+        public static IndependentInternalPropertyModel IndependentInternalPropertyModel(string value = default)
+        {
+            return new IndependentInternalPropertyModel(value, default);
         }
 
         /// <summary>

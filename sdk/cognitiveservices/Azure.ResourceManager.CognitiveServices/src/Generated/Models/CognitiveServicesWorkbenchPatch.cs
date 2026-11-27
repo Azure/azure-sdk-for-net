@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="properties"> Properties of the workbench to update. </param>
         /// <param name="identity"> Identity for the resource. May be changed while the workbench is running only when properties is omitted or null; the change takes effect after restart. If a properties object is supplied, including an empty object or timeout-only update, changing identity requires the workbench to be stopped. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesWorkbenchPatch(WorkbenchUpdateProperties properties, CognitiveServicesComputeIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesWorkbenchPatch(CognitiveServicesWorkbenchPatchProperties properties, CognitiveServicesComputeIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Properties of the workbench to update. </summary>
         [WirePath("properties")]
-        public WorkbenchUpdateProperties Properties { get; set; }
+        public CognitiveServicesWorkbenchPatchProperties Properties { get; set; }
 
         /// <summary> Identity for the resource. May be changed while the workbench is running only when properties is omitted or null; the change takes effect after restart. If a properties object is supplied, including an empty object or timeout-only update, changing identity requires the workbench to be stopped. </summary>
         [WirePath("identity")]

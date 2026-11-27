@@ -285,7 +285,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TextAuthoringCopyProjectDetails>> AuthorizeProjectCopyAsync(TextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
-            CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
+            CopyProjectAuthorizationContent copyProjectAuthorizationRequest = new CopyProjectAuthorizationContent(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = cancellationToken.ToRequestContext();
             Response response = await AuthorizeProjectCopyAsync((RequestContent)copyProjectAuthorizationRequest, context).ConfigureAwait(false);
             return Response.FromValue((TextAuthoringCopyProjectDetails)response, response);
@@ -298,7 +298,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TextAuthoringCopyProjectDetails> AuthorizeProjectCopy(TextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
-            CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
+            CopyProjectAuthorizationContent copyProjectAuthorizationRequest = new CopyProjectAuthorizationContent(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = cancellationToken.ToRequestContext();
             Response response = AuthorizeProjectCopy((RequestContent)copyProjectAuthorizationRequest, context);
             return Response.FromValue((TextAuthoringCopyProjectDetails)response, response);

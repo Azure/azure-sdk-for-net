@@ -2018,6 +2018,36 @@ namespace Azure.Storage.Queues.Test
                 () => queueClient.GenerateSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. QueueSasBuilder.QueueName does not match Name in the Client. QueueSasBuilder.QueueName must either be left empty or match the Name in the Client"));
         }
+
+        [Test]
+        public void GenerateSas_BuilderNameWithIgnorableUnicode_IsRejected()
+        {
+            string queueName = "canary";
+            string spoofedQueueName = "can\u00ADary";
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 }));
+
+            Assert.IsTrue(string.Equals(queueName, spoofedQueueName, StringComparison.InvariantCulture));
+            Assert.IsFalse(string.Equals(queueName, spoofedQueueName, StringComparison.Ordinal));
+
+            QueueUriBuilder queueUriBuilder = new QueueUriBuilder(new Uri("https://account.queue.core.windows.net"))
+            {
+                QueueName = queueName
+            };
+
+            QueueClient queueClient = InstrumentClient(new QueueClient(
+                queueUriBuilder.ToUri(),
+                credential,
+                GetOptions()));
+
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(QueueSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(+1))
+            {
+                QueueName = spoofedQueueName
+            };
+
+            TestHelper.AssertExpectedException(
+                () => queueClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. QueueSasBuilder.QueueName does not match Name in the Client. QueueSasBuilder.QueueName must either be left empty or match the Name in the Client"));
+        }
         #endregion
 
         [Test]

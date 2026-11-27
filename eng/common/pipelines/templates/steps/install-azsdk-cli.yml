@@ -2,11 +2,13 @@ parameters:
   InstallDirectory: $(Agent.TempDirectory)
   SourceRootPath: '$(System.DefaultWorkingDirectory)'
   Condition: succeeded()
+  ContinueOnError: false
 
 steps:
   - task: Powershell@2
     displayName: 'Install Azure SDK Tools CLI'
     condition: ${{ parameters.Condition }}
+    continueOnError: ${{ parameters.ContinueOnError }}
     inputs:
       targetType: 'inline'
       script: |

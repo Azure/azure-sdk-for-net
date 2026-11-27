@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MonitorData> response = Response.FromValue(MonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MonitorData> response = Response.FromValue(MonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MonitorData> response = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MonitorData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MonitorData> response = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MonitorData> response = default;

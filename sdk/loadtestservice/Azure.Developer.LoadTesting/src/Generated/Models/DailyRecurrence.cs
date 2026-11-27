@@ -14,10 +14,8 @@ namespace Azure.Developer.LoadTesting
     public partial class DailyRecurrence : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
-        /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of days between each recurrence. </param>
-        public DailyRecurrence(int interval) : base(Frequency.Daily)
+        public DailyRecurrence() : base(Frequency.Daily)
         {
-            Interval = interval;
         }
 
         /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>

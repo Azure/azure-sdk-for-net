@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Version indicator determining which agent version backs the session.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VersionRefIndicator"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VersionReferenceIndicator"/>.
     /// </summary>
     public abstract partial class VersionIndicator
     {

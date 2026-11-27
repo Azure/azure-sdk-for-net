@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        internal HttpMessage CreateGetDhcpRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
+        internal HttpMessage CreateListDhcpRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        internal HttpMessage CreateNextGetDhcpRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
+        internal HttpMessage CreateNextListDhcpRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        internal HttpMessage CreateGetPortMirroringRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
+        internal HttpMessage CreateListPortMirroringRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        internal HttpMessage CreateNextGetPortMirroringRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
+        internal HttpMessage CreateNextListPortMirroringRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -15,11 +15,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Recurrence model when frequency is set as Daily. </summary>
     public partial class DailyRecurrence : LoadTestingRecurrence, IJsonModel<DailyRecurrence>
     {
-        /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/> for deserialization. </summary>
-        internal DailyRecurrence()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LoadTestingRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

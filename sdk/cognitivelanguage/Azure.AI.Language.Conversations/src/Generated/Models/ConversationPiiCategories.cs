@@ -192,7 +192,7 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Converts a string to a <see cref="ConversationPiiCategories"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationPiiCategories?(string value) => value == null ? null : new ConversationPiiCategories(value);
+        public static implicit operator ConversationPiiCategories?(string value) => value == null ? (ConversationPiiCategories?)null : new ConversationPiiCategories(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

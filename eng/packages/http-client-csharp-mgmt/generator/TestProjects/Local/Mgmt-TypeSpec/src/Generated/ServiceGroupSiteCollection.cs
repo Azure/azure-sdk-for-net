@@ -90,7 +90,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _serviceGroupSitesRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, ServiceGroupSiteData.ToRequestContent(data), context);
+                HttpMessage message = _serviceGroupSitesRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, ServiceGroupSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ServiceGroupSiteResource> operation = new TestsArmOperation<ServiceGroupSiteResource>(
                     new ServiceGroupSiteResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _serviceGroupSitesRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, ServiceGroupSiteData.ToRequestContent(data), context);
+                HttpMessage message = _serviceGroupSitesRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, ServiceGroupSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ServiceGroupSiteResource> operation = new TestsArmOperation<ServiceGroupSiteResource>(
                     new ServiceGroupSiteResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
+                HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceGroupSiteData> response = Response.FromValue(ServiceGroupSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
+                HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceGroupSiteData> response = Response.FromValue(ServiceGroupSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -359,7 +359,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
+                HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceGroupSiteData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
+                HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceGroupSiteData> response = default;
@@ -473,7 +473,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
+                HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceGroupSiteData> response = default;
@@ -534,7 +534,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
+                HttpMessage message = _serviceGroupSitesRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceGroupSiteData> response = default;

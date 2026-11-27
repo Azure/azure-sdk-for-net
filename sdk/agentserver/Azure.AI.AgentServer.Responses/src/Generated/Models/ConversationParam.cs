@@ -6,23 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Conversation object. </summary>
-    public partial class ConversationParam
+    internal partial class ConversationParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationParam"/>. </summary>
         /// <param name="id"> The unique ID of the conversation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ConversationParam(string id)
+        internal ConversationParam(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 
@@ -36,6 +31,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The unique ID of the conversation. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }

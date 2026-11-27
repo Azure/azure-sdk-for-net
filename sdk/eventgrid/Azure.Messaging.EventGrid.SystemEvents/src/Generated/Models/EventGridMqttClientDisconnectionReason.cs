@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Converts a string to a <see cref="EventGridMqttClientDisconnectionReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGridMqttClientDisconnectionReason?(string value) => value == null ? null : new EventGridMqttClientDisconnectionReason(value);
+        public static implicit operator EventGridMqttClientDisconnectionReason?(string value) => value == null ? (EventGridMqttClientDisconnectionReason?)null : new EventGridMqttClientDisconnectionReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

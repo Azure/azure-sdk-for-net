@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.CognitiveServices
     {
         private readonly ClientDiagnostics _accountsClientDiagnostics;
         private readonly Accounts _accountsRestClient;
+        private readonly ClientDiagnostics _attachedAksClustersClientDiagnostics;
+        private readonly AttachedAksClusters _attachedAksClustersRestClient;
         private readonly CognitiveServicesAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts";
@@ -52,8 +54,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CognitiveServicesAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            TryGetApiVersion(ResourceType, out string cognitiveServicesAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2026-09-15-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2026-11-15-preview");
+            _attachedAksClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _attachedAksClustersRestClient = new AttachedAksClusters(_attachedAksClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-11-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +159,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +207,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +266,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +325,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +374,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +423,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -473,7 +478,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -528,7 +533,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -580,7 +585,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -632,7 +637,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -680,7 +685,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -728,7 +733,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -766,7 +771,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -804,7 +809,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -842,7 +847,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -880,7 +885,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -920,7 +925,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -960,7 +965,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -998,7 +1003,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1036,7 +1041,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1088,7 +1093,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1125,6 +1130,100 @@ namespace Azure.ResourceManager.CognitiveServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists lightweight AKS attachment summaries for the account.
+        /// Use GET on an individual attachment to retrieve its full status and bindings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/attachedAksClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedAksClusters_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter expression for attachment summaries. </param>
+        /// <param name="orderby"> OData ordering expression for attachment summaries. </param>
+        /// <param name="maxCount"> Maximum number of attachments per page, from 1 to 100. Defaults to 50. </param>
+        /// <param name="skip"> Number of attachments to skip. Defaults to zero. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AttachedAksClusterListItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AttachedAksClusterListItem> GetAllAsync(string filter = default, string @orderby = default, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AttachedAksClusterListItemAsyncCollectionResultOfT(
+                _attachedAksClustersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                @orderby,
+                maxCount,
+                skip,
+                context,
+                "CognitiveServicesAccountResource.GetAll");
+        }
+
+        /// <summary>
+        /// Lists lightweight AKS attachment summaries for the account.
+        /// Use GET on an individual attachment to retrieve its full status and bindings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/attachedAksClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedAksClusters_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-11-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter expression for attachment summaries. </param>
+        /// <param name="orderby"> OData ordering expression for attachment summaries. </param>
+        /// <param name="maxCount"> Maximum number of attachments per page, from 1 to 100. Defaults to 50. </param>
+        /// <param name="skip"> Number of attachments to skip. Defaults to zero. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AttachedAksClusterListItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AttachedAksClusterListItem> GetAll(string filter = default, string @orderby = default, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AttachedAksClusterListItemCollectionResultOfT(
+                _attachedAksClustersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                @orderby,
+                maxCount,
+                skip,
+                context,
+                "CognitiveServicesAccountResource.GetAll");
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -1397,6 +1496,39 @@ namespace Azure.ResourceManager.CognitiveServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of AttachedAksClusters in the <see cref="CognitiveServicesAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AttachedAksClusters and their operations over a AttachedAksClusterResource. </returns>
+        public virtual AttachedAksClusterCollection GetAttachedAksClusters()
+        {
+            return GetCachedClient(client => new AttachedAksClusterCollection(client, Id));
+        }
+
+        /// <summary> Gets an AKS attachment and its current provisioning and health status. </summary>
+        /// <param name="attachedAksClusterName"> The name of the account-level AKS attachment. It must contain 1-63 letters, digits, periods, underscores, or hyphens, and start and end with a letter or digit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="attachedAksClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedAksClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AttachedAksClusterResource>> GetAttachedAksClusterAsync(string attachedAksClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attachedAksClusterName, nameof(attachedAksClusterName));
+
+            return await GetAttachedAksClusters().GetAsync(attachedAksClusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an AKS attachment and its current provisioning and health status. </summary>
+        /// <param name="attachedAksClusterName"> The name of the account-level AKS attachment. It must contain 1-63 letters, digits, periods, underscores, or hyphens, and start and end with a letter or digit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="attachedAksClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedAksClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AttachedAksClusterResource> GetAttachedAksCluster(string attachedAksClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attachedAksClusterName, nameof(attachedAksClusterName));
+
+            return GetAttachedAksClusters().Get(attachedAksClusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CognitiveServicesPrivateEndpointConnections in the <see cref="CognitiveServicesAccountResource"/>. </summary>
@@ -2066,8 +2198,8 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCachedClient(client => new CognitiveServicesAccountCostControlCollection(client, Id));
         }
 
-        /// <summary> Gets a cost control. </summary>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <summary> Gets an account-owned cost control and its representation entity tag. </summary>
+        /// <param name="costControlName"> The cost-control name. Names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2079,8 +2211,8 @@ namespace Azure.ResourceManager.CognitiveServices
             return await GetCognitiveServicesAccountCostControls().GetAsync(costControlName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a cost control. </summary>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <summary> Gets an account-owned cost control and its representation entity tag. </summary>
+        /// <param name="costControlName"> The cost-control name. Names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>

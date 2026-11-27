@@ -18,19 +18,6 @@ namespace Azure.Messaging.WebPubSub.Chat
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubChatMessage"/>. </summary>
-        /// <param name="createdBy"> User who created the message. </param>
-        /// <param name="content"> Message content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createdBy"/> or <paramref name="content"/> is null. </exception>
-        public WebPubSubChatMessage(string createdBy, WebPubSubChatMessageContent content)
-        {
-            Argument.AssertNotNull(createdBy, nameof(createdBy));
-            Argument.AssertNotNull(content, nameof(content));
-
-            CreatedBy = createdBy;
-            Content = content;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebPubSubChatMessage"/>. </summary>
         /// <param name="id"> Message identifier. </param>
         /// <param name="createdBy"> User who created the message. </param>
         /// <param name="content"> Message content. </param>

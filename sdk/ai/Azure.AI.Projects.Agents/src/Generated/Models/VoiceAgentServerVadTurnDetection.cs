@@ -10,10 +10,8 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Server-side voice activity detection. </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceAgentServerVadTurnDetection : VoiceAgentTurnDetectionConfig
+    public partial class VoiceAgentServerVadTurnDetection : VoiceAgentTurnDetectionConfiguration
     {
-        private long? _idleTimeoutMs;
-        private bool _idleTimeoutMsIsDefined;
         private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;
         private bool _endOfUtteranceDetectionIsDefined;
 
@@ -27,56 +25,45 @@ namespace Azure.AI.Projects.Agents
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"></param>
-        /// <param name="silenceDurationMs"></param>
-        /// <param name="createResponse"></param>
-        /// <param name="interruptResponse"></param>
-        /// <param name="idleTimeoutMs"></param>
-        /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
+        /// <param name="prefixPadding"></param>
+        /// <param name="silenceDuration"></param>
+        /// <param name="createResponseEnabled"></param>
+        /// <param name="interruptResponseEnabled"></param>
+        /// <param name="idleTimeout"></param>
+        /// <param name="speechDuration"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
-        internal VoiceAgentServerVadTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, double? threshold, long? prefixPaddingMs, long? silenceDurationMs, bool? createResponse, bool? interruptResponse, long? idleTimeoutMs, TimeSpan? speechDurationMs, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection) : base(@type, autoTruncate, additionalBinaryDataProperties)
+        internal VoiceAgentServerVadTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, double? threshold, TimeSpan? prefixPadding, TimeSpan? silenceDuration, bool? createResponseEnabled, bool? interruptResponseEnabled, TimeSpan? idleTimeout, TimeSpan? speechDuration, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Threshold = threshold;
-            PrefixPaddingMs = prefixPaddingMs;
-            SilenceDurationMs = silenceDurationMs;
-            CreateResponse = createResponse;
-            InterruptResponse = interruptResponse;
-            _idleTimeoutMs = idleTimeoutMs;
-            SpeechDurationMs = speechDurationMs;
+            PrefixPadding = prefixPadding;
+            SilenceDuration = silenceDuration;
+            CreateResponseEnabled = createResponseEnabled;
+            InterruptResponseEnabled = interruptResponseEnabled;
+            IdleTimeout = idleTimeout;
+            SpeechDuration = speechDuration;
             _endOfUtteranceDetection = endOfUtteranceDetection;
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
         public double? Threshold { get; set; }
 
-        /// <summary> Gets or sets the PrefixPaddingMs. </summary>
-        public long? PrefixPaddingMs { get; set; }
+        /// <summary> Gets or sets the PrefixPadding. </summary>
+        public TimeSpan? PrefixPadding { get; set; }
 
-        /// <summary> Gets or sets the SilenceDurationMs. </summary>
-        public long? SilenceDurationMs { get; set; }
+        /// <summary> Gets or sets the SilenceDuration. </summary>
+        public TimeSpan? SilenceDuration { get; set; }
 
-        /// <summary> Gets or sets the CreateResponse. </summary>
-        public bool? CreateResponse { get; set; }
+        /// <summary> Gets or sets the CreateResponseEnabled. </summary>
+        public bool? CreateResponseEnabled { get; set; }
 
-        /// <summary> Gets or sets the InterruptResponse. </summary>
-        public bool? InterruptResponse { get; set; }
+        /// <summary> Gets or sets the InterruptResponseEnabled. </summary>
+        public bool? InterruptResponseEnabled { get; set; }
 
-        /// <summary> Gets or sets the IdleTimeoutMs. </summary>
-        public long? IdleTimeoutMs
-        {
-            get
-            {
-                return _idleTimeoutMs;
-            }
-            set
-            {
-                _idleTimeoutMs = value;
-                _idleTimeoutMsIsDefined = true;
-            }
-        }
+        /// <summary> Gets or sets the IdleTimeout. </summary>
+        public TimeSpan? IdleTimeout { get; set; }
 
         /// <summary> Minimum speech duration required to trigger detection, in milliseconds. </summary>
-        public TimeSpan? SpeechDurationMs { get; set; }
+        public TimeSpan? SpeechDuration { get; set; }
 
         /// <summary> Semantic end-of-utterance detection configuration. Set to null to disable it. </summary>
         public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection

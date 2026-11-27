@@ -51,7 +51,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Converts a string to a <see cref="DataSchema"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataSchema?(string value) => value == null ? null : new DataSchema(value);
+        public static implicit operator DataSchema?(string value) => value == null ? (DataSchema?)null : new DataSchema(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

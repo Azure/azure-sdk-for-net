@@ -78,7 +78,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _endpointResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), endpointName, EndpointResourceData.ToRequestContent(data), context);
+                HttpMessage message = _endpointResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), endpointName, EndpointResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _endpointResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), endpointName, EndpointResourceData.ToRequestContent(data), context);
+                HttpMessage message = _endpointResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), endpointName, EndpointResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -339,7 +339,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EndpointResourceData> response = default;
@@ -396,7 +396,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EndpointResourceData> response = default;
@@ -453,7 +453,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EndpointResourceData> response = default;
@@ -514,7 +514,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.ToString(), endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EndpointResourceData> response = default;

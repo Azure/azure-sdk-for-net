@@ -55,7 +55,7 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
 
         string annotation = "";
         string text = "";
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
+        await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -86,79 +86,6 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
 
         #region Snippet:Sample_Cleanup_AzureAISearchStreaming_Async
         await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        #endregion
-    }
-
-    [Test]
-    [SyncOnly]
-    public void AzureAISearchSync()
-    {
-        IgnoreSampleMayBe();
-#if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var aiSearchConnectionName = System.Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME");
-#else
-        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var aiSearchConnectionName = TestEnvironment.AI_SEARCH_CONNECTION_NAME;
-#endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-
-        #region Snippet:Sample_CreateAgent_AzureAISearchStreaming_Sync
-        AzureAISearchToolIndex index = new()
-        {
-            ProjectConnectionId = aiSearchConnectionName,
-            IndexName = "sample_index",
-            TopK = 5,
-            Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryKind.Simple
-        };
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-            Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
-        };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-            agentName: "myAgent",
-            options: new(agentDefinition));
-        #endregion
-        #region Snippet:Sample_StreamResponse_AzureAISearchStreaming_Sync
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-
-        string annotation = "";
-        string text = "";
-        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming("What is the temperature rating of the cozynights sleeping bag?"))
-        {
-            if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
-            {
-                Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
-            }
-            else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
-            {
-                Console.WriteLine($"Delta: {textDelta.Delta}");
-            }
-            else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
-            {
-                text = textDoneUpdate.Text;
-            }
-            else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
-            {
-                if (annotation.Length == 0)
-                {
-                    annotation = GetFormattedAnnotation(itemDoneUpdate.Item);
-                }
-            }
-            else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
-            {
-                throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}");
-            }
-        }
-        Console.WriteLine($"{text}{annotation}");
-        #endregion
-
-        #region Snippet:Sample_Cleanup_AzureAISearchStreaming_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

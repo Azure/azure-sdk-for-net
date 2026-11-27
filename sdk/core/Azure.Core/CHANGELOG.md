@@ -1,10 +1,22 @@
 # Release History
 
-## 1.65.0-beta.1 (Unreleased)
+## 1.66.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed `RequestHeaders.Add` and `RequestHeaders.SetValue` to reject header values containing carriage return (`\r`), line feed (`\n`), or NUL (`\0`) characters to prevent header injection. These methods now throw `ArgumentException` for such values.
+
+### Other Changes
+
+## 1.65.0 (2026-11-09)
+
+### Features Added
+
+- Added support for Azure Arc user-assigned managed identities. `ManagedIdentityCredential` supports selection by client ID, resource ID, or object ID; `DefaultAzureCredential` supports selection through its client ID and resource ID options.
 
 ### Bugs Fixed
 

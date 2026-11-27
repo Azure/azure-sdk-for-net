@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync(AzureLocation? location = null)
         {
-            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            var resourceGroupName = Recording.GenerateId("testRG-", 64);
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                         { "test", "env" }
                     }
                 });
+            TestContext.Progress.WriteLine($"Created test resource group: {rgOp.Value.Id}");
             return rgOp.Value;
         }
     }

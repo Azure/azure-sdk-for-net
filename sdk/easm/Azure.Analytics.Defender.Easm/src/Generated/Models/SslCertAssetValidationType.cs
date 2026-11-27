@@ -53,7 +53,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Converts a string to a <see cref="SslCertAssetValidationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SslCertAssetValidationType?(string value) => value == null ? null : new SslCertAssetValidationType(value);
+        public static implicit operator SslCertAssetValidationType?(string value) => value == null ? (SslCertAssetValidationType?)null : new SslCertAssetValidationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

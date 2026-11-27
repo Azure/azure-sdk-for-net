@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
     public partial class RubricBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<RubricBasedEvaluatorDefinition>

@@ -53,8 +53,8 @@ relaxes the hard breaking-change or Framework Design Guideline rules in `review-
 1. **Open-ended review:** bugs, security, correctness, reliability, concurrency, resource lifetime,
    tests, performance, and maintainability.
 2. **Hard rules:** `references/review-quality.md`.
-3. **Azure SDK repository rules:** relevant sections of `references/repository-rules.md`,
-   including management-specific clauses for the owning library.
+3. **Azure SDK repository rules:** relevant sections of `references/repository-rules.md` and
+   `references/naming-rules.md`, including management-specific clauses for the owning library.
 4. **Derived convention:** local project, then repository, then ecosystem practice.
 
 Do not emit duplicate findings when multiple layers identify the same problem.
@@ -76,19 +76,24 @@ evidence is unavailable, state the limitation rather than inventing a baseline o
 ### 2. Load only the relevant repository-rule sections
 
 Use the changed paths and symbols to select sections from
-[references/repository-rules.md](references/repository-rules.md):
+[references/repository-rules.md](references/repository-rules.md) and
+[references/naming-rules.md](references/naming-rules.md):
 
 | Changed area | Sections to consult |
 |---|---|
 | Root configuration, `eng/**`, shared props/targets | Authoritative Guidelines; Shared Configuration; Analyzer Warnings and Suppressions; Packaging, Versioning, Dependencies |
 | `.github/CODEOWNERS*`, labels, ownership files | CODEOWNERS and Labels |
-| `api/*.cs`, new or changed `public`/`protected` API | Breaking Changes; Client Design; Naming; Semantic Value Types; Commonly Overlooked; Generated Code |
-| Client or model implementation under `src/**` | Client Design; Naming; Semantic Value Types; Analyzer Warnings and Suppressions; Implementation |
+| `api/*.cs`, new or changed `public`/`protected` API | Breaking Changes; Client Design; Naming; Semantic Value Types; Commonly Overlooked; Generated Code; Packaging, Versioning, Dependencies |
+| Client or model implementation under `src/**` | Client Design; Naming; Semantic Value Types; Analyzer Warnings and Suppressions; Implementation; Packaging, Versioning, Dependencies |
+| Client or credential construction: a new constructor, parameter, options property, or credential type, or new supported values, identity kinds, or hosts — also when only the changelog or PR description shows it | Client Design; Testing |
+| Design doc or proposal that sketches API or implementation, such as `design/*.md` | The rows for the code it plans, applied to the planned shape as if it were in the diff |
 | Management library | Applicable sections above; management clauses in Naming and Packaging, Versioning, Dependencies |
 | Tests, test projects, test infrastructure | Analyzer Warnings and Suppressions; Testing |
 | `.csproj`, package versions, references, feeds, CPM files | Shared Configuration; Packaging, Versioning, Dependencies |
+| `CHANGELOG.md` | Packaging, Versioning, Dependencies |
 | README, samples, snippets, doc settings, links | Docs & Samples; Broken-Link Ignores |
 | Generated output, TypeSpec/AutoRest configuration | Generated Code; Breaking Changes; Naming; Semantic Value Types |
+| `.github/skills/code-review/references/*.md` | Code-Review Skill |
 
 Consult additional sections whenever the diff crosses concerns. Do not load an unrelated section
 merely to manufacture findings.
@@ -124,3 +129,4 @@ When no candidate survives the evidence filter, leave no comments.
 
 - [Review quality and general rules](references/review-quality.md)
 - [Azure SDK for .NET repository rules](references/repository-rules.md)
+- [C# naming rules](references/naming-rules.md)

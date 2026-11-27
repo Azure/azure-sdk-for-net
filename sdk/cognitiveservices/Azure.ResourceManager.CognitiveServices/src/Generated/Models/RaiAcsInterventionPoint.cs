@@ -29,15 +29,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             PolicyTarget = policyTarget;
             PolicyTargetKind = policyTargetKind;
             Policy = policy;
+            Annotations = new ChangeTrackingDictionary<string, RaiAcsAnnotationBinding>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RaiAcsInterventionPoint"/>. </summary>
         /// <param name="policyTarget"> The canonical Agent Hooks snapshot path projected as the policy target. </param>
         /// <param name="policyTargetKind"> The semantic kind of the projected policy target. </param>
         /// <param name="policy"> The logical policy evaluated at this intervention point. </param>
-        /// <param name="annotations"> Standard Agent Control Specification annotation bindings are disabled; when present, this object must be empty. </param>
+        /// <param name="annotations"> Optional annotator bindings keyed by declaration name. Results are available to Rego as input.annotations.&lt;name&gt;. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiAcsInterventionPoint(RaiAcsPolicyTarget policyTarget, RaiAcsPolicyTargetKind policyTargetKind, RaiAcsPolicyBinding policy, RaiAcsEmptyObject annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiAcsInterventionPoint(RaiAcsPolicyTarget policyTarget, RaiAcsPolicyTargetKind policyTargetKind, RaiAcsPolicyBinding policy, IDictionary<string, RaiAcsAnnotationBinding> annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyTarget = policyTarget;
             PolicyTargetKind = policyTargetKind;
@@ -58,8 +59,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [WirePath("policy")]
         public RaiAcsPolicyBinding Policy { get; set; }
 
-        /// <summary> Standard Agent Control Specification annotation bindings are disabled; when present, this object must be empty. </summary>
+        /// <summary> Optional annotator bindings keyed by declaration name. Results are available to Rego as input.annotations.&lt;name&gt;. </summary>
         [WirePath("annotations")]
-        public RaiAcsEmptyObject Annotations { get; set; }
+        public IDictionary<string, RaiAcsAnnotationBinding> Annotations { get; }
     }
 }

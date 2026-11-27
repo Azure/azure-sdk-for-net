@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> A page of cost controls. </summary>
+    /// <summary> A page of cost controls owned by an account. </summary>
     internal partial class CostControlListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CostControlListResult"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of cost controls. </param>
+        /// <param name="nextLink"> The link used to retrieve the next page, when present. </param>
         /// <param name="value"> The cost controls in this page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CostControlListResult(Uri nextLink, IList<CognitiveServicesAccountCostControlData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The link used to get the next page of cost controls. </summary>
+        /// <summary> The link used to retrieve the next page, when present. </summary>
         [WirePath("nextLink")]
         public Uri NextLink { get; }
 

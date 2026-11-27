@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using Azure;
 
@@ -15,6 +17,8 @@ namespace Azure.ResourceManager.NetApp.Models
     // The 2026 TypeSpec model removed the legacy Entra ID patch wrapper.
     // Keep the old source surface for compatibility with prior SDK releases.
     /// <summary> Entra ID Azure Key Vault configuration patch. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     public partial class EntraIdAkvConfigPatch : IJsonModel<EntraIdAkvConfigPatch>, IPersistableModel<EntraIdAkvConfigPatch>
     {
         /// <summary> Initializes a new instance of <see cref="EntraIdAkvConfigPatch"/>. </summary>
@@ -30,6 +34,58 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The user-assigned managed identity. </summary>
         public Azure.Core.ResourceIdentifier UserAssignedIdentity { get; set; }
+
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        internal static EntraIdAkvConfigPatch DeserializeEntraIdAkvConfigPatch(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri azureKeyVaultUri = default;
+            string certificateName = default;
+            Azure.Core.ResourceIdentifier userAssignedIdentity = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("azureKeyVaultUri"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureKeyVaultUri = new Uri(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("certificateName"u8))
+                {
+                    certificateName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("userAssignedIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userAssignedIdentity = new Azure.Core.ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                }
+            }
+            return new EntraIdAkvConfigPatch
+            {
+                AzureKeyVaultUri = azureKeyVaultUri,
+                CertificateName = certificateName,
+                UserAssignedIdentity = userAssignedIdentity,
+                _additionalBinaryDataProperties = additionalBinaryDataProperties
+            };
+        }
 
         protected virtual EntraIdAkvConfigPatch PersistableModelCreateCore(System.BinaryData data, ModelReaderWriterOptions options)
         {

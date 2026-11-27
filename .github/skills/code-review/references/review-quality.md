@@ -1,5 +1,7 @@
 # Review Quality and General Rules
 
+<!-- § anchors are shared permalinks: never rename or reuse one, and give each new rule a unique name using its section's prefix. -->
+
 These rules augment the review agent's normal open-ended analysis. They are minimum checks, not
 an exhaustive checklist. Continue looking for bugs, security issues, correctness failures,
 reliability problems, concurrency hazards, resource leaks, test gaps, and maintainability or
@@ -7,22 +9,22 @@ performance regressions that are not named here.
 
 ## Scope and Evidence
 
-- Review code added or modified by the change and regressions directly caused by it. Do not mine
+- <a name="scope-changed-code" href="#scope-changed-code">§</a> Review code added or modified by the change and regressions directly caused by it. Do not mine
   unrelated, unchanged code. A severe correctness, security, or breaking-change issue may be
   reported when the changed code exposes or depends on it; explain that connection.
-- Read the pull request description, linked issues, existing review comments, and resolved or
+- <a name="scope-prior-discussion" href="#scope-prior-discussion">§</a> Read the pull request description, linked issues, existing review comments, and resolved or
   outdated threads before commenting. Do not duplicate a finding that has already been raised or
   relitigate an explicitly settled decision without new evidence.
-- Read enough surrounding code and repository configuration to establish the local convention.
+- <a name="scope-local-convention" href="#scope-local-convention">§</a> Read enough surrounding code and repository configuration to establish the local convention.
   A diff hunk alone is not sufficient evidence.
-- Every finding must identify direct evidence, a concrete consequence, and a recommended
+- <a name="scope-evidence" href="#scope-evidence">§</a> Every finding must identify direct evidence, a concrete consequence, and a recommended
   correction. If any of those is missing, omit the finding.
-- Check documented exceptions and allowed cases before reporting a rule violation. Try to
+- <a name="scope-exceptions" href="#scope-exceptions">§</a> Check documented exceptions and allowed cases before reporting a rule violation. Try to
   disprove each candidate finding.
-- Do not repeat diagnostics that normal CI or analyzers will already report unless the change
+- <a name="scope-ci-diagnostics" href="#scope-ci-diagnostics">§</a> Do not repeat diagnostics that normal CI or analyzers will already report unless the change
   adds or widens an opt-out, suppression, baseline, allow-list entry, or other way around the
   enforcement.
-- Prefer silence over generic advice, speculative concerns, style preferences, or observations
+- <a name="scope-prefer-silence" href="#scope-prefer-silence">§</a> Prefer silence over generic advice, speculative concerns, style preferences, or observations
   that do not ask the author to change anything.
 
 ## Hard Rules
@@ -33,7 +35,7 @@ These are not judgment calls. A violation is always 🔴.
 
 **Always report** a concrete incompatibility with a GA-shipped contract.
 
-**All breaking-change checks apply only to APIs and observable contracts that have shipped in a
+<a name="h1-ga-only" href="#h1-ga-only">§</a> **All breaking-change checks apply only to APIs and observable contracts that have shipped in a
 GA (stable) release, evaluated individually.** A package, enclosing type, or neighboring member
 having shipped GA does not establish that this API has; a preview candidate does not undo an
 API's GA history. Protect the API's GA contract, not every subsequent preview-only shape.
@@ -42,37 +44,37 @@ API additions, edits, removals, and renames are not findings by themselves. Beta
 never-shipped contracts may change. Continue checking changed APIs against other applicable
 design, correctness, and repository rules.
 
-For an established GA contract, classify by what changed and how it manifests. Use
+<a name="h1-classification" href="#h1-classification">§</a> For an established GA contract, classify by what changed and how it manifests. Use
 [dotnet/runtime's breaking-change rules](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-change-rules.md)
 as the authoritative source for what qualifies in each category and why — it covers both
 source/binary-compatibility changes and behavioral changes. Do not re-derive examples from
 memory; consult it for borderline cases.
 
-**API-breaking — never permitted in any release (major, minor, or patch).**
+<a name="h1-api-breaking" href="#h1-api-breaking">§</a> **API-breaking — never permitted in any release (major, minor, or patch).**
 Existing code fails to compile or bind.
 
-**Binary-breaking — never permitted in minor or patch releases.**
+<a name="h1-binary-breaking" href="#h1-binary-breaking">§</a> **Binary-breaking — never permitted in minor or patch releases.**
 Public API shape is unchanged but pre-compiled callers break or silently misbehave.
 
-**Source-breaking — major release only, with documented justification.**
+<a name="h1-source-breaking" href="#h1-source-breaking">§</a> **Source-breaking — major release only, with documented justification.**
 API only grew, but recompiling existing source resolves differently or fails.
 
-**Behavioral breaks count too.** Same signature, different observable behavior is a break.
+<a name="h1-behavioral-breaks" href="#h1-behavioral-breaks">§</a> **Behavioral breaks count too.** Same signature, different observable behavior is a break.
 The one explicitly required exception: bumping a GA client options constructor's
-`ServiceVersion` default to the latest supported service version (see Client Design) is not a
-finding.
+`ServiceVersion` default to the latest supported service version (see
+[Client Design](repository-rules.md#client-options)) is not a finding.
 
 **How to check:**
-- Establish each affected API's GA contract using released reference assemblies or
+- <a name="h1-establish-ga-contract" href="#h1-establish-ga-contract">§</a> Establish each affected API's GA contract using released reference assemblies or
   release-tagged source. If release history is unavailable, state the limitation; do not turn
   an API diff or uncertainty alone into a finding.
-- Diff the public surface and implementation, and compare the changed behavior or signature
+- <a name="h1-compare-against-ga" href="#h1-compare-against-ga">§</a> Diff the public surface and implementation, and compare the changed behavior or signature
   against that GA contract. Checked-in API listings locate candidate changes; their presence,
   additions, removals, or edits do not establish release history or incompatibility.
-- Check actual effects on GA callers even when their API is unchanged: a new overload can
+- <a name="h1-caller-effects" href="#h1-caller-effects">§</a> Check actual effects on GA callers even when their API is unchanged: a new overload can
   alter resolution at an existing call site. Conversely, editing a preview-only shape to
   restore the GA contract is not a break merely because the listing changed.
-- For an actual GA incompatibility, recommend preserving the GA API and behavior, adding a
+- <a name="h1-preserve-ga-api" href="#h1-preserve-ga-api">§</a> For an actual GA incompatibility, recommend preserving the GA API and behavior, adding a
   compatible API alongside it when needed. Do not require aliases or overloads solely to
   preserve beta-only or never-shipped contracts.
 
@@ -85,82 +87,67 @@ point, not the full set. Consult the source document when the diff touches an ar
 listed here.
 
 **Naming**
-- PascalCase for types, members, namespaces; camelCase for parameters and locals
-- No abbreviations or acronym soup; acronyms of 2 letters stay upper (`IO`), 3+ are Pascal
-  (`Http`, `Xml`, `Uri`). `Id` and `Vm` are explicit naming exceptions
-- Before recommending expansion of an unfamiliar acronym, check domain documentation and usage
-  for the intended audience. Personal unfamiliarity or search-result ranking is not enough
-- No Hungarian notation; no type names in member names
-- No generic/vague names — `OperationResponse`, `DataCollection`, `Manager`, `Helper`,
-  `Utility`, `Info` are smells
-- Assess public type names in normal unqualified use. Add domain context when needed for meaning,
-  not a mechanical provider prefix. Assess enum members with their enclosing enum
-- Async methods end in `Async`; `Try*` methods return `bool` with an `out` result
-- Boolean members read affirmatively (`IsEnabled`, not `IsNotDisabled`)
-- Numeric durations or time intervals with fixed units name those units, consistently with the
-  contract and conversion logic. This does not apply to `TimeSpan` or explicitly selectable units
+
+Apply the [hard naming checks](naming-rules.md#framework-design-guideline-naming--hard-rules),
+including enum naming, along with the Framework Design Guidelines as written.
 
 **Type design**
-- Prefer classes over interfaces. **Do not introduce an interface** unless you need multiple
+- <a name="fdg-prefer-classes" href="#fdg-prefer-classes">§</a> Prefer classes over interfaces. **Do not introduce an interface** unless you need multiple
   inheritance or structs must implement it — use an abstract class instead
-- Do not introduce an abstraction (interface or abstract class) unless the API both **returns
+- <a name="fdg-abstractions" href="#fdg-abstractions">§</a> Do not introduce an abstraction (interface or abstract class) unless the API both **returns
   and consumes** it
-- No empty types (types with no members)
-- Structs only for small, immutable, value-semantic data; must have a meaningful default
+- <a name="fdg-empty-types" href="#fdg-empty-types">§</a> No empty types (types with no members)
+- <a name="fdg-structs" href="#fdg-structs">§</a> Structs only for small, immutable, value-semantic data; must have a meaningful default
   (all-zero) state
-- Prefer sealed by default for new types not designed for inheritance; document the extension
+- <a name="fdg-sealed-types" href="#fdg-sealed-types">§</a> Prefer sealed by default for new types not designed for inheritance; document the extension
   points you do allow
-- Prefer immutability for types shared across threads
+- <a name="fdg-immutability" href="#fdg-immutability">§</a> Prefer immutability for types shared across threads
 
 **Members**
-- Properties for logical data, methods for actions. Properties must not throw for simple
+- <a name="fdg-properties-vs-methods" href="#fdg-properties-vs-methods">§</a> Properties for logical data, methods for actions. Properties must not throw for simple
   gets, must not be order-dependent, and must be cheap
-- No `ref`/`out` in public APIs unless implementing `Try*`
-- Do not add a new overload that differs from an existing one only by optionality — it's an
+- <a name="fdg-ref-out-parameters" href="#fdg-ref-out-parameters">§</a> No `ref`/`out` in public APIs unless implementing `Try*`
+- <a name="fdg-optional-overloads" href="#fdg-optional-overloads">§</a> Do not add a new overload that differs from an existing one only by optionality — it's an
   ambiguous, confusing overload set for callers. Giving an already-shipped parameter a default
   value is not this (it's an additive change, not a new overload) and is not a finding by
   itself; flag it only under H1, and only with concrete evidence that it breaks overload
   resolution at an existing call site
-- Validate all public/protected inputs and throw the right exception:
+- <a name="fdg-argument-validation" href="#fdg-argument-validation">§</a> Validate all public/protected inputs and throw the right exception:
   `ArgumentNullException` / `ArgumentException` / `ArgumentOutOfRangeException` with the
   correct `paramName`
-- Throw `InvalidOperationException` for wrong-state, not `ArgumentException`
-- Never throw `Exception`, `SystemException`, `ApplicationException`, or
+- <a name="fdg-invalid-operation" href="#fdg-invalid-operation">§</a> Throw `InvalidOperationException` for wrong-state, not `ArgumentException`
+- <a name="fdg-reserved-exceptions" href="#fdg-reserved-exceptions">§</a> Never throw `Exception`, `SystemException`, `ApplicationException`, or
   `NullReferenceException`/`IndexOutOfRangeException` directly
-- Do not introduce a custom exception type when a BCL type already means the same thing —
+- <a name="fdg-custom-exceptions" href="#fdg-custom-exceptions">§</a> Do not introduce a custom exception type when a BCL type already means the same thing —
   cancellation is `OperationCanceledException`. A new exception type has to carry
   information a caller can actually act on
-- Never swallow exceptions silently; never `catch (Exception)` without rethrow or a
+- <a name="fdg-swallowed-exceptions" href="#fdg-swallowed-exceptions">§</a> Never swallow exceptions silently; never `catch (Exception)` without rethrow or a
   documented reason
-- Prefer the least-derived parameter type that works (`IEnumerable<T>` in) and the most
+- <a name="fdg-parameter-and-return-types" href="#fdg-parameter-and-return-types">§</a> Prefer the least-derived parameter type that works (`IEnumerable<T>` in) and the most
   useful return type out; never return `null` for a collection — return empty
 
 **Async & cancellation**
-- A `CancellationToken` parameter must actually be honored, not just declared. `AZC0002`/`CA1068`
+- <a name="fdg-cancellation" href="#fdg-cancellation">§</a> A `CancellationToken` parameter must actually be honored, not just declared. `AZC0002`/`CA1068`
   enforce its existence (or an equivalent `RequestContext` protocol overload), naming, and
   position — but only for `Azure.Core` methods; `AZC0002` doesn't inspect `System.ClientModel`
   methods at all (it only recognizes `Azure.Core` return types), so for those, still check that
   convenience methods declare `CancellationToken cancellationToken = default` and that protocol
   methods instead accept cancellation through their trailing `RequestOptions` parameter
-- No `async void` except event handlers; no sync-over-async (`.Result`, `.Wait()`,
+- <a name="fdg-sync-over-async" href="#fdg-sync-over-async">§</a> No `async void` except event handlers; no sync-over-async (`.Result`, `.Wait()`,
   `GetAwaiter().GetResult()`) in library code
-- Return `Task`/`ValueTask`, not `void`; use `ConfigureAwait(false)` in library code where
+- <a name="fdg-async-returns" href="#fdg-async-returns">§</a> Return `Task`/`ValueTask`, not `void`; use `ConfigureAwait(false)` in library code where
   that is the repo convention
 
 **Enums & flags**
-- Enums for closed sets; `[Flags]` only for genuinely combinable values with power-of-two
+- <a name="fdg-enums-and-flags" href="#fdg-enums-and-flags">§</a> Enums for closed sets; `[Flags]` only for genuinely combinable values with power-of-two
   members and a `None = 0`
-- Use singular names for non-flags enums; plural names are appropriate, not mandatory, for flags
-  enums. Judge actual word meaning and declared semantics, not a trailing `s` or numeric values
-- If the set of values can grow service-side or over time, an extensible
+- <a name="fdg-extensible-enums" href="#fdg-extensible-enums">§</a> If the set of values can grow service-side or over time, an extensible
   value-struct/`readonly struct` pattern is preferred over a plain enum
-- Keep version components unambiguous, such as `Tls1_0` for TLS 1.0. Do not guess how to split
-  digits or impose underscores on an established, unambiguous naming convention
 
 **Disposal & resources**
-- Types owning unmanaged or disposable resources implement `IDisposable` (and
+- <a name="fdg-disposable" href="#fdg-disposable">§</a> Types owning unmanaged or disposable resources implement `IDisposable` (and
   `IAsyncDisposable` where async cleanup exists) with the standard pattern
-- `Dispose` must be idempotent and must not throw
+- <a name="fdg-idempotent-dispose" href="#fdg-idempotent-dispose">§</a> `Dispose` must be idempotent and must not throw
 
 ### H3 — Convention precedence
 
@@ -178,66 +165,66 @@ practice differs. If the convention itself is bad, raise it as a separate ℹ️
 
 ## Correctness
 
-- Null handling: nullable annotations match reality; no dereference of a possibly-null value;
+- <a name="correctness-nullability" href="#correctness-nullability">§</a> Null handling: nullable annotations match reality; no dereference of a possibly-null value;
   no `!` used to silence a real warning
-- Off-by-one, boundary, and empty-collection cases
-- Integer overflow, division by zero, and lossy numeric conversions
-- Culture: `string` comparison and parsing must specify intent — `StringComparison.Ordinal`
+- <a name="correctness-boundaries" href="#correctness-boundaries">§</a> Off-by-one, boundary, and empty-collection cases
+- <a name="correctness-arithmetic" href="#correctness-arithmetic">§</a> Integer overflow, division by zero, and lossy numeric conversions
+- <a name="correctness-culture" href="#correctness-culture">§</a> Culture: `string` comparison and parsing must specify intent — `StringComparison.Ordinal`
   for identifiers/keys, culture-aware only for user-facing text. Same for `ToString`/`Parse`
   (`CultureInfo.InvariantCulture` for machine-readable values)
-- URIs: build with `Uri`/`UriBuilder` or the repo's request-building type, not string
+- <a name="correctness-uri-building" href="#correctness-uri-building">§</a> URIs: build with `Uri`/`UriBuilder` or the repo's request-building type, not string
   concatenation — concatenation is where double slashes, unescaped segments, and dropped
   query separators come from
-- Concurrency: shared mutable state guarded; no lock on `this` or on a public object; no
+- <a name="correctness-concurrency" href="#correctness-concurrency">§</a> Concurrency: shared mutable state guarded; no lock on `this` or on a public object; no
   double-checked locking without `volatile`/`Interlocked`; no `Task` fire-and-forget without
   observing faults
-- Static mutable state is shared by every caller in the process. A non-`readonly` `static`
+- <a name="correctness-static-state" href="#correctness-static-state">§</a> Static mutable state is shared by every caller in the process. A non-`readonly` `static`
   field, or a `static` collection mutated after initialization, needs a concurrent type or
   explicit synchronization. Unlike most concurrency questions, this one is visible from the
   diff alone
-- Resource lifetime: every `IDisposable` is disposed on all paths (including exceptions);
+- <a name="correctness-resource-lifetime" href="#correctness-resource-lifetime">§</a> Resource lifetime: every `IDisposable` is disposed on all paths (including exceptions);
   no disposing of something you don't own (notably `HttpClient`/injected dependencies)
-- Equality: overriding `Equals` requires `GetHashCode`; both must be consistent and match any
+- <a name="correctness-equality" href="#correctness-equality">§</a> Equality: overriding `Equals` requires `GetHashCode`; both must be consistent and match any
   `==` operator or `IComparable` implementation. Combine field hashes with the platform's
   `HashCode` type, or the shared equivalent the repo already links in — never with
   hand-written prime-multiplication arithmetic
 
 ## Security
 
-- No secrets, tokens, connection strings, or keys in source, tests, logs, or comments
-- No secrets or PII in exception messages, log output, or telemetry
-- Untrusted input is validated before use in a path, URL, SQL statement, process
+- <a name="security-secrets" href="#security-secrets">§</a> No secrets, tokens, connection strings, or keys in source, tests, logs, or comments
+- <a name="security-secrets-in-diagnostics" href="#security-secrets-in-diagnostics">§</a> No secrets or PII in exception messages, log output, or telemetry
+- <a name="security-untrusted-input" href="#security-untrusted-input">§</a> Untrusted input is validated before use in a path, URL, SQL statement, process
   invocation, or deserializer. For a path, "validated" means the *resolved* full path is
   confirmed to stay under the intended root — a `..` segment that escapes it is the miss
-- No insecure deserialization (`BinaryFormatter`, unbounded polymorphic JSON)
-- Crypto: no custom crypto, no weak algorithms (MD5, SHA1 for security, DES), no hardcoded
+- <a name="security-deserialization" href="#security-deserialization">§</a> No insecure deserialization (`BinaryFormatter`, unbounded polymorphic JSON)
+- <a name="security-crypto" href="#security-crypto">§</a> Crypto: no custom crypto, no weak algorithms (MD5, SHA1 for security, DES), no hardcoded
   IVs/salts, and no disabling of certificate validation
 
 ## Tests
 
-- New behavior has a test; bug fixes have a test that fails before the fix
-- Tests assert the behavior, not the implementation; no assertion-free tests
-- No `Thread.Sleep` for synchronization; no dependence on wall-clock time, machine locale,
+- <a name="tests-coverage" href="#tests-coverage">§</a> New behavior has a test; bug fixes have a test that fails before the fix
+- <a name="tests-assertions" href="#tests-assertions">§</a> Tests assert the behavior, not the implementation; no assertion-free tests
+- <a name="tests-determinism" href="#tests-determinism">§</a> No `Thread.Sleep` for synchronization; no dependence on wall-clock time, machine locale,
   network, or test execution order
-- Test names describe the scenario and expectation
-- Follow the test conventions of the project being changed (framework, naming, fixtures)
+- <a name="tests-names" href="#tests-names">§</a> Test names describe the scenario and expectation
+- <a name="tests-conventions" href="#tests-conventions">§</a> Follow the test conventions of the project being changed (framework, naming, fixtures)
 
 ## Maintainability
 
-- Dead code, commented-out code, leftover debugging output, and stray TODOs without an issue
+- <a name="maintainability-dead-code" href="#maintainability-dead-code">§</a> Dead code, commented-out code, leftover debugging output, and stray TODOs without an issue
   link do not ship
-- Build outputs, binaries, and local developer assets do not ship — `.nupkg`, compiled
+- <a name="maintainability-build-outputs" href="#maintainability-build-outputs">§</a> Build outputs, binaries, and local developer assets do not ship — `.nupkg`, compiled
   assemblies, archives, publish profiles (`*.pubxml`), and tool output. Do not assume
   `.gitignore` covers them; it frequently does not
-- Comments explain **why**, never restate **what** the code does. Flag comments that
+- <a name="maintainability-comments" href="#maintainability-comments">§</a> Comments explain **why**, never restate **what** the code does. Flag comments that
   paraphrase the next line. XML doc comments on public/protected APIs are expected and
   exempt from this
-- Public and protected members have XML docs — `<summary>`, `<param>`, `<returns>`,
+- <a name="maintainability-xml-docs" href="#maintainability-xml-docs">§</a> Public and protected members have XML docs — `<summary>`, `<param>`, `<returns>`,
   `<exception>` for each exception actually thrown
-- Copy-pasted logic that has drifted between copies
-- Dependencies: new package references need justification; prefer what the repo already uses;
+- <a name="maintainability-drifted-copies" href="#maintainability-drifted-copies">§</a> Copy-pasted logic that has drifted between copies
+- <a name="maintainability-dependencies" href="#maintainability-dependencies">§</a> Dependencies: new package references need justification; prefer what the repo already uses;
   no new dependency for something the BCL already does
-- Vendored or synced directories are effectively read-only in the consuming repository — a
+- <a name="maintainability-vendored-code" href="#maintainability-vendored-code">§</a> Vendored or synced directories are effectively read-only in the consuming repository — a
   local edit is overwritten by the next sync, so the change is lost and the review that
   approved it was wasted. A README saying so, a sync script, or a CODEOWNERS entry naming
   another team are the markers. Send the change upstream instead
@@ -247,8 +234,8 @@ practice differs. If the convention itself is bad, raise it as a separate ℹ️
 Only flag when it matters — a hot path, an allocation per item in a loop, or an O(n²) where
 n is unbounded. Do not micro-optimize cold code.
 
-- Allocations in loops or hot paths: LINQ chains, `string` concatenation (use
+- <a name="performance-allocations" href="#performance-allocations">§</a> Allocations in loops or hot paths: LINQ chains, `string` concatenation (use
   `StringBuilder`/`string.Create`), closures capturing locals, boxing of value types
-- Repeated enumeration of an `IEnumerable<T>` that may be expensive or non-idempotent
-- Missing `StringComparer` on dictionary lookups keyed by string
-- Sync I/O on an async path
+- <a name="performance-repeated-enumeration" href="#performance-repeated-enumeration">§</a> Repeated enumeration of an `IEnumerable<T>` that may be expensive or non-idempotent
+- <a name="performance-string-comparer" href="#performance-string-comparer">§</a> Missing `StringComparer` on dictionary lookups keyed by string
+- <a name="performance-sync-io" href="#performance-sync-io">§</a> Sync I/O on an async path

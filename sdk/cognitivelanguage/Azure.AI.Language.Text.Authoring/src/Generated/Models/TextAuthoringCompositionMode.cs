@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Converts a string to a <see cref="TextAuthoringCompositionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextAuthoringCompositionMode?(string value) => value == null ? null : new TextAuthoringCompositionMode(value);
+        public static implicit operator TextAuthoringCompositionMode?(string value) => value == null ? (TextAuthoringCompositionMode?)null : new TextAuthoringCompositionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

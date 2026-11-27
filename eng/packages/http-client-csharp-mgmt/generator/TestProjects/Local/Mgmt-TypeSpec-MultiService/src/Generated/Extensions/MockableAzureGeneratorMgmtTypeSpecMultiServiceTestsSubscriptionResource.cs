@@ -62,7 +62,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckAvailabilityResult>> CheckAvailabilityAsync(AzureLocation location, CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckAvailabilityResult>> CheckAvailabilityAsync(AzureLocation location, CheckAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -74,7 +74,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = MultiServiceClientRestClient.CreateCheckAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = MultiServiceClientRestClient.CreateCheckAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckAvailabilityResult> response = Response.FromValue(CheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -112,7 +112,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckAvailabilityResult> CheckAvailability(AzureLocation location, CheckAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckAvailabilityResult> CheckAvailability(AzureLocation location, CheckAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -124,7 +124,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = MultiServiceClientRestClient.CreateCheckAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = MultiServiceClientRestClient.CreateCheckAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckAvailabilityResult> response = Response.FromValue(CheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

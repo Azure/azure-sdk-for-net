@@ -16,13 +16,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public RequestValidator Validator { get; }
 
-        private readonly string _listenerKey;
+        private readonly WebPubSubTriggerKey _listenerKey;
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
 
-        public WebPubSubListener(ITriggeredFunctionExecutor executor, string listenerKey, IWebPubSubTriggerDispatcher dispatcher, RequestValidator validator)
+        public WebPubSubListener(ITriggeredFunctionExecutor executor, WebPubSubTriggerKey listenerKey, IWebPubSubTriggerDispatcher dispatcher, RequestValidator validator)
         {
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
-            _listenerKey = listenerKey ?? throw new ArgumentNullException(nameof(listenerKey));
+            _listenerKey = listenerKey;
             Executor = executor ?? throw new ArgumentNullException(nameof(executor));
             Validator = validator ?? new RequestValidator(null);
         }

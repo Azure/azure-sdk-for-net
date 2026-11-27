@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string targetClusterId = default;
+            ResourceIdentifier targetClusterId = default;
             string imageLink = default;
             string instanceType = default;
             int? gpuCount = default;
@@ -201,8 +202,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesComputeSshSettings sshSettings = default;
             CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default;
             string webEndpoint = default;
-            WorkbenchProvisioningState? provisioningState = default;
-            WorkbenchStatus? status = default;
+            CognitiveServicesWorkbenchProvisioningState? provisioningState = default;
+            CognitiveServicesWorkbenchStatus? status = default;
             IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (prop.NameEquals("targetClusterId"u8))
                 {
-                    targetClusterId = prop.Value.GetString();
+                    targetClusterId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("imageLink"u8))
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    provisioningState = new WorkbenchProvisioningState(prop.Value.GetString());
+                    provisioningState = new CognitiveServicesWorkbenchProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    status = new WorkbenchStatus(prop.Value.GetString());
+                    status = new CognitiveServicesWorkbenchStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))

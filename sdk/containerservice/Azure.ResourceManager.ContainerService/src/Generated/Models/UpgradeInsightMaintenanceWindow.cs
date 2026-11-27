@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="startsOn"> The UTC start time of the next scheduled maintenance window. </param>
         /// <param name="endsOn"> The UTC end time of the next scheduled maintenance window. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeInsightMaintenanceWindow(string maintenanceConfigurationName, MaintenanceWindowSource? source, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeInsightMaintenanceWindow(string maintenanceConfigurationName, UpgradeInsightMaintenanceWindowSource? source, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceConfigurationName = maintenanceConfigurationName;
             Source = source;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The auto-upgrade schedule that this window is derived from. </summary>
         [WirePath("source")]
-        public MaintenanceWindowSource? Source { get; }
+        public UpgradeInsightMaintenanceWindowSource? Source { get; }
 
         /// <summary> The UTC start time of the next scheduled maintenance window. </summary>
         [WirePath("startTime")]

@@ -15,11 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a Polygon. </summary>
     public partial class PolygonGeometry : GeoJsonGeometry, IJsonModel<PolygonGeometry>
     {
-        /// <summary> Initializes a new instance of <see cref="PolygonGeometry"/> for deserialization. </summary>
-        internal PolygonGeometry()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

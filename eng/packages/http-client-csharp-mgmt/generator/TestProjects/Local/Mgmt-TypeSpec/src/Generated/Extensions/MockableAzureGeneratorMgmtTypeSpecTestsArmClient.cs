@@ -905,7 +905,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CheckNameAvailabilityContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -917,7 +917,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = CheckNameAvailabilityOperationGroupRestClient.CreateCheckNameAvailabilityRequest(scope.ToString(), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityOperationGroupRestClient.CreateCheckNameAvailabilityRequest(scope.ToString(), CheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -954,7 +954,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(ResourceIdentifier scope, CheckNameAvailabilityContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -966,7 +966,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = CheckNameAvailabilityOperationGroupRestClient.CreateCheckNameAvailabilityRequest(scope.ToString(), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityOperationGroupRestClient.CreateCheckNameAvailabilityRequest(scope.ToString(), CheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1017,7 +1017,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = SelfHelpScopeQueryOperationGroupRestClient.CreateGetDetailsRequest(scope.ToString(), scopeFilter, context);
+                HttpMessage message = SelfHelpScopeQueryOperationGroupRestClient.CreateGetDetailsRequest(scope.ToString(), scopeFilter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1068,7 +1068,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = SelfHelpScopeQueryOperationGroupRestClient.CreateGetDetailsRequest(scope.ToString(), scopeFilter, context);
+                HttpMessage message = SelfHelpScopeQueryOperationGroupRestClient.CreateGetDetailsRequest(scope.ToString(), scopeFilter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

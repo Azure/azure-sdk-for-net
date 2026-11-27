@@ -215,6 +215,30 @@ Generates `ProvisionableResource` subclasses from input model types + resource m
 - **`FromExisting()`**: static factory method
 - **`ResourceVersions`**: nested class with GA API version constants
 
+#### Deployability and Model Settability
+
+Resource deployment capability and model input capability are independent.
+Nonempty `writableScopes` determines standalone deployability for a resource
+projection; writable usages of a shared model determine its input setters and
+requiredness. A GET-only resource model can still be writable inline in a
+deployable parent's body. Do not remove those setters merely because the
+standalone resource is non-deployable.
+
+The current generator intentionally uses model settability to keep resource
+constructors public when needed for writable inline inputs, even for GET-only
+resources. Do not make constructor accessibility depend solely on standalone
+deployability. Retaining setters while hiding the only input constructor is not
+enough; a public constructor does not by itself mean the resource can be deployed
+independently.
+
+`FromExisting()` represents an existing-resource reference and is not a general
+input-object factory; its initialized body values become read-only. Validate
+inline inputs through public-SDK construction and emitted parent-body Bicep,
+not only generator metadata assertions.
+
+The normative rules and motivating `FrontendEndpoint` example are in
+[Resource Detection: Deployability is not model settability](resource-detection-design.md#deployability-is-not-model-settability).
+
 ### Resource Name, Parent, and Scope
 
 ARM resource types contain a provider namespace followed by one or more resource type segments. For example:

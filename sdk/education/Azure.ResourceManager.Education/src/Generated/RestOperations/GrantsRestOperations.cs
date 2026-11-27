@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Education
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string billingAccountName, string billingProfileName, bool? includeAllocatedBudget, RequestContext context)
+        internal HttpMessage CreateListRequest(string billingAccountName, string billingProfileName, bool? includeAllocatedBudget, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Education
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string billingAccountName, string billingProfileName, bool? includeAllocatedBudget, RequestContext context)
+        internal HttpMessage CreateNextListRequest(Uri nextPage, string billingAccountName, string billingProfileName, bool? includeAllocatedBudget, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Education
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(bool? includeAllocatedBudget, RequestContext context)
+        internal HttpMessage CreateListAllRequest(bool? includeAllocatedBudget, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Education
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, bool? includeAllocatedBudget, RequestContext context)
+        internal HttpMessage CreateNextListAllRequest(Uri nextPage, bool? includeAllocatedBudget, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

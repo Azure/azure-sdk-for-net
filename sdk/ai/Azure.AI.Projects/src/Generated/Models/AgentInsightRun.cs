@@ -29,15 +29,15 @@ namespace Azure.AI.Projects
         /// <param name="monitorId"> The Agent Insights monitor this run belongs to. </param>
         /// <param name="agentName"> The agent whose traces are analyzed by this run. </param>
         /// <param name="trigger"> The trigger that started the run. </param>
-        /// <param name="createdOn"> The time when this run was created. </param>
-        /// <param name="updatedOn"> The time when this run was last updated. </param>
+        /// <param name="createdAt"> The time when this run was created. </param>
+        /// <param name="updatedAt"> The time when this run was last updated. </param>
         /// <param name="windowStart"> The start of the trace window analyzed by this run. </param>
         /// <param name="windowEnd"> The end of the trace window analyzed by this run. </param>
-        /// <param name="startedOn"> The time when this run started processing. </param>
-        /// <param name="completedOn"> The time when this run reached a terminal status. </param>
+        /// <param name="startedAt"> The time when this run started processing. </param>
+        /// <param name="completedAt"> The time when this run reached a terminal status. </param>
         /// <param name="modelDeploymentName"> The model deployment used to analyze traces for this run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentInsightRun(string id, AgentInsightRunCreate inputs, AgentInsightRunResult result, ProjectsJobStatus status, FoundryOpenAIError error, string monitorId, string agentName, AgentInsightRunTrigger trigger, DateTimeOffset createdOn, DateTimeOffset updatedOn, DateTimeOffset windowStart, DateTimeOffset windowEnd, DateTimeOffset? startedOn, DateTimeOffset? completedOn, string modelDeploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentInsightRun(string id, AgentInsightRunCreate inputs, AgentInsightRunResult result, ProjectsJobStatus status, FoundryOpenAIError error, string monitorId, string agentName, AgentInsightRunTrigger trigger, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset windowStart, DateTimeOffset windowEnd, DateTimeOffset? startedAt, DateTimeOffset? completedAt, string modelDeploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Inputs = inputs;
@@ -47,12 +47,12 @@ namespace Azure.AI.Projects
             MonitorId = monitorId;
             AgentName = agentName;
             Trigger = trigger;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
             WindowStart = windowStart;
             WindowEnd = windowEnd;
-            StartedOn = startedOn;
-            CompletedOn = completedOn;
+            StartedAt = startedAt;
+            CompletedAt = completedAt;
             ModelDeploymentName = modelDeploymentName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -79,10 +79,10 @@ namespace Azure.AI.Projects
         public AgentInsightRunTrigger Trigger { get; }
 
         /// <summary> The time when this run was created. </summary>
-        public DateTimeOffset CreatedOn { get; }
+        public DateTimeOffset CreatedAt { get; }
 
         /// <summary> The time when this run was last updated. </summary>
-        public DateTimeOffset UpdatedOn { get; }
+        public DateTimeOffset UpdatedAt { get; }
 
         /// <summary> The start of the trace window analyzed by this run. </summary>
         public DateTimeOffset WindowStart { get; }
@@ -91,10 +91,10 @@ namespace Azure.AI.Projects
         public DateTimeOffset WindowEnd { get; }
 
         /// <summary> The time when this run started processing. </summary>
-        public DateTimeOffset? StartedOn { get; }
+        public DateTimeOffset? StartedAt { get; }
 
         /// <summary> The time when this run reached a terminal status. </summary>
-        public DateTimeOffset? CompletedOn { get; }
+        public DateTimeOffset? CompletedAt { get; }
 
         /// <summary> The model deployment used to analyze traces for this run. </summary>
         public string ModelDeploymentName { get; }

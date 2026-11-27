@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing a collection of <see cref="ChaosCapabilityMetadataResource"/> and their operations.
     /// Each <see cref="ChaosCapabilityMetadataResource"/> in the collection will belong to the same instance of <see cref="ChaosTargetMetadataResource"/>.
-    /// To get a <see cref="ChaosCapabilityMetadataCollection"/> instance call the GetChaosCapabilityMetadatas method from an instance of <see cref="ChaosTargetMetadataResource"/>.
+    /// To get a <see cref="ChaosCapabilityMetadataCollection"/> instance call the GetAllChaosCapabilityMetadata method from an instance of <see cref="ChaosTargetMetadataResource"/>.
     /// </summary>
     public partial class ChaosCapabilityMetadataCollection : ArmCollection, IEnumerable<ChaosCapabilityMetadataResource>, IAsyncEnumerable<ChaosCapabilityMetadataResource>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos
         {
             TryGetApiVersion(ChaosCapabilityMetadataResource.ResourceType, out string chaosCapabilityMetadataApiVersion);
             _capabilityTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosCapabilityMetadataResource.ResourceType.Namespace, Diagnostics);
-            _capabilityTypesRestClient = new CapabilityTypes(_capabilityTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosCapabilityMetadataApiVersion ?? "2026-08-01-preview");
+            _capabilityTypesRestClient = new CapabilityTypes(_capabilityTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosCapabilityMetadataApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

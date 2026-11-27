@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WidgetData.ToRequestContent(data), context);
+                HttpMessage message = _optionalBodyRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WidgetData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WidgetData.ToRequestContent(data), context);
+                HttpMessage message = _optionalBodyRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WidgetData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ActionResult>> PostAsync(ActionRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ActionResult>> PostAsync(ActionContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _optionalBodyClientDiagnostics.CreateScope("WidgetResource.Post");
             scope.Start();
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionRequest.ToRequestContent(content), context);
+                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ActionResult> response = Response.FromValue(ActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ActionResult> Post(ActionRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response<ActionResult> Post(ActionContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _optionalBodyClientDiagnostics.CreateScope("WidgetResource.Post");
             scope.Start();
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionRequest.ToRequestContent(content), context);
+                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ActionResult> response = Response.FromValue(ActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.OperationTemplates
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                     return Response.FromValue(new WidgetResource(Client, response.Value), response.GetRawResponse());
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.OperationTemplates
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                     return Response.FromValue(new WidgetResource(Client, response.Value), response.GetRawResponse());
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.OperationTemplates
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                     return Response.FromValue(new WidgetResource(Client, response.Value), response.GetRawResponse());
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.OperationTemplates
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                     return Response.FromValue(new WidgetResource(Client, response.Value), response.GetRawResponse());
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.OperationTemplates
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                     return Response.FromValue(new WidgetResource(Client, response.Value), response.GetRawResponse());
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.OperationTemplates
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                     return Response.FromValue(new WidgetResource(Client, response.Value), response.GetRawResponse());

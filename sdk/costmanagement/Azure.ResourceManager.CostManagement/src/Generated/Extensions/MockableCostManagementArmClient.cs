@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CostAllocationRuleCheckNameAvailabilityResult>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostAllocationRuleCheckNameAvailabilityResult>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostAllocationRuleCheckNameAvailabilityResult> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<CostAllocationRuleCheckNameAvailabilityResult> CheckNameAvailability(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<CostAllocationRuleCheckNameAvailabilityResult> CheckNameAvailability(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostAllocationRuleCheckNameAvailabilityResult> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -128,10 +128,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Annotators))
+            if (Optional.IsCollectionDefined(Annotators))
             {
                 writer.WritePropertyName("annotators"u8);
-                writer.WriteObjectValue(Annotators, options);
+                writer.WriteStartObject();
+                foreach (var item in Annotators)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -180,7 +186,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IDictionary<string, RaiAcsRegoPolicy> policies = default;
             RaiAcsInterventionPoints interventionPoints = default;
             IDictionary<string, RaiAcsTool> tools = default;
-            RaiAcsEmptyObject annotators = default;
+            IDictionary<string, RaiAcsAnnotatorConfiguration> annotators = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -245,7 +251,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    annotators = RaiAcsEmptyObject.DeserializeRaiAcsEmptyObject(prop.Value, options);
+                    Dictionary<string, RaiAcsAnnotatorConfiguration> dictionary = new Dictionary<string, RaiAcsAnnotatorConfiguration>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, RaiAcsAnnotatorConfiguration.DeserializeRaiAcsAnnotatorConfiguration(prop0.Value, options));
+                    }
+                    annotators = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -259,7 +270,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 policies ?? new ChangeTrackingDictionary<string, RaiAcsRegoPolicy>(),
                 interventionPoints,
                 tools ?? new ChangeTrackingDictionary<string, RaiAcsTool>(),
-                annotators,
+                annotators ?? new ChangeTrackingDictionary<string, RaiAcsAnnotatorConfiguration>(),
                 additionalBinaryDataProperties);
         }
     }

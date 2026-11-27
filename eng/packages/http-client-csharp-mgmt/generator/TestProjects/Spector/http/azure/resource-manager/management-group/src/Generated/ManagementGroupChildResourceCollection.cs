@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagementGroup
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managementGroupChildResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, managementGroupChildResourceName, ManagementGroupChildResourceData.ToRequestContent(data), context);
+                HttpMessage message = _managementGroupChildResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, managementGroupChildResourceName, ManagementGroupChildResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagementGroupArmOperation<ManagementGroupChildResource> operation = new ManagementGroupArmOperation<ManagementGroupChildResource>(
                     new ManagementGroupChildResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagementGroup
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managementGroupChildResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, managementGroupChildResourceName, ManagementGroupChildResourceData.ToRequestContent(data), context);
+                HttpMessage message = _managementGroupChildResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, managementGroupChildResourceName, ManagementGroupChildResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagementGroupArmOperation<ManagementGroupChildResource> operation = new ManagementGroupArmOperation<ManagementGroupChildResource>(
                     new ManagementGroupChildResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ManagementGroup
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
+                HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagementGroupChildResourceData> response = Response.FromValue(ManagementGroupChildResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ManagementGroup
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
+                HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagementGroupChildResourceData> response = Response.FromValue(ManagementGroupChildResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ManagementGroup
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
+                HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagementGroupChildResourceData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ManagementGroup
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
+                HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagementGroupChildResourceData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.ManagementGroup
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
+                HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagementGroupChildResourceData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ManagementGroup
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
+                HttpMessage message = _managementGroupChildResourcesRestClient.CreateGetRequest(Id.Name, managementGroupChildResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagementGroupChildResourceData> response = default;

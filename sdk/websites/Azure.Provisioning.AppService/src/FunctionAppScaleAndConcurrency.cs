@@ -66,7 +66,7 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
     {
         get
         {
-            return Triggers?.Http?.HttpPerInstanceConcurrency ?? default;
+            return Triggers?.Http?.GetHttpPerInstanceConcurrency() ?? default;
         }
         set
         {
@@ -78,7 +78,7 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
             {
                 Triggers.Http = new FunctionsScaleAndConcurrencyTriggersHttp();
             }
-            Triggers.Http.HttpPerInstanceConcurrency = value;
+            Triggers.Http.SetHttpPerInstanceConcurrency(value);
         }
     }
 

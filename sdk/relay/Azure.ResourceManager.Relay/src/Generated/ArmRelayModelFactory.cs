@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Relay.RelayPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayPrivateLinkServiceConnectionState connectionState, RelayPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, AzureLocation? location)
+        public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelayPrivateLinkServiceConnectionState connectionState = default, RelayPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AzureLocation? location = default)
         {
             return new RelayPrivateEndpointConnectionData(
                 id,

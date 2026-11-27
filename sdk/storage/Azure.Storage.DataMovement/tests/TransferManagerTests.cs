@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Tests.Shared;
@@ -533,6 +534,57 @@ public class TransferManagerTests
         Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(TransferState.InProgress));
         Assert.That(capturedTransferStatuses[2].State, Is.EqualTo(TransferState.Stopping));
         Assert.That(capturedTransferStatuses[3].IsCompletedWithFailedItems);
+    }
+
+    [Test]
+    public async Task TransferFailAtPartProcess_RequestFailedExceptionWithoutErrorCode_DoesNotRaiseNullReference()
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
+
+        Mock<MemoryTransferCheckpointer> checkpointer = new()
+        {
+            CallBase = true
+        };
+
+        Mock<StorageResourceItem> srcItem = new(MockBehavior.Strict);
+        Mock<StorageResourceItem> dstItem = new(MockBehavior.Strict);
+        (srcItem, dstItem).BasicSetup(srcUri, dstUri);
+        dstItem.Setup(item => item.DeleteIfExistsAsync(It.IsAny<CancellationToken>()));
+
+        StorageResourceItemFailureWrapper srcWrapper = new(
+            srcItem.Object,
+            exceptionFactory: () => new RequestFailedException(500, "Retry failed after 6 tries", null, null));
+        StorageResourceItemFailureWrapper dstWrapper = new(dstItem.Object);
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer.Object,
+            default);
+
+        List<TransferItemFailedEventArgs> failures = new();
+        TransferOptions options = new();
+        options.ItemTransferFailed += e => { failures.Add(e); return Task.CompletedTask; };
+
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcWrapper, dstWrapper, options);
+
+        Assert.That(await jobsProcessor.TryStepAsync(), Is.True);
+
+        using (srcWrapper.ThrowScope())
+        {
+            Assert.That(await partsProcessor.StepAll(), Is.AtLeast(1));
+        }
+
+        Assert.That(transfer.Status.HasFailedItems);
+        Assert.That(failures, Is.Not.Empty);
+        Assert.That(failures.Any(failure => failure.Exception is RequestFailedException requestFailedException && requestFailedException.ErrorCode is null), Is.True);
+        Assert.That(failures.Any(failure => failure.Exception is NullReferenceException), Is.False);
     }
 
     [Test]

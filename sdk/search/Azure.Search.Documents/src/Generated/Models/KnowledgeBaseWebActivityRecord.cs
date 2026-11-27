@@ -31,14 +31,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
         /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
-        /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="webArguments"> The web arguments for the retrieval activity. </param>
-        internal KnowledgeBaseWebActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryOn, int? count, ImageServingStatistics imageServing, KnowledgeBaseWebActivityArguments webArguments) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseWebActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryOn, int? count, KnowledgeBaseWebActivityArguments webArguments) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             QueryOn = queryOn;
             Count = count;
-            ImageServing = imageServing;
             WebArguments = webArguments;
         }
 
@@ -50,9 +48,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </summary>
         public int? Count { get; }
-
-        /// <summary> Statistics about image serving for this retrieval activity. </summary>
-        public ImageServingStatistics ImageServing { get; }
 
         /// <summary> The web arguments for the retrieval activity. </summary>
         public KnowledgeBaseWebActivityArguments WebArguments { get; }

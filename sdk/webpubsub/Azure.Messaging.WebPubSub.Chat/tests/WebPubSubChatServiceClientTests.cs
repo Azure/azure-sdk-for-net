@@ -92,13 +92,15 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             Assert.That(uri.ToString(), Does.StartWith("ws://localhost:8080/client/hubs/hub?access_token="));
         }
 
-        [Test]
-        public void KeyCredentialRequest_ReverseProxyUsesOriginalEndpointForJwtAudience()
+        [TestCase(WebPubSubChatServiceClientOptions.ServiceVersion.V2026_02_01_Preview, "2026-02-01-preview")]
+        [TestCase(WebPubSubChatServiceClientOptions.ServiceVersion.V2026_08_01_Preview, "2026-08-01-preview")]
+        public void KeyCredentialRequest_ReverseProxyUsesOriginalEndpointForJwtAudience(
+            WebPubSubChatServiceClientOptions.ServiceVersion version, string apiVersion)
         {
             var transport = new MockTransport(new MockResponse(201));
             var originalEndpoint = new Uri("https://contoso.webpubsub.azure.com");
             var proxyEndpoint = new Uri("https://apim.contoso.com");
-            var options = new WebPubSubChatServiceClientOptions
+            var options = new WebPubSubChatServiceClientOptions(version)
             {
                 Transport = transport,
                 ReverseProxyEndpoint = proxyEndpoint,
@@ -113,7 +115,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
             Assert.That(transport.SingleRequest.Headers.TryGetValue("Authorization", out string authorization), Is.True);
             JwtSecurityToken jwt = s_jwtTokenHandler.ReadJwtToken(authorization.Substring("Bearer ".Length));
-            Assert.That(jwt.Audiences, Is.EquivalentTo(new[] { "https://contoso.webpubsub.azure.com/api/hubs/hub/chat/roles/user.role?api-version=2026-02-01-preview" }));
+            Assert.That(jwt.Audiences, Is.EquivalentTo(new[] { $"https://contoso.webpubsub.azure.com/api/hubs/hub/chat/roles/user.role?api-version={apiVersion}" }));
         }
 
         [Test]
@@ -139,13 +141,15 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             Assert.That(authorization, Is.EqualTo("Bearer test-token"));
         }
 
-        [Test]
-        public void GetMessages_MessageQueryOptions_AreAddedToRequest()
+        [TestCase(WebPubSubChatServiceClientOptions.ServiceVersion.V2026_02_01_Preview, "2026-02-01-preview")]
+        [TestCase(WebPubSubChatServiceClientOptions.ServiceVersion.V2026_08_01_Preview, "2026-08-01-preview")]
+        public void GetMessages_MessageQueryOptions_AreAddedToRequest(
+            WebPubSubChatServiceClientOptions.ServiceVersion version, string apiVersion)
         {
             var response = new MockResponse(200);
             response.SetContent("{\"value\":[]}");
             var transport = new MockTransport(response);
-            var clientOptions = new WebPubSubChatServiceClientOptions { Transport = transport };
+            var clientOptions = new WebPubSubChatServiceClientOptions(version) { Transport = transport };
             var client = new WebPubSubChatServiceClient(
                 new Uri("https://contoso.webpubsub.azure.com"),
                 "hub",
@@ -161,7 +165,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
             Assert.That(
                 transport.SingleRequest.Uri.Query,
-                Is.EqualTo("?api-version=2026-02-01-preview&latestMessageId=30&earliestMessageId=10&maxpagesize=20"));
+                Is.EqualTo($"?api-version={apiVersion}&latestMessageId=30&earliestMessageId=10&maxpagesize=20"));
         }
 
         [Test]
@@ -210,7 +214,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             Assert.That(requestUri.AbsolutePath, Is.EqualTo("/api/hubs/hub/:generateToken"));
             Assert.That(
                 requestUri.Query,
-                Is.EqualTo("?userId=user1&role=webpubsub.getGroupState&role=webpubsub.setGroupState&minutesToExpire=2&api-version=2024-12-01&clientType=default"));
+                Is.EqualTo("?userId=user1&role=webpubsub.getGroupState&role=webpubsub.setGroupState&minutesToExpire=2&api-version=2024-12-01"));
             Assert.That(accessUri.Query, Does.Contain("access_token=test-client-token"));
         }
 

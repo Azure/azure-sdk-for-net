@@ -231,7 +231,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 else
                 {
-                    dependencyTarget = activityTagsProcessor.MappedTags.GetDependencyTarget(activityTagsProcessor.BaseActivityType);
+                    dependencyTarget = activityTagsProcessor.MappedTags.GetDependencyTarget(activityTagsProcessor.activityType);
 
                     statusCode = activityTagsProcessor.MappedTags[SemanticSlot.HttpStatusCode]?.ToString();
                 }

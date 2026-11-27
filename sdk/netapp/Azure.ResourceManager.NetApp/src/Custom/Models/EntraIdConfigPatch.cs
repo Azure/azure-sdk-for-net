@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using Azure;
 
@@ -15,6 +17,8 @@ namespace Azure.ResourceManager.NetApp.Models
     // The 2026 TypeSpec model removed the legacy Entra ID patch wrapper.
     // Preserve the shipped constructor/property shape for source compatibility.
     /// <summary> Entra ID configuration patch. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     public partial class EntraIdConfigPatch : IJsonModel<EntraIdConfigPatch>, IPersistableModel<EntraIdConfigPatch>
     {
         /// <summary> Initializes a new instance of <see cref="EntraIdConfigPatch"/>. </summary>
@@ -33,6 +37,61 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The Azure Key Vault configuration. </summary>
         public EntraIdAkvConfigPatch EntraIdAkvConfig { get; set; }
+
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        internal static EntraIdConfigPatch DeserializeEntraIdConfigPatch(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string applicationId = default;
+            string domain = default;
+            string serverNamePrefix = default;
+            EntraIdAkvConfigPatch entraIdAkvConfig = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("applicationId"u8))
+                {
+                    applicationId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("domain"u8))
+                {
+                    domain = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("serverNamePrefix"u8))
+                {
+                    serverNamePrefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("entraIdAkvConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    entraIdAkvConfig = EntraIdAkvConfigPatch.DeserializeEntraIdAkvConfigPatch(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                }
+            }
+            return new EntraIdConfigPatch
+            {
+                ApplicationId = applicationId,
+                Domain = domain,
+                ServerNamePrefix = serverNamePrefix,
+                EntraIdAkvConfig = entraIdAkvConfig,
+                _additionalBinaryDataProperties = additionalBinaryDataProperties
+            };
+        }
 
         protected virtual EntraIdConfigPatch PersistableModelCreateCore(System.BinaryData data, ModelReaderWriterOptions options)
         {

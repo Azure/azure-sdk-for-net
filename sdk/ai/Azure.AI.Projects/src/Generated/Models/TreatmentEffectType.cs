@@ -65,7 +65,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Converts a string to a <see cref="TreatmentEffectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TreatmentEffectType?(string value) => value == null ? null : new TreatmentEffectType(value);
+        public static implicit operator TreatmentEffectType?(string value) => value == null ? (TreatmentEffectType?)null : new TreatmentEffectType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

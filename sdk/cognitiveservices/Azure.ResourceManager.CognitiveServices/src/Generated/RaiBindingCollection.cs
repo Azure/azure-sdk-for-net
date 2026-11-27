@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(RaiBindingResource.ResourceType, out string raiBindingApiVersion);
             _raiBindingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiBindingResource.ResourceType.Namespace, Diagnostics);
-            _raiBindingsRestClient = new RaiBindings(_raiBindingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiBindingApiVersion ?? "2026-09-15-preview");
+            _raiBindingsRestClient = new RaiBindings(_raiBindingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiBindingApiVersion ?? "2026-11-15-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Education
     {
         private readonly ClientDiagnostics _joinRequestsClientDiagnostics;
         private readonly JoinRequests _joinRequestsRestClient;
-        private readonly EducationJoinRequestData _data;
+        private readonly EducationJoinContentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Education/labs/joinRequests";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Education
         /// <summary> Initializes a new instance of <see cref="EducationJoinRequestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EducationJoinRequestResource(ArmClient client, EducationJoinRequestData data) : this(client, data.Id)
+        internal EducationJoinRequestResource(ArmClient client, EducationJoinContentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Education
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual EducationJoinRequestData Data
+        public virtual EducationJoinContentData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
+                Response<EducationJoinContentData> response = Response.FromValue(EducationJoinContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
+                Response<EducationJoinContentData> response = Response.FromValue(EducationJoinContentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

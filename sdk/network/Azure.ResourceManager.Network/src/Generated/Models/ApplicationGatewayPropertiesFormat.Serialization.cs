@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            if (Optional.IsDefined(DeploymentTier))
+            {
+                writer.WritePropertyName("deploymentTier"u8);
+                writer.WriteStringValue(DeploymentTier.Value.ToString());
+            }
             if (Optional.IsDefined(SslPolicy))
             {
                 writer.WritePropertyName("sslPolicy"u8);
@@ -319,6 +324,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableFips"u8);
                 writer.WriteBooleanValue(EnableFips.Value);
             }
+            if (Optional.IsDefined(EnableConfidentialCompute))
+            {
+                writer.WritePropertyName("enableConfidentialCompute"u8);
+                writer.WriteBooleanValue(EnableConfidentialCompute.Value);
+            }
             if (Optional.IsDefined(AutoscaleConfiguration))
             {
                 writer.WritePropertyName("autoscaleConfiguration"u8);
@@ -447,6 +457,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ApplicationGatewaySku sku = default;
+            ApplicationGatewayDeploymentTier? deploymentTier = default;
             ApplicationGatewaySslPolicy sslPolicy = default;
             ApplicationGatewayOperationalState? operationalState = default;
             IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default;
@@ -474,6 +485,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource firewallPolicy = default;
             bool? enableHttp2 = default;
             bool? enableFips = default;
+            bool? enableConfidentialCompute = default;
             ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = default;
             int? reservedCapacity = default;
             IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = default;
@@ -496,6 +508,15 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     sku = ApplicationGatewaySku.DeserializeApplicationGatewaySku(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("deploymentTier"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deploymentTier = new ApplicationGatewayDeploymentTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sslPolicy"u8))
@@ -846,6 +867,15 @@ namespace Azure.ResourceManager.Network.Models
                     enableFips = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("enableConfidentialCompute"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableConfidentialCompute = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("autoscaleConfiguration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -986,6 +1016,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new ApplicationGatewayPropertiesFormat(
                 sku,
+                deploymentTier,
                 sslPolicy,
                 operationalState,
                 gatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
@@ -1013,6 +1044,7 @@ namespace Azure.ResourceManager.Network.Models
                 firewallPolicy,
                 enableHttp2,
                 enableFips,
+                enableConfidentialCompute,
                 autoscaleConfiguration,
                 reservedCapacity,
                 privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>(),

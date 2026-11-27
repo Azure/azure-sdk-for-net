@@ -13,7 +13,6 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NetApp account properties. </summary>
     internal partial class AccountProperties : IJsonModel<AccountProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -89,11 +88,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EntraIdConfig))
-            {
-                writer.WritePropertyName("entraIdConfig"u8);
-                writer.WriteObjectValue(EntraIdConfig, options);
-            }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
@@ -132,6 +126,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("ldapConfiguration"u8);
                 writer.WriteObjectValue(LdapConfiguration, options);
+            }
+            if (Optional.IsDefined(EntraIdConfig))
+            {
+                writer.WritePropertyName("entraIdConfig"u8);
+                WriteEntraIdConfig(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -177,7 +176,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string provisioningState = default;
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
-            EntraIdConfig entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
             bool disableShowmountIsDefined = false;
             bool? disableShowmount = default;
@@ -185,6 +183,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
             LdapConfiguration ldapConfiguration = default;
+            object entraIdConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,15 +204,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
                     }
                     activeDirectories = array;
-                    continue;
-                }
-                if (prop.NameEquals("entraIdConfig"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    entraIdConfig = EntraIdConfig.DeserializeEntraIdConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
@@ -265,6 +255,11 @@ namespace Azure.ResourceManager.NetApp.Models
                     ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("entraIdConfig"u8))
+                {
+                    ReadEntraIdConfig(prop, ref entraIdConfig, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -273,12 +268,12 @@ namespace Azure.ResourceManager.NetApp.Models
             return new AccountProperties(
                 provisioningState,
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
-                entraIdConfig,
                 encryption,
                 disableShowmount,
                 nfsV4IdDomain,
                 multiAdStatus,
                 ldapConfiguration,
+                entraIdConfig,
                 additionalBinaryDataProperties)
             {
                 _disableShowmountIsDefined = disableShowmountIsDefined,

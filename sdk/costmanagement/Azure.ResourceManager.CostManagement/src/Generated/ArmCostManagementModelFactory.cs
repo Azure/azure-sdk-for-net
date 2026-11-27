@@ -1173,10 +1173,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> The cost allocation rule check name availability request. </summary>
         /// <param name="name"> Rule name. </param>
         /// <param name="type"> Resource type. This is expected to be Microsoft.CostManagement/costAllocationRules. </param>
-        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityRequest"/> instance for mocking. </returns>
-        public static CostAllocationRuleCheckNameAvailabilityRequest CostAllocationRuleCheckNameAvailabilityRequest(string name = default, string @type = default)
+        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityContent"/> instance for mocking. </returns>
+        public static CostAllocationRuleCheckNameAvailabilityContent CostAllocationRuleCheckNameAvailabilityContent(string name = default, string @type = default)
         {
-            return new CostAllocationRuleCheckNameAvailabilityRequest(name, @type, default);
+            return new CostAllocationRuleCheckNameAvailabilityContent(name, @type, default);
         }
 
         /// <summary> The cost allocation rule check name availability response. </summary>

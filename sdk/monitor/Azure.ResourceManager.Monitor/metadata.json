@@ -2,7 +2,7 @@
   "apiVersions": {
     "DataCollectionApi": "2024-03-11",
     "PrivateLinkScopesApi": "2023-06-01-preview",
-    "AutoScaleApi": "2022-10-01",
+    "AutoScaleApi": "2025-09-01-preview",
     "ActivityLogsApi": "2015-04-01",
     "MetricsApi": "2024-02-01",
     "ServiceDiagnosticsSettingsApi": "2016-09-01",
@@ -13,6 +13,9 @@
     "ScheduledQueryRuleApi": "2025-01-01-preview",
     "MetricBaselinesApi": "2019-03-01",
     "ActionGroupsApi": "2024-10-01-preview",
-    "NetworkSecurityPerimeterApi": "2021-10-01"
+    "NetworkSecurityPerimeterApi": "2021-10-01",
+    "TenantActionGroups": "2023-05-01-preview",
+    "VmInsightsOnboarding": "2018-11-27-preview",
+    "DiagnosticsSettings": "2021-05-01-preview"
   }
 }

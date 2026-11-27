@@ -85,11 +85,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CommunicationEndpoint))
-            {
-                writer.WritePropertyName("communicationEndpoint"u8);
-                writer.WriteStringValue(CommunicationEndpoint);
-            }
             writer.WritePropertyName("scopes"u8);
             writer.WriteStartArray();
             foreach (ResourceIdentifier item in Scopes)
@@ -102,6 +97,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             ChaosProvisioningState? provisioningState = default;
-            string communicationEndpoint = default;
             IList<ResourceIdentifier> scopes = default;
+            WorkspaceEncryption encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,11 +157,6 @@ namespace Azure.ResourceManager.Chaos.Models
                         continue;
                     }
                     provisioningState = new ChaosProvisioningState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("communicationEndpoint"u8))
-                {
-                    communicationEndpoint = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("scopes"u8))
@@ -181,12 +176,21 @@ namespace Azure.ResourceManager.Chaos.Models
                     scopes = array;
                     continue;
                 }
+                if (prop.NameEquals("encryption"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = WorkspaceEncryption.DeserializeWorkspaceEncryption(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkspaceProperties(provisioningState, communicationEndpoint, scopes ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            return new WorkspaceProperties(provisioningState, scopes ?? new ChangeTrackingList<ResourceIdentifier>(), encryption, additionalBinaryDataProperties);
         }
     }
 }

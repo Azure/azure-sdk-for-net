@@ -7679,6 +7679,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "ConfigurationStore",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -7764,6 +7765,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "resourceName": "KeyValue",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -7824,6 +7826,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "resourceName": "Item",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -7896,6 +7899,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "resourceName": "Profile",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -7981,6 +7985,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "resourceName": "ResourceProfile",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8029,6 +8034,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "resourceName": "DiscriminatedResourceProfile",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8065,6 +8071,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
                 "resourceName": "ResourceProfileRevision",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8112,6 +8119,7 @@
                   "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
                 },
                 "resourceName": "ExtensionAssignment",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-01-01",
@@ -8146,6 +8154,7 @@
                 },
                 "singletonResourceName": "default",
                 "resourceName": "ReadOnlyExtension",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8194,6 +8203,7 @@
                 },
                 "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}",
                 "resourceName": "ExtensionChild",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8238,6 +8248,7 @@
                   "scopeIdPattern": "/{scope}"
                 },
                 "resourceName": "MultiScopeAssignment",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8285,6 +8296,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "ResourceGroupAssignment",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8334,6 +8346,7 @@
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "singletonResourceName": "default",
                 "resourceName": "SingletonSetting",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8480,6 +8493,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "resourceName": "ConfigurationStorePrivateLinkResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-01-01",
@@ -8549,6 +8563,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "VersionedResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8620,6 +8635,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "PreviewRetainedResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8690,6 +8706,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "LatestStableResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },

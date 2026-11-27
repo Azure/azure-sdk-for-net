@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            WorkbenchUpdateProperties properties = default;
+            CognitiveServicesWorkbenchPatchProperties properties = default;
             CognitiveServicesComputeIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    properties = WorkbenchUpdateProperties.DeserializeWorkbenchUpdateProperties(prop.Value, options);
+                    properties = CognitiveServicesWorkbenchPatchProperties.DeserializeCognitiveServicesWorkbenchPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

@@ -17,14 +17,9 @@ namespace Azure.AI.Projects.Evaluation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EvaluationTaxonomy"/>. </summary>
-        /// <param name="taxonomyInput"> Input configuration for the evaluation taxonomy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taxonomyInput"/> is null. </exception>
-        public EvaluationTaxonomy(EvaluationTaxonomyInput taxonomyInput)
+        public EvaluationTaxonomy()
         {
-            Argument.AssertNotNull(taxonomyInput, nameof(taxonomyInput));
-
             Tags = new ChangeTrackingDictionary<string, string>();
-            TaxonomyInput = taxonomyInput;
             TaxonomyCategories = new ChangeTrackingList<TaxonomyCategory>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
@@ -50,6 +45,16 @@ namespace Azure.AI.Projects.Evaluation
             TaxonomyCategories = taxonomyCategories;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EvaluationTaxonomy"/>. </summary>
+        /// <param name="taxonomyInput"> Input configuration for the evaluation taxonomy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taxonomyInput"/> is null. </exception>
+        public EvaluationTaxonomy(EvaluationTaxonomyInput taxonomyInput) : this()
+        {
+            Argument.AssertNotNull(taxonomyInput, nameof(taxonomyInput));
+
+            TaxonomyInput = taxonomyInput;
         }
 
         /// <summary> Asset ID, a unique identifier for the asset. </summary>

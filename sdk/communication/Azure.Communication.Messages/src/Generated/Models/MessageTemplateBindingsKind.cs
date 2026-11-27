@@ -46,7 +46,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Converts a string to a <see cref="MessageTemplateBindingsKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MessageTemplateBindingsKind?(string value) => value == null ? null : new MessageTemplateBindingsKind(value);
+        public static implicit operator MessageTemplateBindingsKind?(string value) => value == null ? (MessageTemplateBindingsKind?)null : new MessageTemplateBindingsKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -71,6 +71,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Configuration of the internal load balancer for a managed Network Virtual Appliance in a virtual hub or virtual network. Not applicable to partner-managed load balancers on SaaS NVAs. When omitted on create or update, Default distribution and a 5-minute idle timeout are used. </summary>
+        [WirePath("properties.loadBalancerConfiguration")]
+        public NetworkVirtualApplianceLoadBalancerConfiguration LoadBalancerConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                Properties.LoadBalancerConfiguration = value;
+            }
+        }
+
         /// <summary> Address Prefix. </summary>
         [WirePath("properties.addressPrefix")]
         public string AddressPrefix

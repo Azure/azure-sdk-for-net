@@ -57,6 +57,11 @@ parameters:
   type: boolean
   default: false
 
+# Fetch recent main/source history before regeneration pushes when greater than zero.
+- name: RegenerationHistoryDepth
+  type: number
+  default: 0
+
 # Number of jobs to generate. This is the maximum number of jobs that will be generated. The actual number of jobs will be reduced if it would result in fewer than MinimumPerJob packages per job.
 - name: RegenerationJobCount
   type: number
@@ -400,9 +405,7 @@ extends:
         jobs:
         - job: Initialize
           steps:
-          # Regeneration does not read repository history, so fetch only the
-          # checked-out commit. git-branch-push.ps1's retry path diffs the branch
-          # tip against its parent, which stays inside the depth-1 boundary.
+          # Start shallow; callers may opt in to fetching push history later.
           - checkout: self
             fetchDepth: 1
             fetchTags: false
@@ -459,6 +462,23 @@ extends:
               npm_config_userconfig: $(tspClientNpmrcPath)
 
           - ${{ parameters.InitializationSteps }}
+
+          - ${{ if gt(parameters.RegenerationHistoryDepth, 0) }}:
+            - task: PowerShell@2
+              displayName: Check for regeneration push changes
+              inputs:
+                pwsh: true
+                workingDirectory: $(Build.SourcesDirectory)
+                filePath: ./eng/common/scripts/check-for-git-changes.ps1
+                ignoreLASTEXITCODE: true
+            - task: PowerShell@2
+              displayName: Prepare regeneration push history
+              condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+              inputs:
+                pwsh: true
+                workingDirectory: $(Build.SourcesDirectory)
+                filePath: ./eng/scripts/Prepare-RegenerationHistory.ps1
+                arguments: '-Depth ${{ parameters.RegenerationHistoryDepth }} -SourceVersion "$(Build.SourceVersion)"'
 
           - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
             parameters:
@@ -540,6 +560,23 @@ extends:
             continueOnError: true
             env:
               npm_config_userconfig: $(emitterNpmrcPath)
+
+          - ${{ if gt(parameters.RegenerationHistoryDepth, 0) }}:
+            - task: PowerShell@2
+              displayName: Check for regeneration push changes
+              inputs:
+                pwsh: true
+                workingDirectory: $(Build.SourcesDirectory)
+                filePath: ./eng/common/scripts/check-for-git-changes.ps1
+                ignoreLASTEXITCODE: true
+            - task: PowerShell@2
+              displayName: Prepare regeneration push history
+              condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+              inputs:
+                pwsh: true
+                workingDirectory: $(Build.SourcesDirectory)
+                filePath: ./eng/scripts/Prepare-RegenerationHistory.ps1
+                arguments: '-Depth ${{ parameters.RegenerationHistoryDepth }} -SourceVersion "$(Build.SourceVersion)"'
 
           - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
             parameters:

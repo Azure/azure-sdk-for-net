@@ -51,7 +51,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Converts a string to a <see cref="TileAddressingScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TileAddressingScheme?(string value) => value == null ? null : new TileAddressingScheme(value);
+        public static implicit operator TileAddressingScheme?(string value) => value == null ? (TileAddressingScheme?)null : new TileAddressingScheme(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

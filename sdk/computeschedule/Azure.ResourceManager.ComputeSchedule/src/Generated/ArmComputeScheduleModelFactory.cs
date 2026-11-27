@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadline = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timezone = default, string operationTimezone = default, ResourceOperationError resourceOperationError = default, ScheduledActionFallbackInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, UserRequestRetryPolicy retryPolicy = default)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timezone, string operationTimezone, ResourceOperationError resourceOperationError, ScheduledActionFallbackInfo fallbackOperationInfo, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy)
         {
             return new ResourceOperationDetails(
                 operationId,
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourcePrefix"> If resourceOverrides doesn't contain name, service will create name based on prefix and resourceCount. </param>
         /// <param name="flexProperties"> The flex properties for flexible VM creation. </param>
         /// <returns> A new <see cref="Models.ResourceProvisionFlexPayload"/> instance for mocking. </returns>
-        public static ResourceProvisionFlexPayload ResourceProvisionFlexPayload(BulkVmConfiguration virtualMachineBaseProfile, IEnumerable<BulkVmConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix, ComputeScheduleFlexProperties flexProperties)
+        public static ResourceProvisionFlexPayload ResourceProvisionFlexPayload(BulkVmConfiguration virtualMachineBaseProfile = default, IEnumerable<BulkVmConfiguration> virtualMachineOverrides = default, int resourceCount = default, string resourcePrefix = default, ComputeScheduleFlexProperties flexProperties = default)
         {
             virtualMachineOverrides ??= new ChangeTrackingList<BulkVmConfiguration>();
 

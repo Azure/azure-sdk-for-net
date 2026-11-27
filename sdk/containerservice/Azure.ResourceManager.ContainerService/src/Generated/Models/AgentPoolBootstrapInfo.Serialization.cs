@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            BootstrapAzureConfig azure = default;
-            BootstrapComponentVersions components = default;
-            BootstrapNetworkingConfig networking = default;
-            BootstrapNodeConfig node = default;
+            AgentPoolBootstrapAzureConfig azure = default;
+            AgentPoolBootstrapComponentVersions components = default;
+            AgentPoolBootstrapNetworkingConfig networking = default;
+            AgentPoolBootstrapNodeConfig node = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    azure = BootstrapAzureConfig.DeserializeBootstrapAzureConfig(prop.Value, options);
+                    azure = AgentPoolBootstrapAzureConfig.DeserializeAgentPoolBootstrapAzureConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("components"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    components = BootstrapComponentVersions.DeserializeBootstrapComponentVersions(prop.Value, options);
+                    components = AgentPoolBootstrapComponentVersions.DeserializeAgentPoolBootstrapComponentVersions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networking"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    networking = BootstrapNetworkingConfig.DeserializeBootstrapNetworkingConfig(prop.Value, options);
+                    networking = AgentPoolBootstrapNetworkingConfig.DeserializeAgentPoolBootstrapNetworkingConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("node"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    node = BootstrapNodeConfig.DeserializeBootstrapNodeConfig(prop.Value, options);
+                    node = AgentPoolBootstrapNodeConfig.DeserializeAgentPoolBootstrapNodeConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

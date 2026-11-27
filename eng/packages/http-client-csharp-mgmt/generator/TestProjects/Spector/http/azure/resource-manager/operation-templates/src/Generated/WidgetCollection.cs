@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
+                HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
+                HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WidgetData> response = Response.FromValue(WidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
+                HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WidgetData> response = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
+                HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WidgetData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
+                HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WidgetData> response = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
+                HttpMessage message = _optionalBodyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, widgetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WidgetData> response = default;

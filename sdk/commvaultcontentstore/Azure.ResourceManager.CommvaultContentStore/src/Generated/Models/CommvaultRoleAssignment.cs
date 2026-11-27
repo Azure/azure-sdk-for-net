@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Initializes a new instance of <see cref="CommvaultRoleAssignment"/>. </summary>
         /// <param name="roleName"> The name of the Commvault role. </param>
-        /// <param name="entities"> The Entra entities (users or groups) assigned to this role. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
-        public CommvaultRoleAssignment(CommvaultRoleName roleName, IEnumerable<CommvaultEntityInfo> entities)
+        /// <param name="principals"> The Entra entities (users or groups) assigned to this role. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="principals"/> is null. </exception>
+        public CommvaultRoleAssignment(CommvaultRoleName roleName, IEnumerable<CommvaultRolePrincipal> principals)
         {
-            Argument.AssertNotNull(entities, nameof(entities));
+            Argument.AssertNotNull(principals, nameof(principals));
 
             RoleName = roleName;
-            Entities = entities.ToList();
+            Principals = principals.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommvaultRoleAssignment"/>. </summary>
         /// <param name="roleName"> The name of the Commvault role. </param>
-        /// <param name="entities"> The Entra entities (users or groups) assigned to this role. </param>
+        /// <param name="principals"> The Entra entities (users or groups) assigned to this role. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultRoleAssignment(CommvaultRoleName roleName, IList<CommvaultEntityInfo> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultRoleAssignment(CommvaultRoleName roleName, IList<CommvaultRolePrincipal> principals, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleName = roleName;
-            Entities = entities;
+            Principals = principals;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public CommvaultRoleName RoleName { get; set; }
 
         /// <summary> The Entra entities (users or groups) assigned to this role. </summary>
-        public IList<CommvaultEntityInfo> Entities { get; }
+        public IList<CommvaultRolePrincipal> Principals { get; }
     }
 }
