@@ -440,7 +440,7 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetConversations(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
-            return new ConversationAdministrationClientGetConversationsCollectionResult(
+            return new GetConversationsCollectionResult(
                 this,
                 maxPageSize,
                 participantId,
@@ -465,7 +465,7 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetConversationsAsync(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
-            return new ConversationAdministrationClientGetConversationsAsyncCollectionResult(
+            return new GetConversationsAsyncCollectionResult(
                 this,
                 maxPageSize,
                 participantId,
@@ -482,7 +482,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<CommunicationConversation> GetConversations(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAdministrationClientGetConversationsCollectionResultOfT(
+            return new GetConversationsCollectionResultOfT(
                 this,
                 maxPageSize,
                 participantId,
@@ -499,7 +499,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<CommunicationConversation> GetConversationsAsync(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAdministrationClientGetConversationsAsyncCollectionResultOfT(
+            return new GetConversationsAsyncCollectionResultOfT(
                 this,
                 maxPageSize,
                 participantId,
@@ -528,7 +528,7 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationAdministrationClientGetMessagesCollectionResult(
+            return new GetMessagesCollectionResult(
                 this,
                 conversationId,
                 maxPageSize,
@@ -557,7 +557,7 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationAdministrationClientGetMessagesAsyncCollectionResult(
+            return new GetMessagesAsyncCollectionResult(
                 this,
                 conversationId,
                 maxPageSize,
@@ -578,7 +578,7 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationAdministrationClientGetMessagesCollectionResultOfT(
+            return new GetMessagesCollectionResultOfT(
                 this,
                 conversationId,
                 maxPageSize,
@@ -599,7 +599,7 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationAdministrationClientGetMessagesAsyncCollectionResultOfT(
+            return new GetMessagesAsyncCollectionResultOfT(
                 this,
                 conversationId,
                 maxPageSize,

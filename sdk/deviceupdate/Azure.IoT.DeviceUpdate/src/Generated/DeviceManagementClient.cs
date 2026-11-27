@@ -104,7 +104,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDeviceClasses(string filter = default, RequestContext context = null)
         {
-            return new DeviceManagementClientGetDeviceClassesCollectionResult(this, filter, context, "DeviceManagementClient.GetDeviceClasses");
+            return new GetDeviceClassesCollectionResult(this, filter, context, "DeviceManagementClient.GetDeviceClasses");
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(string filter = default, RequestContext context = null)
         {
-            return new DeviceManagementClientGetDeviceClassesAsyncCollectionResult(this, filter, context, "DeviceManagementClient.GetDeviceClasses");
+            return new GetDeviceClassesAsyncCollectionResult(this, filter, context, "DeviceManagementClient.GetDeviceClasses");
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return new DeviceManagementClientGetInstallableUpdatesForDeviceClassesCollectionResult(this, deviceClassId, context, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
+            return new GetInstallableUpdatesForDeviceClassesCollectionResult(this, deviceClassId, context, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return new DeviceManagementClientGetInstallableUpdatesForDeviceClassesAsyncCollectionResult(this, deviceClassId, context, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
+            return new GetInstallableUpdatesForDeviceClassesAsyncCollectionResult(this, deviceClassId, context, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDevices(string filter = default, RequestContext context = null)
         {
-            return new DeviceManagementClientGetDevicesCollectionResult(this, filter, context, "DeviceManagementClient.GetDevices");
+            return new GetDevicesCollectionResult(this, filter, context, "DeviceManagementClient.GetDevices");
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDevicesAsync(string filter = default, RequestContext context = null)
         {
-            return new DeviceManagementClientGetDevicesAsyncCollectionResult(this, filter, context, "DeviceManagementClient.GetDevices");
+            return new GetDevicesAsyncCollectionResult(this, filter, context, "DeviceManagementClient.GetDevices");
         }
 
         /// <summary>
@@ -684,7 +684,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetGroups(string orderBy = default, RequestContext context = null)
         {
-            return new DeviceManagementClientGetGroupsCollectionResult(this, orderBy, context, "DeviceManagementClient.GetGroups");
+            return new GetGroupsCollectionResult(this, orderBy, context, "DeviceManagementClient.GetGroups");
         }
 
         /// <summary>
@@ -706,7 +706,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetGroupsAsync(string orderBy = default, RequestContext context = null)
         {
-            return new DeviceManagementClientGetGroupsAsyncCollectionResult(this, orderBy, context, "DeviceManagementClient.GetGroups");
+            return new GetGroupsAsyncCollectionResult(this, orderBy, context, "DeviceManagementClient.GetGroups");
         }
 
         /// <summary>
@@ -936,7 +936,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetBestUpdatesForGroupsCollectionResult(this, groupId, context, "DeviceManagementClient.GetBestUpdatesForGroups");
+            return new GetBestUpdatesForGroupsCollectionResult(this, groupId, context, "DeviceManagementClient.GetBestUpdatesForGroups");
         }
 
         /// <summary>
@@ -958,7 +958,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetBestUpdatesForGroupsAsyncCollectionResult(this, groupId, context, "DeviceManagementClient.GetBestUpdatesForGroups");
+            return new GetBestUpdatesForGroupsAsyncCollectionResult(this, groupId, context, "DeviceManagementClient.GetBestUpdatesForGroups");
         }
 
         /// <summary>
@@ -980,7 +980,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetDeploymentsForGroupsCollectionResult(this, groupId, orderBy, context, "DeviceManagementClient.GetDeploymentsForGroups");
+            return new GetDeploymentsForGroupsCollectionResult(this, groupId, orderBy, context, "DeviceManagementClient.GetDeploymentsForGroups");
         }
 
         /// <summary>
@@ -1002,7 +1002,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetDeploymentsForGroupsAsyncCollectionResult(this, groupId, orderBy, context, "DeviceManagementClient.GetDeploymentsForGroups");
+            return new GetDeploymentsForGroupsAsyncCollectionResult(this, groupId, orderBy, context, "DeviceManagementClient.GetDeploymentsForGroups");
         }
 
         /// <summary>
@@ -1308,7 +1308,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetDeviceClassSubgroupsForGroupsCollectionResult(this, groupId, filter, context, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups");
+            return new GetDeviceClassSubgroupsForGroupsCollectionResult(this, groupId, filter, context, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups");
         }
 
         /// <summary>
@@ -1336,7 +1336,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetDeviceClassSubgroupsForGroupsAsyncCollectionResult(this, groupId, filter, context, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups");
+            return new GetDeviceClassSubgroupsForGroupsAsyncCollectionResult(this, groupId, filter, context, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups");
         }
 
         /// <summary>
@@ -1656,7 +1656,7 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return new DeviceManagementClientGetDeploymentsForDeviceClassSubgroupsCollectionResult(
+            return new GetDeploymentsForDeviceClassSubgroupsCollectionResult(
                 this,
                 groupId,
                 deviceClassId,
@@ -1686,7 +1686,7 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return new DeviceManagementClientGetDeploymentsForDeviceClassSubgroupsAsyncCollectionResult(
+            return new GetDeploymentsForDeviceClassSubgroupsAsyncCollectionResult(
                 this,
                 groupId,
                 deviceClassId,
@@ -2084,7 +2084,7 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            return new DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentsCollectionResult(
+            return new GetDeviceStatesForDeviceClassSubgroupDeploymentsCollectionResult(
                 this,
                 groupId,
                 deviceClassId,
@@ -2121,7 +2121,7 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            return new DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentsAsyncCollectionResult(
+            return new GetDeviceStatesForDeviceClassSubgroupDeploymentsAsyncCollectionResult(
                 this,
                 groupId,
                 deviceClassId,
@@ -2226,7 +2226,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetOperationStatuses(string filter = default, int? top = default, RequestContext context = null)
         {
-            return new DeviceManagementClientGetOperationStatusesCollectionResult(this, filter, top, context, "DeviceManagementClient.GetOperationStatuses");
+            return new GetOperationStatusesCollectionResult(this, filter, top, context, "DeviceManagementClient.GetOperationStatuses");
         }
 
         /// <summary>
@@ -2252,7 +2252,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = default, int? top = default, RequestContext context = null)
         {
-            return new DeviceManagementClientGetOperationStatusesAsyncCollectionResult(this, filter, top, context, "DeviceManagementClient.GetOperationStatuses");
+            return new GetOperationStatusesAsyncCollectionResult(this, filter, top, context, "DeviceManagementClient.GetOperationStatuses");
         }
 
         /// <summary>
@@ -2400,7 +2400,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetLogCollections(RequestContext context = null)
         {
-            return new DeviceManagementClientGetLogCollectionsCollectionResult(this, context, "DeviceManagementClient.GetLogCollections");
+            return new GetLogCollectionsCollectionResult(this, context, "DeviceManagementClient.GetLogCollections");
         }
 
         /// <summary>
@@ -2416,7 +2416,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetLogCollectionsAsync(RequestContext context = null)
         {
-            return new DeviceManagementClientGetLogCollectionsAsyncCollectionResult(this, context, "DeviceManagementClient.GetLogCollections");
+            return new GetLogCollectionsAsyncCollectionResult(this, context, "DeviceManagementClient.GetLogCollections");
         }
 
         /// <summary>
@@ -2504,7 +2504,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
-            return new DeviceManagementClientGetHealthOfDevicesCollectionResult(this, filter, context, "DeviceManagementClient.GetHealthOfDevices");
+            return new GetHealthOfDevicesCollectionResult(this, filter, context, "DeviceManagementClient.GetHealthOfDevices");
         }
 
         /// <summary>
@@ -2528,7 +2528,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
-            return new DeviceManagementClientGetHealthOfDevicesAsyncCollectionResult(this, filter, context, "DeviceManagementClient.GetHealthOfDevices");
+            return new GetHealthOfDevicesAsyncCollectionResult(this, filter, context, "DeviceManagementClient.GetHealthOfDevices");
         }
     }
 }

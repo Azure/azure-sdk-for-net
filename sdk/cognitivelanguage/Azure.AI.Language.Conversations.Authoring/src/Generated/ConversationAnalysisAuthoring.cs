@@ -117,7 +117,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetProjectsCollectionResult(
+            return new GetProjectsCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -142,7 +142,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetProjectsAsyncCollectionResult(
+            return new GetProjectsAsyncCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -159,7 +159,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ConversationAuthoringProjectMetadata> GetProjects(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetProjectsCollectionResultOfT(
+            return new GetProjectsCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -176,7 +176,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ConversationAuthoringProjectMetadata> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetProjectsAsyncCollectionResultOfT(
+            return new GetProjectsAsyncCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -202,7 +202,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSupportedLanguages(string projectKind, int? maxCount = default, int? skip = default, int? maxPageSize = default, RequestContext context = null)
         {
-            return new ConversationAnalysisAuthoringGetSupportedLanguagesCollectionResult(
+            return new GetSupportedLanguagesCollectionResult(
                 this,
                 projectKind,
                 maxCount,
@@ -229,7 +229,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSupportedLanguagesAsync(string projectKind, int? maxCount = default, int? skip = default, int? maxPageSize = default, RequestContext context = null)
         {
-            return new ConversationAnalysisAuthoringGetSupportedLanguagesAsyncCollectionResult(
+            return new GetSupportedLanguagesAsyncCollectionResult(
                 this,
                 projectKind,
                 maxCount,
@@ -248,7 +248,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ConversationAuthoringSupportedLanguage> GetSupportedLanguages(ConversationAuthoringProjectKind projectKind, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetSupportedLanguagesCollectionResultOfT(
+            return new GetSupportedLanguagesCollectionResultOfT(
                 this,
                 projectKind.ToString(),
                 maxCount,
@@ -267,7 +267,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ConversationAuthoringSupportedLanguage> GetSupportedLanguagesAsync(ConversationAuthoringProjectKind projectKind, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetSupportedLanguagesAsyncCollectionResultOfT(
+            return new GetSupportedLanguagesAsyncCollectionResultOfT(
                 this,
                 projectKind.ToString(),
                 maxCount,
@@ -293,7 +293,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAssignedResourceDeployments(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsCollectionResult(
+            return new GetAssignedResourceDeploymentsCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -318,7 +318,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsAsyncCollectionResult(
+            return new GetAssignedResourceDeploymentsAsyncCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -335,7 +335,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ConversationAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsCollectionResultOfT(
+            return new GetAssignedResourceDeploymentsCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -352,7 +352,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ConversationAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsAsyncCollectionResultOfT(
+            return new GetAssignedResourceDeploymentsAsyncCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -379,7 +379,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(int? maxCount, int? skip, int? maxPageSize, string language, string multilingual, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesCollectionResult(
+            return new GetSupportedPrebuiltEntitiesCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -408,7 +408,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(int? maxCount, int? skip, int? maxPageSize, string language, string multilingual, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesAsyncCollectionResult(
+            return new GetSupportedPrebuiltEntitiesAsyncCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -429,7 +429,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ConversationAuthoringPrebuiltEntity> GetSupportedPrebuiltEntities(int? maxCount = default, int? skip = default, int? maxPageSize = default, string language = default, string multilingual = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesCollectionResultOfT(
+            return new GetSupportedPrebuiltEntitiesCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -450,7 +450,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ConversationAuthoringPrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, string language = default, string multilingual = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT(
+            return new GetSupportedPrebuiltEntitiesAsyncCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -478,7 +478,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, int? maxCount = default, int? skip = default, int? maxPageSize = default, RequestContext context = null)
         {
-            return new ConversationAnalysisAuthoringGetTrainingConfigVersionsCollectionResult(
+            return new GetTrainingConfigVersionsCollectionResult(
                 this,
                 projectKind,
                 maxCount,
@@ -505,7 +505,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, int? maxCount = default, int? skip = default, int? maxPageSize = default, RequestContext context = null)
         {
-            return new ConversationAnalysisAuthoringGetTrainingConfigVersionsAsyncCollectionResult(
+            return new GetTrainingConfigVersionsAsyncCollectionResult(
                 this,
                 projectKind,
                 maxCount,
@@ -524,7 +524,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ConversationAuthoringTrainingConfigVersion> GetTrainingConfigVersions(ConversationAuthoringProjectKind projectKind, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetTrainingConfigVersionsCollectionResultOfT(
+            return new GetTrainingConfigVersionsCollectionResultOfT(
                 this,
                 projectKind.ToString(),
                 maxCount,
@@ -543,7 +543,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ConversationAuthoringTrainingConfigVersion> GetTrainingConfigVersionsAsync(ConversationAuthoringProjectKind projectKind, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetTrainingConfigVersionsAsyncCollectionResultOfT(
+            return new GetTrainingConfigVersionsAsyncCollectionResultOfT(
                 this,
                 projectKind.ToString(),
                 maxCount,
@@ -574,7 +574,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetTrainedModelsCollectionResult(
+            return new GetTrainedModelsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -605,7 +605,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetTrainedModelsAsyncCollectionResult(
+            return new GetTrainedModelsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -628,7 +628,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetTrainedModelsCollectionResultOfT(
+            return new GetTrainedModelsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -651,7 +651,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetTrainedModelsAsyncCollectionResultOfT(
+            return new GetTrainedModelsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -682,7 +682,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetTrainingJobsCollectionResult(
+            return new GetTrainingJobsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -713,7 +713,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetTrainingJobsAsyncCollectionResult(
+            return new GetTrainingJobsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -736,7 +736,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetTrainingJobsCollectionResultOfT(
+            return new GetTrainingJobsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -759,7 +759,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetTrainingJobsAsyncCollectionResultOfT(
+            return new GetTrainingJobsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -790,7 +790,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetDeploymentResourcesCollectionResult(
+            return new GetDeploymentResourcesCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -821,7 +821,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetDeploymentResourcesAsyncCollectionResult(
+            return new GetDeploymentResourcesAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -844,7 +844,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetDeploymentResourcesCollectionResultOfT(
+            return new GetDeploymentResourcesCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -867,7 +867,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetDeploymentResourcesAsyncCollectionResultOfT(
+            return new GetDeploymentResourcesAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -898,7 +898,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetDeploymentsCollectionResult(
+            return new GetDeploymentsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -929,7 +929,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetDeploymentsAsyncCollectionResult(
+            return new GetDeploymentsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -952,7 +952,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetDeploymentsCollectionResultOfT(
+            return new GetDeploymentsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -975,7 +975,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetDeploymentsAsyncCollectionResultOfT(
+            return new GetDeploymentsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -1006,7 +1006,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetExportedModelsCollectionResult(
+            return new GetExportedModelsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1037,7 +1037,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetExportedModelsAsyncCollectionResult(
+            return new GetExportedModelsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1060,7 +1060,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetExportedModelsCollectionResultOfT(
+            return new GetExportedModelsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -1083,7 +1083,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAnalysisAuthoringGetExportedModelsAsyncCollectionResultOfT(
+            return new GetExportedModelsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,

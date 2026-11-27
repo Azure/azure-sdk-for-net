@@ -810,7 +810,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timeInterval, nameof(timeInterval));
 
-            return new LoadTestRunClientGetMetricDimensionValuesCollectionResult(
+            return new GetMetricDimensionValuesCollectionResult(
                 this,
                 testRunId,
                 name,
@@ -852,7 +852,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timeInterval, nameof(timeInterval));
 
-            return new LoadTestRunClientGetMetricDimensionValuesAsyncCollectionResult(
+            return new GetMetricDimensionValuesAsyncCollectionResult(
                 this,
                 testRunId,
                 name,
@@ -886,7 +886,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
-            return new LoadTestRunClientGetMetricDimensionValuesCollectionResultOfT(
+            return new GetMetricDimensionValuesCollectionResultOfT(
                 this,
                 testRunId,
                 name,
@@ -920,7 +920,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
-            return new LoadTestRunClientGetMetricDimensionValuesAsyncCollectionResultOfT(
+            return new GetMetricDimensionValuesAsyncCollectionResultOfT(
                 this,
                 testRunId,
                 name,
@@ -1178,7 +1178,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
-            return new LoadTestRunClientGetMetricsCollectionResult(
+            return new GetMetricsCollectionResult(
                 this,
                 testRunId,
                 metricName,
@@ -1221,7 +1221,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
-            return new LoadTestRunClientGetMetricsAsyncCollectionResult(
+            return new GetMetricsAsyncCollectionResult(
                 this,
                 testRunId,
                 metricName,
@@ -1256,7 +1256,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
-            return new LoadTestRunClientGetMetricsCollectionResultOfT(
+            return new GetMetricsCollectionResultOfT(
                 this,
                 testRunId,
                 metricName,
@@ -1291,7 +1291,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
-            return new LoadTestRunClientGetMetricsAsyncCollectionResultOfT(
+            return new GetMetricsAsyncCollectionResultOfT(
                 this,
                 testRunId,
                 metricName,
@@ -1333,7 +1333,7 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTestRuns(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
         {
-            return new LoadTestRunClientGetTestRunsCollectionResult(
+            return new GetTestRunsCollectionResult(
                 this,
                 @orderby,
                 search,
@@ -1377,7 +1377,7 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
         {
-            return new LoadTestRunClientGetTestRunsAsyncCollectionResult(
+            return new GetTestRunsAsyncCollectionResult(
                 this,
                 @orderby,
                 search,
@@ -1413,7 +1413,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<LoadTestRun> GetTestRuns(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxPageSize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
         {
-            return new LoadTestRunClientGetTestRunsCollectionResultOfT(
+            return new GetTestRunsCollectionResultOfT(
                 this,
                 @orderby,
                 search,
@@ -1449,7 +1449,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<LoadTestRun> GetTestRunsAsync(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxPageSize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
         {
-            return new LoadTestRunClientGetTestRunsAsyncCollectionResultOfT(
+            return new GetTestRunsAsyncCollectionResultOfT(
                 this,
                 @orderby,
                 search,

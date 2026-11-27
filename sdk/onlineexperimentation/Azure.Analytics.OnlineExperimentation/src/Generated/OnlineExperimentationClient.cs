@@ -444,7 +444,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetMetrics(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new OnlineExperimentationClientGetMetricsCollectionResult(
+            return new GetMetricsCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -469,7 +469,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new OnlineExperimentationClientGetMetricsAsyncCollectionResult(
+            return new GetMetricsAsyncCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -486,7 +486,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ExperimentMetric> GetMetrics(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new OnlineExperimentationClientGetMetricsCollectionResultOfT(
+            return new GetMetricsCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -503,7 +503,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ExperimentMetric> GetMetricsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new OnlineExperimentationClientGetMetricsAsyncCollectionResultOfT(
+            return new GetMetricsAsyncCollectionResultOfT(
                 this,
                 maxCount,
                 skip,

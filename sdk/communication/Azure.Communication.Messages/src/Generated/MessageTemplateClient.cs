@@ -73,7 +73,7 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTemplates(Guid channelId, int? maxpagesize, RequestContext context)
         {
-            return new MessageTemplateClientGetTemplatesCollectionResult(this, channelId, maxpagesize, context, "MessageTemplateClient.GetTemplates");
+            return new GetTemplatesCollectionResult(this, channelId, maxpagesize, context, "MessageTemplateClient.GetTemplates");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTemplatesAsync(Guid channelId, int? maxpagesize, RequestContext context)
         {
-            return new MessageTemplateClientGetTemplatesAsyncCollectionResult(this, channelId, maxpagesize, context, "MessageTemplateClient.GetTemplates");
+            return new GetTemplatesAsyncCollectionResult(this, channelId, maxpagesize, context, "MessageTemplateClient.GetTemplates");
         }
 
         /// <summary> List all templates for given Azure Communication Services channel. </summary>
@@ -101,7 +101,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<MessageTemplateItem> GetTemplates(Guid channelId, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new MessageTemplateClientGetTemplatesCollectionResultOfT(this, channelId, maxpagesize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
+            return new GetTemplatesCollectionResultOfT(this, channelId, maxpagesize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
         }
 
         /// <summary> List all templates for given Azure Communication Services channel. </summary>
@@ -111,7 +111,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<MessageTemplateItem> GetTemplatesAsync(Guid channelId, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new MessageTemplateClientGetTemplatesAsyncCollectionResultOfT(this, channelId, maxpagesize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
+            return new GetTemplatesAsyncCollectionResultOfT(this, channelId, maxpagesize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
         }
     }
 }

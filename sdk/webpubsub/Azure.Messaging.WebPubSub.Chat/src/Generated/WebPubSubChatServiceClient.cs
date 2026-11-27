@@ -156,7 +156,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new WebPubSubChatServiceClientGetMessagesCollectionResult(
+            return new GetMessagesCollectionResult(
                 this,
                 conversationId,
                 latestMessageId,
@@ -188,7 +188,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new WebPubSubChatServiceClientGetMessagesAsyncCollectionResult(
+            return new GetMessagesAsyncCollectionResult(
                 this,
                 conversationId,
                 latestMessageId,
@@ -388,7 +388,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetRoles(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetRolesCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRoles");
+            return new GetRolesCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRoles");
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetRolesAsync(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetRolesAsyncCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRoles");
+            return new GetRolesAsyncCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRoles");
         }
 
         /// <summary> Query roles in a hub. </summary>
@@ -414,7 +414,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<WebPubSubChatRole> GetRoles(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetRolesCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRoles");
+            return new GetRolesCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRoles");
         }
 
         /// <summary> Query roles in a hub. </summary>
@@ -423,7 +423,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<WebPubSubChatRole> GetRolesAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetRolesAsyncCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRoles");
+            return new GetRolesAsyncCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRoles");
         }
 
         /// <summary>
@@ -730,7 +730,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetRooms(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetRoomsCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRooms");
+            return new GetRoomsCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRooms");
         }
 
         /// <summary>
@@ -747,7 +747,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetRoomsAsync(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetRoomsAsyncCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRooms");
+            return new GetRoomsAsyncCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRooms");
         }
 
         /// <summary> List rooms with pagination. </summary>
@@ -756,7 +756,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<WebPubSubChatRoom> GetRooms(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetRoomsCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRooms");
+            return new GetRoomsCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRooms");
         }
 
         /// <summary> List rooms with pagination. </summary>
@@ -765,7 +765,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<WebPubSubChatRoom> GetRoomsAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetRoomsAsyncCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRooms");
+            return new GetRoomsAsyncCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRooms");
         }
 
         /// <summary>
@@ -1077,7 +1077,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
-            return new WebPubSubChatServiceClientGetTopicsCollectionResult(
+            return new GetTopicsCollectionResult(
                 this,
                 roomId,
                 maxPageSize,
@@ -1105,7 +1105,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
-            return new WebPubSubChatServiceClientGetTopicsAsyncCollectionResult(
+            return new GetTopicsAsyncCollectionResult(
                 this,
                 roomId,
                 maxPageSize,
@@ -1125,7 +1125,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
-            return new WebPubSubChatServiceClientGetTopicsCollectionResultOfT(
+            return new GetTopicsCollectionResultOfT(
                 this,
                 roomId,
                 maxPageSize,
@@ -1145,7 +1145,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
-            return new WebPubSubChatServiceClientGetTopicsAsyncCollectionResultOfT(
+            return new GetTopicsAsyncCollectionResultOfT(
                 this,
                 roomId,
                 maxPageSize,
@@ -1561,7 +1561,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
-            return new WebPubSubChatServiceClientGetRoomMembersCollectionResult(
+            return new GetRoomMembersCollectionResult(
                 this,
                 roomId,
                 maxPageSize,
@@ -1589,7 +1589,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
-            return new WebPubSubChatServiceClientGetRoomMembersAsyncCollectionResult(
+            return new GetRoomMembersAsyncCollectionResult(
                 this,
                 roomId,
                 maxPageSize,
@@ -1609,7 +1609,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
-            return new WebPubSubChatServiceClientGetRoomMembersCollectionResultOfT(
+            return new GetRoomMembersCollectionResultOfT(
                 this,
                 roomId,
                 maxPageSize,
@@ -1629,7 +1629,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
-            return new WebPubSubChatServiceClientGetRoomMembersAsyncCollectionResultOfT(
+            return new GetRoomMembersAsyncCollectionResultOfT(
                 this,
                 roomId,
                 maxPageSize,
@@ -1866,7 +1866,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetUsers(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetUsersCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetUsers");
+            return new GetUsersCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetUsers");
         }
 
         /// <summary>
@@ -1883,7 +1883,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetUsersAsync(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetUsersAsyncCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetUsers");
+            return new GetUsersAsyncCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetUsers");
         }
 
         /// <summary> List all users with pagination. </summary>
@@ -1892,7 +1892,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<WebPubSubChatUser> GetUsers(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetUsersCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetUsers");
+            return new GetUsersCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetUsers");
         }
 
         /// <summary> List all users with pagination. </summary>
@@ -1901,7 +1901,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<WebPubSubChatUser> GetUsersAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetUsersAsyncCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetUsers");
+            return new GetUsersAsyncCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetUsers");
         }
 
         /// <summary>
@@ -2213,7 +2213,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new WebPubSubChatServiceClientGetRoomsForUserCollectionResult(
+            return new GetRoomsForUserCollectionResult(
                 this,
                 userId,
                 maxPageSize,
@@ -2241,7 +2241,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new WebPubSubChatServiceClientGetRoomsForUserAsyncCollectionResult(
+            return new GetRoomsForUserAsyncCollectionResult(
                 this,
                 userId,
                 maxPageSize,
@@ -2261,7 +2261,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new WebPubSubChatServiceClientGetRoomsForUserCollectionResultOfT(
+            return new GetRoomsForUserCollectionResultOfT(
                 this,
                 userId,
                 maxPageSize,
@@ -2281,7 +2281,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new WebPubSubChatServiceClientGetRoomsForUserAsyncCollectionResultOfT(
+            return new GetRoomsForUserAsyncCollectionResultOfT(
                 this,
                 userId,
                 maxPageSize,

@@ -281,7 +281,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetOperations(int? maxCount, int? skip, string collectionId, string status, RequestContext context)
         {
-            return new IngestionClientGetOperationsCollectionResult(
+            return new GetOperationsCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -308,7 +308,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(int? maxCount, int? skip, string collectionId, string status, RequestContext context)
         {
-            return new IngestionClientGetOperationsAsyncCollectionResult(
+            return new GetOperationsAsyncCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -327,7 +327,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<PlanetaryComputerOperation> GetOperations(int? maxCount = default, int? skip = default, string collectionId = default, PlanetaryComputerOperationStatus? status = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetOperationsCollectionResultOfT(
+            return new GetOperationsCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -346,7 +346,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<PlanetaryComputerOperation> GetOperationsAsync(int? maxCount = default, int? skip = default, string collectionId = default, PlanetaryComputerOperationStatus? status = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetOperationsAsyncCollectionResultOfT(
+            return new GetOperationsAsyncCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -573,7 +573,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetRunsCollectionResult(
+            return new GetRunsCollectionResult(
                 this,
                 collectionId,
                 ingestionId,
@@ -604,7 +604,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetRunsAsyncCollectionResult(
+            return new GetRunsAsyncCollectionResult(
                 this,
                 collectionId,
                 ingestionId,
@@ -627,7 +627,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetRunsCollectionResultOfT(
+            return new GetRunsCollectionResultOfT(
                 this,
                 collectionId,
                 ingestionId,
@@ -650,7 +650,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetRunsAsyncCollectionResultOfT(
+            return new GetRunsAsyncCollectionResultOfT(
                 this,
                 collectionId,
                 ingestionId,
@@ -956,7 +956,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllCollectionResult(
+            return new GetAllCollectionResult(
                 this,
                 collectionId,
                 maxCount,
@@ -985,7 +985,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllAsyncCollectionResult(
+            return new GetAllAsyncCollectionResult(
                 this,
                 collectionId,
                 maxCount,
@@ -1006,7 +1006,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllCollectionResultOfT(
+            return new GetAllCollectionResultOfT(
                 this,
                 collectionId,
                 maxCount,
@@ -1027,7 +1027,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllAsyncCollectionResultOfT(
+            return new GetAllAsyncCollectionResultOfT(
                 this,
                 collectionId,
                 maxCount,
@@ -1451,7 +1451,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSources(int? maxCount, int? skip, RequestContext context)
         {
-            return new IngestionClientGetSourcesCollectionResult(this, maxCount, skip, context, "IngestionClient.GetSources");
+            return new GetSourcesCollectionResult(this, maxCount, skip, context, "IngestionClient.GetSources");
         }
 
         /// <summary>
@@ -1469,7 +1469,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSourcesAsync(int? maxCount, int? skip, RequestContext context)
         {
-            return new IngestionClientGetSourcesAsyncCollectionResult(this, maxCount, skip, context, "IngestionClient.GetSources");
+            return new GetSourcesAsyncCollectionResult(this, maxCount, skip, context, "IngestionClient.GetSources");
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
@@ -1479,7 +1479,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<IngestionSourceSummary> GetSources(int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext(), "IngestionClient.GetSources");
+            return new GetSourcesCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext(), "IngestionClient.GetSources");
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
@@ -1489,7 +1489,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<IngestionSourceSummary> GetSourcesAsync(int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesAsyncCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext(), "IngestionClient.GetSources");
+            return new GetSourcesAsyncCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext(), "IngestionClient.GetSources");
         }
 
         /// <summary>
@@ -1505,7 +1505,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetManagedIdentities(RequestContext context)
         {
-            return new IngestionClientGetManagedIdentitiesCollectionResult(this, context, "IngestionClient.GetManagedIdentities");
+            return new GetManagedIdentitiesCollectionResult(this, context, "IngestionClient.GetManagedIdentities");
         }
 
         /// <summary>
@@ -1521,7 +1521,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetManagedIdentitiesAsync(RequestContext context)
         {
-            return new IngestionClientGetManagedIdentitiesAsyncCollectionResult(this, context, "IngestionClient.GetManagedIdentities");
+            return new GetManagedIdentitiesAsyncCollectionResult(this, context, "IngestionClient.GetManagedIdentities");
         }
 
         /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
@@ -1529,7 +1529,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ManagedIdentityMetadata> GetManagedIdentities(CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetManagedIdentitiesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "IngestionClient.GetManagedIdentities");
+            return new GetManagedIdentitiesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "IngestionClient.GetManagedIdentities");
         }
 
         /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
@@ -1537,7 +1537,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ManagedIdentityMetadata> GetManagedIdentitiesAsync(CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetManagedIdentitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "IngestionClient.GetManagedIdentities");
+            return new GetManagedIdentitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "IngestionClient.GetManagedIdentities");
         }
     }
 }

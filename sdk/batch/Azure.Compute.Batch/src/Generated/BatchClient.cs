@@ -99,7 +99,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetApplications(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
         {
-            return new BatchClientGetApplicationsCollectionResult(
+            return new GetApplicationsCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -135,7 +135,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetApplicationsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
         {
-            return new BatchClientGetApplicationsAsyncCollectionResult(
+            return new GetApplicationsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -165,7 +165,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<BatchApplication> GetApplications(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetApplicationsCollectionResultOfT(
+            return new GetApplicationsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -195,7 +195,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<BatchApplication> GetApplicationsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetApplicationsAsyncCollectionResultOfT(
+            return new GetApplicationsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -382,7 +382,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetPoolUsageMetrics(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
-            return new BatchClientGetPoolUsageMetricsCollectionResult(
+            return new GetPoolUsageMetricsCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -436,7 +436,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetPoolUsageMetricsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
-            return new BatchClientGetPoolUsageMetricsAsyncCollectionResult(
+            return new GetPoolUsageMetricsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -484,7 +484,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<BatchPoolUsageMetrics> GetPoolUsageMetrics(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, DateTimeOffset? starttime = default, DateTimeOffset? endtime = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetPoolUsageMetricsCollectionResultOfT(
+            return new GetPoolUsageMetricsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -532,7 +532,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, DateTimeOffset? starttime = default, DateTimeOffset? endtime = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetPoolUsageMetricsAsyncCollectionResultOfT(
+            return new GetPoolUsageMetricsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -695,7 +695,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetPools(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
-            return new BatchClientGetPoolsCollectionResult(
+            return new GetPoolsCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -736,7 +736,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetPoolsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
-            return new BatchClientGetPoolsAsyncCollectionResult(
+            return new GetPoolsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -769,7 +769,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<BatchPool> GetPools(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetPoolsCollectionResultOfT(
+            return new GetPoolsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -802,7 +802,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<BatchPool> GetPoolsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetPoolsAsyncCollectionResultOfT(
+            return new GetPoolsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -2191,7 +2191,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSupportedImages(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
-            return new BatchClientGetSupportedImagesCollectionResult(
+            return new GetSupportedImagesCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -2228,7 +2228,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSupportedImagesAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
-            return new BatchClientGetSupportedImagesAsyncCollectionResult(
+            return new GetSupportedImagesAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -2257,7 +2257,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<BatchSupportedImage> GetSupportedImages(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetSupportedImagesCollectionResultOfT(
+            return new GetSupportedImagesCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -2286,7 +2286,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<BatchSupportedImage> GetSupportedImagesAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetSupportedImagesAsyncCollectionResultOfT(
+            return new GetSupportedImagesAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -2325,7 +2325,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetPoolNodeCounts(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
-            return new BatchClientGetPoolNodeCountsCollectionResult(
+            return new GetPoolNodeCountsCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -2364,7 +2364,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetPoolNodeCountsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
-            return new BatchClientGetPoolNodeCountsAsyncCollectionResult(
+            return new GetPoolNodeCountsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -2397,7 +2397,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<BatchPoolNodeCounts> GetPoolNodeCounts(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetPoolNodeCountsCollectionResultOfT(
+            return new GetPoolNodeCountsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -2430,7 +2430,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<BatchPoolNodeCounts> GetPoolNodeCountsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetPoolNodeCountsAsyncCollectionResultOfT(
+            return new GetPoolNodeCountsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -3503,7 +3503,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetJobs(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
-            return new BatchClientGetJobsCollectionResult(
+            return new GetJobsCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -3544,7 +3544,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetJobsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
-            return new BatchClientGetJobsAsyncCollectionResult(
+            return new GetJobsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -3577,7 +3577,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<BatchJob> GetJobs(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetJobsCollectionResultOfT(
+            return new GetJobsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -3610,7 +3610,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<BatchJob> GetJobsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetJobsAsyncCollectionResultOfT(
+            return new GetJobsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -3656,7 +3656,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromScheduleCollectionResult(
+            return new GetJobsFromScheduleCollectionResult(
                 this,
                 jobScheduleId,
                 timeout,
@@ -3703,7 +3703,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromScheduleAsyncCollectionResult(
+            return new GetJobsFromScheduleAsyncCollectionResult(
                 this,
                 jobScheduleId,
                 timeout,
@@ -3742,7 +3742,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromScheduleCollectionResultOfT(
+            return new GetJobsFromScheduleCollectionResultOfT(
                 this,
                 jobScheduleId,
                 timeout,
@@ -3781,7 +3781,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromScheduleAsyncCollectionResultOfT(
+            return new GetJobsFromScheduleAsyncCollectionResultOfT(
                 this,
                 jobScheduleId,
                 timeout,
@@ -3832,7 +3832,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return new BatchClientGetJobPreparationAndReleaseTaskStatusesCollectionResult(
+            return new GetJobPreparationAndReleaseTaskStatusesCollectionResult(
                 this,
                 jobId,
                 timeout,
@@ -3882,7 +3882,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return new BatchClientGetJobPreparationAndReleaseTaskStatusesAsyncCollectionResult(
+            return new GetJobPreparationAndReleaseTaskStatusesAsyncCollectionResult(
                 this,
                 jobId,
                 timeout,
@@ -3926,7 +3926,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return new BatchClientGetJobPreparationAndReleaseTaskStatusesCollectionResultOfT(
+            return new GetJobPreparationAndReleaseTaskStatusesCollectionResultOfT(
                 this,
                 jobId,
                 timeout,
@@ -3970,7 +3970,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return new BatchClientGetJobPreparationAndReleaseTaskStatusesAsyncCollectionResultOfT(
+            return new GetJobPreparationAndReleaseTaskStatusesAsyncCollectionResultOfT(
                 this,
                 jobId,
                 timeout,
@@ -5155,7 +5155,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetJobSchedules(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
-            return new BatchClientGetJobSchedulesCollectionResult(
+            return new GetJobSchedulesCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -5196,7 +5196,7 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetJobSchedulesAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
-            return new BatchClientGetJobSchedulesAsyncCollectionResult(
+            return new GetJobSchedulesAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
@@ -5229,7 +5229,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<BatchJobSchedule> GetJobSchedules(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetJobSchedulesCollectionResultOfT(
+            return new GetJobSchedulesCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -5262,7 +5262,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<BatchJobSchedule> GetJobSchedulesAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetJobSchedulesAsyncCollectionResultOfT(
+            return new GetJobSchedulesAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
@@ -5444,7 +5444,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return new BatchClientGetTasksCollectionResult(
+            return new GetTasksCollectionResult(
                 this,
                 jobId,
                 timeout,
@@ -5493,7 +5493,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return new BatchClientGetTasksAsyncCollectionResult(
+            return new GetTasksAsyncCollectionResult(
                 this,
                 jobId,
                 timeout,
@@ -5536,7 +5536,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return new BatchClientGetTasksCollectionResultOfT(
+            return new GetTasksCollectionResultOfT(
                 this,
                 jobId,
                 timeout,
@@ -5579,7 +5579,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return new BatchClientGetTasksAsyncCollectionResultOfT(
+            return new GetTasksAsyncCollectionResultOfT(
                 this,
                 jobId,
                 timeout,
@@ -6227,7 +6227,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return new BatchClientGetSubTasksCollectionResult(
+            return new GetSubTasksCollectionResult(
                 this,
                 jobId,
                 taskId,
@@ -6265,7 +6265,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return new BatchClientGetSubTasksAsyncCollectionResult(
+            return new GetSubTasksAsyncCollectionResult(
                 this,
                 jobId,
                 taskId,
@@ -6295,7 +6295,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return new BatchClientGetSubTasksCollectionResultOfT(
+            return new GetSubTasksCollectionResultOfT(
                 this,
                 jobId,
                 taskId,
@@ -6325,7 +6325,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return new BatchClientGetSubTasksAsyncCollectionResultOfT(
+            return new GetSubTasksAsyncCollectionResultOfT(
                 this,
                 jobId,
                 taskId,
@@ -7118,7 +7118,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return new BatchClientGetTaskFilesCollectionResult(
+            return new GetTaskFilesCollectionResult(
                 this,
                 jobId,
                 taskId,
@@ -7169,7 +7169,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return new BatchClientGetTaskFilesAsyncCollectionResult(
+            return new GetTaskFilesAsyncCollectionResult(
                 this,
                 jobId,
                 taskId,
@@ -7212,7 +7212,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return new BatchClientGetTaskFilesCollectionResultOfT(
+            return new GetTaskFilesCollectionResultOfT(
                 this,
                 jobId,
                 taskId,
@@ -7255,7 +7255,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return new BatchClientGetTaskFilesAsyncCollectionResultOfT(
+            return new GetTaskFilesAsyncCollectionResultOfT(
                 this,
                 jobId,
                 taskId,
@@ -8843,7 +8843,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            return new BatchClientGetNodesCollectionResult(
+            return new GetNodesCollectionResult(
                 this,
                 poolId,
                 timeout,
@@ -8888,7 +8888,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            return new BatchClientGetNodesAsyncCollectionResult(
+            return new GetNodesAsyncCollectionResult(
                 this,
                 poolId,
                 timeout,
@@ -8925,7 +8925,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            return new BatchClientGetNodesCollectionResultOfT(
+            return new GetNodesCollectionResultOfT(
                 this,
                 poolId,
                 timeout,
@@ -8962,7 +8962,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            return new BatchClientGetNodesAsyncCollectionResultOfT(
+            return new GetNodesAsyncCollectionResultOfT(
                 this,
                 poolId,
                 timeout,
@@ -9141,7 +9141,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return new BatchClientGetNodeExtensionsCollectionResult(
+            return new GetNodeExtensionsCollectionResult(
                 this,
                 poolId,
                 nodeId,
@@ -9184,7 +9184,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return new BatchClientGetNodeExtensionsAsyncCollectionResult(
+            return new GetNodeExtensionsAsyncCollectionResult(
                 this,
                 poolId,
                 nodeId,
@@ -9219,7 +9219,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return new BatchClientGetNodeExtensionsCollectionResultOfT(
+            return new GetNodeExtensionsCollectionResultOfT(
                 this,
                 poolId,
                 nodeId,
@@ -9254,7 +9254,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return new BatchClientGetNodeExtensionsAsyncCollectionResultOfT(
+            return new GetNodeExtensionsAsyncCollectionResultOfT(
                 this,
                 poolId,
                 nodeId,
@@ -9753,7 +9753,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return new BatchClientGetNodeFilesCollectionResult(
+            return new GetNodeFilesCollectionResult(
                 this,
                 poolId,
                 nodeId,
@@ -9801,7 +9801,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return new BatchClientGetNodeFilesAsyncCollectionResult(
+            return new GetNodeFilesAsyncCollectionResult(
                 this,
                 poolId,
                 nodeId,
@@ -9841,7 +9841,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return new BatchClientGetNodeFilesCollectionResultOfT(
+            return new GetNodeFilesCollectionResultOfT(
                 this,
                 poolId,
                 nodeId,
@@ -9881,7 +9881,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return new BatchClientGetNodeFilesAsyncCollectionResultOfT(
+            return new GetNodeFilesAsyncCollectionResultOfT(
                 this,
                 poolId,
                 nodeId,

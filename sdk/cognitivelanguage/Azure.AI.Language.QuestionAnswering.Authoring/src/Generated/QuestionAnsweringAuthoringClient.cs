@@ -98,7 +98,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResult(
+            return new GetProjectsCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -123,7 +123,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResult(
+            return new GetProjectsAsyncCollectionResult(
                 this,
                 maxCount,
                 skip,
@@ -140,7 +140,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<QuestionAnsweringProject> GetProjects(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResultOfT(
+            return new GetProjectsCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -157,7 +157,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<QuestionAnsweringProject> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(
+            return new GetProjectsAsyncCollectionResultOfT(
                 this,
                 maxCount,
                 skip,
@@ -1185,7 +1185,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetDeploymentsCollectionResult(
+            return new GetDeploymentsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1216,7 +1216,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetDeploymentsAsyncCollectionResult(
+            return new GetDeploymentsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1239,7 +1239,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetDeploymentsCollectionResultOfT(
+            return new GetDeploymentsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -1262,7 +1262,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetDeploymentsAsyncCollectionResultOfT(
+            return new GetDeploymentsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -1293,7 +1293,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetSynonymsCollectionResult(
+            return new GetSynonymsCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1324,7 +1324,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetSynonymsAsyncCollectionResult(
+            return new GetSynonymsAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1347,7 +1347,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetSynonymsCollectionResultOfT(
+            return new GetSynonymsCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -1370,7 +1370,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetSynonymsAsyncCollectionResultOfT(
+            return new GetSynonymsAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -1499,7 +1499,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetSourcesCollectionResult(
+            return new GetSourcesCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1530,7 +1530,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetSourcesAsyncCollectionResult(
+            return new GetSourcesAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1553,7 +1553,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetSourcesCollectionResultOfT(
+            return new GetSourcesCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -1576,7 +1576,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetSourcesAsyncCollectionResultOfT(
+            return new GetSourcesAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -1820,7 +1820,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetQnasCollectionResult(
+            return new GetQnasCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1853,7 +1853,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetQnasAsyncCollectionResult(
+            return new GetQnasAsyncCollectionResult(
                 this,
                 projectName,
                 maxCount,
@@ -1878,7 +1878,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetQnasCollectionResultOfT(
+            return new GetQnasCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,
@@ -1903,7 +1903,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new QuestionAnsweringAuthoringClientGetQnasAsyncCollectionResultOfT(
+            return new GetQnasAsyncCollectionResultOfT(
                 this,
                 projectName,
                 maxCount,

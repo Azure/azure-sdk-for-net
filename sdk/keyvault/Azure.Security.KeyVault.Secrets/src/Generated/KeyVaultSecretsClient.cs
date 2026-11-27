@@ -384,7 +384,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetSecrets(int? maxresults, RequestContext context)
         {
-            return new KeyVaultSecretsClientGetSecretsCollectionResult(this, maxresults, context, "KeyVaultSecretsClient.GetSecrets");
+            return new GetSecretsCollectionResult(this, maxresults, context, "KeyVaultSecretsClient.GetSecrets");
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetSecretsAsync(int? maxresults, RequestContext context)
         {
-            return new KeyVaultSecretsClientGetSecretsAsyncCollectionResult(this, maxresults, context, "KeyVaultSecretsClient.GetSecrets");
+            return new GetSecretsAsyncCollectionResult(this, maxresults, context, "KeyVaultSecretsClient.GetSecrets");
         }
 
         /// <summary> The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier and its attributes are provided in the response. Individual secret versions are not listed in the response. This operation requires the secrets/list permission. </summary>
@@ -410,7 +410,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<SecretItem> GetSecrets(int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultSecretsClientGetSecretsCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecrets");
+            return new GetSecretsCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecrets");
         }
 
         /// <summary> The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier and its attributes are provided in the response. Individual secret versions are not listed in the response. This operation requires the secrets/list permission. </summary>
@@ -419,7 +419,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<SecretItem> GetSecretsAsync(int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultSecretsClientGetSecretsAsyncCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecrets");
+            return new GetSecretsAsyncCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecrets");
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetSecretVersions(string secretName, int? maxresults, RequestContext context)
         {
-            return new KeyVaultSecretsClientGetSecretVersionsCollectionResult(this, secretName, maxresults, context, "KeyVaultSecretsClient.GetSecretVersions");
+            return new GetSecretVersionsCollectionResult(this, secretName, maxresults, context, "KeyVaultSecretsClient.GetSecretVersions");
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetSecretVersionsAsync(string secretName, int? maxresults, RequestContext context)
         {
-            return new KeyVaultSecretsClientGetSecretVersionsAsyncCollectionResult(this, secretName, maxresults, context, "KeyVaultSecretsClient.GetSecretVersions");
+            return new GetSecretVersionsAsyncCollectionResult(this, secretName, maxresults, context, "KeyVaultSecretsClient.GetSecretVersions");
         }
 
         /// <summary> The full secret identifier and attributes are provided in the response. No values are returned for the secrets. This operations requires the secrets/list permission. </summary>
@@ -465,7 +465,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<SecretItem> GetSecretVersions(string secretName, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultSecretsClientGetSecretVersionsCollectionResultOfT(this, secretName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecretVersions");
+            return new GetSecretVersionsCollectionResultOfT(this, secretName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecretVersions");
         }
 
         /// <summary> The full secret identifier and attributes are provided in the response. No values are returned for the secrets. This operations requires the secrets/list permission. </summary>
@@ -475,7 +475,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<SecretItem> GetSecretVersionsAsync(string secretName, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultSecretsClientGetSecretVersionsAsyncCollectionResultOfT(this, secretName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecretVersions");
+            return new GetSecretVersionsAsyncCollectionResultOfT(this, secretName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecretVersions");
         }
 
         /// <summary>
@@ -492,7 +492,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetDeletedSecrets(int? maxresults, RequestContext context)
         {
-            return new KeyVaultSecretsClientGetDeletedSecretsCollectionResult(this, maxresults, context, "KeyVaultSecretsClient.GetDeletedSecrets");
+            return new GetDeletedSecretsCollectionResult(this, maxresults, context, "KeyVaultSecretsClient.GetDeletedSecrets");
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetDeletedSecretsAsync(int? maxresults, RequestContext context)
         {
-            return new KeyVaultSecretsClientGetDeletedSecretsAsyncCollectionResult(this, maxresults, context, "KeyVaultSecretsClient.GetDeletedSecrets");
+            return new GetDeletedSecretsAsyncCollectionResult(this, maxresults, context, "KeyVaultSecretsClient.GetDeletedSecrets");
         }
 
         /// <summary> The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for soft-delete. This operation requires the secrets/list permission. </summary>
@@ -518,7 +518,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeletedSecretItem> GetDeletedSecrets(int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultSecretsClientGetDeletedSecretsCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetDeletedSecrets");
+            return new GetDeletedSecretsCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetDeletedSecrets");
         }
 
         /// <summary> The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for soft-delete. This operation requires the secrets/list permission. </summary>
@@ -527,7 +527,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeletedSecretItem> GetDeletedSecretsAsync(int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new KeyVaultSecretsClientGetDeletedSecretsAsyncCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetDeletedSecrets");
+            return new GetDeletedSecretsAsyncCollectionResultOfT(this, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetDeletedSecrets");
         }
 
         /// <summary>

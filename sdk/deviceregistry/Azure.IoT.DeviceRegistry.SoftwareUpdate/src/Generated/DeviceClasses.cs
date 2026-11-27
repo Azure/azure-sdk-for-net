@@ -57,7 +57,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAll(RequestContext context)
         {
-            return new DeviceClassesGetAllCollectionResult(this, context, "DeviceClasses.GetAll");
+            return new GetAllCollectionResult(this, context, "DeviceClasses.GetAll");
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAllAsync(RequestContext context)
         {
-            return new DeviceClassesGetAllAsyncCollectionResult(this, context, "DeviceClasses.GetAll");
+            return new GetAllAsyncCollectionResult(this, context, "DeviceClasses.GetAll");
         }
 
         /// <summary> Gets a list of device classes. </summary>
@@ -81,7 +81,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DeviceClass> GetAll(CancellationToken cancellationToken = default)
         {
-            return new DeviceClassesGetAllCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceClasses.GetAll");
+            return new GetAllCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceClasses.GetAll");
         }
 
         /// <summary> Gets a list of device classes. </summary>
@@ -89,7 +89,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DeviceClass> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return new DeviceClassesGetAllAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceClasses.GetAll");
+            return new GetAllAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceClasses.GetAll");
         }
 
         /// <summary>

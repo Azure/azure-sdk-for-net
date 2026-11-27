@@ -587,7 +587,7 @@ namespace Azure.AI.Translation.Document
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDocumentsStatus(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
         {
-            return new DocumentTranslationClientGetDocumentsStatusCollectionResult(
+            return new GetDocumentsStatusCollectionResult(
                 this,
                 translationId,
                 maxCount,
@@ -692,7 +692,7 @@ namespace Azure.AI.Translation.Document
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDocumentsStatusAsync(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
         {
-            return new DocumentTranslationClientGetDocumentsStatusAsyncCollectionResult(
+            return new GetDocumentsStatusAsyncCollectionResult(
                 this,
                 translationId,
                 maxCount,
@@ -791,7 +791,7 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentStatusResult> GetDocumentsStatus(Guid translationId, int? maxCount = default, int? skip = default, int? maxpagesize = default, IEnumerable<Guid> documentIds = default, IEnumerable<string> statuses = default, DateTimeOffset? createdDateTimeUtcStart = default, DateTimeOffset? createdDateTimeUtcEnd = default, IEnumerable<string> @orderby = default, CancellationToken cancellationToken = default)
         {
-            return new DocumentTranslationClientGetDocumentsStatusCollectionResultOfT(
+            return new GetDocumentsStatusCollectionResultOfT(
                 this,
                 translationId,
                 maxCount,
@@ -890,7 +890,7 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentStatusResult> GetDocumentsStatusAsync(Guid translationId, int? maxCount = default, int? skip = default, int? maxpagesize = default, IEnumerable<Guid> documentIds = default, IEnumerable<string> statuses = default, DateTimeOffset? createdDateTimeUtcStart = default, DateTimeOffset? createdDateTimeUtcEnd = default, IEnumerable<string> @orderby = default, CancellationToken cancellationToken = default)
         {
-            return new DocumentTranslationClientGetDocumentsStatusAsyncCollectionResultOfT(
+            return new GetDocumentsStatusAsyncCollectionResultOfT(
                 this,
                 translationId,
                 maxCount,

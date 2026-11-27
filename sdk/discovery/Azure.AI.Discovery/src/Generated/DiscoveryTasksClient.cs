@@ -173,7 +173,7 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(investigationName, nameof(investigationName));
 
-            return new DiscoveryTasksClientGetAllCollectionResult(
+            return new GetAllCollectionResult(
                 this,
                 projectName,
                 investigationName,
@@ -203,7 +203,7 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(investigationName, nameof(investigationName));
 
-            return new DiscoveryTasksClientGetAllAsyncCollectionResult(
+            return new GetAllAsyncCollectionResult(
                 this,
                 projectName,
                 investigationName,
@@ -225,7 +225,7 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(investigationName, nameof(investigationName));
 
-            return new DiscoveryTasksClientGetAllCollectionResultOfT(
+            return new GetAllCollectionResultOfT(
                 this,
                 projectName,
                 investigationName,
@@ -247,7 +247,7 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(investigationName, nameof(investigationName));
 
-            return new DiscoveryTasksClientGetAllAsyncCollectionResultOfT(
+            return new GetAllAsyncCollectionResultOfT(
                 this,
                 projectName,
                 investigationName,
