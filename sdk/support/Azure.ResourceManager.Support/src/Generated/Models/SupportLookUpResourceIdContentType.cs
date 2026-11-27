@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Converts a string to a <see cref="SupportLookUpResourceIdContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SupportLookUpResourceIdContentType?(string value) => value == null ? null : new SupportLookUpResourceIdContentType(value);
+        public static implicit operator SupportLookUpResourceIdContentType?(string value) => value == null ? (SupportLookUpResourceIdContentType?)null : new SupportLookUpResourceIdContentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

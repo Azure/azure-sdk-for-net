@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="ServerEndpointOfflineDataTransferState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ServerEndpointOfflineDataTransferState?(string value) => value == null ? null : new ServerEndpointOfflineDataTransferState(value);
+        public static implicit operator ServerEndpointOfflineDataTransferState?(string value) => value == null ? (ServerEndpointOfflineDataTransferState?)null : new ServerEndpointOfflineDataTransferState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

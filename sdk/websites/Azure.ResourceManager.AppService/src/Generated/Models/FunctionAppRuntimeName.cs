@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="FunctionAppRuntimeName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FunctionAppRuntimeName?(string value) => value == null ? null : new FunctionAppRuntimeName(value);
+        public static implicit operator FunctionAppRuntimeName?(string value) => value == null ? (FunctionAppRuntimeName?)null : new FunctionAppRuntimeName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

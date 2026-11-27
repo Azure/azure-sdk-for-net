@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="WorkflowSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkflowSkuName?(string value) => value == null ? null : new WorkflowSkuName(value);
+        public static implicit operator WorkflowSkuName?(string value) => value == null ? (WorkflowSkuName?)null : new WorkflowSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

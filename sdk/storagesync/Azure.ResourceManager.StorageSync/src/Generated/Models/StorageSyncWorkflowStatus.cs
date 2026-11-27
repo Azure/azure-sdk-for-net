@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="StorageSyncWorkflowStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSyncWorkflowStatus?(string value) => value == null ? null : new StorageSyncWorkflowStatus(value);
+        public static implicit operator StorageSyncWorkflowStatus?(string value) => value == null ? (StorageSyncWorkflowStatus?)null : new StorageSyncWorkflowStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

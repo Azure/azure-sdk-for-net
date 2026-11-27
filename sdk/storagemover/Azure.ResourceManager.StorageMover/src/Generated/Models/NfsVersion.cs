@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="NfsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NfsVersion?(string value) => value == null ? null : new NfsVersion(value);
+        public static implicit operator NfsVersion?(string value) => value == null ? (NfsVersion?)null : new NfsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="EnterpriseGradeCdnStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnterpriseGradeCdnStatus?(string value) => value == null ? null : new EnterpriseGradeCdnStatus(value);
+        public static implicit operator EnterpriseGradeCdnStatus?(string value) => value == null ? (EnterpriseGradeCdnStatus?)null : new EnterpriseGradeCdnStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

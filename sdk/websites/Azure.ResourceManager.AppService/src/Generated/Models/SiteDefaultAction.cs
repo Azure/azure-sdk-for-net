@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="SiteDefaultAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteDefaultAction?(string value) => value == null ? null : new SiteDefaultAction(value);
+        public static implicit operator SiteDefaultAction?(string value) => value == null ? (SiteDefaultAction?)null : new SiteDefaultAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

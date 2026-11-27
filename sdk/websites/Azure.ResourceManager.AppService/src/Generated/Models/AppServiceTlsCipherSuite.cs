@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceTlsCipherSuite"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceTlsCipherSuite?(string value) => value == null ? null : new AppServiceTlsCipherSuite(value);
+        public static implicit operator AppServiceTlsCipherSuite?(string value) => value == null ? (AppServiceTlsCipherSuite?)null : new AppServiceTlsCipherSuite(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

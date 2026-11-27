@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         /// <summary> Converts a string to a <see cref="AcceptOwnershipProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcceptOwnershipProvisioningState?(string value) => value == null ? null : new AcceptOwnershipProvisioningState(value);
+        public static implicit operator AcceptOwnershipProvisioningState?(string value) => value == null ? (AcceptOwnershipProvisioningState?)null : new AcceptOwnershipProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

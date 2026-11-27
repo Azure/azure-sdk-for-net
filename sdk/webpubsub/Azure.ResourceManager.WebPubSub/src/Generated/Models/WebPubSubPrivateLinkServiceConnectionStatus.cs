@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Converts a string to a <see cref="WebPubSubPrivateLinkServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebPubSubPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new WebPubSubPrivateLinkServiceConnectionStatus(value);
+        public static implicit operator WebPubSubPrivateLinkServiceConnectionStatus?(string value) => value == null ? (WebPubSubPrivateLinkServiceConnectionStatus?)null : new WebPubSubPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

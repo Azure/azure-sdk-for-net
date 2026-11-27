@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapEnvironmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapEnvironmentType?(string value) => value == null ? null : new SapEnvironmentType(value);
+        public static implicit operator SapEnvironmentType?(string value) => value == null ? (SapEnvironmentType?)null : new SapEnvironmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

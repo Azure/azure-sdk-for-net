@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Converts a string to a <see cref="SupportTicketCommunicationDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SupportTicketCommunicationDirection?(string value) => value == null ? null : new SupportTicketCommunicationDirection(value);
+        public static implicit operator SupportTicketCommunicationDirection?(string value) => value == null ? (SupportTicketCommunicationDirection?)null : new SupportTicketCommunicationDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

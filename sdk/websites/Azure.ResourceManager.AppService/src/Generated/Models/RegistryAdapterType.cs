@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="RegistryAdapterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegistryAdapterType?(string value) => value == null ? null : new RegistryAdapterType(value);
+        public static implicit operator RegistryAdapterType?(string value) => value == null ? (RegistryAdapterType?)null : new RegistryAdapterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

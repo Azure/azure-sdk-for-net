@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="StorageMoverProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageMoverProvisioningState?(string value) => value == null ? null : new StorageMoverProvisioningState(value);
+        public static implicit operator StorageMoverProvisioningState?(string value) => value == null ? (StorageMoverProvisioningState?)null : new StorageMoverProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

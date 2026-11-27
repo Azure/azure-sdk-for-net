@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="StorageSyncOperationDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSyncOperationDirection?(string value) => value == null ? null : new StorageSyncOperationDirection(value);
+        public static implicit operator StorageSyncOperationDirection?(string value) => value == null ? (StorageSyncOperationDirection?)null : new StorageSyncOperationDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

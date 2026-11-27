@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> Converts a string to a <see cref="TrafficViewEnrollmentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficViewEnrollmentStatus?(string value) => value == null ? null : new TrafficViewEnrollmentStatus(value);
+        public static implicit operator TrafficViewEnrollmentStatus?(string value) => value == null ? (TrafficViewEnrollmentStatus?)null : new TrafficViewEnrollmentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

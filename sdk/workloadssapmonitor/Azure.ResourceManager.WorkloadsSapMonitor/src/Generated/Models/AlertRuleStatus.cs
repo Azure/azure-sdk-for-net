@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="AlertRuleStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertRuleStatus?(string value) => value == null ? null : new AlertRuleStatus(value);
+        public static implicit operator AlertRuleStatus?(string value) => value == null ? (AlertRuleStatus?)null : new AlertRuleStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

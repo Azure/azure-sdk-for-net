@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapHealthState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapHealthState?(string value) => value == null ? null : new SapHealthState(value);
+        public static implicit operator SapHealthState?(string value) => value == null ? (SapHealthState?)null : new SapHealthState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

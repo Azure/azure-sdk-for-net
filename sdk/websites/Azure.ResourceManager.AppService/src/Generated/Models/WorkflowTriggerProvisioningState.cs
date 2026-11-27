@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="WorkflowTriggerProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkflowTriggerProvisioningState?(string value) => value == null ? null : new WorkflowTriggerProvisioningState(value);
+        public static implicit operator WorkflowTriggerProvisioningState?(string value) => value == null ? (WorkflowTriggerProvisioningState?)null : new WorkflowTriggerProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

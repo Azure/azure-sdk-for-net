@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapHighAvailabilityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapHighAvailabilityType?(string value) => value == null ? null : new SapHighAvailabilityType(value);
+        public static implicit operator SapHighAvailabilityType?(string value) => value == null ? (SapHighAvailabilityType?)null : new SapHighAvailabilityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

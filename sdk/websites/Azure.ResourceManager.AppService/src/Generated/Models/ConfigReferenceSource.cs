@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="ConfigReferenceSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfigReferenceSource?(string value) => value == null ? null : new ConfigReferenceSource(value);
+        public static implicit operator ConfigReferenceSource?(string value) => value == null ? (ConfigReferenceSource?)null : new ConfigReferenceSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

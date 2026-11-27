@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Converts a string to a <see cref="UpstreamAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpstreamAuthType?(string value) => value == null ? null : new UpstreamAuthType(value);
+        public static implicit operator UpstreamAuthType?(string value) => value == null ? (UpstreamAuthType?)null : new UpstreamAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

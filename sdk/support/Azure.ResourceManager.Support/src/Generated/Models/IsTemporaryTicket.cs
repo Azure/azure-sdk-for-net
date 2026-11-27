@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Converts a string to a <see cref="IsTemporaryTicket"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsTemporaryTicket?(string value) => value == null ? null : new IsTemporaryTicket(value);
+        public static implicit operator IsTemporaryTicket?(string value) => value == null ? (IsTemporaryTicket?)null : new IsTemporaryTicket(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="ClientCredentialMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClientCredentialMethod?(string value) => value == null ? null : new ClientCredentialMethod(value);
+        public static implicit operator ClientCredentialMethod?(string value) => value == null ? (ClientCredentialMethod?)null : new ClientCredentialMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

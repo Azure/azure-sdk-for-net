@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Converts a string to a <see cref="WebPubSubScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebPubSubScaleType?(string value) => value == null ? null : new WebPubSubScaleType(value);
+        public static implicit operator WebPubSubScaleType?(string value) => value == null ? (WebPubSubScaleType?)null : new WebPubSubScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

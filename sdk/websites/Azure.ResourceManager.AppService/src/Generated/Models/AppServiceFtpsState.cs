@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceFtpsState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceFtpsState?(string value) => value == null ? null : new AppServiceFtpsState(value);
+        public static implicit operator AppServiceFtpsState?(string value) => value == null ? (AppServiceFtpsState?)null : new AppServiceFtpsState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

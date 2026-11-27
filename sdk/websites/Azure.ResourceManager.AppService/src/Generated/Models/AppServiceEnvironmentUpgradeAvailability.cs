@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceEnvironmentUpgradeAvailability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceEnvironmentUpgradeAvailability?(string value) => value == null ? null : new AppServiceEnvironmentUpgradeAvailability(value);
+        public static implicit operator AppServiceEnvironmentUpgradeAvailability?(string value) => value == null ? (AppServiceEnvironmentUpgradeAvailability?)null : new AppServiceEnvironmentUpgradeAvailability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

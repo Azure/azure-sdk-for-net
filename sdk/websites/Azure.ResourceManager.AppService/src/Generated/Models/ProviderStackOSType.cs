@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="ProviderStackOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderStackOSType?(string value) => value == null ? null : new ProviderStackOSType(value);
+        public static implicit operator ProviderStackOSType?(string value) => value == null ? (ProviderStackOSType?)null : new ProviderStackOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

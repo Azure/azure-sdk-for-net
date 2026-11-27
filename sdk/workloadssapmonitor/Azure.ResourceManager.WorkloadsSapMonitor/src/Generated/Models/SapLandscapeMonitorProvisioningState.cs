@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="SapLandscapeMonitorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapLandscapeMonitorProvisioningState?(string value) => value == null ? null : new SapLandscapeMonitorProvisioningState(value);
+        public static implicit operator SapLandscapeMonitorProvisioningState?(string value) => value == null ? (SapLandscapeMonitorProvisioningState?)null : new SapLandscapeMonitorProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

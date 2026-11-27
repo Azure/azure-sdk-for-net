@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Converts a string to a <see cref="WebPubSubSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebPubSubSkuTier?(string value) => value == null ? null : new WebPubSubSkuTier(value);
+        public static implicit operator WebPubSubSkuTier?(string value) => value == null ? (WebPubSubSkuTier?)null : new WebPubSubSkuTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

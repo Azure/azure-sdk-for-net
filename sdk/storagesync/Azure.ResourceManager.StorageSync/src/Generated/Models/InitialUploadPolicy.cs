@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="InitialUploadPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InitialUploadPolicy?(string value) => value == null ? null : new InitialUploadPolicy(value);
+        public static implicit operator InitialUploadPolicy?(string value) => value == null ? (InitialUploadPolicy?)null : new InitialUploadPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentBuildStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentBuildStatus?(string value) => value == null ? null : new DeploymentBuildStatus(value);
+        public static implicit operator DeploymentBuildStatus?(string value) => value == null ? (DeploymentBuildStatus?)null : new DeploymentBuildStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="S3WithHmacSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator S3WithHmacSourceType?(string value) => value == null ? null : new S3WithHmacSourceType(value);
+        public static implicit operator S3WithHmacSourceType?(string value) => value == null ? (S3WithHmacSourceType?)null : new S3WithHmacSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Converts a string to a <see cref="EdgeUpdateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EdgeUpdateType?(string value) => value == null ? null : new EdgeUpdateType(value);
+        public static implicit operator EdgeUpdateType?(string value) => value == null ? (EdgeUpdateType?)null : new EdgeUpdateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

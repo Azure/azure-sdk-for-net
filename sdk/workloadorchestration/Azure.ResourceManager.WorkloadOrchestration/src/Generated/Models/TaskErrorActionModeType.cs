@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Converts a string to a <see cref="TaskErrorActionModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskErrorActionModeType?(string value) => value == null ? null : new TaskErrorActionModeType(value);
+        public static implicit operator TaskErrorActionModeType?(string value) => value == null ? (TaskErrorActionModeType?)null : new TaskErrorActionModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

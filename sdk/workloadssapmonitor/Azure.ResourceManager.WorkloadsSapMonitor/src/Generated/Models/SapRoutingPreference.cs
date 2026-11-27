@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="SapRoutingPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapRoutingPreference?(string value) => value == null ? null : new SapRoutingPreference(value);
+        public static implicit operator SapRoutingPreference?(string value) => value == null ? (SapRoutingPreference?)null : new SapRoutingPreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

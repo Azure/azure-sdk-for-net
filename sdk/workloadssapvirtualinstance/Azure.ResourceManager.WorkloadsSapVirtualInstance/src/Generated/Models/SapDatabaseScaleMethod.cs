@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapDatabaseScaleMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapDatabaseScaleMethod?(string value) => value == null ? null : new SapDatabaseScaleMethod(value);
+        public static implicit operator SapDatabaseScaleMethod?(string value) => value == null ? (SapDatabaseScaleMethod?)null : new SapDatabaseScaleMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

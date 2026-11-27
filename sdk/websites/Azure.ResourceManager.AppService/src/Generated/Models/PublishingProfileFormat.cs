@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="PublishingProfileFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublishingProfileFormat?(string value) => value == null ? null : new PublishingProfileFormat(value);
+        public static implicit operator PublishingProfileFormat?(string value) => value == null ? (PublishingProfileFormat?)null : new PublishingProfileFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

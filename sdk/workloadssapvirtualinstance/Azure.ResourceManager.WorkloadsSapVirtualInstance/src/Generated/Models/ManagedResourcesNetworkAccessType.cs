@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="ManagedResourcesNetworkAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedResourcesNetworkAccessType?(string value) => value == null ? null : new ManagedResourcesNetworkAccessType(value);
+        public static implicit operator ManagedResourcesNetworkAccessType?(string value) => value == null ? (ManagedResourcesNetworkAccessType?)null : new ManagedResourcesNetworkAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

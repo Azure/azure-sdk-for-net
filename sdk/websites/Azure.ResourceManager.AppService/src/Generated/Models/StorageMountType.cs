@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="StorageMountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageMountType?(string value) => value == null ? null : new StorageMountType(value);
+        public static implicit operator StorageMountType?(string value) => value == null ? (StorageMountType?)null : new StorageMountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         /// <summary> Converts a string to a <see cref="ChangeDirectoryOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChangeDirectoryOperationStatus?(string value) => value == null ? null : new ChangeDirectoryOperationStatus(value);
+        public static implicit operator ChangeDirectoryOperationStatus?(string value) => value == null ? (ChangeDirectoryOperationStatus?)null : new ChangeDirectoryOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

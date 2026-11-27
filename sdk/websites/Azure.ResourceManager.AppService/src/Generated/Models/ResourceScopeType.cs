@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="ResourceScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceScopeType?(string value) => value == null ? null : new ResourceScopeType(value);
+        public static implicit operator ResourceScopeType?(string value) => value == null ? (ResourceScopeType?)null : new ResourceScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="WebAppParameterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebAppParameterType?(string value) => value == null ? null : new WebAppParameterType(value);
+        public static implicit operator WebAppParameterType?(string value) => value == null ? (WebAppParameterType?)null : new WebAppParameterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

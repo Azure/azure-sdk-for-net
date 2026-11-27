@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Converts a string to a <see cref="CommonExportType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommonExportType?(string value) => value == null ? null : new CommonExportType(value);
+        public static implicit operator CommonExportType?(string value) => value == null ? (CommonExportType?)null : new CommonExportType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

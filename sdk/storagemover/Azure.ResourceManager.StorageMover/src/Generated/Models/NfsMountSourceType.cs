@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="NfsMountSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NfsMountSourceType?(string value) => value == null ? null : new NfsMountSourceType(value);
+        public static implicit operator NfsMountSourceType?(string value) => value == null ? (NfsMountSourceType?)null : new NfsMountSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Converts a string to a <see cref="WebPubSubGroupPresenceEventName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WebPubSubGroupPresenceEventName?(string value) => value == null ? null : new WebPubSubGroupPresenceEventName(value);
+        public static implicit operator WebPubSubGroupPresenceEventName?(string value) => value == null ? (WebPubSubGroupPresenceEventName?)null : new WebPubSubGroupPresenceEventName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

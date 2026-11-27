@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Converts a string to a <see cref="InstanceReconciliationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstanceReconciliationState?(string value) => value == null ? null : new InstanceReconciliationState(value);
+        public static implicit operator InstanceReconciliationState?(string value) => value == null ? (InstanceReconciliationState?)null : new InstanceReconciliationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

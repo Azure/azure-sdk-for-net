@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapDatabaseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapDatabaseType?(string value) => value == null ? null : new SapDatabaseType(value);
+        public static implicit operator SapDatabaseType?(string value) => value == null ? (SapDatabaseType?)null : new SapDatabaseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

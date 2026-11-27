@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapConfigurationType?(string value) => value == null ? null : new SapConfigurationType(value);
+        public static implicit operator SapConfigurationType?(string value) => value == null ? (SapConfigurationType?)null : new SapConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

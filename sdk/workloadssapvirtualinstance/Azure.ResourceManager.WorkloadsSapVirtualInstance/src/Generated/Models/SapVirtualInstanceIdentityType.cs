@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapVirtualInstanceIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapVirtualInstanceIdentityType?(string value) => value == null ? null : new SapVirtualInstanceIdentityType(value);
+        public static implicit operator SapVirtualInstanceIdentityType?(string value) => value == null ? (SapVirtualInstanceIdentityType?)null : new SapVirtualInstanceIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

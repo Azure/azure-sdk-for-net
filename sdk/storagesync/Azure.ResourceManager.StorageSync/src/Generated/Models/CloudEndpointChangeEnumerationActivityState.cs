@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="CloudEndpointChangeEnumerationActivityState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CloudEndpointChangeEnumerationActivityState?(string value) => value == null ? null : new CloudEndpointChangeEnumerationActivityState(value);
+        public static implicit operator CloudEndpointChangeEnumerationActivityState?(string value) => value == null ? (CloudEndpointChangeEnumerationActivityState?)null : new CloudEndpointChangeEnumerationActivityState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

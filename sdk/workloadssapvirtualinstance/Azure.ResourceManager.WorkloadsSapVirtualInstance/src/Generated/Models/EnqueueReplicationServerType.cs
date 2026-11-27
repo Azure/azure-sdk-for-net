@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="EnqueueReplicationServerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnqueueReplicationServerType?(string value) => value == null ? null : new EnqueueReplicationServerType(value);
+        public static implicit operator EnqueueReplicationServerType?(string value) => value == null ? (EnqueueReplicationServerType?)null : new EnqueueReplicationServerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

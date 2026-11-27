@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="ScmType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScmType?(string value) => value == null ? null : new ScmType(value);
+        public static implicit operator ScmType?(string value) => value == null ? (ScmType?)null : new ScmType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

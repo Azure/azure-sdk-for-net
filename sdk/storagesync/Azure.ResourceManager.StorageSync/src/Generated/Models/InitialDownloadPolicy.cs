@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="InitialDownloadPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InitialDownloadPolicy?(string value) => value == null ? null : new InitialDownloadPolicy(value);
+        public static implicit operator InitialDownloadPolicy?(string value) => value == null ? (InitialDownloadPolicy?)null : new InitialDownloadPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

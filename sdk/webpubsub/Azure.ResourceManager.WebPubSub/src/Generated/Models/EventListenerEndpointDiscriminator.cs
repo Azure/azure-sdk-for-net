@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Converts a string to a <see cref="EventListenerEndpointDiscriminator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventListenerEndpointDiscriminator?(string value) => value == null ? null : new EventListenerEndpointDiscriminator(value);
+        public static implicit operator EventListenerEndpointDiscriminator?(string value) => value == null ? (EventListenerEndpointDiscriminator?)null : new EventListenerEndpointDiscriminator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

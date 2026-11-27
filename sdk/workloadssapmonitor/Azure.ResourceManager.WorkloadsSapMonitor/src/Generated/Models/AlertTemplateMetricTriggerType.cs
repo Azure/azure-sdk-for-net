@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="AlertTemplateMetricTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertTemplateMetricTriggerType?(string value) => value == null ? null : new AlertTemplateMetricTriggerType(value);
+        public static implicit operator AlertTemplateMetricTriggerType?(string value) => value == null ? (AlertTemplateMetricTriggerType?)null : new AlertTemplateMetricTriggerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

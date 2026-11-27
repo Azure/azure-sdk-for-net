@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppDaprLogLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppDaprLogLevel?(string value) => value == null ? null : new AppDaprLogLevel(value);
+        public static implicit operator AppDaprLogLevel?(string value) => value == null ? (AppDaprLogLevel?)null : new AppDaprLogLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

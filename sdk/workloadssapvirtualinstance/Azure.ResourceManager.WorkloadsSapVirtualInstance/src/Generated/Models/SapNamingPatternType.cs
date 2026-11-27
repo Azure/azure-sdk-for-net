@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Converts a string to a <see cref="SapNamingPatternType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SapNamingPatternType?(string value) => value == null ? null : new SapNamingPatternType(value);
+        public static implicit operator SapNamingPatternType?(string value) => value == null ? (SapNamingPatternType?)null : new SapNamingPatternType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

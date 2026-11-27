@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary> Converts a string to a <see cref="AlertAutoMitigate"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertAutoMitigate?(string value) => value == null ? null : new AlertAutoMitigate(value);
+        public static implicit operator AlertAutoMitigate?(string value) => value == null ? (AlertAutoMitigate?)null : new AlertAutoMitigate(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

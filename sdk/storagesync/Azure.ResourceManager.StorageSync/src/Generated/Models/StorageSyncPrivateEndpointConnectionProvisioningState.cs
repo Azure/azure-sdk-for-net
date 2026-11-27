@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Converts a string to a <see cref="StorageSyncPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSyncPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new StorageSyncPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator StorageSyncPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (StorageSyncPrivateEndpointConnectionProvisioningState?)null : new StorageSyncPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

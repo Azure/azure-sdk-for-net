@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="SiteUpdateStrategyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SiteUpdateStrategyType?(string value) => value == null ? null : new SiteUpdateStrategyType(value);
+        public static implicit operator SiteUpdateStrategyType?(string value) => value == null ? (SiteUpdateStrategyType?)null : new SiteUpdateStrategyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

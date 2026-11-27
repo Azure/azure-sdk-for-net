@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="AppServiceStorageProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServiceStorageProtocol?(string value) => value == null ? null : new AppServiceStorageProtocol(value);
+        public static implicit operator AppServiceStorageProtocol?(string value) => value == null ? (AppServiceStorageProtocol?)null : new AppServiceStorageProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Converts a string to a <see cref="CustomDomainStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomDomainStatus?(string value) => value == null ? null : new CustomDomainStatus(value);
+        public static implicit operator CustomDomainStatus?(string value) => value == null ? (CustomDomainStatus?)null : new CustomDomainStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

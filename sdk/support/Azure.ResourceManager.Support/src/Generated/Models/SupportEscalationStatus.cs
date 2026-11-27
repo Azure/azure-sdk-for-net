@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Converts a string to a <see cref="SupportEscalationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SupportEscalationStatus?(string value) => value == null ? null : new SupportEscalationStatus(value);
+        public static implicit operator SupportEscalationStatus?(string value) => value == null ? (SupportEscalationStatus?)null : new SupportEscalationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

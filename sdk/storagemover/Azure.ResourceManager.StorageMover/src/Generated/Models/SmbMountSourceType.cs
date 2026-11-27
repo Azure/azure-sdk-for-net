@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Converts a string to a <see cref="SmbMountSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SmbMountSourceType?(string value) => value == null ? null : new SmbMountSourceType(value);
+        public static implicit operator SmbMountSourceType?(string value) => value == null ? (SmbMountSourceType?)null : new SmbMountSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
