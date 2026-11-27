@@ -151,6 +151,39 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
+        public async Task TenantDiscoveryTokenRequest_IsCaeEnabled()
+        {
+            bool isCaeEnabledOnDiscovery = false;
+            bool firstRequest = true;
+            MockCredential mockCredential = new MockCredential()
+            {
+                GetTokenCallback = (trc, _) =>
+                {
+                    isCaeEnabledOnDiscovery = trc.IsCaeEnabled;
+                }
+            };
+
+            StorageBearerTokenChallengeAuthorizationPolicy policy = new StorageBearerTokenChallengeAuthorizationPolicy(mockCredential, scopes, enableTenantDiscovery: true);
+            MockResponse challengeResponse = new MockResponse((int)HttpStatusCode.Unauthorized);
+            challengeResponse.AddHeader(
+                new HttpHeader(
+                    HttpHeader.Names.WwwAuthenticate,
+                    "Bearer authorization_uri=https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize resource_id=https://storage.azure.com"));
+
+            MockTransport transport = CreateMockTransport(
+                _ =>
+                {
+                    MockResponse response = firstRequest ? challengeResponse : new MockResponse(200);
+                    firstRequest = false;
+                    return response;
+                });
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+
+            Assert.IsTrue(isCaeEnabledOnDiscovery);
+        }
+
+        [Test]
         [TestCaseSource(nameof(CaeTestDetails))]
         public async Task StorageBearerTokenChallengeAuthorizationPolicy_CAE_TokenRevocation(string description, string challenge, int expectedResponseCode, string expectedClaims, string encodedClaims)
         {
