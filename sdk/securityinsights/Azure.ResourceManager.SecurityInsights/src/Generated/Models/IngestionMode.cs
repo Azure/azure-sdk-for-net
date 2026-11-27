@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="IngestionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IngestionMode?(string value) => value == null ? null : new IngestionMode(value);
+        public static implicit operator IngestionMode?(string value) => value == null ? (IngestionMode?)null : new IngestionMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

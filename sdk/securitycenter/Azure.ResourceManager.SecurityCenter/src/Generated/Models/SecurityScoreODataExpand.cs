@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityScoreODataExpand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityScoreODataExpand?(string value) => value == null ? null : new SecurityScoreODataExpand(value);
+        public static implicit operator SecurityScoreODataExpand?(string value) => value == null ? (SecurityScoreODataExpand?)null : new SecurityScoreODataExpand(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

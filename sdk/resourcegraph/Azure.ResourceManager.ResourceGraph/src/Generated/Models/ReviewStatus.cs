@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="ReviewStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReviewStatus?(string value) => value == null ? null : new ReviewStatus(value);
+        public static implicit operator ReviewStatus?(string value) => value == null ? (ReviewStatus?)null : new ReviewStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

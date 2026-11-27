@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="ResultKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResultKind?(string value) => value == null ? null : new ResultKind(value);
+        public static implicit operator ResultKind?(string value) => value == null ? (ResultKind?)null : new ResultKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

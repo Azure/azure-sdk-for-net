@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityFamily?(string value) => value == null ? null : new SecurityFamily(value);
+        public static implicit operator SecurityFamily?(string value) => value == null ? (SecurityFamily?)null : new SecurityFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

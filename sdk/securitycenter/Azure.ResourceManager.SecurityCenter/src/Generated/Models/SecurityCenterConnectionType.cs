@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterConnectionType?(string value) => value == null ? null : new SecurityCenterConnectionType(value);
+        public static implicit operator SecurityCenterConnectionType?(string value) => value == null ? (SecurityCenterConnectionType?)null : new SecurityCenterConnectionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

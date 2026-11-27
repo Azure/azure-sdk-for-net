@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="IotSecurityRecommendationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotSecurityRecommendationType?(string value) => value == null ? null : new IotSecurityRecommendationType(value);
+        public static implicit operator IotSecurityRecommendationType?(string value) => value == null ? (IotSecurityRecommendationType?)null : new IotSecurityRecommendationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

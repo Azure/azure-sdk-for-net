@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SettingKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SettingKind?(string value) => value == null ? null : new SettingKind(value);
+        public static implicit operator SettingKind?(string value) => value == null ? (SettingKind?)null : new SettingKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

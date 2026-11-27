@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="MipIntegrationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MipIntegrationStatus?(string value) => value == null ? null : new MipIntegrationStatus(value);
+        public static implicit operator MipIntegrationStatus?(string value) => value == null ? (MipIntegrationStatus?)null : new MipIntegrationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

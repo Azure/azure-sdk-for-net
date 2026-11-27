@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="WatchlistProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WatchlistProvisioningState?(string value) => value == null ? null : new WatchlistProvisioningState(value);
+        public static implicit operator WatchlistProvisioningState?(string value) => value == null ? (WatchlistProvisioningState?)null : new WatchlistProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

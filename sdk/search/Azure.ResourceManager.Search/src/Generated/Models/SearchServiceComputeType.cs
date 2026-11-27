@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchServiceComputeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchServiceComputeType?(string value) => value == null ? null : new SearchServiceComputeType(value);
+        public static implicit operator SearchServiceComputeType?(string value) => value == null ? (SearchServiceComputeType?)null : new SearchServiceComputeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

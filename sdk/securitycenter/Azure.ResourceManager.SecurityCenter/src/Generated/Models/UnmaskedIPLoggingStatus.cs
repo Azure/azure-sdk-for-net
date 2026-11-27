@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="UnmaskedIPLoggingStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UnmaskedIPLoggingStatus?(string value) => value == null ? null : new UnmaskedIPLoggingStatus(value);
+        public static implicit operator UnmaskedIPLoggingStatus?(string value) => value == null ? (UnmaskedIPLoggingStatus?)null : new UnmaskedIPLoggingStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchServiceNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchServiceNameUnavailableReason?(string value) => value == null ? null : new SearchServiceNameUnavailableReason(value);
+        public static implicit operator SearchServiceNameUnavailableReason?(string value) => value == null ? (SearchServiceNameUnavailableReason?)null : new SearchServiceNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

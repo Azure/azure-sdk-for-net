@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="ConnectAuthKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectAuthKind?(string value) => value == null ? null : new ConnectAuthKind(value);
+        public static implicit operator ConnectAuthKind?(string value) => value == null ? (ConnectAuthKind?)null : new ConnectAuthKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

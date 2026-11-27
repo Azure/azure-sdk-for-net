@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SubAssessmentStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubAssessmentStatusCode?(string value) => value == null ? null : new SubAssessmentStatusCode(value);
+        public static implicit operator SubAssessmentStatusCode?(string value) => value == null ? (SubAssessmentStatusCode?)null : new SubAssessmentStatusCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

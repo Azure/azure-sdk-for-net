@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="EventGroupingAggregationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventGroupingAggregationKind?(string value) => value == null ? null : new EventGroupingAggregationKind(value);
+        public static implicit operator EventGroupingAggregationKind?(string value) => value == null ? (EventGroupingAggregationKind?)null : new EventGroupingAggregationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

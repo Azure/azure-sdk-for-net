@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="TriggersOn"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TriggersOn?(string value) => value == null ? null : new TriggersOn(value);
+        public static implicit operator TriggersOn?(string value) => value == null ? (TriggersOn?)null : new TriggersOn(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

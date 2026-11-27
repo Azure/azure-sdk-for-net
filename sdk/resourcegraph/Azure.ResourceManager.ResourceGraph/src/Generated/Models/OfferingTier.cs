@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="OfferingTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OfferingTier?(string value) => value == null ? null : new OfferingTier(value);
+        public static implicit operator OfferingTier?(string value) => value == null ? (OfferingTier?)null : new OfferingTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

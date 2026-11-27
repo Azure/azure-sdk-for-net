@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="AutoDiscovery"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoDiscovery?(string value) => value == null ? null : new AutoDiscovery(value);
+        public static implicit operator AutoDiscovery?(string value) => value == null ? (AutoDiscovery?)null : new AutoDiscovery(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityAlertMinimalSeverity?(string value) => value == null ? null : new SecurityAlertMinimalSeverity(value);
+        public static implicit operator SecurityAlertMinimalSeverity?(string value) => value == null ? (SecurityAlertMinimalSeverity?)null : new SecurityAlertMinimalSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

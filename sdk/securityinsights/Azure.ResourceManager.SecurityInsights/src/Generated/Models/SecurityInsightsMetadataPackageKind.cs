@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsMetadataPackageKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsMetadataPackageKind?(string value) => value == null ? null : new SecurityInsightsMetadataPackageKind(value);
+        public static implicit operator SecurityInsightsMetadataPackageKind?(string value) => value == null ? (SecurityInsightsMetadataPackageKind?)null : new SecurityInsightsMetadataPackageKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

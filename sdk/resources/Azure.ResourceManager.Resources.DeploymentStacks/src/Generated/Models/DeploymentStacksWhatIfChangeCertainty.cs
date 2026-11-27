@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentStacksWhatIfChangeCertainty"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentStacksWhatIfChangeCertainty?(string value) => value == null ? null : new DeploymentStacksWhatIfChangeCertainty(value);
+        public static implicit operator DeploymentStacksWhatIfChangeCertainty?(string value) => value == null ? (DeploymentStacksWhatIfChangeCertainty?)null : new DeploymentStacksWhatIfChangeCertainty(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

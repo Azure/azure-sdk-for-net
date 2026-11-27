@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="AgentlessEnablement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentlessEnablement?(string value) => value == null ? null : new AgentlessEnablement(value);
+        public static implicit operator AgentlessEnablement?(string value) => value == null ? (AgentlessEnablement?)null : new AgentlessEnablement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

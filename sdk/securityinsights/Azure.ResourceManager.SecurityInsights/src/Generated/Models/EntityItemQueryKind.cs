@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="EntityItemQueryKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityItemQueryKind?(string value) => value == null ? null : new EntityItemQueryKind(value);
+        public static implicit operator EntityItemQueryKind?(string value) => value == null ? (EntityItemQueryKind?)null : new EntityItemQueryKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

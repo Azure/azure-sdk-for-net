@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="AvailableSubPlanType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvailableSubPlanType?(string value) => value == null ? null : new AvailableSubPlanType(value);
+        public static implicit operator AvailableSubPlanType?(string value) => value == null ? (AvailableSubPlanType?)null : new AvailableSubPlanType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

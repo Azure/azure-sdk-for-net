@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="ThreatIntelligenceResourceInnerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatIntelligenceResourceInnerKind?(string value) => value == null ? null : new ThreatIntelligenceResourceInnerKind(value);
+        public static implicit operator ThreatIntelligenceResourceInnerKind?(string value) => value == null ? (ThreatIntelligenceResourceInnerKind?)null : new ThreatIntelligenceResourceInnerKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

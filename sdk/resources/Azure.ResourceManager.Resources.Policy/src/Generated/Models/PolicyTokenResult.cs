@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicyTokenResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyTokenResult?(string value) => value == null ? null : new PolicyTokenResult(value);
+        public static implicit operator PolicyTokenResult?(string value) => value == null ? (PolicyTokenResult?)null : new PolicyTokenResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="AdditionalWorkspaceDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalWorkspaceDataType?(string value) => value == null ? null : new AdditionalWorkspaceDataType(value);
+        public static implicit operator AdditionalWorkspaceDataType?(string value) => value == null ? (AdditionalWorkspaceDataType?)null : new AdditionalWorkspaceDataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

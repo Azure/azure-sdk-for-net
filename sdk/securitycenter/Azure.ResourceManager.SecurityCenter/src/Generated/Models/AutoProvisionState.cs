@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="AutoProvisionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoProvisionState?(string value) => value == null ? null : new AutoProvisionState(value);
+        public static implicit operator AutoProvisionState?(string value) => value == null ? (AutoProvisionState?)null : new AutoProvisionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentStacksDiagnosticLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentStacksDiagnosticLevel?(string value) => value == null ? null : new DeploymentStacksDiagnosticLevel(value);
+        public static implicit operator DeploymentStacksDiagnosticLevel?(string value) => value == null ? (DeploymentStacksDiagnosticLevel?)null : new DeploymentStacksDiagnosticLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

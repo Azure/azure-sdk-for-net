@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsMetadataFlag"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsMetadataFlag?(string value) => value == null ? null : new SecurityInsightsMetadataFlag(value);
+        public static implicit operator SecurityInsightsMetadataFlag?(string value) => value == null ? (SecurityInsightsMetadataFlag?)null : new SecurityInsightsMetadataFlag(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

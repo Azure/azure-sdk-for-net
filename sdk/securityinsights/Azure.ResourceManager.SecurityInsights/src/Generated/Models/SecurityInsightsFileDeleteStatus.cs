@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsFileDeleteStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsFileDeleteStatus?(string value) => value == null ? null : new SecurityInsightsFileDeleteStatus(value);
+        public static implicit operator SecurityInsightsFileDeleteStatus?(string value) => value == null ? (SecurityInsightsFileDeleteStatus?)null : new SecurityInsightsFileDeleteStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

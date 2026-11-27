@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsRegistryHive"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsRegistryHive?(string value) => value == null ? null : new SecurityInsightsRegistryHive(value);
+        public static implicit operator SecurityInsightsRegistryHive?(string value) => value == null ? (SecurityInsightsRegistryHive?)null : new SecurityInsightsRegistryHive(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

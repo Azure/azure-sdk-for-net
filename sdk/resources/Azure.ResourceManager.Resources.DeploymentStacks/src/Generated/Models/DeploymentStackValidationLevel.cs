@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentStackValidationLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentStackValidationLevel?(string value) => value == null ? null : new DeploymentStackValidationLevel(value);
+        public static implicit operator DeploymentStackValidationLevel?(string value) => value == null ? (DeploymentStackValidationLevel?)null : new DeploymentStackValidationLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

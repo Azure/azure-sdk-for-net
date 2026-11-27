@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="ExternalSecuritySolutionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExternalSecuritySolutionKind?(string value) => value == null ? null : new ExternalSecuritySolutionKind(value);
+        public static implicit operator ExternalSecuritySolutionKind?(string value) => value == null ? (ExternalSecuritySolutionKind?)null : new ExternalSecuritySolutionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

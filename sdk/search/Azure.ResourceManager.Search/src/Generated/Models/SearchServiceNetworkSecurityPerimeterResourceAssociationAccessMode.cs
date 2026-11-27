@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode?(string value) => value == null ? null : new SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode(value);
+        public static implicit operator SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode?(string value) => value == null ? (SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode?)null : new SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

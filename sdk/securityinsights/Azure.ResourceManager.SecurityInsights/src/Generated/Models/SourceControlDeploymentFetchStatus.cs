@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SourceControlDeploymentFetchStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceControlDeploymentFetchStatus?(string value) => value == null ? null : new SourceControlDeploymentFetchStatus(value);
+        public static implicit operator SourceControlDeploymentFetchStatus?(string value) => value == null ? (SourceControlDeploymentFetchStatus?)null : new SourceControlDeploymentFetchStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="DataConnectorKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataConnectorKind?(string value) => value == null ? null : new DataConnectorKind(value);
+        public static implicit operator DataConnectorKind?(string value) => value == null ? (DataConnectorKind?)null : new DataConnectorKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

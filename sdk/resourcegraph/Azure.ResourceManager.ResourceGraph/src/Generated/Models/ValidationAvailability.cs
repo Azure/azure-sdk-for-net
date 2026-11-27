@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="ValidationAvailability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ValidationAvailability?(string value) => value == null ? null : new ValidationAvailability(value);
+        public static implicit operator ValidationAvailability?(string value) => value == null ? (ValidationAvailability?)null : new ValidationAvailability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

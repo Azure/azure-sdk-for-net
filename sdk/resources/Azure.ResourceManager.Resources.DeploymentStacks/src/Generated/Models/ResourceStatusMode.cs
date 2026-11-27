@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Converts a string to a <see cref="ResourceStatusMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceStatusMode?(string value) => value == null ? null : new ResourceStatusMode(value);
+        public static implicit operator ResourceStatusMode?(string value) => value == null ? (ResourceStatusMode?)null : new ResourceStatusMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

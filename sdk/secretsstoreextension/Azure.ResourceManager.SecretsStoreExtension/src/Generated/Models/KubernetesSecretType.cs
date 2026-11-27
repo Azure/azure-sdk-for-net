@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
 
         /// <summary> Converts a string to a <see cref="KubernetesSecretType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesSecretType?(string value) => value == null ? null : new KubernetesSecretType(value);
+        public static implicit operator KubernetesSecretType?(string value) => value == null ? (KubernetesSecretType?)null : new KubernetesSecretType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchServiceSharedPrivateLinkResourceProvisioningState?(string value) => value == null ? null : new SearchServiceSharedPrivateLinkResourceProvisioningState(value);
+        public static implicit operator SearchServiceSharedPrivateLinkResourceProvisioningState?(string value) => value == null ? (SearchServiceSharedPrivateLinkResourceProvisioningState?)null : new SearchServiceSharedPrivateLinkResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

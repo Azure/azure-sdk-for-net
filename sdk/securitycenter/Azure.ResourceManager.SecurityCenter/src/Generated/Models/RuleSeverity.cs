@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="RuleSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleSeverity?(string value) => value == null ? null : new RuleSeverity(value);
+        public static implicit operator RuleSeverity?(string value) => value == null ? (RuleSeverity?)null : new RuleSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

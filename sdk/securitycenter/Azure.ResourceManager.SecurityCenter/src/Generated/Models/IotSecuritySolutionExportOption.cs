@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="IotSecuritySolutionExportOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotSecuritySolutionExportOption?(string value) => value == null ? null : new IotSecuritySolutionExportOption(value);
+        public static implicit operator IotSecuritySolutionExportOption?(string value) => value == null ? (IotSecuritySolutionExportOption?)null : new IotSecuritySolutionExportOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterPublicNetworkAccess?(string value) => value == null ? null : new SecurityCenterPublicNetworkAccess(value);
+        public static implicit operator SecurityCenterPublicNetworkAccess?(string value) => value == null ? (SecurityCenterPublicNetworkAccess?)null : new SecurityCenterPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentLabelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsIncidentLabelType?(string value) => value == null ? null : new SecurityInsightsIncidentLabelType(value);
+        public static implicit operator SecurityInsightsIncidentLabelType?(string value) => value == null ? (SecurityInsightsIncidentLabelType?)null : new SecurityInsightsIncidentLabelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

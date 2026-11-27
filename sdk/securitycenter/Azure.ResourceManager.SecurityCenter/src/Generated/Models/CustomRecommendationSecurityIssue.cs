@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="CustomRecommendationSecurityIssue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomRecommendationSecurityIssue?(string value) => value == null ? null : new CustomRecommendationSecurityIssue(value);
+        public static implicit operator CustomRecommendationSecurityIssue?(string value) => value == null ? (CustomRecommendationSecurityIssue?)null : new CustomRecommendationSecurityIssue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

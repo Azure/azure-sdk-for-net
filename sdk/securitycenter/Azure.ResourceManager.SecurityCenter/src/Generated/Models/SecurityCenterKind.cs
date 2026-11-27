@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterKind?(string value) => value == null ? null : new SecurityCenterKind(value);
+        public static implicit operator SecurityCenterKind?(string value) => value == null ? (SecurityCenterKind?)null : new SecurityCenterKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

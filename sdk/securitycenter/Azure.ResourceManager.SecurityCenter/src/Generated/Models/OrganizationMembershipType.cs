@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="OrganizationMembershipType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OrganizationMembershipType?(string value) => value == null ? null : new OrganizationMembershipType(value);
+        public static implicit operator OrganizationMembershipType?(string value) => value == null ? (OrganizationMembershipType?)null : new OrganizationMembershipType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

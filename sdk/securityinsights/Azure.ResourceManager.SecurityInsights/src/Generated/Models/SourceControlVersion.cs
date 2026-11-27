@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SourceControlVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceControlVersion?(string value) => value == null ? null : new SourceControlVersion(value);
+        public static implicit operator SourceControlVersion?(string value) => value == null ? (SourceControlVersion?)null : new SourceControlVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

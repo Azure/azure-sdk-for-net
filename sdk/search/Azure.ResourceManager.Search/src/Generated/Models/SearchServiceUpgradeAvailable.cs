@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchServiceUpgradeAvailable"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchServiceUpgradeAvailable?(string value) => value == null ? null : new SearchServiceUpgradeAvailable(value);
+        public static implicit operator SearchServiceUpgradeAvailable?(string value) => value == null ? (SearchServiceUpgradeAvailable?)null : new SearchServiceUpgradeAvailable(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

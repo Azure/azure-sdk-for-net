@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
 
         /// <summary> Converts a string to a <see cref="ExpressionEvaluationScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpressionEvaluationScope?(string value) => value == null ? null : new ExpressionEvaluationScope(value);
+        public static implicit operator ExpressionEvaluationScope?(string value) => value == null ? (ExpressionEvaluationScope?)null : new ExpressionEvaluationScope(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

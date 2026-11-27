@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="RecommendationConfigStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendationConfigStatus?(string value) => value == null ? null : new RecommendationConfigStatus(value);
+        public static implicit operator RecommendationConfigStatus?(string value) => value == null ? (RecommendationConfigStatus?)null : new RecommendationConfigStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

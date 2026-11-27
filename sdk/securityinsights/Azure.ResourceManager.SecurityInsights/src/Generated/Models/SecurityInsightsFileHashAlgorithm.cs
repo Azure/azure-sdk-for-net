@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsFileHashAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsFileHashAlgorithm?(string value) => value == null ? null : new SecurityInsightsFileHashAlgorithm(value);
+        public static implicit operator SecurityInsightsFileHashAlgorithm?(string value) => value == null ? (SecurityInsightsFileHashAlgorithm?)null : new SecurityInsightsFileHashAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

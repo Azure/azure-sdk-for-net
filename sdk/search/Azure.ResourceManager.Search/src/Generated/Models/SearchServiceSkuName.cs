@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchServiceSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchServiceSkuName?(string value) => value == null ? null : new SearchServiceSkuName(value);
+        public static implicit operator SearchServiceSkuName?(string value) => value == null ? (SearchServiceSkuName?)null : new SearchServiceSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

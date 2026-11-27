@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsFileImportContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsFileImportContentType?(string value) => value == null ? null : new SecurityInsightsFileImportContentType(value);
+        public static implicit operator SecurityInsightsFileImportContentType?(string value) => value == null ? (SecurityInsightsFileImportContentType?)null : new SecurityInsightsFileImportContentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

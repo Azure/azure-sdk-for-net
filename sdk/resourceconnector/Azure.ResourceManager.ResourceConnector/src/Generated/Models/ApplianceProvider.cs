@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         /// <summary> Converts a string to a <see cref="ApplianceProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplianceProvider?(string value) => value == null ? null : new ApplianceProvider(value);
+        public static implicit operator ApplianceProvider?(string value) => value == null ? (ApplianceProvider?)null : new ApplianceProvider(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

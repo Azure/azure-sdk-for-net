@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityAlertSimulatorBundleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityAlertSimulatorBundleType?(string value) => value == null ? null : new SecurityAlertSimulatorBundleType(value);
+        public static implicit operator SecurityAlertSimulatorBundleType?(string value) => value == null ? (SecurityAlertSimulatorBundleType?)null : new SecurityAlertSimulatorBundleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

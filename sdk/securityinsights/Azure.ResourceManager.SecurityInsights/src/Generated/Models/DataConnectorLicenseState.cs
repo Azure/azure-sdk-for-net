@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="DataConnectorLicenseState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataConnectorLicenseState?(string value) => value == null ? null : new DataConnectorLicenseState(value);
+        public static implicit operator DataConnectorLicenseState?(string value) => value == null ? (DataConnectorLicenseState?)null : new DataConnectorLicenseState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

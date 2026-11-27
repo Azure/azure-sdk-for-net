@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="SecurityInsightsAlertRuleTemplateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityInsightsAlertRuleTemplateStatus?(string value) => value == null ? null : new SecurityInsightsAlertRuleTemplateStatus(value);
+        public static implicit operator SecurityInsightsAlertRuleTemplateStatus?(string value) => value == null ? (SecurityInsightsAlertRuleTemplateStatus?)null : new SecurityInsightsAlertRuleTemplateStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

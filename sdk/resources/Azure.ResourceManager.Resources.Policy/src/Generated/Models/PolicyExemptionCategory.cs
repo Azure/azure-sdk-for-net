@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicyExemptionCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyExemptionCategory?(string value) => value == null ? null : new PolicyExemptionCategory(value);
+        public static implicit operator PolicyExemptionCategory?(string value) => value == null ? (PolicyExemptionCategory?)null : new PolicyExemptionCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Converts a string to a <see cref="UnmanageActionResourceGroupMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UnmanageActionResourceGroupMode?(string value) => value == null ? null : new UnmanageActionResourceGroupMode(value);
+        public static implicit operator UnmanageActionResourceGroupMode?(string value) => value == null ? (UnmanageActionResourceGroupMode?)null : new UnmanageActionResourceGroupMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

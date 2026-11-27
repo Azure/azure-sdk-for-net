@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicyAliasPathTokenType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyAliasPathTokenType?(string value) => value == null ? null : new PolicyAliasPathTokenType(value);
+        public static implicit operator PolicyAliasPathTokenType?(string value) => value == null ? (PolicyAliasPathTokenType?)null : new PolicyAliasPathTokenType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

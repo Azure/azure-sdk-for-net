@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="HypothesisStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HypothesisStatus?(string value) => value == null ? null : new HypothesisStatus(value);
+        public static implicit operator HypothesisStatus?(string value) => value == null ? (HypothesisStatus?)null : new HypothesisStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

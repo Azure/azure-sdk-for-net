@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityCenterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityCenterProvisioningState?(string value) => value == null ? null : new SecurityCenterProvisioningState(value);
+        public static implicit operator SecurityCenterProvisioningState?(string value) => value == null ? (SecurityCenterProvisioningState?)null : new SecurityCenterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

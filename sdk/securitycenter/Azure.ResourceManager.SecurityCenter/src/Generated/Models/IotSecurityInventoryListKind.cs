@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="IotSecurityInventoryListKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotSecurityInventoryListKind?(string value) => value == null ? null : new IotSecurityInventoryListKind(value);
+        public static implicit operator IotSecurityInventoryListKind?(string value) => value == null ? (IotSecurityInventoryListKind?)null : new IotSecurityInventoryListKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

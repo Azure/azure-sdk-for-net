@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
 
         /// <summary> Converts a string to a <see cref="AzureCloudName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureCloudName?(string value) => value == null ? null : new AzureCloudName(value);
+        public static implicit operator AzureCloudName?(string value) => value == null ? (AzureCloudName?)null : new AzureCloudName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

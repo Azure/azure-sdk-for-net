@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a <see cref="SearchBypass"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchBypass?(string value) => value == null ? null : new SearchBypass(value);
+        public static implicit operator SearchBypass?(string value) => value == null ? (SearchBypass?)null : new SearchBypass(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

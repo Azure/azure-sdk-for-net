@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> Converts a string to a <see cref="PolicyAliasPathAttributes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyAliasPathAttributes?(string value) => value == null ? null : new PolicyAliasPathAttributes(value);
+        public static implicit operator PolicyAliasPathAttributes?(string value) => value == null ? (PolicyAliasPathAttributes?)null : new PolicyAliasPathAttributes(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

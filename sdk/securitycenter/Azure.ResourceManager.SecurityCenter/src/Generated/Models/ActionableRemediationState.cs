@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="ActionableRemediationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActionableRemediationState?(string value) => value == null ? null : new ActionableRemediationState(value);
+        public static implicit operator ActionableRemediationState?(string value) => value == null ? (ActionableRemediationState?)null : new ActionableRemediationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

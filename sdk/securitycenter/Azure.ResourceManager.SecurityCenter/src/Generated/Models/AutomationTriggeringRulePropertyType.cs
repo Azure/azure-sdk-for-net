@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="AutomationTriggeringRulePropertyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutomationTriggeringRulePropertyType?(string value) => value == null ? null : new AutomationTriggeringRulePropertyType(value);
+        public static implicit operator AutomationTriggeringRulePropertyType?(string value) => value == null ? (AutomationTriggeringRulePropertyType?)null : new AutomationTriggeringRulePropertyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

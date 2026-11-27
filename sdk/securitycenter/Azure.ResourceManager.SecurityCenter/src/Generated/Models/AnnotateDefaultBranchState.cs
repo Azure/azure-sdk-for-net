@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="AnnotateDefaultBranchState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnnotateDefaultBranchState?(string value) => value == null ? null : new AnnotateDefaultBranchState(value);
+        public static implicit operator AnnotateDefaultBranchState?(string value) => value == null ? (AnnotateDefaultBranchState?)null : new AnnotateDefaultBranchState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

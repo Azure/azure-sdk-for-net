@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="GetInsightsError"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GetInsightsError?(string value) => value == null ? null : new GetInsightsError(value);
+        public static implicit operator GetInsightsError?(string value) => value == null ? (GetInsightsError?)null : new GetInsightsError(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

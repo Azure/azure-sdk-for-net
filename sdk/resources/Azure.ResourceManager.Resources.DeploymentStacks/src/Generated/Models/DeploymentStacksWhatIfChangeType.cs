@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentStacksWhatIfChangeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentStacksWhatIfChangeType?(string value) => value == null ? null : new DeploymentStacksWhatIfChangeType(value);
+        public static implicit operator DeploymentStacksWhatIfChangeType?(string value) => value == null ? (DeploymentStacksWhatIfChangeType?)null : new DeploymentStacksWhatIfChangeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

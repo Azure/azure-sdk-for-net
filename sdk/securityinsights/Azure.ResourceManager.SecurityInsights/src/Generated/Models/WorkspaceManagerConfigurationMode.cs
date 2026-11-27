@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="WorkspaceManagerConfigurationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkspaceManagerConfigurationMode?(string value) => value == null ? null : new WorkspaceManagerConfigurationMode(value);
+        public static implicit operator WorkspaceManagerConfigurationMode?(string value) => value == null ? (WorkspaceManagerConfigurationMode?)null : new WorkspaceManagerConfigurationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

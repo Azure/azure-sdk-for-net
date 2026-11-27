@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Converts a string to a <see cref="DeploymentStacksManagementStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentStacksManagementStatus?(string value) => value == null ? null : new DeploymentStacksManagementStatus(value);
+        public static implicit operator DeploymentStacksManagementStatus?(string value) => value == null ? (DeploymentStacksManagementStatus?)null : new DeploymentStacksManagementStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

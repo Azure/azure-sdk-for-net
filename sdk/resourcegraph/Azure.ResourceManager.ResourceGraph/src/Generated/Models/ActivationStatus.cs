@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Converts a string to a <see cref="ActivationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActivationStatus?(string value) => value == null ? null : new ActivationStatus(value);
+        public static implicit operator ActivationStatus?(string value) => value == null ? (ActivationStatus?)null : new ActivationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

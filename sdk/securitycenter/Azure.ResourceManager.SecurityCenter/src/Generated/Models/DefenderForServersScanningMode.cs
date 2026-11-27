@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="DefenderForServersScanningMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DefenderForServersScanningMode?(string value) => value == null ? null : new DefenderForServersScanningMode(value);
+        public static implicit operator DefenderForServersScanningMode?(string value) => value == null ? (DefenderForServersScanningMode?)null : new DefenderForServersScanningMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

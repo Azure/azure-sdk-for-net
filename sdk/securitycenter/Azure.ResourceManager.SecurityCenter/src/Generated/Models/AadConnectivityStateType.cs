@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="AadConnectivityStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AadConnectivityStateType?(string value) => value == null ? null : new AadConnectivityStateType(value);
+        public static implicit operator AadConnectivityStateType?(string value) => value == null ? (AadConnectivityStateType?)null : new AadConnectivityStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="BillingStatisticKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BillingStatisticKind?(string value) => value == null ? null : new BillingStatisticKind(value);
+        public static implicit operator BillingStatisticKind?(string value) => value == null ? (BillingStatisticKind?)null : new BillingStatisticKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

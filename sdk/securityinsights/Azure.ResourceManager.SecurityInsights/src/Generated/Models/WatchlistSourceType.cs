@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Converts a string to a <see cref="WatchlistSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WatchlistSourceType?(string value) => value == null ? null : new WatchlistSourceType(value);
+        public static implicit operator WatchlistSourceType?(string value) => value == null ? (WatchlistSourceType?)null : new WatchlistSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

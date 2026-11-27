@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Converts a string to a <see cref="SecurityExemptionCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityExemptionCategory?(string value) => value == null ? null : new SecurityExemptionCategory(value);
+        public static implicit operator SecurityExemptionCategory?(string value) => value == null ? (SecurityExemptionCategory?)null : new SecurityExemptionCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

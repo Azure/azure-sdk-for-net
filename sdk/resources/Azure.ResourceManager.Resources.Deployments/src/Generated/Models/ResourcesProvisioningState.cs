@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
 
         /// <summary> Converts a string to a <see cref="ResourcesProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourcesProvisioningState?(string value) => value == null ? null : new ResourcesProvisioningState(value);
+        public static implicit operator ResourcesProvisioningState?(string value) => value == null ? (ResourcesProvisioningState?)null : new ResourcesProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
