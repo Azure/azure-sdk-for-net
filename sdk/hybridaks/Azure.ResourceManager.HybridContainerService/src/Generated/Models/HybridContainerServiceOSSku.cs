@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Converts a string to a <see cref="HybridContainerServiceOSSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridContainerServiceOSSku?(string value) => value == null ? null : new HybridContainerServiceOSSku(value);
+        public static implicit operator HybridContainerServiceOSSku?(string value) => value == null ? (HybridContainerServiceOSSku?)null : new HybridContainerServiceOSSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

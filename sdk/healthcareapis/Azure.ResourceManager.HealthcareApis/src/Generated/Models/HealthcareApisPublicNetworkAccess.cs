@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Converts a string to a <see cref="HealthcareApisPublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthcareApisPublicNetworkAccess?(string value) => value == null ? null : new HealthcareApisPublicNetworkAccess(value);
+        public static implicit operator HealthcareApisPublicNetworkAccess?(string value) => value == null ? (HealthcareApisPublicNetworkAccess?)null : new HealthcareApisPublicNetworkAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

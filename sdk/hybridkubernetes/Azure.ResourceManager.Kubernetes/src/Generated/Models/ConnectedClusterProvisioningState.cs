@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <summary> Converts a string to a <see cref="ConnectedClusterProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedClusterProvisioningState?(string value) => value == null ? null : new ConnectedClusterProvisioningState(value);
+        public static implicit operator ConnectedClusterProvisioningState?(string value) => value == null ? (ConnectedClusterProvisioningState?)null : new ConnectedClusterProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

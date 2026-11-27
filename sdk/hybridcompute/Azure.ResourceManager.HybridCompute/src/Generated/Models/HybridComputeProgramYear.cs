@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HybridComputeProgramYear"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridComputeProgramYear?(string value) => value == null ? null : new HybridComputeProgramYear(value);
+        public static implicit operator HybridComputeProgramYear?(string value) => value == null ? (HybridComputeProgramYear?)null : new HybridComputeProgramYear(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

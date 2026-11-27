@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBComputeModelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBComputeModelType?(string value) => value == null ? null : new HorizonDBComputeModelType(value);
+        public static implicit operator HorizonDBComputeModelType?(string value) => value == null ? (HorizonDBComputeModelType?)null : new HorizonDBComputeModelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

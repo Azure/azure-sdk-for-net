@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Converts a string to a <see cref="OperationActionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationActionType?(string value) => value == null ? null : new OperationActionType(value);
+        public static implicit operator OperationActionType?(string value) => value == null ? (OperationActionType?)null : new OperationActionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

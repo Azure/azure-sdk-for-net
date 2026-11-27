@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="PublicCloudResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PublicCloudResourceProvisioningState?(string value) => value == null ? null : new PublicCloudResourceProvisioningState(value);
+        public static implicit operator PublicCloudResourceProvisioningState?(string value) => value == null ? (PublicCloudResourceProvisioningState?)null : new PublicCloudResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

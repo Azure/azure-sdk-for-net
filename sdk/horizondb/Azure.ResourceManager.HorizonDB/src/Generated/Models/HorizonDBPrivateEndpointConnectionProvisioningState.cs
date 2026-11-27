@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Converts a string to a <see cref="HorizonDBPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDBPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new HorizonDBPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator HorizonDBPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (HorizonDBPrivateEndpointConnectionProvisioningState?)null : new HorizonDBPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

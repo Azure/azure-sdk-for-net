@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowEndpointAuthenticationSaslType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowEndpointAuthenticationSaslType?(string value) => value == null ? null : new DataflowEndpointAuthenticationSaslType(value);
+        public static implicit operator DataflowEndpointAuthenticationSaslType?(string value) => value == null ? (DataflowEndpointAuthenticationSaslType?)null : new DataflowEndpointAuthenticationSaslType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

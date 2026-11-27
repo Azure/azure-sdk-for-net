@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowEndpointType?(string value) => value == null ? null : new DataflowEndpointType(value);
+        public static implicit operator DataflowEndpointType?(string value) => value == null ? (DataflowEndpointType?)null : new DataflowEndpointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

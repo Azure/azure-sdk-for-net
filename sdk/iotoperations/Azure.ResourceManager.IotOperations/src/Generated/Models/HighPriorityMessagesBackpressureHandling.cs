@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="HighPriorityMessagesBackpressureHandling"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HighPriorityMessagesBackpressureHandling?(string value) => value == null ? null : new HighPriorityMessagesBackpressureHandling(value);
+        public static implicit operator HighPriorityMessagesBackpressureHandling?(string value) => value == null ? (HighPriorityMessagesBackpressureHandling?)null : new HighPriorityMessagesBackpressureHandling(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="StateStoreResourceDefinitionMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StateStoreResourceDefinitionMethod?(string value) => value == null ? null : new StateStoreResourceDefinitionMethod(value);
+        public static implicit operator StateStoreResourceDefinitionMethod?(string value) => value == null ? (StateStoreResourceDefinitionMethod?)null : new StateStoreResourceDefinitionMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

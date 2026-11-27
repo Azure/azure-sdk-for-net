@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubCapability"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubCapability?(string value) => value == null ? null : new IotHubCapability(value);
+        public static implicit operator IotHubCapability?(string value) => value == null ? (IotHubCapability?)null : new IotHubCapability(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <summary> Converts a string to a <see cref="ImageTemplateReplicationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageTemplateReplicationMode?(string value) => value == null ? null : new ImageTemplateReplicationMode(value);
+        public static implicit operator ImageTemplateReplicationMode?(string value) => value == null ? (ImageTemplateReplicationMode?)null : new ImageTemplateReplicationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

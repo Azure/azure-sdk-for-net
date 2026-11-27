@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="VersionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VersionState?(string value) => value == null ? null : new VersionState(value);
+        public static implicit operator VersionState?(string value) => value == null ? (VersionState?)null : new VersionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

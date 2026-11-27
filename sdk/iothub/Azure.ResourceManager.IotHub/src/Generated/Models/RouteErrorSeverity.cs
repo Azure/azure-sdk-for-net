@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="RouteErrorSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouteErrorSeverity?(string value) => value == null ? null : new RouteErrorSeverity(value);
+        public static implicit operator RouteErrorSeverity?(string value) => value == null ? (RouteErrorSeverity?)null : new RouteErrorSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Converts a string to a <see cref="SmartDataAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SmartDataAction?(string value) => value == null ? null : new SmartDataAction(value);
+        public static implicit operator SmartDataAction?(string value) => value == null ? (SmartDataAction?)null : new SmartDataAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

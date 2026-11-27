@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="PodStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PodStatus?(string value) => value == null ? null : new PodStatus(value);
+        public static implicit operator PodStatus?(string value) => value == null ? (PodStatus?)null : new PodStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

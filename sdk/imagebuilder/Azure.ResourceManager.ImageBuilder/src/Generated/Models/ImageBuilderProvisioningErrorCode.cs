@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <summary> Converts a string to a <see cref="ImageBuilderProvisioningErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageBuilderProvisioningErrorCode?(string value) => value == null ? null : new ImageBuilderProvisioningErrorCode(value);
+        public static implicit operator ImageBuilderProvisioningErrorCode?(string value) => value == null ? (ImageBuilderProvisioningErrorCode?)null : new ImageBuilderProvisioningErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

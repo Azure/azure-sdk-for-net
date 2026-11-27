@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Converts a string to a <see cref="ImpactProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactProtocol?(string value) => value == null ? null : new ImpactProtocol(value);
+        public static implicit operator ImpactProtocol?(string value) => value == null ? (ImpactProtocol?)null : new ImpactProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="ArtifactReplicationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArtifactReplicationStrategy?(string value) => value == null ? null : new ArtifactReplicationStrategy(value);
+        public static implicit operator ArtifactReplicationStrategy?(string value) => value == null ? (ArtifactReplicationStrategy?)null : new ArtifactReplicationStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

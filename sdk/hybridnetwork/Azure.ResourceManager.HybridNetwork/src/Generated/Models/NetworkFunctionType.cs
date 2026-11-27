@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="NetworkFunctionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkFunctionType?(string value) => value == null ? null : new NetworkFunctionType(value);
+        public static implicit operator NetworkFunctionType?(string value) => value == null ? (NetworkFunctionType?)null : new NetworkFunctionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

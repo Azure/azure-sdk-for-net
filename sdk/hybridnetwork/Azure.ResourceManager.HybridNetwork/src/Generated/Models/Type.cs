@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="Type"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Type?(string value) => value == null ? null : new Type(value);
+        public static implicit operator Type?(string value) => value == null ? (Type?)null : new Type(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

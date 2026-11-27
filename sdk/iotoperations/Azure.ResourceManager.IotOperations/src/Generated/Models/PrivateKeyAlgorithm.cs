@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="PrivateKeyAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateKeyAlgorithm?(string value) => value == null ? null : new PrivateKeyAlgorithm(value);
+        public static implicit operator PrivateKeyAlgorithm?(string value) => value == null ? (PrivateKeyAlgorithm?)null : new PrivateKeyAlgorithm(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

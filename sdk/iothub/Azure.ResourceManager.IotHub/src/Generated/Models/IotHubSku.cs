@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubSku?(string value) => value == null ? null : new IotHubSku(value);
+        public static implicit operator IotHubSku?(string value) => value == null ? (IotHubSku?)null : new IotHubSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

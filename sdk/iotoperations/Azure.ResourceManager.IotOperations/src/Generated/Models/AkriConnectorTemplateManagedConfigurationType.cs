@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="AkriConnectorTemplateManagedConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AkriConnectorTemplateManagedConfigurationType?(string value) => value == null ? null : new AkriConnectorTemplateManagedConfigurationType(value);
+        public static implicit operator AkriConnectorTemplateManagedConfigurationType?(string value) => value == null ? (AkriConnectorTemplateManagedConfigurationType?)null : new AkriConnectorTemplateManagedConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

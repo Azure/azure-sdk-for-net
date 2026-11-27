@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="BrokerOperatorValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BrokerOperatorValue?(string value) => value == null ? null : new BrokerOperatorValue(value);
+        public static implicit operator BrokerOperatorValue?(string value) => value == null ? (BrokerOperatorValue?)null : new BrokerOperatorValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

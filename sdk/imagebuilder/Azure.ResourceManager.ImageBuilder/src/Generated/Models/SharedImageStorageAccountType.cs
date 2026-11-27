@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <summary> Converts a string to a <see cref="SharedImageStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SharedImageStorageAccountType?(string value) => value == null ? null : new SharedImageStorageAccountType(value);
+        public static implicit operator SharedImageStorageAccountType?(string value) => value == null ? (SharedImageStorageAccountType?)null : new SharedImageStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

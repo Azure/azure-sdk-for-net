@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="PrivateKeyRotationPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PrivateKeyRotationPolicy?(string value) => value == null ? null : new PrivateKeyRotationPolicy(value);
+        public static implicit operator PrivateKeyRotationPolicy?(string value) => value == null ? (PrivateKeyRotationPolicy?)null : new PrivateKeyRotationPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

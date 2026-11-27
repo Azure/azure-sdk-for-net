@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="IotOperationsExtendedLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotOperationsExtendedLocationType?(string value) => value == null ? null : new IotOperationsExtendedLocationType(value);
+        public static implicit operator IotOperationsExtendedLocationType?(string value) => value == null ? (IotOperationsExtendedLocationType?)null : new IotOperationsExtendedLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

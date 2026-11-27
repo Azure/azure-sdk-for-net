@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="TlsCertMethodMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TlsCertMethodMode?(string value) => value == null ? null : new TlsCertMethodMode(value);
+        public static implicit operator TlsCertMethodMode?(string value) => value == null ? (TlsCertMethodMode?)null : new TlsCertMethodMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

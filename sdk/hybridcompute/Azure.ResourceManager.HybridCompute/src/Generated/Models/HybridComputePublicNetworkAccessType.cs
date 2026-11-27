@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HybridComputePublicNetworkAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridComputePublicNetworkAccessType?(string value) => value == null ? null : new HybridComputePublicNetworkAccessType(value);
+        public static implicit operator HybridComputePublicNetworkAccessType?(string value) => value == null ? (HybridComputePublicNetworkAccessType?)null : new HybridComputePublicNetworkAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

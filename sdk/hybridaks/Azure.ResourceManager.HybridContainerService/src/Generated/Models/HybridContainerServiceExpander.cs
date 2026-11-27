@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Converts a string to a <see cref="HybridContainerServiceExpander"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridContainerServiceExpander?(string value) => value == null ? null : new HybridContainerServiceExpander(value);
+        public static implicit operator HybridContainerServiceExpander?(string value) => value == null ? (HybridContainerServiceExpander?)null : new HybridContainerServiceExpander(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Converts a string to a <see cref="ImpactReportingProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactReportingProvisioningState?(string value) => value == null ? null : new ImpactReportingProvisioningState(value);
+        public static implicit operator ImpactReportingProvisioningState?(string value) => value == null ? (ImpactReportingProvisioningState?)null : new ImpactReportingProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

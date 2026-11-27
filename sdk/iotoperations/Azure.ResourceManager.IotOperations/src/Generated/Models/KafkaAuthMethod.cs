@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="KafkaAuthMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KafkaAuthMethod?(string value) => value == null ? null : new KafkaAuthMethod(value);
+        public static implicit operator KafkaAuthMethod?(string value) => value == null ? (KafkaAuthMethod?)null : new KafkaAuthMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

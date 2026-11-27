@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="EsuEligibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EsuEligibility?(string value) => value == null ? null : new EsuEligibility(value);
+        public static implicit operator EsuEligibility?(string value) => value == null ? (EsuEligibility?)null : new EsuEligibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

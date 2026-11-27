@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="CertManagerIssuerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertManagerIssuerKind?(string value) => value == null ? null : new CertManagerIssuerKind(value);
+        public static implicit operator CertManagerIssuerKind?(string value) => value == null ? (CertManagerIssuerKind?)null : new CertManagerIssuerKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

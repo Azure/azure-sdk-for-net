@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="IotOperationsOperationalMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotOperationsOperationalMode?(string value) => value == null ? null : new IotOperationsOperationalMode(value);
+        public static implicit operator IotOperationsOperationalMode?(string value) => value == null ? (IotOperationsOperationalMode?)null : new IotOperationsOperationalMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

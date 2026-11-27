@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubPrivateLinkServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new IotHubPrivateLinkServiceConnectionStatus(value);
+        public static implicit operator IotHubPrivateLinkServiceConnectionStatus?(string value) => value == null ? (IotHubPrivateLinkServiceConnectionStatus?)null : new IotHubPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

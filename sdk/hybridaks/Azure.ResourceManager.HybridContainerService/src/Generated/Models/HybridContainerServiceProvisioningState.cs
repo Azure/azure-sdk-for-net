@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Converts a string to a <see cref="HybridContainerServiceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridContainerServiceProvisioningState?(string value) => value == null ? null : new HybridContainerServiceProvisioningState(value);
+        public static implicit operator HybridContainerServiceProvisioningState?(string value) => value == null ? (HybridContainerServiceProvisioningState?)null : new HybridContainerServiceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

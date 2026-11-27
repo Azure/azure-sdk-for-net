@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="MachineOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MachineOperationStatus?(string value) => value == null ? null : new MachineOperationStatus(value);
+        public static implicit operator MachineOperationStatus?(string value) => value == null ? (MachineOperationStatus?)null : new MachineOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

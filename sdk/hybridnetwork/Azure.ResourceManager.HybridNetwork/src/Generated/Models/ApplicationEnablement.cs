@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="ApplicationEnablement"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationEnablement?(string value) => value == null ? null : new ApplicationEnablement(value);
+        public static implicit operator ApplicationEnablement?(string value) => value == null ? (ApplicationEnablement?)null : new ApplicationEnablement(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

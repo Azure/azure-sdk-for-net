@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Converts a string to a <see cref="ImpactConfidenceLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactConfidenceLevel?(string value) => value == null ? null : new ImpactConfidenceLevel(value);
+        public static implicit operator ImpactConfidenceLevel?(string value) => value == null ? (ImpactConfidenceLevel?)null : new ImpactConfidenceLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

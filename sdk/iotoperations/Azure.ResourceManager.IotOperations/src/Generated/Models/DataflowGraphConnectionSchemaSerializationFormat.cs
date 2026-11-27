@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowGraphConnectionSchemaSerializationFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowGraphConnectionSchemaSerializationFormat?(string value) => value == null ? null : new DataflowGraphConnectionSchemaSerializationFormat(value);
+        public static implicit operator DataflowGraphConnectionSchemaSerializationFormat?(string value) => value == null ? (DataflowGraphConnectionSchemaSerializationFormat?)null : new DataflowGraphConnectionSchemaSerializationFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="DeviceRegistryIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeviceRegistryIdentityType?(string value) => value == null ? null : new DeviceRegistryIdentityType(value);
+        public static implicit operator DeviceRegistryIdentityType?(string value) => value == null ? (DeviceRegistryIdentityType?)null : new DeviceRegistryIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

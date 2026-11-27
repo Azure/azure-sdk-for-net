@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="ArtifactState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArtifactState?(string value) => value == null ? null : new ArtifactState(value);
+        public static implicit operator ArtifactState?(string value) => value == null ? (ArtifactState?)null : new ArtifactState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

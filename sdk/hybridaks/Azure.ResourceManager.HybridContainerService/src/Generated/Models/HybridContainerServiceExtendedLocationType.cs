@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Converts a string to a <see cref="HybridContainerServiceExtendedLocationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridContainerServiceExtendedLocationType?(string value) => value == null ? null : new HybridContainerServiceExtendedLocationType(value);
+        public static implicit operator HybridContainerServiceExtendedLocationType?(string value) => value == null ? (HybridContainerServiceExtendedLocationType?)null : new HybridContainerServiceExtendedLocationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

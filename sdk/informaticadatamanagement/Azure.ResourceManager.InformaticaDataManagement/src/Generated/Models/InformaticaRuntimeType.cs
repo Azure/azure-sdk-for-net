@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
         /// <summary> Converts a string to a <see cref="InformaticaRuntimeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InformaticaRuntimeType?(string value) => value == null ? null : new InformaticaRuntimeType(value);
+        public static implicit operator InformaticaRuntimeType?(string value) => value == null ? (InformaticaRuntimeType?)null : new InformaticaRuntimeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

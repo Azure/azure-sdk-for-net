@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="ContainerizedNetworkFunctionNfviType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerizedNetworkFunctionNfviType?(string value) => value == null ? null : new ContainerizedNetworkFunctionNfviType(value);
+        public static implicit operator ContainerizedNetworkFunctionNfviType?(string value) => value == null ? (ContainerizedNetworkFunctionNfviType?)null : new ContainerizedNetworkFunctionNfviType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

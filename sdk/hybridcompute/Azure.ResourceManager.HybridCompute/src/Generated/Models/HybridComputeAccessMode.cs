@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HybridComputeAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridComputeAccessMode?(string value) => value == null ? null : new HybridComputeAccessMode(value);
+        public static implicit operator HybridComputeAccessMode?(string value) => value == null ? (HybridComputeAccessMode?)null : new HybridComputeAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

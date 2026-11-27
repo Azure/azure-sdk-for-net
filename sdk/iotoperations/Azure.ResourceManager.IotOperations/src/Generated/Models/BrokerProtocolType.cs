@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="BrokerProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BrokerProtocolType?(string value) => value == null ? null : new BrokerProtocolType(value);
+        public static implicit operator BrokerProtocolType?(string value) => value == null ? (BrokerProtocolType?)null : new BrokerProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

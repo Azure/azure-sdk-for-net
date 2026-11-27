@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <summary> Converts a string to a <see cref="ImageBuilderOnBuildError"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageBuilderOnBuildError?(string value) => value == null ? null : new ImageBuilderOnBuildError(value);
+        public static implicit operator ImageBuilderOnBuildError?(string value) => value == null ? (ImageBuilderOnBuildError?)null : new ImageBuilderOnBuildError(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

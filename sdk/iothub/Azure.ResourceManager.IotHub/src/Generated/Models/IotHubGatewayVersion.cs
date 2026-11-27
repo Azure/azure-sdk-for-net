@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubGatewayVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubGatewayVersion?(string value) => value == null ? null : new IotHubGatewayVersion(value);
+        public static implicit operator IotHubGatewayVersion?(string value) => value == null ? (IotHubGatewayVersion?)null : new IotHubGatewayVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

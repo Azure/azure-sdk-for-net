@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
 
         /// <summary> Converts a string to a <see cref="HealthDataAIServicesPrivateEndpointConnectionProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthDataAIServicesPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new HealthDataAIServicesPrivateEndpointConnectionProvisioningState(value);
+        public static implicit operator HealthDataAIServicesPrivateEndpointConnectionProvisioningState?(string value) => value == null ? (HealthDataAIServicesPrivateEndpointConnectionProvisioningState?)null : new HealthDataAIServicesPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

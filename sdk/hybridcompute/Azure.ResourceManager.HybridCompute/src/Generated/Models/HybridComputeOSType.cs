@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HybridComputeOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridComputeOSType?(string value) => value == null ? null : new HybridComputeOSType(value);
+        public static implicit operator HybridComputeOSType?(string value) => value == null ? (HybridComputeOSType?)null : new HybridComputeOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

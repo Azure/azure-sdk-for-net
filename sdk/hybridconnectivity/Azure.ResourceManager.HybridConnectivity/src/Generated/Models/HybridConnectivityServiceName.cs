@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="HybridConnectivityServiceName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridConnectivityServiceName?(string value) => value == null ? null : new HybridConnectivityServiceName(value);
+        public static implicit operator HybridConnectivityServiceName?(string value) => value == null ? (HybridConnectivityServiceName?)null : new HybridConnectivityServiceName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

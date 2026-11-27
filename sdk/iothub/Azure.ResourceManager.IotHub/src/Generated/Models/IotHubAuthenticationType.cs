@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Converts a string to a <see cref="IotHubAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IotHubAuthenticationType?(string value) => value == null ? null : new IotHubAuthenticationType(value);
+        public static implicit operator IotHubAuthenticationType?(string value) => value == null ? (IotHubAuthenticationType?)null : new IotHubAuthenticationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

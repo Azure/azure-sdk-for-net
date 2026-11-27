@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="AzureOperatorNexusArtifactType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureOperatorNexusArtifactType?(string value) => value == null ? null : new AzureOperatorNexusArtifactType(value);
+        public static implicit operator AzureOperatorNexusArtifactType?(string value) => value == null ? (AzureOperatorNexusArtifactType?)null : new AzureOperatorNexusArtifactType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

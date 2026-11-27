@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowEndpointHostType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowEndpointHostType?(string value) => value == null ? null : new DataflowEndpointHostType(value);
+        public static implicit operator DataflowEndpointHostType?(string value) => value == null ? (DataflowEndpointHostType?)null : new DataflowEndpointHostType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

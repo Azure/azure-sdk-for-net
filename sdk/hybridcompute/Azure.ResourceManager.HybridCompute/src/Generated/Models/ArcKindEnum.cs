@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="ArcKindEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ArcKindEnum?(string value) => value == null ? null : new ArcKindEnum(value);
+        public static implicit operator ArcKindEnum?(string value) => value == null ? (ArcKindEnum?)null : new ArcKindEnum(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

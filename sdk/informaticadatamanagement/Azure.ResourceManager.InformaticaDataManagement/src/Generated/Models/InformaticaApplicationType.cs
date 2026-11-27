@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
         /// <summary> Converts a string to a <see cref="InformaticaApplicationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InformaticaApplicationType?(string value) => value == null ? null : new InformaticaApplicationType(value);
+        public static implicit operator InformaticaApplicationType?(string value) => value == null ? (InformaticaApplicationType?)null : new InformaticaApplicationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

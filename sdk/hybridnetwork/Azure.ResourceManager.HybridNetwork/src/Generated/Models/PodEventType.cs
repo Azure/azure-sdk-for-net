@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="PodEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PodEventType?(string value) => value == null ? null : new PodEventType(value);
+        public static implicit operator PodEventType?(string value) => value == null ? (PodEventType?)null : new PodEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

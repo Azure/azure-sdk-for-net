@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="MqttRetainType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MqttRetainType?(string value) => value == null ? null : new MqttRetainType(value);
+        public static implicit operator MqttRetainType?(string value) => value == null ? (MqttRetainType?)null : new MqttRetainType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

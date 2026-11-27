@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="ConfigurationGroupValueConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfigurationGroupValueConfigurationType?(string value) => value == null ? null : new ConfigurationGroupValueConfigurationType(value);
+        public static implicit operator ConfigurationGroupValueConfigurationType?(string value) => value == null ? (ConfigurationGroupValueConfigurationType?)null : new ConfigurationGroupValueConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

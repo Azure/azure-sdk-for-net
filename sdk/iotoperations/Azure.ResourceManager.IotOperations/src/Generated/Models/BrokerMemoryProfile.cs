@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="BrokerMemoryProfile"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BrokerMemoryProfile?(string value) => value == null ? null : new BrokerMemoryProfile(value);
+        public static implicit operator BrokerMemoryProfile?(string value) => value == null ? (BrokerMemoryProfile?)null : new BrokerMemoryProfile(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

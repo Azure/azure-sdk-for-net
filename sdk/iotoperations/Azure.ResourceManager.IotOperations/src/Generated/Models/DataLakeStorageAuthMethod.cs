@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataLakeStorageAuthMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataLakeStorageAuthMethod?(string value) => value == null ? null : new DataLakeStorageAuthMethod(value);
+        public static implicit operator DataLakeStorageAuthMethod?(string value) => value == null ? (DataLakeStorageAuthMethod?)null : new DataLakeStorageAuthMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

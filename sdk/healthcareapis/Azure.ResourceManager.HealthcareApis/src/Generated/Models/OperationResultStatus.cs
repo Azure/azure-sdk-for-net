@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Converts a string to a <see cref="OperationResultStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationResultStatus?(string value) => value == null ? null : new OperationResultStatus(value);
+        public static implicit operator OperationResultStatus?(string value) => value == null ? (OperationResultStatus?)null : new OperationResultStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

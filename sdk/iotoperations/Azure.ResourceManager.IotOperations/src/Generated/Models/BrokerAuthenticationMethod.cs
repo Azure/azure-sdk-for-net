@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="BrokerAuthenticationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BrokerAuthenticationMethod?(string value) => value == null ? null : new BrokerAuthenticationMethod(value);
+        public static implicit operator BrokerAuthenticationMethod?(string value) => value == null ? (BrokerAuthenticationMethod?)null : new BrokerAuthenticationMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

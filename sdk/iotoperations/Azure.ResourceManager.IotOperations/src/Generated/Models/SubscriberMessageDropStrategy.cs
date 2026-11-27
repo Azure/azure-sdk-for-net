@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="SubscriberMessageDropStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubscriberMessageDropStrategy?(string value) => value == null ? null : new SubscriberMessageDropStrategy(value);
+        public static implicit operator SubscriberMessageDropStrategy?(string value) => value == null ? (SubscriberMessageDropStrategy?)null : new SubscriberMessageDropStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

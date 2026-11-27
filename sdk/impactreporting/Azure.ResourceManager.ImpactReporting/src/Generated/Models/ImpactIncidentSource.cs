@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Converts a string to a <see cref="ImpactIncidentSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImpactIncidentSource?(string value) => value == null ? null : new ImpactIncidentSource(value);
+        public static implicit operator ImpactIncidentSource?(string value) => value == null ? (ImpactIncidentSource?)null : new ImpactIncidentSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

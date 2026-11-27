@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowEndpointKafkaCompression"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowEndpointKafkaCompression?(string value) => value == null ? null : new DataflowEndpointKafkaCompression(value);
+        public static implicit operator DataflowEndpointKafkaCompression?(string value) => value == null ? (DataflowEndpointKafkaCompression?)null : new DataflowEndpointKafkaCompression(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> Converts a string to a <see cref="HybridConnectivityProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridConnectivityProvisioningState?(string value) => value == null ? null : new HybridConnectivityProvisioningState(value);
+        public static implicit operator HybridConnectivityProvisioningState?(string value) => value == null ? (HybridConnectivityProvisioningState?)null : new HybridConnectivityProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

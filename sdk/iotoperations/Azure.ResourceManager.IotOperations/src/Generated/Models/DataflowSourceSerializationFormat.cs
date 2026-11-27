@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Converts a string to a <see cref="DataflowSourceSerializationFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataflowSourceSerializationFormat?(string value) => value == null ? null : new DataflowSourceSerializationFormat(value);
+        public static implicit operator DataflowSourceSerializationFormat?(string value) => value == null ? (DataflowSourceSerializationFormat?)null : new DataflowSourceSerializationFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

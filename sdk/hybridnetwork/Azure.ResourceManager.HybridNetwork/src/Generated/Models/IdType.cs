@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Converts a string to a <see cref="IdType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IdType?(string value) => value == null ? null : new IdType(value);
+        public static implicit operator IdType?(string value) => value == null ? (IdType?)null : new IdType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

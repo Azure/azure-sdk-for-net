@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Converts a string to a <see cref="HotpatchEnablementStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HotpatchEnablementStatus?(string value) => value == null ? null : new HotpatchEnablementStatus(value);
+        public static implicit operator HotpatchEnablementStatus?(string value) => value == null ? (HotpatchEnablementStatus?)null : new HotpatchEnablementStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
