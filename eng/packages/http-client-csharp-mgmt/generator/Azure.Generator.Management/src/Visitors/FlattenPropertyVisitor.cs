@@ -357,7 +357,7 @@ namespace Azure.Generator.Management.Visitors
                 return null;
             }
             var constructorParameters = publicConstructor
-                ? propertyModelType.Constructors.First(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)).Signature.Parameters
+                ? PropertyHelpers.GetPublicConstructors(propertyModelType).First().Signature.Parameters
                 : propertyModelType.FullConstructor.Signature.Parameters;
 
             var parameters = new List<ValueExpression>();
@@ -931,7 +931,7 @@ namespace Azure.Generator.Management.Visitors
 
         private void UpdatePublicConstructor(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> map)
         {
-            var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            var publicConstructor = model.GeneratedConstructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             if (publicConstructor is null)
             {
                 return;
@@ -1048,7 +1048,7 @@ namespace Azure.Generator.Management.Visitors
         {
             foreach (var serializationType in model.SerializationProviders)
             {
-                var ctors = serializationType.Constructors;
+                var ctors = serializationType.GeneratedConstructors;
                 var parameterlessCtor = ctors.SingleOrDefault(c => !c.Signature.Parameters.Any());
                 if (parameterlessCtor is not null)
                 {
@@ -1122,7 +1122,7 @@ namespace Azure.Generator.Management.Visitors
                                 bool nestedHasPublicCtor = false;
                                 if (TryGetModelProvider(variable.Type, out var nestedModelType))
                                 {
-                                    nestedHasPublicCtor = nestedModelType.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                                    nestedHasPublicCtor = PropertyHelpers.GetPublicConstructors(nestedModelType).Any();
                                 }
                                 var conditionExpression = BuildConditionExpression(properties, publicConstructor: nestedHasPublicCtor);
                                 var ctorParams = BuildConstructorParameters(variable.Type, properties, publicConstructor: nestedHasPublicCtor);
@@ -1156,8 +1156,7 @@ namespace Azure.Generator.Management.Visitors
                                     if (internalProperty.WireInfo?.IsRequired == true
                                         && internalProperty.Body is AutoPropertyBody { HasSetter: false, InitializationExpression: null } autoBody
                                         && TryGetModelProvider(internalProperty.Type, out var nestedModel)
-                                        && nestedModel.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
-                                            && c.Signature.Parameters.Count == 0))
+                                        && PropertyHelpers.GetPublicConstructors(nestedModel).Any(c => c.Signature.Parameters.Count == 0))
                                     {
                                         internalProperty.Update(body: autoBody with { InitializationExpression = New.Instance(internalProperty.Type) });
                                     }

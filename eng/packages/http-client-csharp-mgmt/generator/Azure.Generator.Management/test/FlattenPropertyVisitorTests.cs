@@ -5,6 +5,7 @@ using Azure.Generator.Management;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -1387,6 +1388,60 @@ namespace Azure.Generator.Mgmt.Tests
             RunVisitors(parentProvider);
 
             AssertSafeFlattenApplied(parentProvider, "dynamic Patch property");
+        }
+
+        [Test]
+        public void FlatteningPreservesHandwrittenAndGeneratedConstructorOverloads()
+        {
+            var wrapper = InputFactory.Model("Wrapper", properties:
+                [InputFactory.Property("value", InputPrimitiveType.String, isRequired: true)]);
+            var property = InputFactory.Property("wrapper", wrapper, isRequired: true);
+            ApplyFlattenDecorator(property);
+            var parent = InputFactory.Model("ParentModel", properties: [property]);
+            const string customization = """
+                namespace Samples.Models
+                {
+                    public partial class ParentModel
+                    {
+                        public ParentModel(Wrapper wrapper) { }
+                    }
+                }
+                """;
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parent, wrapper], customizationSources: [customization]);
+            var model = plugin.Object.TypeFactory.CreateModel(parent)!;
+            Assert.That(model.CustomCodeView!.Constructors, Has.Count.EqualTo(1));
+            Assert.That(model.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.False);
+
+            RunVisitors(model);
+
+            var generated = model.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(generated.Signature.Parameters.Single().Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(model.CanonicalView.Constructors.Where(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                .Select(c => c.Signature.Parameters.Single().Type.Name), Is.EquivalentTo(new[] { "Wrapper", "String" }));
+        }
+
+        [Test]
+        public void PublicConstructorLookupIncludesStructSerializationConstructor()
+        {
+            var input = InputFactory.Model("Wrapper", modelAsStruct: true, properties:
+                [InputFactory.Property("value", InputPrimitiveType.String, isRequired: true)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            var constructor = model.SerializationProviders.SelectMany(partial => partial.Constructors)
+                .Single(c => c.Signature.Parameters.Count == 0 && c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+
+            Assert.That(model.CanonicalView.Constructors, Does.Not.Contain(constructor));
+            Assert.That(PropertyHelpers.GetPublicConstructors(model), Does.Contain(constructor));
+
+            var declared = new ConstructorProvider(
+                new ConstructorSignature(model.Type, null, MethodSignatureModifiers.Internal, []),
+                MethodBodyStatement.Empty,
+                model);
+            model.Update(constructors: [declared]);
+
+            Assert.That(PropertyHelpers.GetPublicConstructors(model), Is.Empty,
+                "A serialization constructor cannot replace a parameterless constructor declared on the model.");
         }
 
         [Test]

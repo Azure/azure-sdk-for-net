@@ -10,7 +10,8 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Expressions.DataFactory" />
     <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" Condition="'$(LocalMtgRoot)' == ''" />
+    <ProjectReference Include="$(LocalMtgRoot)/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Microsoft.TypeSpec.Generator.ClientModel.csproj" Condition="'$(LocalMtgRoot)' != ''" />
   </ItemGroup>
 
   <Target Name="CheckEmitterBuild" BeforeTargets="Build">
@@ -25,7 +26,8 @@
       <SourceDir Include="$(OutputPath)**\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
-    <Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
+    <Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" Condition="'$(LocalMtgRoot)' == ''" />
+    <Copy SourceFiles="$(LocalMtgRoot)/packages/http-client-csharp/dist/generator/Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" Condition="'$(LocalMtgRoot)' != ''" />
   </Target>
 
   <!-- Include shared code from Azure.Core. CopyToOutputDirectory is required to make roslyn reduce work -->

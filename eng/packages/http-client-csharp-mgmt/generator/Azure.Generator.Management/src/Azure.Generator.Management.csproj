@@ -8,7 +8,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Azure.Core" />
-		<PackageReference Include="Azure.Generator" />
+		<PackageReference Include="Azure.Generator" Condition="'$(LocalMtgRoot)' == ''" />
+		<ProjectReference Include="../../../../http-client-csharp/generator/Azure.Generator/src/Azure.Generator.csproj" Condition="'$(LocalMtgRoot)' != ''" />
 		<PackageReference Include="Azure.ResourceManager" />
 		<PackageReference Include="Humanizer.Core" />
 	</ItemGroup>
@@ -29,7 +30,8 @@
 			<SourceDir Include="$(OutputPath)**\*.*" />
 		</ItemGroup>
 		<Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
-		<Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
+		<Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" Condition="'$(LocalMtgRoot)' == ''" />
+		<Copy SourceFiles="$(LocalMtgRoot)/packages/http-client-csharp/dist/generator/Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" Condition="'$(LocalMtgRoot)' != ''" />
 	</Target>
 
 	<!-- Include shared code from Azure.Core -->
