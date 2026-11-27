@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> object. </returns>
         public virtual HealthcareApisServicePrivateEndpointConnectionResource GetHealthcareApisServicePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HealthcareApisServicePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HealthcareApisServicePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> object. </returns>
         public virtual HealthcareApisWorkspacePrivateEndpointConnectionResource GetHealthcareApisWorkspacePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HealthcareApisWorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HealthcareApisWorkspacePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="HealthcareApisServicePrivateLinkResource"/> object. </returns>
         public virtual HealthcareApisServicePrivateLinkResource GetHealthcareApisServicePrivateLinkResource(ResourceIdentifier id)
         {
-            HealthcareApisServicePrivateLinkResource.ValidateResourceId(id);
             return new HealthcareApisServicePrivateLinkResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateLinkResource"/> object. </returns>
         public virtual HealthcareApisWorkspacePrivateLinkResource GetHealthcareApisWorkspacePrivateLinkResource(ResourceIdentifier id)
         {
-            HealthcareApisWorkspacePrivateLinkResource.ValidateResourceId(id);
             return new HealthcareApisWorkspacePrivateLinkResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="HealthcareApisWorkspaceResource"/> object. </returns>
         public virtual HealthcareApisWorkspaceResource GetHealthcareApisWorkspaceResource(ResourceIdentifier id)
         {
-            HealthcareApisWorkspaceResource.ValidateResourceId(id);
             return new HealthcareApisWorkspaceResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="DicomServiceResource"/> object. </returns>
         public virtual DicomServiceResource GetDicomServiceResource(ResourceIdentifier id)
         {
-            DicomServiceResource.ValidateResourceId(id);
             return new DicomServiceResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="HealthcareApisIotConnectorResource"/> object. </returns>
         public virtual HealthcareApisIotConnectorResource GetHealthcareApisIotConnectorResource(ResourceIdentifier id)
         {
-            HealthcareApisIotConnectorResource.ValidateResourceId(id);
             return new HealthcareApisIotConnectorResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="FhirServiceResource"/> object. </returns>
         public virtual FhirServiceResource GetFhirServiceResource(ResourceIdentifier id)
         {
-            FhirServiceResource.ValidateResourceId(id);
             return new FhirServiceResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="HealthcareApisServiceResource"/> object. </returns>
         public virtual HealthcareApisServiceResource GetHealthcareApisServiceResource(ResourceIdentifier id)
         {
-            HealthcareApisServiceResource.ValidateResourceId(id);
             return new HealthcareApisServiceResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <returns> Returns a <see cref="HealthcareApisIotFhirDestinationResource"/> object. </returns>
         public virtual HealthcareApisIotFhirDestinationResource GetHealthcareApisIotFhirDestinationResource(ResourceIdentifier id)
         {
-            HealthcareApisIotFhirDestinationResource.ValidateResourceId(id);
             return new HealthcareApisIotFhirDestinationResource(Client, id);
         }
     }

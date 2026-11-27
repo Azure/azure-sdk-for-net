@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <returns> Returns a <see cref="HybridConnectivityEndpointResource"/> object. </returns>
         public virtual HybridConnectivityEndpointResource GetHybridConnectivityEndpointResource(ResourceIdentifier id)
         {
-            HybridConnectivityEndpointResource.ValidateResourceId(id);
             return new HybridConnectivityEndpointResource(Client, id);
         }
 
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <returns> Returns a <see cref="HybridConnectivityServiceConfigurationResource"/> object. </returns>
         public virtual HybridConnectivityServiceConfigurationResource GetHybridConnectivityServiceConfigurationResource(ResourceIdentifier id)
         {
-            HybridConnectivityServiceConfigurationResource.ValidateResourceId(id);
             return new HybridConnectivityServiceConfigurationResource(Client, id);
         }
 
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <returns> Returns a <see cref="PublicCloudConnectorResource"/> object. </returns>
         public virtual PublicCloudConnectorResource GetPublicCloudConnectorResource(ResourceIdentifier id)
         {
-            PublicCloudConnectorResource.ValidateResourceId(id);
             return new PublicCloudConnectorResource(Client, id);
         }
 
@@ -134,7 +131,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <returns> Returns a <see cref="PublicCloudConnectorSolutionConfigurationResource"/> object. </returns>
         public virtual PublicCloudConnectorSolutionConfigurationResource GetPublicCloudConnectorSolutionConfigurationResource(ResourceIdentifier id)
         {
-            PublicCloudConnectorSolutionConfigurationResource.ValidateResourceId(id);
             return new PublicCloudConnectorSolutionConfigurationResource(Client, id);
         }
 
@@ -179,7 +175,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <returns> Returns a <see cref="PublicCloudInventoryResource"/> object. </returns>
         public virtual PublicCloudInventoryResource GetPublicCloudInventoryResource(ResourceIdentifier id)
         {
-            PublicCloudInventoryResource.ValidateResourceId(id);
             return new PublicCloudInventoryResource(Client, id);
         }
 
@@ -224,7 +219,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <returns> Returns a <see cref="PublicCloudConnectorSolutionTypeResource"/> object. </returns>
         public virtual PublicCloudConnectorSolutionTypeResource GetPublicCloudConnectorSolutionTypeResource(ResourceIdentifier id)
         {
-            PublicCloudConnectorSolutionTypeResource.ValidateResourceId(id);
             return new PublicCloudConnectorSolutionTypeResource(Client, id);
         }
     }

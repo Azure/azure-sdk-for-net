@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// <returns> Returns a <see cref="WorkloadImpactResource"/> object. </returns>
         public virtual WorkloadImpactResource GetWorkloadImpactResource(ResourceIdentifier id)
         {
-            WorkloadImpactResource.ValidateResourceId(id);
             return new WorkloadImpactResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// <returns> Returns a <see cref="ImpactCategoryResource"/> object. </returns>
         public virtual ImpactCategoryResource GetImpactCategoryResource(ResourceIdentifier id)
         {
-            ImpactCategoryResource.ValidateResourceId(id);
             return new ImpactCategoryResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// <returns> Returns a <see cref="ImpactInsightResource"/> object. </returns>
         public virtual ImpactInsightResource GetImpactInsightResource(ResourceIdentifier id)
         {
-            ImpactInsightResource.ValidateResourceId(id);
             return new ImpactInsightResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// <returns> Returns a <see cref="ImpactConnectorResource"/> object. </returns>
         public virtual ImpactConnectorResource GetImpactConnectorResource(ResourceIdentifier id)
         {
-            ImpactConnectorResource.ValidateResourceId(id);
             return new ImpactConnectorResource(Client, id);
         }
     }

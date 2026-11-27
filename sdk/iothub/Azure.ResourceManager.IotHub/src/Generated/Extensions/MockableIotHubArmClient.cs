@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <returns> Returns a <see cref="IotHubPrivateEndpointConnectionResource"/> object. </returns>
         public virtual IotHubPrivateEndpointConnectionResource GetIotHubPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            IotHubPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new IotHubPrivateEndpointConnectionResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <returns> Returns a <see cref="IotHubDescriptionResource"/> object. </returns>
         public virtual IotHubDescriptionResource GetIotHubDescriptionResource(ResourceIdentifier id)
         {
-            IotHubDescriptionResource.ValidateResourceId(id);
             return new IotHubDescriptionResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <returns> Returns a <see cref="EventHubConsumerGroupInfoResource"/> object. </returns>
         public virtual EventHubConsumerGroupInfoResource GetEventHubConsumerGroupInfoResource(ResourceIdentifier id)
         {
-            EventHubConsumerGroupInfoResource.ValidateResourceId(id);
             return new EventHubConsumerGroupInfoResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <returns> Returns a <see cref="IotHubCertificateDescriptionResource"/> object. </returns>
         public virtual IotHubCertificateDescriptionResource GetIotHubCertificateDescriptionResource(ResourceIdentifier id)
         {
-            IotHubCertificateDescriptionResource.ValidateResourceId(id);
             return new IotHubCertificateDescriptionResource(Client, id);
         }
     }

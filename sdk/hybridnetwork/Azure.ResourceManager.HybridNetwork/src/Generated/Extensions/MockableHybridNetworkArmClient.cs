@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource"/> object. </returns>
         public virtual ConfigurationGroupSchemaResource GetConfigurationGroupSchemaResource(ResourceIdentifier id)
         {
-            ConfigurationGroupSchemaResource.ValidateResourceId(id);
             return new ConfigurationGroupSchemaResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
         public virtual PublisherResource GetPublisherResource(ResourceIdentifier id)
         {
-            PublisherResource.ValidateResourceId(id);
             return new PublisherResource(Client, id);
         }
 
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="ConfigurationGroupValueResource"/> object. </returns>
         public virtual ConfigurationGroupValueResource GetConfigurationGroupValueResource(ResourceIdentifier id)
         {
-            ConfigurationGroupValueResource.ValidateResourceId(id);
             return new ConfigurationGroupValueResource(Client, id);
         }
 
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="NetworkFunctionResource"/> object. </returns>
         public virtual NetworkFunctionResource GetNetworkFunctionResource(ResourceIdentifier id)
         {
-            NetworkFunctionResource.ValidateResourceId(id);
             return new NetworkFunctionResource(Client, id);
         }
 
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="ComponentResource"/> object. </returns>
         public virtual ComponentResource GetComponentResource(ResourceIdentifier id)
         {
-            ComponentResource.ValidateResourceId(id);
             return new ComponentResource(Client, id);
         }
 
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="NetworkFunctionDefinitionGroupResource"/> object. </returns>
         public virtual NetworkFunctionDefinitionGroupResource GetNetworkFunctionDefinitionGroupResource(ResourceIdentifier id)
         {
-            NetworkFunctionDefinitionGroupResource.ValidateResourceId(id);
             return new NetworkFunctionDefinitionGroupResource(Client, id);
         }
 
@@ -85,7 +79,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="NetworkFunctionDefinitionVersionResource"/> object. </returns>
         public virtual NetworkFunctionDefinitionVersionResource GetNetworkFunctionDefinitionVersionResource(ResourceIdentifier id)
         {
-            NetworkFunctionDefinitionVersionResource.ValidateResourceId(id);
             return new NetworkFunctionDefinitionVersionResource(Client, id);
         }
 
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="NetworkServiceDesignGroupResource"/> object. </returns>
         public virtual NetworkServiceDesignGroupResource GetNetworkServiceDesignGroupResource(ResourceIdentifier id)
         {
-            NetworkServiceDesignGroupResource.ValidateResourceId(id);
             return new NetworkServiceDesignGroupResource(Client, id);
         }
 
@@ -103,7 +95,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="NetworkServiceDesignVersionResource"/> object. </returns>
         public virtual NetworkServiceDesignVersionResource GetNetworkServiceDesignVersionResource(ResourceIdentifier id)
         {
-            NetworkServiceDesignVersionResource.ValidateResourceId(id);
             return new NetworkServiceDesignVersionResource(Client, id);
         }
 
@@ -112,7 +103,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="ArtifactStoreResource"/> object. </returns>
         public virtual ArtifactStoreResource GetArtifactStoreResource(ResourceIdentifier id)
         {
-            ArtifactStoreResource.ValidateResourceId(id);
             return new ArtifactStoreResource(Client, id);
         }
 
@@ -121,7 +111,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="ArtifactManifestResource"/> object. </returns>
         public virtual ArtifactManifestResource GetArtifactManifestResource(ResourceIdentifier id)
         {
-            ArtifactManifestResource.ValidateResourceId(id);
             return new ArtifactManifestResource(Client, id);
         }
 
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
         public virtual SiteResource GetSiteResource(ResourceIdentifier id)
         {
-            SiteResource.ValidateResourceId(id);
             return new SiteResource(Client, id);
         }
 
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <returns> Returns a <see cref="SiteNetworkServiceResource"/> object. </returns>
         public virtual SiteNetworkServiceResource GetSiteNetworkServiceResource(ResourceIdentifier id)
         {
-            SiteNetworkServiceResource.ValidateResourceId(id);
             return new SiteNetworkServiceResource(Client, id);
         }
     }

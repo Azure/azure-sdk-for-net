@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// <returns> Returns a <see cref="InformaticaOrganizationResource"/> object. </returns>
         public virtual InformaticaOrganizationResource GetInformaticaOrganizationResource(ResourceIdentifier id)
         {
-            InformaticaOrganizationResource.ValidateResourceId(id);
             return new InformaticaOrganizationResource(Client, id);
         }
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// <returns> Returns a <see cref="InformaticaServerlessRuntimeResource"/> object. </returns>
         public virtual InformaticaServerlessRuntimeResource GetInformaticaServerlessRuntimeResource(ResourceIdentifier id)
         {
-            InformaticaServerlessRuntimeResource.ValidateResourceId(id);
             return new InformaticaServerlessRuntimeResource(Client, id);
         }
     }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         /// <returns> Returns a <see cref="ConnectedClusterResource"/> object. </returns>
         public virtual ConnectedClusterResource GetConnectedClusterResource(ResourceIdentifier id)
         {
-            ConnectedClusterResource.ValidateResourceId(id);
             return new ConnectedClusterResource(Client, id);
         }
     }

@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputeLicenseResource"/> object. </returns>
         public virtual HybridComputeLicenseResource GetHybridComputeLicenseResource(ResourceIdentifier id)
         {
-            HybridComputeLicenseResource.ValidateResourceId(id);
             return new HybridComputeLicenseResource(Client, id);
         }
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputeMachineResource"/> object. </returns>
         public virtual HybridComputeMachineResource GetHybridComputeMachineResource(ResourceIdentifier id)
         {
-            HybridComputeMachineResource.ValidateResourceId(id);
             return new HybridComputeMachineResource(Client, id);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputeLicenseProfileResource"/> object. </returns>
         public virtual HybridComputeLicenseProfileResource GetHybridComputeLicenseProfileResource(ResourceIdentifier id)
         {
-            HybridComputeLicenseProfileResource.ValidateResourceId(id);
             return new HybridComputeLicenseProfileResource(Client, id);
         }
 
@@ -62,7 +59,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputeMachineExtensionResource"/> object. </returns>
         public virtual HybridComputeMachineExtensionResource GetHybridComputeMachineExtensionResource(ResourceIdentifier id)
         {
-            HybridComputeMachineExtensionResource.ValidateResourceId(id);
             return new HybridComputeMachineExtensionResource(Client, id);
         }
 
@@ -71,7 +67,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputeMachineRunCommandResource"/> object. </returns>
         public virtual HybridComputeMachineRunCommandResource GetHybridComputeMachineRunCommandResource(ResourceIdentifier id)
         {
-            HybridComputeMachineRunCommandResource.ValidateResourceId(id);
             return new HybridComputeMachineRunCommandResource(Client, id);
         }
 
@@ -80,7 +75,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="ArcGatewayResource"/> object. </returns>
         public virtual ArcGatewayResource GetArcGatewayResource(ResourceIdentifier id)
         {
-            ArcGatewayResource.ValidateResourceId(id);
             return new ArcGatewayResource(Client, id);
         }
 
@@ -89,7 +83,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputePrivateLinkResource"/> object. </returns>
         public virtual HybridComputePrivateLinkResource GetHybridComputePrivateLinkResource(ResourceIdentifier id)
         {
-            HybridComputePrivateLinkResource.ValidateResourceId(id);
             return new HybridComputePrivateLinkResource(Client, id);
         }
 
@@ -98,7 +91,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputePrivateEndpointConnectionResource"/> object. </returns>
         public virtual HybridComputePrivateEndpointConnectionResource GetHybridComputePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HybridComputePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HybridComputePrivateEndpointConnectionResource(Client, id);
         }
 
@@ -107,7 +99,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
@@ -116,7 +107,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputePrivateLinkScopeResource"/> object. </returns>
         public virtual HybridComputePrivateLinkScopeResource GetHybridComputePrivateLinkScopeResource(ResourceIdentifier id)
         {
-            HybridComputePrivateLinkScopeResource.ValidateResourceId(id);
             return new HybridComputePrivateLinkScopeResource(Client, id);
         }
 
@@ -125,7 +115,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputeExtensionValueResource"/> object. </returns>
         public virtual HybridComputeExtensionValueResource GetHybridComputeExtensionValueResource(ResourceIdentifier id)
         {
-            HybridComputeExtensionValueResource.ValidateResourceId(id);
             return new HybridComputeExtensionValueResource(Client, id);
         }
 
@@ -134,7 +123,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputeExtensionValueV2Resource"/> object. </returns>
         public virtual HybridComputeExtensionValueV2Resource GetHybridComputeExtensionValueV2Resource(ResourceIdentifier id)
         {
-            HybridComputeExtensionValueV2Resource.ValidateResourceId(id);
             return new HybridComputeExtensionValueV2Resource(Client, id);
         }
 
@@ -143,7 +131,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> Returns a <see cref="HybridComputeSettingsResource"/> object. </returns>
         public virtual HybridComputeSettingsResource GetHybridComputeSettingsResource(ResourceIdentifier id)
         {
-            HybridComputeSettingsResource.ValidateResourceId(id);
             return new HybridComputeSettingsResource(Client, id);
         }
 

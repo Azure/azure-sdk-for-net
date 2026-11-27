@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <returns> Returns a <see cref="ProvisionedClusterResource"/> object. </returns>
         public virtual ProvisionedClusterResource GetProvisionedClusterResource(ResourceIdentifier id)
         {
-            ProvisionedClusterResource.ValidateResourceId(id);
             return new ProvisionedClusterResource(Client, id);
         }
 
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource"/> object. </returns>
         public virtual ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(ResourceIdentifier id)
         {
-            ProvisionedClusterUpgradeProfileResource.ValidateResourceId(id);
             return new ProvisionedClusterUpgradeProfileResource(Client, id);
         }
 
@@ -69,7 +67,6 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
         public virtual HybridIdentityMetadataResource GetHybridIdentityMetadataResource(ResourceIdentifier id)
         {
-            HybridIdentityMetadataResource.ValidateResourceId(id);
             return new HybridIdentityMetadataResource(Client, id);
         }
 
@@ -86,7 +83,6 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <returns> Returns a <see cref="HybridContainerServiceAgentPoolResource"/> object. </returns>
         public virtual HybridContainerServiceAgentPoolResource GetHybridContainerServiceAgentPoolResource(ResourceIdentifier id)
         {
-            HybridContainerServiceAgentPoolResource.ValidateResourceId(id);
             return new HybridContainerServiceAgentPoolResource(Client, id);
         }
 
@@ -131,7 +127,6 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <returns> Returns a <see cref="KubernetesVersionProfileResource"/> object. </returns>
         public virtual KubernetesVersionProfileResource GetKubernetesVersionProfileResource(ResourceIdentifier id)
         {
-            KubernetesVersionProfileResource.ValidateResourceId(id);
             return new KubernetesVersionProfileResource(Client, id);
         }
 
@@ -148,7 +143,6 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <returns> Returns a <see cref="HybridContainerServiceVmSkuResource"/> object. </returns>
         public virtual HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSkuResource(ResourceIdentifier id)
         {
-            HybridContainerServiceVmSkuResource.ValidateResourceId(id);
             return new HybridContainerServiceVmSkuResource(Client, id);
         }
 
@@ -165,7 +159,6 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource"/> object. </returns>
         public virtual HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(ResourceIdentifier id)
         {
-            HybridContainerServiceVirtualNetworkResource.ValidateResourceId(id);
             return new HybridContainerServiceVirtualNetworkResource(Client, id);
         }
     }
