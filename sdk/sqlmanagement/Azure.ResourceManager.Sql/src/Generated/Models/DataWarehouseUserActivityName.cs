@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DataWarehouseUserActivityName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataWarehouseUserActivityName?(string value) => value == null ? null : new DataWarehouseUserActivityName(value);
+        public static implicit operator DataWarehouseUserActivityName?(string value) => value == null ? (DataWarehouseUserActivityName?)null : new DataWarehouseUserActivityName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="FileShareAccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileShareAccessTier?(string value) => value == null ? null : new FileShareAccessTier(value);
+        public static implicit operator FileShareAccessTier?(string value) => value == null ? (FileShareAccessTier?)null : new FileShareAccessTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

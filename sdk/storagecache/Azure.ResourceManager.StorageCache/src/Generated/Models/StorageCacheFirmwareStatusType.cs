@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="StorageCacheFirmwareStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageCacheFirmwareStatusType?(string value) => value == null ? null : new StorageCacheFirmwareStatusType(value);
+        public static implicit operator StorageCacheFirmwareStatusType?(string value) => value == null ? (StorageCacheFirmwareStatusType?)null : new StorageCacheFirmwareStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

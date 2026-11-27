@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Converts a string to a <see cref="StandbyRefillPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StandbyRefillPolicy?(string value) => value == null ? null : new StandbyRefillPolicy(value);
+        public static implicit operator StandbyRefillPolicy?(string value) => value == null ? (StandbyRefillPolicy?)null : new StandbyRefillPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

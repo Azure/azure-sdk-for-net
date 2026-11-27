@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewComplianceDetailsFilterOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewComplianceDetailsFilterOperator?(string value) => value == null ? null : new SovereignViewComplianceDetailsFilterOperator(value);
+        public static implicit operator SovereignViewComplianceDetailsFilterOperator?(string value) => value == null ? (SovereignViewComplianceDetailsFilterOperator?)null : new SovereignViewComplianceDetailsFilterOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageRoutingChoice"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageRoutingChoice?(string value) => value == null ? null : new StorageRoutingChoice(value);
+        public static implicit operator StorageRoutingChoice?(string value) => value == null ? (StorageRoutingChoice?)null : new StorageRoutingChoice(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

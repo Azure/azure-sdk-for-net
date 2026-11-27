@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlDatabaseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlDatabaseStatus?(string value) => value == null ? null : new SqlDatabaseStatus(value);
+        public static implicit operator SqlDatabaseStatus?(string value) => value == null ? (SqlDatabaseStatus?)null : new SqlDatabaseStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

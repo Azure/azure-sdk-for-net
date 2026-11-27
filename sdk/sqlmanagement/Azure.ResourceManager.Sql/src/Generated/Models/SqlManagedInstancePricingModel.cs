@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlManagedInstancePricingModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlManagedInstancePricingModel?(string value) => value == null ? null : new SqlManagedInstancePricingModel(value);
+        public static implicit operator SqlManagedInstancePricingModel?(string value) => value == null ? (SqlManagedInstancePricingModel?)null : new SqlManagedInstancePricingModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

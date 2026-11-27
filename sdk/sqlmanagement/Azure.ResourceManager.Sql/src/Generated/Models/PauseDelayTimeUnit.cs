@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="PauseDelayTimeUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PauseDelayTimeUnit?(string value) => value == null ? null : new PauseDelayTimeUnit(value);
+        public static implicit operator PauseDelayTimeUnit?(string value) => value == null ? (PauseDelayTimeUnit?)null : new PauseDelayTimeUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

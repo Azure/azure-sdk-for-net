@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SampleSchemaName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SampleSchemaName?(string value) => value == null ? null : new SampleSchemaName(value);
+        public static implicit operator SampleSchemaName?(string value) => value == null ? (SampleSchemaName?)null : new SampleSchemaName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

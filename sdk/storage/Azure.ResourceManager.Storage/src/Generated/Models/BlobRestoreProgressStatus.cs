@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="BlobRestoreProgressStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobRestoreProgressStatus?(string value) => value == null ? null : new BlobRestoreProgressStatus(value);
+        public static implicit operator BlobRestoreProgressStatus?(string value) => value == null ? (BlobRestoreProgressStatus?)null : new BlobRestoreProgressStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

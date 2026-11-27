@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountSasPermission"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountSasPermission?(string value) => value == null ? null : new StorageAccountSasPermission(value);
+        public static implicit operator StorageAccountSasPermission?(string value) => value == null ? (StorageAccountSasPermission?)null : new StorageAccountSasPermission(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

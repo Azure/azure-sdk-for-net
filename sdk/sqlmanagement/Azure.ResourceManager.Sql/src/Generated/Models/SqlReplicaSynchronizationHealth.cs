@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlReplicaSynchronizationHealth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlReplicaSynchronizationHealth?(string value) => value == null ? null : new SqlReplicaSynchronizationHealth(value);
+        public static implicit operator SqlReplicaSynchronizationHealth?(string value) => value == null ? (SqlReplicaSynchronizationHealth?)null : new SqlReplicaSynchronizationHealth(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

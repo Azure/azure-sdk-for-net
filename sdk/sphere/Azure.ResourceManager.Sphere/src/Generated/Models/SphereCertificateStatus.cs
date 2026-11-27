@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Converts a string to a <see cref="SphereCertificateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SphereCertificateStatus?(string value) => value == null ? null : new SphereCertificateStatus(value);
+        public static implicit operator SphereCertificateStatus?(string value) => value == null ? (SphereCertificateStatus?)null : new SphereCertificateStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagementOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagementOperationState?(string value) => value == null ? null : new ManagementOperationState(value);
+        public static implicit operator ManagementOperationState?(string value) => value == null ? (ManagementOperationState?)null : new ManagementOperationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

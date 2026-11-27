@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageActions.Models
 
         /// <summary> Converts a string to a <see cref="MatchedBlockName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MatchedBlockName?(string value) => value == null ? null : new MatchedBlockName(value);
+        public static implicit operator MatchedBlockName?(string value) => value == null ? (MatchedBlockName?)null : new MatchedBlockName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

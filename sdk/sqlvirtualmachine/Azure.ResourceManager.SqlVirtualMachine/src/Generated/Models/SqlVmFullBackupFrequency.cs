@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmFullBackupFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmFullBackupFrequency?(string value) => value == null ? null : new SqlVmFullBackupFrequency(value);
+        public static implicit operator SqlVmFullBackupFrequency?(string value) => value == null ? (SqlVmFullBackupFrequency?)null : new SqlVmFullBackupFrequency(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

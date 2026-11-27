@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="JobStepActionSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobStepActionSource?(string value) => value == null ? null : new JobStepActionSource(value);
+        public static implicit operator JobStepActionSource?(string value) => value == null ? (JobStepActionSource?)null : new JobStepActionSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

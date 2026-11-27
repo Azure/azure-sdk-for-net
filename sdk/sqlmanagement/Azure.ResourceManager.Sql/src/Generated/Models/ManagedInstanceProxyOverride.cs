@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedInstanceProxyOverride"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedInstanceProxyOverride?(string value) => value == null ? null : new ManagedInstanceProxyOverride(value);
+        public static implicit operator ManagedInstanceProxyOverride?(string value) => value == null ? (ManagedInstanceProxyOverride?)null : new ManagedInstanceProxyOverride(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

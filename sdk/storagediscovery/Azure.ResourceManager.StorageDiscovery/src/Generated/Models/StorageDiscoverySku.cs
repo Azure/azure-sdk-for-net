@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <summary> Converts a string to a <see cref="StorageDiscoverySku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageDiscoverySku?(string value) => value == null ? null : new StorageDiscoverySku(value);
+        public static implicit operator StorageDiscoverySku?(string value) => value == null ? (StorageDiscoverySku?)null : new StorageDiscoverySku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

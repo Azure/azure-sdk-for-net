@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSkuName?(string value) => value == null ? null : new StorageSkuName(value);
+        public static implicit operator StorageSkuName?(string value) => value == null ? (StorageSkuName?)null : new StorageSkuName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

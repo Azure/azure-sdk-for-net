@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ContextCacheAccountKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContextCacheAccountKind?(string value) => value == null ? null : new ContextCacheAccountKind(value);
+        public static implicit operator ContextCacheAccountKind?(string value) => value == null ? (ContextCacheAccountKind?)null : new ContextCacheAccountKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

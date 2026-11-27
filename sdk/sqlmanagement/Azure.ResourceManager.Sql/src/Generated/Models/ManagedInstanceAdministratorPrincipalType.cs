@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedInstanceAdministratorPrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedInstanceAdministratorPrincipalType?(string value) => value == null ? null : new ManagedInstanceAdministratorPrincipalType(value);
+        public static implicit operator ManagedInstanceAdministratorPrincipalType?(string value) => value == null ? (ManagedInstanceAdministratorPrincipalType?)null : new ManagedInstanceAdministratorPrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

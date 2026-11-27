@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="LastAccessTimeTrackingPolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LastAccessTimeTrackingPolicyName?(string value) => value == null ? null : new LastAccessTimeTrackingPolicyName(value);
+        public static implicit operator LastAccessTimeTrackingPolicyName?(string value) => value == null ? (LastAccessTimeTrackingPolicyName?)null : new LastAccessTimeTrackingPolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

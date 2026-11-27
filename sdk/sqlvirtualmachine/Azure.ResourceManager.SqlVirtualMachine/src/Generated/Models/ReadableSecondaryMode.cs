@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="ReadableSecondaryMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReadableSecondaryMode?(string value) => value == null ? null : new ReadableSecondaryMode(value);
+        public static implicit operator ReadableSecondaryMode?(string value) => value == null ? (ReadableSecondaryMode?)null : new ReadableSecondaryMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

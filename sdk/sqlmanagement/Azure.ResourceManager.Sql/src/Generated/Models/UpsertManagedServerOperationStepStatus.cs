@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="UpsertManagedServerOperationStepStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpsertManagedServerOperationStepStatus?(string value) => value == null ? null : new UpsertManagedServerOperationStepStatus(value);
+        public static implicit operator UpsertManagedServerOperationStepStatus?(string value) => value == null ? (UpsertManagedServerOperationStepStatus?)null : new UpsertManagedServerOperationStepStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

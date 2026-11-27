@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ReplicaType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicaType?(string value) => value == null ? null : new ReplicaType(value);
+        public static implicit operator ReplicaType?(string value) => value == null ? (ReplicaType?)null : new ReplicaType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

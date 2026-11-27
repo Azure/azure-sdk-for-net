@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ResourceAssociationAccessMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceAssociationAccessMode?(string value) => value == null ? null : new ResourceAssociationAccessMode(value);
+        public static implicit operator ResourceAssociationAccessMode?(string value) => value == null ? (ResourceAssociationAccessMode?)null : new ResourceAssociationAccessMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

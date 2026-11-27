@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlDayOfWeek?(string value) => value == null ? null : new SqlDayOfWeek(value);
+        public static implicit operator SqlDayOfWeek?(string value) => value == null ? (SqlDayOfWeek?)null : new SqlDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

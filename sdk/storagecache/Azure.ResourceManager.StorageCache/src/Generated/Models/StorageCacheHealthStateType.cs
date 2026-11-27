@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="StorageCacheHealthStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageCacheHealthStateType?(string value) => value == null ? null : new StorageCacheHealthStateType(value);
+        public static implicit operator StorageCacheHealthStateType?(string value) => value == null ? (StorageCacheHealthStateType?)null : new StorageCacheHealthStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

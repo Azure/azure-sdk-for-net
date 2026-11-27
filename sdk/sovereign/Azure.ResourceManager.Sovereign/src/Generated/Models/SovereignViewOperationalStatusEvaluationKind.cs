@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewOperationalStatusEvaluationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewOperationalStatusEvaluationKind?(string value) => value == null ? null : new SovereignViewOperationalStatusEvaluationKind(value);
+        public static implicit operator SovereignViewOperationalStatusEvaluationKind?(string value) => value == null ? (SovereignViewOperationalStatusEvaluationKind?)null : new SovereignViewOperationalStatusEvaluationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

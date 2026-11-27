@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerConnectivityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerConnectivityType?(string value) => value == null ? null : new SqlServerConnectivityType(value);
+        public static implicit operator SqlServerConnectivityType?(string value) => value == null ? (SqlServerConnectivityType?)null : new SqlServerConnectivityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

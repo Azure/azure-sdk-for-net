@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlPrivateLinkServiceConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new SqlPrivateLinkServiceConnectionStatus(value);
+        public static implicit operator SqlPrivateLinkServiceConnectionStatus?(string value) => value == null ? (SqlPrivateLinkServiceConnectionStatus?)null : new SqlPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

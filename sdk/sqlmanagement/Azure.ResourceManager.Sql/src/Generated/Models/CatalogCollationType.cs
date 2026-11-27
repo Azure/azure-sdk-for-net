@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="CatalogCollationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CatalogCollationType?(string value) => value == null ? null : new CatalogCollationType(value);
+        public static implicit operator CatalogCollationType?(string value) => value == null ? (CatalogCollationType?)null : new CatalogCollationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

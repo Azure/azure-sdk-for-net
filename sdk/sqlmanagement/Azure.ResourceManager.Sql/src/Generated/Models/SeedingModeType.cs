@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SeedingModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SeedingModeType?(string value) => value == null ? null : new SeedingModeType(value);
+        public static implicit operator SeedingModeType?(string value) => value == null ? (SeedingModeType?)null : new SeedingModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

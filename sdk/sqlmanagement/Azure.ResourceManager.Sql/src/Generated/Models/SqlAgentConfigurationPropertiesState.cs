@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlAgentConfigurationPropertiesState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlAgentConfigurationPropertiesState?(string value) => value == null ? null : new SqlAgentConfigurationPropertiesState(value);
+        public static implicit operator SqlAgentConfigurationPropertiesState?(string value) => value == null ? (SqlAgentConfigurationPropertiesState?)null : new SqlAgentConfigurationPropertiesState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

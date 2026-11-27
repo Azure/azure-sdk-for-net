@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewOperationalStatusUnhealthyReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewOperationalStatusUnhealthyReason?(string value) => value == null ? null : new SovereignViewOperationalStatusUnhealthyReason(value);
+        public static implicit operator SovereignViewOperationalStatusUnhealthyReason?(string value) => value == null ? (SovereignViewOperationalStatusUnhealthyReason?)null : new SovereignViewOperationalStatusUnhealthyReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Converts a string to a <see cref="SphereCapabilityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SphereCapabilityType?(string value) => value == null ? null : new SphereCapabilityType(value);
+        public static implicit operator SphereCapabilityType?(string value) => value == null ? (SphereCapabilityType?)null : new SphereCapabilityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

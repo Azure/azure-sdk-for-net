@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerPrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerPrincipalType?(string value) => value == null ? null : new SqlServerPrincipalType(value);
+        public static implicit operator SqlServerPrincipalType?(string value) => value == null ? (SqlServerPrincipalType?)null : new SqlServerPrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

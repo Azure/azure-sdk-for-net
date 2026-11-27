@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="BlobAccessPointPrivateLinkIdType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobAccessPointPrivateLinkIdType?(string value) => value == null ? null : new BlobAccessPointPrivateLinkIdType(value);
+        public static implicit operator BlobAccessPointPrivateLinkIdType?(string value) => value == null ? (BlobAccessPointPrivateLinkIdType?)null : new BlobAccessPointPrivateLinkIdType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

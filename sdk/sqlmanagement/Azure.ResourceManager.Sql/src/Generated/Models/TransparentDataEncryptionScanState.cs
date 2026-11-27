@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="TransparentDataEncryptionScanState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransparentDataEncryptionScanState?(string value) => value == null ? null : new TransparentDataEncryptionScanState(value);
+        public static implicit operator TransparentDataEncryptionScanState?(string value) => value == null ? (TransparentDataEncryptionScanState?)null : new TransparentDataEncryptionScanState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

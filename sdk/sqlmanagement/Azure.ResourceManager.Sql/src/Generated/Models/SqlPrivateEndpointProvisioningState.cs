@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlPrivateEndpointProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlPrivateEndpointProvisioningState?(string value) => value == null ? null : new SqlPrivateEndpointProvisioningState(value);
+        public static implicit operator SqlPrivateEndpointProvisioningState?(string value) => value == null ? (SqlPrivateEndpointProvisioningState?)null : new SqlPrivateEndpointProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

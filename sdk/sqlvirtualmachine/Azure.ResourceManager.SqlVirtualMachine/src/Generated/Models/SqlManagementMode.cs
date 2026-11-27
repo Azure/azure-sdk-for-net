@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlManagementMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlManagementMode?(string value) => value == null ? null : new SqlManagementMode(value);
+        public static implicit operator SqlManagementMode?(string value) => value == null ? (SqlManagementMode?)null : new SqlManagementMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

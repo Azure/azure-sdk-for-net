@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerFailoverType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerFailoverType?(string value) => value == null ? null : new SqlServerFailoverType(value);
+        public static implicit operator SqlServerFailoverType?(string value) => value == null ? (SqlServerFailoverType?)null : new SqlServerFailoverType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

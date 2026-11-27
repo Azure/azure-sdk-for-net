@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ShortTermRetentionPolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ShortTermRetentionPolicyName?(string value) => value == null ? null : new ShortTermRetentionPolicyName(value);
+        public static implicit operator ShortTermRetentionPolicyName?(string value) => value == null ? (ShortTermRetentionPolicyName?)null : new ShortTermRetentionPolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

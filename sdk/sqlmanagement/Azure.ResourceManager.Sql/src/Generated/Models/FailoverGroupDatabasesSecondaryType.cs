@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="FailoverGroupDatabasesSecondaryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverGroupDatabasesSecondaryType?(string value) => value == null ? null : new FailoverGroupDatabasesSecondaryType(value);
+        public static implicit operator FailoverGroupDatabasesSecondaryType?(string value) => value == null ? (FailoverGroupDatabasesSecondaryType?)null : new FailoverGroupDatabasesSecondaryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

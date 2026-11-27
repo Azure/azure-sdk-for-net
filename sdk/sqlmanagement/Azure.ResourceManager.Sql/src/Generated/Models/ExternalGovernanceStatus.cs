@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ExternalGovernanceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExternalGovernanceStatus?(string value) => value == null ? null : new ExternalGovernanceStatus(value);
+        public static implicit operator ExternalGovernanceStatus?(string value) => value == null ? (ExternalGovernanceStatus?)null : new ExternalGovernanceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

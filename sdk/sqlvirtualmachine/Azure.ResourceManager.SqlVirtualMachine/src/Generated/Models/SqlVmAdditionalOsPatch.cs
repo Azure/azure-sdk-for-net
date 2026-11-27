@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmAdditionalOsPatch"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmAdditionalOsPatch?(string value) => value == null ? null : new SqlVmAdditionalOsPatch(value);
+        public static implicit operator SqlVmAdditionalOsPatch?(string value) => value == null ? (SqlVmAdditionalOsPatch?)null : new SqlVmAdditionalOsPatch(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

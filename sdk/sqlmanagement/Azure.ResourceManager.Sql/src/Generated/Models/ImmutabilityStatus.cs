@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ImmutabilityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImmutabilityStatus?(string value) => value == null ? null : new ImmutabilityStatus(value);
+        public static implicit operator ImmutabilityStatus?(string value) => value == null ? (ImmutabilityStatus?)null : new ImmutabilityStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

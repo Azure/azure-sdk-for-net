@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="AIProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AIProvider?(string value) => value == null ? null : new AIProvider(value);
+        public static implicit operator AIProvider?(string value) => value == null ? (AIProvider?)null : new AIProvider(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

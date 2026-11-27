@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="AdvancedPlatformMetricsFilterType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvancedPlatformMetricsFilterType?(string value) => value == null ? null : new AdvancedPlatformMetricsFilterType(value);
+        public static implicit operator AdvancedPlatformMetricsFilterType?(string value) => value == null ? (AdvancedPlatformMetricsFilterType?)null : new AdvancedPlatformMetricsFilterType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

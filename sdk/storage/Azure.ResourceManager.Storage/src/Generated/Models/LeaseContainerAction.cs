@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="LeaseContainerAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LeaseContainerAction?(string value) => value == null ? null : new LeaseContainerAction(value);
+        public static implicit operator LeaseContainerAction?(string value) => value == null ? (LeaseContainerAction?)null : new LeaseContainerAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="DefaultSharePermission"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DefaultSharePermission?(string value) => value == null ? null : new DefaultSharePermission(value);
+        public static implicit operator DefaultSharePermission?(string value) => value == null ? (DefaultSharePermission?)null : new DefaultSharePermission(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

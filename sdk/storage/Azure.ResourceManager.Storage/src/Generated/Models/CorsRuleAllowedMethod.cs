@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="CorsRuleAllowedMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CorsRuleAllowedMethod?(string value) => value == null ? null : new CorsRuleAllowedMethod(value);
+        public static implicit operator CorsRuleAllowedMethod?(string value) => value == null ? (CorsRuleAllowedMethod?)null : new CorsRuleAllowedMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="TimeBasedImmutabilityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TimeBasedImmutabilityMode?(string value) => value == null ? null : new TimeBasedImmutabilityMode(value);
+        public static implicit operator TimeBasedImmutabilityMode?(string value) => value == null ? (TimeBasedImmutabilityMode?)null : new TimeBasedImmutabilityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

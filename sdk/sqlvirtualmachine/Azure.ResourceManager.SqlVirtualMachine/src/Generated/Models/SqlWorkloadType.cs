@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlWorkloadType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlWorkloadType?(string value) => value == null ? null : new SqlWorkloadType(value);
+        public static implicit operator SqlWorkloadType?(string value) => value == null ? (SqlWorkloadType?)null : new SqlWorkloadType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

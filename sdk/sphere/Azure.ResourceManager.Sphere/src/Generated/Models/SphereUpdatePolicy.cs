@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Converts a string to a <see cref="SphereUpdatePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SphereUpdatePolicy?(string value) => value == null ? null : new SphereUpdatePolicy(value);
+        public static implicit operator SphereUpdatePolicy?(string value) => value == null ? (SphereUpdatePolicy?)null : new SphereUpdatePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

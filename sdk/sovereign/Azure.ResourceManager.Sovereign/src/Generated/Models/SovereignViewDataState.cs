@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Converts a string to a <see cref="SovereignViewDataState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SovereignViewDataState?(string value) => value == null ? null : new SovereignViewDataState(value);
+        public static implicit operator SovereignViewDataState?(string value) => value == null ? (SovereignViewDataState?)null : new SovereignViewDataState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

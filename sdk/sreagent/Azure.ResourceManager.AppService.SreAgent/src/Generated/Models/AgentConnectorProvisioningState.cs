@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
 
         /// <summary> Converts a string to a <see cref="AgentConnectorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentConnectorProvisioningState?(string value) => value == null ? null : new AgentConnectorProvisioningState(value);
+        public static implicit operator AgentConnectorProvisioningState?(string value) => value == null ? (AgentConnectorProvisioningState?)null : new AgentConnectorProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

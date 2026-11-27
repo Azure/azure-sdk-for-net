@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedInstancePropertiesProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedInstancePropertiesProvisioningState?(string value) => value == null ? null : new ManagedInstancePropertiesProvisioningState(value);
+        public static implicit operator ManagedInstancePropertiesProvisioningState?(string value) => value == null ? (ManagedInstancePropertiesProvisioningState?)null : new ManagedInstancePropertiesProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedInstanceDatabaseFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedInstanceDatabaseFormat?(string value) => value == null ? null : new ManagedInstanceDatabaseFormat(value);
+        public static implicit operator ManagedInstanceDatabaseFormat?(string value) => value == null ? (ManagedInstanceDatabaseFormat?)null : new ManagedInstanceDatabaseFormat(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

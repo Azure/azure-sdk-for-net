@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmTroubleshootingScenario"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmTroubleshootingScenario?(string value) => value == null ? null : new SqlVmTroubleshootingScenario(value);
+        public static implicit operator SqlVmTroubleshootingScenario?(string value) => value == null ? (SqlVmTroubleshootingScenario?)null : new SqlVmTroubleshootingScenario(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

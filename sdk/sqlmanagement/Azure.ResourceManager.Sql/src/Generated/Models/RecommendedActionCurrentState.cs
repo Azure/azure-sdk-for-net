@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="RecommendedActionCurrentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecommendedActionCurrentState?(string value) => value == null ? null : new RecommendedActionCurrentState(value);
+        public static implicit operator RecommendedActionCurrentState?(string value) => value == null ? (RecommendedActionCurrentState?)null : new RecommendedActionCurrentState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

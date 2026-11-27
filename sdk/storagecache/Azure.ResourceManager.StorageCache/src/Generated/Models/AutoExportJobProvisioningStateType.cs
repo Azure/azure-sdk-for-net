@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="AutoExportJobProvisioningStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoExportJobProvisioningStateType?(string value) => value == null ? null : new AutoExportJobProvisioningStateType(value);
+        public static implicit operator AutoExportJobProvisioningStateType?(string value) => value == null ? (AutoExportJobProvisioningStateType?)null : new AutoExportJobProvisioningStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseLicenseType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseLicenseType?(string value) => value == null ? null : new DatabaseLicenseType(value);
+        public static implicit operator DatabaseLicenseType?(string value) => value == null ? (DatabaseLicenseType?)null : new DatabaseLicenseType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ExecutionIntervalUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExecutionIntervalUnit?(string value) => value == null ? null : new ExecutionIntervalUnit(value);
+        public static implicit operator ExecutionIntervalUnit?(string value) => value == null ? (ExecutionIntervalUnit?)null : new ExecutionIntervalUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

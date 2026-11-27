@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="EncryptionScopeSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EncryptionScopeSource?(string value) => value == null ? null : new EncryptionScopeSource(value);
+        public static implicit operator EncryptionScopeSource?(string value) => value == null ? (EncryptionScopeSource?)null : new EncryptionScopeSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

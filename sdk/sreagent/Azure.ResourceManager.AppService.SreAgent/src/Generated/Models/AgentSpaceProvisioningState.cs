@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
 
         /// <summary> Converts a string to a <see cref="AgentSpaceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentSpaceProvisioningState?(string value) => value == null ? null : new AgentSpaceProvisioningState(value);
+        public static implicit operator AgentSpaceProvisioningState?(string value) => value == null ? (AgentSpaceProvisioningState?)null : new AgentSpaceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageDnsEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageDnsEndpointType?(string value) => value == null ? null : new StorageDnsEndpointType(value);
+        public static implicit operator StorageDnsEndpointType?(string value) => value == null ? (StorageDnsEndpointType?)null : new StorageDnsEndpointType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

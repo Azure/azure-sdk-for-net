@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageActions.Models
 
         /// <summary> Converts a string to a <see cref="StorageTaskOperationName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageTaskOperationName?(string value) => value == null ? null : new StorageTaskOperationName(value);
+        public static implicit operator StorageTaskOperationName?(string value) => value == null ? (StorageTaskOperationName?)null : new StorageTaskOperationName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

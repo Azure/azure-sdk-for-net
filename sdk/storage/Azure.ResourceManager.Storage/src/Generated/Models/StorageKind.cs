@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageKind?(string value) => value == null ? null : new StorageKind(value);
+        public static implicit operator StorageKind?(string value) => value == null ? (StorageKind?)null : new StorageKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

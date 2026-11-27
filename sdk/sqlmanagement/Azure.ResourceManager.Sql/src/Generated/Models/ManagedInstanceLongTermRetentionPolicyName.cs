@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedInstanceLongTermRetentionPolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedInstanceLongTermRetentionPolicyName?(string value) => value == null ? null : new ManagedInstanceLongTermRetentionPolicyName(value);
+        public static implicit operator ManagedInstanceLongTermRetentionPolicyName?(string value) => value == null ? (ManagedInstanceLongTermRetentionPolicyName?)null : new ManagedInstanceLongTermRetentionPolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

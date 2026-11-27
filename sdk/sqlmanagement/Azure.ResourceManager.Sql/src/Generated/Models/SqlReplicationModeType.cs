@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlReplicationModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlReplicationModeType?(string value) => value == null ? null : new SqlReplicationModeType(value);
+        public static implicit operator SqlReplicationModeType?(string value) => value == null ? (SqlReplicationModeType?)null : new SqlReplicationModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Converts a string to a <see cref="SphereOSFeedType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SphereOSFeedType?(string value) => value == null ? null : new SphereOSFeedType(value);
+        public static implicit operator SphereOSFeedType?(string value) => value == null ? (SphereOSFeedType?)null : new SphereOSFeedType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

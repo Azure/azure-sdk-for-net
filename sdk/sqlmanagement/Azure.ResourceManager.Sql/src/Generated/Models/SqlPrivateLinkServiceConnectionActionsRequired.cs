@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlPrivateLinkServiceConnectionActionsRequired"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlPrivateLinkServiceConnectionActionsRequired?(string value) => value == null ? null : new SqlPrivateLinkServiceConnectionActionsRequired(value);
+        public static implicit operator SqlPrivateLinkServiceConnectionActionsRequired?(string value) => value == null ? (SqlPrivateLinkServiceConnectionActionsRequired?)null : new SqlPrivateLinkServiceConnectionActionsRequired(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

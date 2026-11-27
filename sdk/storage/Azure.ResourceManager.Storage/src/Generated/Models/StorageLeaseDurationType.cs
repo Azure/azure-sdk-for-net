@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageLeaseDurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageLeaseDurationType?(string value) => value == null ? null : new StorageLeaseDurationType(value);
+        public static implicit operator StorageLeaseDurationType?(string value) => value == null ? (StorageLeaseDurationType?)null : new StorageLeaseDurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

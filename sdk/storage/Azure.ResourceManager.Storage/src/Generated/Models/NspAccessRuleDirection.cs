@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="NspAccessRuleDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NspAccessRuleDirection?(string value) => value == null ? null : new NspAccessRuleDirection(value);
+        public static implicit operator NspAccessRuleDirection?(string value) => value == null ? (NspAccessRuleDirection?)null : new NspAccessRuleDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

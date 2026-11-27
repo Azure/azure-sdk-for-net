@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ContextCacheNameUnavailableReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContextCacheNameUnavailableReason?(string value) => value == null ? null : new ContextCacheNameUnavailableReason(value);
+        public static implicit operator ContextCacheNameUnavailableReason?(string value) => value == null ? (ContextCacheNameUnavailableReason?)null : new ContextCacheNameUnavailableReason(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

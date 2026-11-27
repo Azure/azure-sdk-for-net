@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlColumnDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlColumnDataType?(string value) => value == null ? null : new SqlColumnDataType(value);
+        public static implicit operator SqlColumnDataType?(string value) => value == null ? (SqlColumnDataType?)null : new SqlColumnDataType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

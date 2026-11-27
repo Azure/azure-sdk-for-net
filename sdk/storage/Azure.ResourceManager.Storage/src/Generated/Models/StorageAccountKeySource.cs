@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountKeySource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountKeySource?(string value) => value == null ? null : new StorageAccountKeySource(value);
+        public static implicit operator StorageAccountKeySource?(string value) => value == null ? (StorageAccountKeySource?)null : new StorageAccountKeySource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

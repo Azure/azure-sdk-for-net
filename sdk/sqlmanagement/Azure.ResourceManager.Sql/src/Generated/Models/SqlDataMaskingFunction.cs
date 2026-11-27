@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlDataMaskingFunction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlDataMaskingFunction?(string value) => value == null ? null : new SqlDataMaskingFunction(value);
+        public static implicit operator SqlDataMaskingFunction?(string value) => value == null ? (SqlDataMaskingFunction?)null : new SqlDataMaskingFunction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

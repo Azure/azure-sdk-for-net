@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerVirtualNetworkRuleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerVirtualNetworkRuleState?(string value) => value == null ? null : new SqlServerVirtualNetworkRuleState(value);
+        public static implicit operator SqlServerVirtualNetworkRuleState?(string value) => value == null ? (SqlServerVirtualNetworkRuleState?)null : new SqlServerVirtualNetworkRuleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

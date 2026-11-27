@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedInstanceStartStopScheduleName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedInstanceStartStopScheduleName?(string value) => value == null ? null : new ManagedInstanceStartStopScheduleName(value);
+        public static implicit operator ManagedInstanceStartStopScheduleName?(string value) => value == null ? (ManagedInstanceStartStopScheduleName?)null : new ManagedInstanceStartStopScheduleName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

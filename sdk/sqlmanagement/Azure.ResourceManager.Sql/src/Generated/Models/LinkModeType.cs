@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="LinkModeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinkModeType?(string value) => value == null ? null : new LinkModeType(value);
+        public static implicit operator LinkModeType?(string value) => value == null ? (LinkModeType?)null : new LinkModeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

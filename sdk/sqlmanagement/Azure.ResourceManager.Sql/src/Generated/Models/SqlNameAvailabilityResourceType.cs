@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlNameAvailabilityResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlNameAvailabilityResourceType?(string value) => value == null ? null : new SqlNameAvailabilityResourceType(value);
+        public static implicit operator SqlNameAvailabilityResourceType?(string value) => value == null ? (SqlNameAvailabilityResourceType?)null : new SqlNameAvailabilityResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

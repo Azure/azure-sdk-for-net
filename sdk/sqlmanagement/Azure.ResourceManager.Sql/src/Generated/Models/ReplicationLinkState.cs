@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ReplicationLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicationLinkState?(string value) => value == null ? null : new ReplicationLinkState(value);
+        public static implicit operator ReplicationLinkState?(string value) => value == null ? (ReplicationLinkState?)null : new ReplicationLinkState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

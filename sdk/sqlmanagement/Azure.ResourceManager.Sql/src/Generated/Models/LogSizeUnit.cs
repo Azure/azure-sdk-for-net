@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="LogSizeUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogSizeUnit?(string value) => value == null ? null : new LogSizeUnit(value);
+        public static implicit operator LogSizeUnit?(string value) => value == null ? (LogSizeUnit?)null : new LogSizeUnit(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="AdvancedThreatProtectionName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdvancedThreatProtectionName?(string value) => value == null ? null : new AdvancedThreatProtectionName(value);
+        public static implicit operator AdvancedThreatProtectionName?(string value) => value == null ? (AdvancedThreatProtectionName?)null : new AdvancedThreatProtectionName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

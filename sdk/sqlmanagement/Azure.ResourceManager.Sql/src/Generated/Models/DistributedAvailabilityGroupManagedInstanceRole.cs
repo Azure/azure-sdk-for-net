@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DistributedAvailabilityGroupManagedInstanceRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DistributedAvailabilityGroupManagedInstanceRole?(string value) => value == null ? null : new DistributedAvailabilityGroupManagedInstanceRole(value);
+        public static implicit operator DistributedAvailabilityGroupManagedInstanceRole?(string value) => value == null ? (DistributedAvailabilityGroupManagedInstanceRole?)null : new DistributedAvailabilityGroupManagedInstanceRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

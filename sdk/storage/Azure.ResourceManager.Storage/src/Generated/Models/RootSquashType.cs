@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="RootSquashType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RootSquashType?(string value) => value == null ? null : new RootSquashType(value);
+        public static implicit operator RootSquashType?(string value) => value == null ? (RootSquashType?)null : new RootSquashType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

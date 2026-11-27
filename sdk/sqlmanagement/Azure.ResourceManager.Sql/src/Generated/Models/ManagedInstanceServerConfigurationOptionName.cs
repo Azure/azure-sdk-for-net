@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="ManagedInstanceServerConfigurationOptionName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ManagedInstanceServerConfigurationOptionName?(string value) => value == null ? null : new ManagedInstanceServerConfigurationOptionName(value);
+        public static implicit operator ManagedInstanceServerConfigurationOptionName?(string value) => value == null ? (ManagedInstanceServerConfigurationOptionName?)null : new ManagedInstanceServerConfigurationOptionName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

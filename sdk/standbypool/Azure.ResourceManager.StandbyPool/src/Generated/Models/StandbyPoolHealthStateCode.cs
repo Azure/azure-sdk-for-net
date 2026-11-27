@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Converts a string to a <see cref="StandbyPoolHealthStateCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StandbyPoolHealthStateCode?(string value) => value == null ? null : new StandbyPoolHealthStateCode(value);
+        public static implicit operator StandbyPoolHealthStateCode?(string value) => value == null ? (StandbyPoolHealthStateCode?)null : new StandbyPoolHealthStateCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

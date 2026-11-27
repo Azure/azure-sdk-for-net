@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="AmlFileSystemExpansionJobProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AmlFileSystemExpansionJobProvisioningState?(string value) => value == null ? null : new AmlFileSystemExpansionJobProvisioningState(value);
+        public static implicit operator AmlFileSystemExpansionJobProvisioningState?(string value) => value == null ? (AmlFileSystemExpansionJobProvisioningState?)null : new AmlFileSystemExpansionJobProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

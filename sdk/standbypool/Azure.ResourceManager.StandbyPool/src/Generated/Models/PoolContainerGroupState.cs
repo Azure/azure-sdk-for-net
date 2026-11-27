@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Converts a string to a <see cref="PoolContainerGroupState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PoolContainerGroupState?(string value) => value == null ? null : new PoolContainerGroupState(value);
+        public static implicit operator PoolContainerGroupState?(string value) => value == null ? (PoolContainerGroupState?)null : new PoolContainerGroupState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

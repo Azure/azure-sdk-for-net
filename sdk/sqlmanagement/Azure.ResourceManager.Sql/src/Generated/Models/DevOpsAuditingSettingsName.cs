@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DevOpsAuditingSettingsName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevOpsAuditingSettingsName?(string value) => value == null ? null : new DevOpsAuditingSettingsName(value);
+        public static implicit operator DevOpsAuditingSettingsName?(string value) => value == null ? (DevOpsAuditingSettingsName?)null : new DevOpsAuditingSettingsName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

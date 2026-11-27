@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqVmBackupScheduleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqVmBackupScheduleType?(string value) => value == null ? null : new SqVmBackupScheduleType(value);
+        public static implicit operator SqVmBackupScheduleType?(string value) => value == null ? (SqVmBackupScheduleType?)null : new SqVmBackupScheduleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

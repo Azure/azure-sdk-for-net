@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Converts a string to a <see cref="SphereProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SphereProvisioningState?(string value) => value == null ? null : new SphereProvisioningState(value);
+        public static implicit operator SphereProvisioningState?(string value) => value == null ? (SphereProvisioningState?)null : new SphereProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

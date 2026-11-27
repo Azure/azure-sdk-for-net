@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DataMaskingPolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataMaskingPolicyName?(string value) => value == null ? null : new DataMaskingPolicyName(value);
+        public static implicit operator DataMaskingPolicyName?(string value) => value == null ? (DataMaskingPolicyName?)null : new DataMaskingPolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

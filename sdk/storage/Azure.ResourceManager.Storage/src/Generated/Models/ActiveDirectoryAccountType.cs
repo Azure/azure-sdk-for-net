@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="ActiveDirectoryAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ActiveDirectoryAccountType?(string value) => value == null ? null : new ActiveDirectoryAccountType(value);
+        public static implicit operator ActiveDirectoryAccountType?(string value) => value == null ? (ActiveDirectoryAccountType?)null : new ActiveDirectoryAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

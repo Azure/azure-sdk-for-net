@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="NativeDataSharingProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NativeDataSharingProvisioningState?(string value) => value == null ? null : new NativeDataSharingProvisioningState(value);
+        public static implicit operator NativeDataSharingProvisioningState?(string value) => value == null ? (NativeDataSharingProvisioningState?)null : new NativeDataSharingProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

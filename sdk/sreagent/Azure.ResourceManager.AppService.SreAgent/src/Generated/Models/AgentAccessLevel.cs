@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
 
         /// <summary> Converts a string to a <see cref="AgentAccessLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentAccessLevel?(string value) => value == null ? null : new AgentAccessLevel(value);
+        public static implicit operator AgentAccessLevel?(string value) => value == null ? (AgentAccessLevel?)null : new AgentAccessLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

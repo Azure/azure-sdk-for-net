@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DnsRefreshConfigurationPropertiesStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsRefreshConfigurationPropertiesStatus?(string value) => value == null ? null : new DnsRefreshConfigurationPropertiesStatus(value);
+        public static implicit operator DnsRefreshConfigurationPropertiesStatus?(string value) => value == null ? (DnsRefreshConfigurationPropertiesStatus?)null : new DnsRefreshConfigurationPropertiesStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

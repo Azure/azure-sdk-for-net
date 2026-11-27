@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Converts a string to a <see cref="AmlFileSystemHealthStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AmlFileSystemHealthStateType?(string value) => value == null ? null : new AmlFileSystemHealthStateType(value);
+        public static implicit operator AmlFileSystemHealthStateType?(string value) => value == null ? (AmlFileSystemHealthStateType?)null : new AmlFileSystemHealthStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

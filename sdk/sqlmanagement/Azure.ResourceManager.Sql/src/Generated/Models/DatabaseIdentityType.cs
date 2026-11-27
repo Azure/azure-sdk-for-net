@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseIdentityType?(string value) => value == null ? null : new DatabaseIdentityType(value);
+        public static implicit operator DatabaseIdentityType?(string value) => value == null ? (DatabaseIdentityType?)null : new DatabaseIdentityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

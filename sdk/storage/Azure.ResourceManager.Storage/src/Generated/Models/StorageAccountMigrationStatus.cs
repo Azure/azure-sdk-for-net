@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountMigrationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountMigrationStatus?(string value) => value == null ? null : new StorageAccountMigrationStatus(value);
+        public static implicit operator StorageAccountMigrationStatus?(string value) => value == null ? (StorageAccountMigrationStatus?)null : new StorageAccountMigrationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

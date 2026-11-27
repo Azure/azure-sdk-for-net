@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="AvailabilityGroupReplicaCommitMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvailabilityGroupReplicaCommitMode?(string value) => value == null ? null : new AvailabilityGroupReplicaCommitMode(value);
+        public static implicit operator AvailabilityGroupReplicaCommitMode?(string value) => value == null ? (AvailabilityGroupReplicaCommitMode?)null : new AvailabilityGroupReplicaCommitMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

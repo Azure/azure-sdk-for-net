@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StorageActions.Models
 
         /// <summary> Converts a string to a <see cref="OnSuccessAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnSuccessAction?(string value) => value == null ? null : new OnSuccessAction(value);
+        public static implicit operator OnSuccessAction?(string value) => value == null ? (OnSuccessAction?)null : new OnSuccessAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

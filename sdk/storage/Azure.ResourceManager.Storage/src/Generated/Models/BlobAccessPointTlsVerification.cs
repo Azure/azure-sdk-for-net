@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="BlobAccessPointTlsVerification"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobAccessPointTlsVerification?(string value) => value == null ? null : new BlobAccessPointTlsVerification(value);
+        public static implicit operator BlobAccessPointTlsVerification?(string value) => value == null ? (BlobAccessPointTlsVerification?)null : new BlobAccessPointTlsVerification(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

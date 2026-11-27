@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageTaskRunResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageTaskRunResult?(string value) => value == null ? null : new StorageTaskRunResult(value);
+        public static implicit operator StorageTaskRunResult?(string value) => value == null ? (StorageTaskRunResult?)null : new StorageTaskRunResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="DatabaseOperationPhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabaseOperationPhase?(string value) => value == null ? null : new DatabaseOperationPhase(value);
+        public static implicit operator DatabaseOperationPhase?(string value) => value == null ? (DatabaseOperationPhase?)null : new DatabaseOperationPhase(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

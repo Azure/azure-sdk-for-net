@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="BlobAccessPointSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobAccessPointSourceType?(string value) => value == null ? null : new BlobAccessPointSourceType(value);
+        public static implicit operator BlobAccessPointSourceType?(string value) => value == null ? (BlobAccessPointSourceType?)null : new BlobAccessPointSourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

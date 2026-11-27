@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="TransparentDataEncryptionName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransparentDataEncryptionName?(string value) => value == null ? null : new TransparentDataEncryptionName(value);
+        public static implicit operator TransparentDataEncryptionName?(string value) => value == null ? (TransparentDataEncryptionName?)null : new TransparentDataEncryptionName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

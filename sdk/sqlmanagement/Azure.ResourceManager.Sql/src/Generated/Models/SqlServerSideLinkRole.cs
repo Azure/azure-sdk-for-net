@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlServerSideLinkRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlServerSideLinkRole?(string value) => value == null ? null : new SqlServerSideLinkRole(value);
+        public static implicit operator SqlServerSideLinkRole?(string value) => value == null ? (SqlServerSideLinkRole?)null : new SqlServerSideLinkRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

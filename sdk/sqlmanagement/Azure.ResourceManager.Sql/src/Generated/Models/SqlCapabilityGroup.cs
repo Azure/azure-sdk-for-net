@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlCapabilityGroup"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlCapabilityGroup?(string value) => value == null ? null : new SqlCapabilityGroup(value);
+        public static implicit operator SqlCapabilityGroup?(string value) => value == null ? (SqlCapabilityGroup?)null : new SqlCapabilityGroup(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

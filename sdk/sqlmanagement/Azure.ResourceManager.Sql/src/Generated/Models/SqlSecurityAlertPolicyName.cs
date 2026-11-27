@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SqlSecurityAlertPolicyName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlSecurityAlertPolicyName?(string value) => value == null ? null : new SqlSecurityAlertPolicyName(value);
+        public static implicit operator SqlSecurityAlertPolicyName?(string value) => value == null ? (SqlSecurityAlertPolicyName?)null : new SqlSecurityAlertPolicyName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

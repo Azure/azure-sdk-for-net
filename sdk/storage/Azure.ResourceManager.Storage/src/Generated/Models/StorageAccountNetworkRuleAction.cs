@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Converts a string to a <see cref="StorageAccountNetworkRuleAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountNetworkRuleAction?(string value) => value == null ? null : new StorageAccountNetworkRuleAction(value);
+        public static implicit operator StorageAccountNetworkRuleAction?(string value) => value == null ? (StorageAccountNetworkRuleAction?)null : new StorageAccountNetworkRuleAction(value);
     }
 }

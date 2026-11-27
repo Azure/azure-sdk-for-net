@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmGroupScaleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmGroupScaleType?(string value) => value == null ? null : new SqlVmGroupScaleType(value);
+        public static implicit operator SqlVmGroupScaleType?(string value) => value == null ? (SqlVmGroupScaleType?)null : new SqlVmGroupScaleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Converts a string to a <see cref="SqlVmClusterConfiguration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmClusterConfiguration?(string value) => value == null ? null : new SqlVmClusterConfiguration(value);
+        public static implicit operator SqlVmClusterConfiguration?(string value) => value == null ? (SqlVmClusterConfiguration?)null : new SqlVmClusterConfiguration(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

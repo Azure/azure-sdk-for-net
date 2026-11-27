@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Converts a string to a <see cref="SyncDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SyncDirection?(string value) => value == null ? null : new SyncDirection(value);
+        public static implicit operator SyncDirection?(string value) => value == null ? (SyncDirection?)null : new SyncDirection(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
