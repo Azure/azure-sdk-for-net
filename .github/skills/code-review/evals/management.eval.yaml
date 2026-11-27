@@ -624,6 +624,93 @@ stimuli:
         config:
           pattern: 'ResourceManager\.Models\.ErrorDetail'
 
+  - name: new-management-extension-methods-need-rp-or-resource-context
+    prompt: >-
+      First invoke the code-review skill. Review these synthetic API additions and return
+      findings only. Azure.ResourceManager.Compute introduces three public extension methods
+      in its public ComputeExtensions class and Azure.ResourceManager.Compute namespace:
+      `Pageable<ComputeUsage> GetUsages(this SubscriptionResource subscription, AzureLocation location,
+      CancellationToken cancellationToken = default)`,
+      `VirtualMachineCollection GetResources(this ResourceGroupResource resourceGroup)`, and
+      `VirtualMachineResource GetResource(this ArmClient client, ResourceIdentifier id)`.
+      These are new APIs, not replacements or overloads of shipped methods. The resource
+      identifier is validated as a virtual machine ID. All implementation, generation,
+      documentation, tests and API listing requirements are otherwise satisfied; no enabled
+      analyzer checks these method names. For each finding, include a separate line in the exact
+      format `RECOMMEND: original-name -> replacement-name`, without backticks; explanations may follow.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: GetUsages -> GetComputeUsages\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: GetResources -> GetVirtualMachines\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?m)^RECOMMEND: GetResource -> GetVirtualMachine(?:Resource)?\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: allow-rp-and-resource-specific-management-extension-methods
+    prompt: >-
+      First invoke the code-review skill. Review these synthetic API additions and return
+      findings only. Azure.ResourceManager.Compute introduces three public extension methods:
+      `Pageable<ComputeUsage> GetComputeUsages(this SubscriptionResource subscription, AzureLocation location,
+      CancellationToken cancellationToken = default)`,
+      `VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroup)`, and
+      `VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)`.
+      The resource identifier is validated as a virtual machine ID. All implementation,
+      generation, documentation, tests and API listing requirements are satisfied. If there
+      is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: do-not-apply-public-extension-naming-rule-to-scoped-members
+    prompt: >-
+      First invoke the code-review skill. Review these synthetic API additions and return
+      findings only. Azure.ResourceManager.Compute adds a public instance method
+      `Pageable<ComputeUsage> GetUsages(CancellationToken cancellationToken = default)` on
+      VirtualMachineResource, returning usage for that virtual machine. It is not an extension
+      method. The PR also adds an internal extension helper
+      `internal static VirtualMachineCollection GetResources(this ResourceGroupResource resourceGroup)`,
+      used only inside the assembly and not exposed in its public API. All implementation,
+      generation, documentation, tests and API listing requirements are satisfied. If there
+      is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: preserve-shipped-generic-management-extension-method-name
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return findings only.
+      Azure.ResourceManager.Compute has shipped the public extension method
+      `Pageable<ComputeUsage> GetUsages(this SubscriptionResource subscription, AzureLocation location,
+      CancellationToken cancellationToken = default)` in several GA releases. This PR changes
+      that method's implementation to fix pagination, with correct regression tests. The
+      public method name, signature and API listing are unchanged, and no new public APIs
+      are introduced. The implementation fix, generation and documentation are otherwise
+      correct. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
   - name: checknameavailability-naming-pattern-enforced
     prompt: >-
       First invoke the code-review skill. Review this synthetic new API and
