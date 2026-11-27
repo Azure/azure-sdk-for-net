@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("geoRedundantBackup"u8);
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
             }
+            if (Optional.IsDefined(ImmutableBackup))
+            {
+                writer.WritePropertyName("immutableBackup"u8);
+                writer.WriteStringValue(ImmutableBackup.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             int? backupRetentionDays = default;
             PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = default;
+            ImmutableBackup? immutableBackup = default;
             DateTimeOffset? earliestRestoreOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,6 +162,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     geoRedundantBackup = new PostgreSqlFlexibleServerGeoRedundantBackupEnum(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("immutableBackup"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    immutableBackup = new ImmutableBackup(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("earliestRestoreDate"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -170,7 +185,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BackupForPatch(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, additionalBinaryDataProperties);
+            return new BackupForPatch(backupRetentionDays, geoRedundantBackup, immutableBackup, earliestRestoreOn, additionalBinaryDataProperties);
         }
     }
 }

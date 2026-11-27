@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Major version of PostgreSQL database engine. </summary>
+        [CodeGenMember("Version")]
         [WirePath("properties.version")]
         public PostgreSqlFlexibleServerVersion? Version
         {
@@ -322,6 +324,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     Properties = new ServerPropertiesForPatch();
                 }
                 Properties.Cluster = value;
+            }
+        }
+
+        /// <summary> Indicates if FIPS (Federal Information Processing Standards) mode is enabled on the server. If not specified, the current value is preserved. </summary>
+        [WirePath("properties.fipsMode")]
+        public FipsMode? FipsMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FipsMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerPropertiesForPatch();
+                }
+                Properties.FipsMode = value;
             }
         }
     }
