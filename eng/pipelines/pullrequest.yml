@@ -39,5 +39,12 @@ extends:
     ${{ else }}:
       ServiceDirectory: ${{ parameters.Service }}
     BuildSnippets: true
+    # The default public PR matrix uses coverage instead of the equivalent Windows .NET 10 Debug leg.
+    ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), ne(variables['System.TeamProject'], 'internal')) }}:
+      MatrixConfigs:
+        - Name: NET_ci_test_base
+          Path: eng/pipelines/templates/stages/pr-platform-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
