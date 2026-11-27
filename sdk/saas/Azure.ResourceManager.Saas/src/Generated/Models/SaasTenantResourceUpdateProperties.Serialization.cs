@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Saas.Models
                 writer.WritePropertyName("riskPropertyBagHeader"u8);
                 writer.WriteStringValue(RiskPropertyBagHeader);
             }
-            if (Optional.IsDefined(IsAutoRenew))
+            if (Optional.IsDefined(AutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
-                writer.WriteBooleanValue(IsAutoRenew.Value);
+                writer.WriteBooleanValue(AutoRenew.Value);
             }
             if (Optional.IsDefined(Storefront))
             {
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.Saas.Models
             string description = default;
             long? quantity = default;
             string riskPropertyBagHeader = default;
-            bool? isAutoRenew = default;
+            bool? autoRenew = default;
             string storefront = default;
             string quoteId = default;
             string privateOfferId = default;
             string productCode = default;
-            SaasPatchIntent? intent = default;
+            PatchIntent? intent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Saas.Models
                     {
                         continue;
                     }
-                    isAutoRenew = prop.Value.GetBoolean();
+                    autoRenew = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("storefront"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Saas.Models
                     {
                         continue;
                     }
-                    intent = new SaasPatchIntent(prop.Value.GetString());
+                    intent = new PatchIntent(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Saas.Models
                 description,
                 quantity,
                 riskPropertyBagHeader,
-                isAutoRenew,
+                autoRenew,
                 storefront,
                 quoteId,
                 privateOfferId,

@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Saas
 {
     /// <summary></summary>
-    public partial class SaasResource : IJsonModel<SaasData>
+    public partial class SaasResource : IJsonModel<SaasResourceData>
     {
-        private static IJsonModel<SaasData> s_dataDeserializationInstance;
+        private static IJsonModel<SaasResourceData> s_dataDeserializationInstance;
 
-        private static IJsonModel<SaasData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SaasData();
+        private static IJsonModel<SaasResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SaasResourceData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SaasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SaasData>)Data).Write(writer, options);
+        void IJsonModel<SaasResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SaasResourceData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SaasData IJsonModel<SaasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        SaasResourceData IJsonModel<SaasResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SaasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SaasData>(Data, options, AzureResourceManagerSaasContext.Default);
+        BinaryData IPersistableModel<SaasResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SaasResourceData>(Data, options, AzureResourceManagerSaasContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SaasData IPersistableModel<SaasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SaasData>(data, options, AzureResourceManagerSaasContext.Default);
+        SaasResourceData IPersistableModel<SaasResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SaasResourceData>(data, options, AzureResourceManagerSaasContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SaasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<SaasResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

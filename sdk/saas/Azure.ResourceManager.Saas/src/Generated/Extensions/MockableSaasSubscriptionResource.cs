@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SaasResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SaasResource> GetSaasAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SaasResource> GetSaasResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SaasData, SaasResource>(new SaasDataAsync0CollectionResultOfT(SaasSubscriptionLevelGlobalRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSaasSubscriptionResource.GetSaas"), data => new SaasResource(Client, data));
+            return new AsyncPageableWrapper<SaasResourceData, SaasResource>(new SaasResourceDataAsync0CollectionResultOfT(SaasSubscriptionLevelGlobalRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSaasSubscriptionResource.GetSaasResources"), data => new SaasResource(Client, data));
         }
 
         /// <summary>
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SaasResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SaasResource> GetSaas(CancellationToken cancellationToken = default)
+        public virtual Pageable<SaasResource> GetSaasResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SaasData, SaasResource>(new SaasData0CollectionResultOfT(SaasSubscriptionLevelGlobalRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSaasSubscriptionResource.GetSaas"), data => new SaasResource(Client, data));
+            return new PageableWrapper<SaasResourceData, SaasResource>(new SaasResourceData0CollectionResultOfT(SaasSubscriptionLevelGlobalRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSaasSubscriptionResource.GetSaasResources"), data => new SaasResource(Client, data));
         }
 
         /// <summary>
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SaasNameAvailabilityResult>> CheckSaasNameAvailabilityAsync(SaasNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SaasSubscriptionLevelGlobalClientDiagnostics.CreateScope("MockableSaasSubscriptionResource.CheckSaasNameAvailability");
+            using DiagnosticScope scope = SaasSubscriptionLevelGlobalClientDiagnostics.CreateScope("MockableSaasSubscriptionResource.CheckNameAvailability");
             scope.Start();
             try
             {
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.Saas.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaasSubscriptionLevelGlobalRestClient.CreateCheckSaasNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SaasNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = SaasSubscriptionLevelGlobalRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SaasNameAvailabilityResult> response = Response.FromValue(SaasNameAvailabilityResult.FromResponse(result), result);
+                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SaasNameAvailabilityResult> CheckSaasNameAvailability(SaasNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SaasSubscriptionLevelGlobalClientDiagnostics.CreateScope("MockableSaasSubscriptionResource.CheckSaasNameAvailability");
+            using DiagnosticScope scope = SaasSubscriptionLevelGlobalClientDiagnostics.CreateScope("MockableSaasSubscriptionResource.CheckNameAvailability");
             scope.Start();
             try
             {
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Saas.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaasSubscriptionLevelGlobalRestClient.CreateCheckSaasNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SaasNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = SaasSubscriptionLevelGlobalRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SaasNameAvailabilityResult> response = Response.FromValue(SaasNameAvailabilityResult.FromResponse(result), result);
+                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SaasResourceValidationResult>> ValidatePurchaseBySubscriptionAsync(SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceValidationResult>> ValidatePurchaseBySubscriptionAsync(SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Saas.Mocking
                 };
                 HttpMessage message = SaasSubscriptionLevelGlobalRestClient.CreateValidatePurchaseBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), SaasPurchaseValidationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SaasResourceValidationResult> response = Response.FromValue(SaasResourceValidationResult.FromResponse(result), result);
+                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SaasResourceValidationResult> ValidatePurchaseBySubscription(SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceValidationResult> ValidatePurchaseBySubscription(SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Saas.Mocking
                 };
                 HttpMessage message = SaasSubscriptionLevelGlobalRestClient.CreateValidatePurchaseBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), SaasPurchaseValidationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SaasResourceValidationResult> response = Response.FromValue(SaasResourceValidationResult.FromResponse(result), result);
+                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

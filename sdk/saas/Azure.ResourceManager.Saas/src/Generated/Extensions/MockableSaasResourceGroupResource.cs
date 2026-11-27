@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Saas.Mocking
             "2026-04-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
-        /// <summary> Gets a collection of Saas in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Saas and their operations over a SaasResource. </returns>
-        public virtual SaasCollection GetAllSaas()
+        /// <summary> Gets a collection of SaasResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SaasResources and their operations over a SaasResource. </returns>
+        public virtual SaasResourceCollection GetSaasResources()
         {
-            return GetCachedClient(client => new SaasCollection(client, Id));
+            return GetCachedClient(client => new SaasResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SaasResource>> GetSaasAsync(string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SaasResource>> GetSaasResourceAsync(string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return await GetAllSaas().GetAsync(resourceName, expandCustomerData, cancellationToken).ConfigureAwait(false);
+            return await GetSaasResources().GetAsync(resourceName, expandCustomerData, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SaasResource> GetSaas(string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
+        public virtual Response<SaasResource> GetSaasResource(string resourceName, bool? expandCustomerData = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetAllSaas().Get(resourceName, expandCustomerData, cancellationToken);
+            return GetSaasResources().Get(resourceName, expandCustomerData, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SaasResourceValidationResult>> ValidatePurchaseAsync(SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceValidationResult>> ValidatePurchaseAsync(SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Saas.Mocking
                 };
                 HttpMessage message = SaasSubscriptionLevelGlobalRestClient.CreateValidatePurchaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SaasPurchaseValidationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SaasResourceValidationResult> response = Response.FromValue(SaasResourceValidationResult.FromResponse(result), result);
+                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Saas.Mocking
         /// <param name="content"> The proposed purchase request to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SaasResourceValidationResult> ValidatePurchase(SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceValidationResult> ValidatePurchase(SaasPurchaseValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Saas.Mocking
                 };
                 HttpMessage message = SaasSubscriptionLevelGlobalRestClient.CreateValidatePurchaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, SaasPurchaseValidationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SaasResourceValidationResult> response = Response.FromValue(SaasResourceValidationResult.FromResponse(result), result);
+                Response<ResourceValidationResult> response = Response.FromValue(ResourceValidationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

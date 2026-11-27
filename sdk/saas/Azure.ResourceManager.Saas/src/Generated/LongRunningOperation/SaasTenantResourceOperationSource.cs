@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Saas
         SaasTenantResource IOperationSource<SaasTenantResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SaasTenantData data = SaasTenantData.DeserializeSaasTenantData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SaasTenantResourceData data = SaasTenantResourceData.DeserializeSaasTenantResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SaasTenantResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Saas
         async ValueTask<SaasTenantResource> IOperationSource<SaasTenantResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SaasTenantData data = SaasTenantData.DeserializeSaasTenantData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SaasTenantResourceData data = SaasTenantResourceData.DeserializeSaasTenantResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SaasTenantResource(_client, data);
         }
     }
