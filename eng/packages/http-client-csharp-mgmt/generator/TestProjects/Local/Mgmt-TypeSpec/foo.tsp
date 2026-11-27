@@ -163,6 +163,16 @@ interface Foos {
     ArmResponse<FooProvisioningState>
   >;
 
+  /** Check whether the named configuration exists. */
+  @head
+  @action("checkConfiguration")
+  @responseAsBool("csharp")
+  checkConfiguration is ArmResourceActionSync<
+    Foo,
+    void,
+    OkResponse | NotFoundResponse
+  >;
+
   /** Get raw metadata (Record<unknown>) for a Foo resource. */
   @get
   @action("getMetadata")

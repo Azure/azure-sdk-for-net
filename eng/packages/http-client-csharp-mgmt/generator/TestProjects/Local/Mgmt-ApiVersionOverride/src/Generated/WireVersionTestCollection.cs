@@ -28,6 +28,8 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
     {
         private readonly ClientDiagnostics _wireVersionOperationsClientDiagnostics;
         private readonly WireVersionOperations _wireVersionOperationsRestClient;
+        private readonly ClientDiagnostics _wireVersionExistenceOperationsClientDiagnostics;
+        private readonly WireVersionExistenceOperations _wireVersionExistenceOperationsRestClient;
 
         /// <summary> Initializes a new instance of WireVersionTestCollection for mocking. </summary>
         protected WireVersionTestCollection()
@@ -41,6 +43,8 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         {
             _wireVersionOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests", WireVersionTestResource.ResourceType.Namespace, Diagnostics);
             _wireVersionOperationsRestClient = new WireVersionOperations(_wireVersionOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _wireVersionExistenceOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests", WireVersionTestResource.ResourceType.Namespace, Diagnostics);
+            _wireVersionExistenceOperationsRestClient = new WireVersionExistenceOperations(_wireVersionExistenceOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/wireVersionTests", out string wireVersionExistenceOperationsApiVersionOverride) ? wireVersionExistenceOperationsApiVersionOverride : "opaque-head");
             ValidateResourceId(id);
         }
 
@@ -327,11 +331,11 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WireVersionReads_Get. </description>
+        /// <description> WireVersionExistence_CheckExistence. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> opaque-read. </description>
+        /// <description> opaque-head. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,7 +347,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         {
             Argument.AssertNotNullOrEmpty(wireVersionTestName, nameof(wireVersionTestName));
 
-            using DiagnosticScope scope = _wireVersionOperationsClientDiagnostics.CreateScope("WireVersionTestCollection.Exists");
+            using DiagnosticScope scope = _wireVersionExistenceOperationsClientDiagnostics.CreateScope("WireVersionTestCollection.Exists");
             scope.Start();
             try
             {
@@ -351,22 +355,14 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, wireVersionTestName, context);
+                HttpMessage message = _wireVersionExistenceOperationsRestClient.CreateCheckExistenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, wireVersionTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<WireVersionTestData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WireVersionTestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {
@@ -384,11 +380,11 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WireVersionReads_Get. </description>
+        /// <description> WireVersionExistence_CheckExistence. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> opaque-read. </description>
+        /// <description> opaque-head. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,7 +396,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         {
             Argument.AssertNotNullOrEmpty(wireVersionTestName, nameof(wireVersionTestName));
 
-            using DiagnosticScope scope = _wireVersionOperationsClientDiagnostics.CreateScope("WireVersionTestCollection.Exists");
+            using DiagnosticScope scope = _wireVersionExistenceOperationsClientDiagnostics.CreateScope("WireVersionTestCollection.Exists");
             scope.Start();
             try
             {
@@ -408,22 +404,14 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, wireVersionTestName, context);
+                HttpMessage message = _wireVersionExistenceOperationsRestClient.CreateCheckExistenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, wireVersionTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<WireVersionTestData> response = default;
-                switch (result.Status)
+                Response response = message.Response;
+                if ((response.Status < 200 || response.Status >= 300) && response.Status != 404)
                 {
-                    case 200:
-                        response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WireVersionTestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
+                    throw new RequestFailedException(response);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Status != 404, response);
             }
             catch (Exception e)
             {

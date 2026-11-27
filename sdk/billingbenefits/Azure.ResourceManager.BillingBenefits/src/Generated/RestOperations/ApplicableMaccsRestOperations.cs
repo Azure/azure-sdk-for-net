@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string billingAccountId, RequestContext context)
+        internal HttpMessage CreateGetApplicableMaccsRequest(string billingAccountId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.BillingBenefits
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string billingAccountId, RequestContext context)
+        internal HttpMessage CreateNextGetApplicableMaccsRequest(Uri nextPage, string billingAccountId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

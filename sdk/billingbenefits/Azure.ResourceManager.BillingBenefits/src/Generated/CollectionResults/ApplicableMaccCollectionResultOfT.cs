@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _billingAccountId, _context) : _client.CreateGetAllRequest(_billingAccountId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetApplicableMaccsRequest(nextLink, _billingAccountId, _context) : _client.CreateGetApplicableMaccsRequest(_billingAccountId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
