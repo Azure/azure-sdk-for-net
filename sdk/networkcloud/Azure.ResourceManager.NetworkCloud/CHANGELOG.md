@@ -1,14 +1,17 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (2026-11-13)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for API version `2026-08-01-preview`.
+- Added secret archive provider configuration models for CyberArk, HashiCorp Vault, and OpenBao, along with encryption public key support.
+- Added cluster manager rollout ring configuration.
+- Added the cluster edge management service CA certificate and the `EdgeManagement` access bridge name.
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.63.0.
 
 ## 1.4.0 (2026-10-08)
 

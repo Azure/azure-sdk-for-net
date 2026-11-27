@@ -144,6 +144,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("relayConfiguration"u8);
                 writer.WriteObjectValue(RelayConfiguration, options);
             }
+            if (Optional.IsDefined(RolloutRing))
+            {
+                writer.WritePropertyName("rolloutRing"u8);
+                writer.WriteNumberValue(RolloutRing.Value);
+            }
             if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
@@ -201,6 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Resources.Models.ExtendedLocation managerExtendedLocation = default;
             ClusterManagerProvisioningState? provisioningState = default;
             ClusterManagerRelayConfiguration relayConfiguration = default;
+            int? rolloutRing = default;
             string vmSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -304,6 +310,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     relayConfiguration = ClusterManagerRelayConfiguration.DeserializeClusterManagerRelayConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("rolloutRing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rolloutRing = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("vmSize"u8))
                 {
                     vmSize = prop.Value.GetString();
@@ -325,6 +340,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 managerExtendedLocation,
                 provisioningState,
                 relayConfiguration,
+                rolloutRing,
                 vmSize,
                 additionalBinaryDataProperties);
         }

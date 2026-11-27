@@ -42,9 +42,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster manager. </param>
         /// <param name="relayConfiguration"> The relay configuration for the cluster manager. </param>
+        /// <param name="rolloutRing"> The relative ordering group used to apply software updates to associated clusters. The minimum accepted value is 1; the service enforces the upper bound currently in effect, which may change over time. </param>
         /// <param name="vmSize"> The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterManagerProperties(ResourceIdentifier analyticsWorkspaceId, IList<string> availabilityZones, IReadOnlyList<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, Resources.Models.ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, ClusterManagerRelayConfiguration relayConfiguration, string vmSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterManagerProperties(ResourceIdentifier analyticsWorkspaceId, IList<string> availabilityZones, IReadOnlyList<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, Resources.Models.ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, ClusterManagerRelayConfiguration relayConfiguration, int? rolloutRing, string vmSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AnalyticsWorkspaceId = analyticsWorkspaceId;
             AvailabilityZones = availabilityZones;
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ManagerExtendedLocation = managerExtendedLocation;
             ProvisioningState = provisioningState;
             RelayConfiguration = relayConfiguration;
+            RolloutRing = rolloutRing;
             VmSize = vmSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -89,6 +91,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The relay configuration for the cluster manager. </summary>
         internal ClusterManagerRelayConfiguration RelayConfiguration { get; }
+
+        /// <summary> The relative ordering group used to apply software updates to associated clusters. The minimum accepted value is 1; the service enforces the upper bound currently in effect, which may change over time. </summary>
+        public int? RolloutRing { get; set; }
 
         /// <summary> The size of the Azure virtual machines to use for hosting the cluster manager resource. </summary>
         public string VmSize { get; set; }
