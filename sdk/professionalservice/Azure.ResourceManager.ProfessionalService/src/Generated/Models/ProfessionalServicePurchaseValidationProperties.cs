@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <param name="productCode"> The product code. Primary purchase identifier for GA — used to resolve term details server-side. </param>
         /// <param name="name"> The proposed Professional Service resource name to validate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfessionalServicePurchaseValidationProperties(ProfessionalServiceProvisioningState? provisioningState, string assetId, string description, ProfessionalServiceResourceStatus? status, ProfessionalServiceSubscriptionStatusReason? statusReason, long? quantity, string publisherName, string planName, string offerName, string termUnit, string billingPeriod, string riskPropertyBagHeader, DateTimeOffset? termStartsOn, DateTimeOffset? termEndsOn, DateTimeOffset? futureStartsOn, bool? isAutoRenew, bool? isFreeTrial, string storefront, string purchaserEmail, string quoteId, string privateOfferId, string productCode, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfessionalServicePurchaseValidationProperties(ProfessionalServiceProvisioningState? provisioningState, string assetId, string description, ProfessionalServiceSubscriptionStatus? status, ProfessionalServiceSubscriptionStatusReason? statusReason, long? quantity, string publisherName, string planName, string offerName, string termUnit, string billingPeriod, string riskPropertyBagHeader, DateTimeOffset? termStartsOn, DateTimeOffset? termEndsOn, DateTimeOffset? futureStartsOn, bool? isAutoRenew, bool? isFreeTrial, string storefront, string purchaserEmail, string quoteId, string privateOfferId, string productCode, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AssetId = assetId;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         public string Description { get; set; }
 
         /// <summary> The Professional Service subscription status. Server-assigned. </summary>
-        public ProfessionalServiceResourceStatus? Status { get; }
+        public ProfessionalServiceSubscriptionStatus? Status { get; }
 
         /// <summary> The reason for the current status. Server-assigned. </summary>
         public ProfessionalServiceSubscriptionStatusReason? StatusReason { get; }

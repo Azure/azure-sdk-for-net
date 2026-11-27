@@ -12,7 +12,7 @@ using Azure.ResourceManager.ProfessionalService;
 namespace Azure.ResourceManager.ProfessionalService.Models
 {
     /// <summary> The Professional Service Subscription Status. </summary>
-    public readonly partial struct ProfessionalServiceResourceStatus : IEquatable<ProfessionalServiceResourceStatus>
+    public readonly partial struct ProfessionalServiceSubscriptionStatus : IEquatable<ProfessionalServiceSubscriptionStatus>
     {
         private readonly string _value;
         /// <summary> Subscription has not started. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         /// <summary> The subscription is suspended. </summary>
         private const string SuspendedValue = "Suspended";
 
-        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceResourceStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfessionalServiceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProfessionalServiceResourceStatus(string value)
+        public ProfessionalServiceSubscriptionStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.ProfessionalService.Models
         }
 
         /// <summary> Subscription has not started. </summary>
-        public static ProfessionalServiceResourceStatus NotStarted { get; } = new ProfessionalServiceResourceStatus(NotStartedValue);
+        public static ProfessionalServiceSubscriptionStatus NotStarted { get; } = new ProfessionalServiceSubscriptionStatus(NotStartedValue);
 
         /// <summary> Pending fulfillment start. </summary>
-        public static ProfessionalServiceResourceStatus PendingFulfillmentStart { get; } = new ProfessionalServiceResourceStatus(PendingFulfillmentStartValue);
+        public static ProfessionalServiceSubscriptionStatus PendingFulfillmentStart { get; } = new ProfessionalServiceSubscriptionStatus(PendingFulfillmentStartValue);
 
         /// <summary> The subscription is active and in use. </summary>
-        public static ProfessionalServiceResourceStatus Subscribed { get; } = new ProfessionalServiceResourceStatus(SubscribedValue);
+        public static ProfessionalServiceSubscriptionStatus Subscribed { get; } = new ProfessionalServiceSubscriptionStatus(SubscribedValue);
 
         /// <summary> The subscription has been cancelled. </summary>
-        public static ProfessionalServiceResourceStatus Unsubscribed { get; } = new ProfessionalServiceResourceStatus(UnsubscribedValue);
+        public static ProfessionalServiceSubscriptionStatus Unsubscribed { get; } = new ProfessionalServiceSubscriptionStatus(UnsubscribedValue);
 
         /// <summary> The subscription is suspended. </summary>
-        public static ProfessionalServiceResourceStatus Suspended { get; } = new ProfessionalServiceResourceStatus(SuspendedValue);
+        public static ProfessionalServiceSubscriptionStatus Suspended { get; } = new ProfessionalServiceSubscriptionStatus(SuspendedValue);
 
-        /// <summary> Determines if two <see cref="ProfessionalServiceResourceStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ProfessionalServiceSubscriptionStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProfessionalServiceResourceStatus left, ProfessionalServiceResourceStatus right) => left.Equals(right);
+        public static bool operator ==(ProfessionalServiceSubscriptionStatus left, ProfessionalServiceSubscriptionStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProfessionalServiceResourceStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ProfessionalServiceSubscriptionStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProfessionalServiceResourceStatus left, ProfessionalServiceResourceStatus right) => !left.Equals(right);
+        public static bool operator !=(ProfessionalServiceSubscriptionStatus left, ProfessionalServiceSubscriptionStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProfessionalServiceResourceStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProfessionalServiceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProfessionalServiceResourceStatus(string value) => new ProfessionalServiceResourceStatus(value);
+        public static implicit operator ProfessionalServiceSubscriptionStatus(string value) => new ProfessionalServiceSubscriptionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ProfessionalServiceResourceStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProfessionalServiceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProfessionalServiceResourceStatus?(string value) => value == null ? null : new ProfessionalServiceResourceStatus(value);
+        public static implicit operator ProfessionalServiceSubscriptionStatus?(string value) => value == null ? null : new ProfessionalServiceSubscriptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProfessionalServiceResourceStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is ProfessionalServiceSubscriptionStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProfessionalServiceResourceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProfessionalServiceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
             ProfessionalServiceProvisioningState? provisioningState = default;
             string assetId = default;
             string description = default;
-            ProfessionalServiceResourceStatus? status = default;
+            ProfessionalServiceSubscriptionStatus? status = default;
             ProfessionalServiceSubscriptionStatusReason? statusReason = default;
             long? quantity = default;
             string publisherName = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ProfessionalService.Models
                     {
                         continue;
                     }
-                    status = new ProfessionalServiceResourceStatus(prop.Value.GetString());
+                    status = new ProfessionalServiceSubscriptionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("statusReason"u8))
