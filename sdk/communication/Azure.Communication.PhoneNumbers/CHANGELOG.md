@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Validate the destination of token-authenticated requests against the configured endpoint before authentication.
+
 ### Other Changes
 
 ## 1.5.0 (2025-08-28)
