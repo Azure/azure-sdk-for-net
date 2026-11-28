@@ -10,6 +10,7 @@ namespace Azure.AI.Projects.Agents;
 # pragma warning disable AAIP002
 
 [CodeGenSerialization(nameof(AllowedTools), DeserializationValueHook = nameof(DeserializeAllowedToolsValue))]
+[CodeGenSerialization(nameof(ConnectorId), SerializationValueHook = nameof(SerializeConnectorIdValue), DeserializationValueHook = nameof(DeserializeConnectorIdValue))]
 public partial class McpToolboxTool : IJsonModel<McpToolboxTool>
 {
     // CUSTOM: Accepts the MCP shorthand allowed_tools array form and normalizes it into McpToolFilter.
@@ -42,5 +43,23 @@ public partial class McpToolboxTool : IJsonModel<McpToolboxTool>
         }
 
         throw new InvalidOperationException($"Expected allowed_tools to be null, an object, or an array but found {property.Value.ValueKind}.");
+    }
+
+    // CUSTOM: McpToolConnectorId is a string-valued struct from the OpenAI library, not a model. The generated
+    // code routes it through ModelReaderWriter, which throws "No ModelReaderWriterTypeBuilder found".
+    // Read and write it as a JSON string instead.
+    private void SerializeConnectorIdValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    {
+        writer.WriteStringValue(ConnectorId.Value.ToString());
+    }
+
+    private static void DeserializeConnectorIdValue(JsonProperty property, ref McpToolConnectorId? connectorId, ModelReaderWriterOptions options = null)
+    {
+        if (property.Value.ValueKind == JsonValueKind.Null)
+        {
+            connectorId = null;
+            return;
+        }
+        connectorId = new McpToolConnectorId(property.Value.GetString());
     }
 }

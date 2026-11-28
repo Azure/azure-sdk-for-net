@@ -105,7 +105,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(SearchContextSize))
             {
                 writer.WritePropertyName("search_context_size"u8);
-                writer.WriteObjectValue<WebSearchToolContextSize?>(SearchContextSize.Value, options);
+                SerializeSearchContextSizeValue(writer, options);
             }
             if (Optional.IsDefined(CustomSearchConfiguration))
             {
@@ -222,11 +222,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("search_context_size"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    searchContextSize = ModelReaderWriter.Read<WebSearchToolContextSize?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    DeserializeSearchContextSizeValue(prop, ref searchContextSize, options);
                     continue;
                 }
                 if (prop.NameEquals("custom_search_configuration"u8))

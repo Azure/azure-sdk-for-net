@@ -88,7 +88,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connector_id"u8);
-                writer.WriteObjectValue<McpToolConnectorId?>(ConnectorId.Value, options);
+                SerializeConnectorIdValue(writer, options);
             }
             if (Optional.IsDefined(TunnelId))
             {
@@ -278,11 +278,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("connector_id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    connectorId = ModelReaderWriter.Read<McpToolConnectorId?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    DeserializeConnectorIdValue(prop, ref connectorId, options);
                     continue;
                 }
                 if (prop.NameEquals("tunnel_id"u8))

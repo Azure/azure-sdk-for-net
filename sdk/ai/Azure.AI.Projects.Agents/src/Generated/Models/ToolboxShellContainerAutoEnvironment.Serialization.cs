@@ -92,7 +92,7 @@ namespace Azure.AI.Projects.Agents
                 if (MemoryLimit != null)
                 {
                     writer.WritePropertyName("memory_limit"u8);
-                    writer.WriteObjectValue<ContainerMemoryLimit?>(MemoryLimit.Value, options);
+                    SerializeMemoryLimitValue(writer, options);
                 }
                 else
                 {
@@ -179,12 +179,7 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("memory_limit"u8))
                 {
                     memoryLimitIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        memoryLimit = null;
-                        continue;
-                    }
-                    memoryLimit = ModelReaderWriter.Read<ContainerMemoryLimit?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    DeserializeMemoryLimitValue(prop, ref memoryLimit, options);
                     continue;
                 }
                 if (prop.NameEquals("skills"u8))

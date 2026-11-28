@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed `InvalidOperationException` ("No ModelReaderWriterTypeBuilder found") when serializing or deserializing properties typed as OpenAI string-valued structs: `VoiceResult.Status` and `OutputModalities` (which broke `BetaVoiceAgentsConversations.GetAgentConversationResponses` and `GetAgentConversationResponse`), `VoiceAgentSemanticVadTurnDetection.Eagerness`, `WebSearchToolboxTool.SearchContextSize`, `McpToolboxTool.ConnectorId`, and `ToolboxShellContainerAutoEnvironment.MemoryLimit`.
 
 ### Other Changes
 
