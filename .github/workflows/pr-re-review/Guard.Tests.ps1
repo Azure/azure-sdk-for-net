@@ -657,12 +657,36 @@ Describe 'Compiled re-review publication guard' {
         @{ Name = 'Download exported-patch markers' }
         @{ Name = 'Checkout trusted re-review publication guard' }
         @{ Name = 'Verify re-review helpers match the export' }
-        @{ Name = 'Require complete re-review coverage before publishing' }
         @{ Name = 'Process Safe Outputs' }
     ) {
         $step = Get-Step $Name
         Get-StepProperty $step 'if' | Should -BeNullOrEmpty
         Get-StepProperty $step 'continue-on-error' | Should -BeNullOrEmpty
+    }
+
+    It 'skips the live guard only for a replay, whose safe outputs are staged so nothing is published' {
+        $guard = Get-Step 'Require complete re-review coverage before publishing'
+        Get-StepProperty $guard 'if' | Should -BeExactly "github.event_name != 'workflow_dispatch'"
+        Get-StepProperty $guard 'continue-on-error' | Should -BeNullOrEmpty
+        (Get-StepMapping (Get-Step 'Process Safe Outputs') 'env')['GH_AW_SAFE_OUTPUTS_STAGED'] | Should -BeExactly "`${{ github.event_name == 'workflow_dispatch' }}"
+        Test-PrReReviewReplayStaged (Join-Path $script:RepoRoot '.github' 'workflows' 'pr-re-review.lock.yml') | Should -BeTrue
+    }
+
+    It 'evaluates a replay only on workflow_dispatch, before the live guard and anything is published' {
+        $replay = Get-Step 'Evaluate the replayed re-review'
+        Get-StepProperty $replay 'if' | Should -BeExactly "github.event_name == 'workflow_dispatch'"
+        Get-StepProperty $replay 'continue-on-error' | Should -BeNullOrEmpty
+        Get-StepProperty $replay 'shell' | Should -BeExactly 'pwsh'
+        Get-StepProperty $replay 'run' | Should -BeExactly './.github/workflows/pr-re-review/Invoke-PrReReviewReplayGuard.ps1'
+        $environment = Get-StepMapping $replay 'env'
+        $environment['REVIEW_REPLAY'] | Should -BeExactly '${{ runner.temp }}/pr-re-review-input/replay.json'
+        $environment['REVIEW_WORKFLOW_LOCK'] | Should -BeExactly '${{ github.workspace }}/.github/workflows/pr-re-review.lock.yml'
+        $upload = Get-Step 'Upload replay result'
+        Get-StepProperty $upload 'if' | Should -BeExactly '${{ !cancelled() && github.event_name == ''workflow_dispatch'' }}'
+        (Get-StepMapping $upload 'with')['path'] | Should -BeExactly ($environment['REVIEW_REPLAY_RESULT'] -replace '/[^/]+$')
+        $order = @('Verify re-review helpers match the export', 'Evaluate the replayed re-review', 'Upload replay result', 'Require complete re-review coverage before publishing', 'Process Safe Outputs') |
+            ForEach-Object { [array]::IndexOf($script:StepNames, $_) }
+        for ($i = 1; $i -lt $order.Count; $i++) { $order[$i] | Should -BeGreaterThan $order[$i - 1] }
     }
 
     It 'blocks run 40400877253 when the compiled step runs the guard' {
@@ -800,6 +824,64 @@ Describe 'Compiled re-review input export' {
     }
 }
 
+Describe 'Compiled re-review size gate' {
+    BeforeAll {
+        $script:GateSteps = Get-CompiledSteps 'size_gate'
+
+        function Get-GateStep {
+            param([string]$Name)
+
+            $matching = @($script:GateSteps | Where-Object Name -ceq $Name)
+            if ($matching.Count -ne 1) { throw "Expected one '$Name' step in size_gate; found $($matching.Count)." }
+            return $matching[0]
+        }
+    }
+
+    It 'holds the agent job until the size gate has measured the read set' {
+        $needs = Get-YamlBlock (Get-CompiledJob 'agent') 'needs:' 4
+        $needs | Should -Contain '      - size_gate'
+    }
+
+    It 'measures the pull request the agent job exports, with the base branch tip''s helpers and read-only access' {
+        $checkout = Get-GateStep 'Checkout trusted re-review helpers'
+        Get-StepProperty $checkout 'uses' | Should -BeExactly 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1'
+        $with = Get-StepMapping $checkout 'with'
+        $with['ref'] | Should -BeExactly '${{ github.event.pull_request.base.ref }}'
+        $with['path'] | Should -BeExactly '.pr-re-review-helpers'
+        $with['persist-credentials'] | Should -BeExactly 'false'
+        $with['sparse-checkout'] | Should -BeExactly '.github/workflows/pr-re-review'
+
+        $measure = Get-GateStep 'Measure the re-review read set'
+        Get-StepProperty $measure 'id' | Should -BeExactly 'measure'
+        Get-StepProperty $measure 'shell' | Should -BeExactly 'pwsh'
+        ($measure.Lines -join "`n") | Should -Match '\./\.pr-re-review-helpers/\.github/workflows/pr-re-review/Invoke-PrReReviewSizeGate\.ps1'
+        $environment = Get-StepMapping $measure 'env'
+        $agentSteps = Get-CompiledSteps 'agent'
+        $export = Get-StepMapping (@($agentSteps | Where-Object Name -ceq 'Export changed-file patches for the re-review')[0]) 'env'
+        foreach ($name in 'GH_TOKEN', 'PR_NUMBER', 'PR_HEAD_SHA', 'PR_BASE_SHA', 'REPLAY_PULL_REQUEST', 'REPLAY_HEAD_SHA', 'REPLAY_BASE_SHA', 'REPLAY_HISTORY_CUTOFF') {
+            $environment[$name] | Should -BeExactly $export[$name] -Because "the gate must measure what the agent job exports ($name)"
+        }
+
+        $permissions = Get-YamlBlock (Get-CompiledJob 'size_gate') 'permissions:' 4
+        foreach ($scope in 'contents', 'issues', 'pull-requests') { $permissions | Should -Contain "      ${scope}: read" }
+        @($permissions | Where-Object { $_ -match ': write$' }) | Should -BeNullOrEmpty
+    }
+
+    It 'lets the re-review run without a limit when the base branch predates the size gate' {
+        $run = (Get-YamlBlock (Get-GateStep 'Measure the re-review read set').Lines.ToArray() 'run: |' 8) -join "`n"
+        $previous = $env:GITHUB_OUTPUT
+        $env:GITHUB_OUTPUT = Join-Path $TestDrive "output-$([guid]::NewGuid())"
+        Push-Location $TestDrive
+        try {
+            & ([scriptblock]::Create($run))
+            Get-Content $env:GITHUB_OUTPUT | Should -Be @('within_cap=true')
+        } finally {
+            Pop-Location
+            $env:GITHUB_OUTPUT = $previous
+        }
+    }
+}
+
 Describe 'Re-review prompt' {
     BeforeAll {
         Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
@@ -810,6 +892,11 @@ Describe 'Re-review prompt' {
     It 'asks for the exact coverage line the guard enforces' {
         $prompt = [IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md'))
         $prompt.Contains((Get-PrReReviewCoverageTemplate), [StringComparison]::Ordinal) | Should -BeTrue
+    }
+
+    # gh-aw v0.92.0 evaluates a {{#if}} condition before it substitutes the condition's value, so the block is always kept.
+    It 'uses no {{#if}} blocks' {
+        $script:PromptBody | Should -Not -Match '\{\{#if\b'
     }
 
     It 'accepts that coverage line once every placeholder is a matching count' {

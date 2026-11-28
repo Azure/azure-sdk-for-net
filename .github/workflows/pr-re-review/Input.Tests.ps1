@@ -30,7 +30,19 @@ BeforeAll {
             Markers = @((Get-Content $markersPath -Raw | ConvertFrom-Json).files)
             InputDirectory = $inputDirectory
             MarkersPath = $markersPath
-            Read = { param($Entry) Get-Content (Join-Path $inputDirectory $Entry.patchFile) -Raw }.GetNewClosure()
+            Read = {
+                param($Entry)
+                $text = ''
+                foreach ($path in $Entry.readFiles) {
+                    $content = [IO.File]::ReadAllText((Join-Path $inputDirectory $path))
+                    if ($content.StartsWith('# Review input part ')) {
+                        $start = $content.IndexOf("`n") + 1
+                        $content = $content.Substring($start, $content.LastIndexOf("`n# End of part") - $start)
+                    }
+                    $text += $content
+                }
+                return $text
+            }.GetNewClosure()
         }
     }
 }
@@ -189,7 +201,31 @@ Describe 'Export-PrReReviewInput' {
             $part | Should -BeExactly $marker.chunks[$i].content
             $reassembled += $part.Substring($part.IndexOf("`n") + 1, $part.LastIndexOf("`n# End of part") - $part.IndexOf("`n") - 1)
         }
-        $reassembled | Should -BeExactly (& $export.Read $entry)
+        $reassembled | Should -BeExactly "$header$patch`n# End of review input 1/1 [$($marker.marker)]`n"
+    }
+
+    It 'writes each patch once, so the patches directory holds exactly the files the agent must read' {
+        $export = Invoke-Export @(
+            (New-ChangedFile 'src/Short.cs')
+            (New-ChangedFile 'src/Long.cs' -Patch ((1..400 | ForEach-Object { "+    public string Property$_ { get; set; }" }) -join "`n"))
+        )
+        $export.Files[1].readFiles.Count | Should -BeGreaterThan 1
+        $written = @(Get-ChildItem (Join-Path $export.InputDirectory 'patches') -File | ForEach-Object { "patches/$($_.Name)" } | Sort-Object)
+        $written | Should -Be @($export.Files.readFiles | Sort-Object)
+        $export.Files[1].PSObject.Properties.Name | Should -Not -Contain 'patchFile'
+    }
+
+    It 'starts files.json with the size of everything the agent must read' {
+        $export = Invoke-Export @(
+            (New-ChangedFile 'src/Short.cs')
+            (New-ChangedFile 'src/Long.cs' -Patch ((1..400 | ForEach-Object { "+    public string Property$_ { get; set; }" }) -join "`n"))
+        )
+        $reads = @($export.Files.readFiles)
+        $list = $export.ListText | ConvertFrom-Json
+        $list.readSet.changedFiles | Should -Be 2
+        $list.readSet.readFiles | Should -Be $reads.Count
+        $list.readSet.characters | Should -Be ($reads | ForEach-Object { [IO.File]::ReadAllText((Join-Path $export.InputDirectory $_)).Length } | Measure-Object -Sum).Sum
+        $export.ListText.IndexOf('"readSet"') | Should -BeLessThan $export.ListText.IndexOf('"files"')
     }
 
     It 'cuts a long patch into parts only at line boundaries' {
@@ -409,6 +445,16 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         }
     }
 
+    It 'names every missing input in one error' {
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { throw "Unexpected gh api $($Arguments -join ' ')" }
+        $env:GITHUB_REPOSITORY = 'Azure/azure-sdk-for-net'
+        $env:PR_NUMBER = '1'
+        $env:PR_BASE_SHA = 'base'
+        $env:REVIEW_INPUT_DIR = Join-Path $TestDrive 'input'
+        foreach ($envName in 'PR_HEAD_SHA', 'REVIEW_INPUT_MARKERS') { [Environment]::SetEnvironmentVariable($envName, $null) }
+        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1') } | Should -Throw -ExpectedMessage 'Missing PR_HEAD_SHA, REVIEW_INPUT_MARKERS.'
+    }
+
     It 'exports the old text when a binary modification has no patch or line counts' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
             '[[{"filename":"src/Changed.cs","status":"modified","sha":"2222222222222222222222222222222222222222","additions":0,"deletions":0}]]'
@@ -430,7 +476,7 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         $env:REVIEW_INPUT_MARKERS = Join-Path $root 'private' 'markers.json'
         & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
         $files = (Get-Content (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json).files
-        $text = Get-Content (Join-Path $env:REVIEW_INPUT_DIR $files[0].patchFile) -Raw
+        $text = Get-Content (Join-Path $env:REVIEW_INPUT_DIR $files[0].readFiles[0]) -Raw
         $text | Should -Match '// deleted declaration'
         $text | Should -Match 'no text content at the head commit'
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -like '*/compare/*' }
@@ -457,9 +503,48 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         $env:REVIEW_INPUT_MARKERS = Join-Path $root 'private' 'markers.json'
         & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
         $files = (Get-Content (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json).files
-        $text = Get-Content (Join-Path $env:REVIEW_INPUT_DIR $files[0].patchFile) -Raw
+        $text = Get-Content (Join-Path $env:REVIEW_INPUT_DIR $files[0].readFiles[0]) -Raw
         $text | Should -Match '// deleted declaration'
         $text | Should -Match '// new declaration'
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/contents/src/Changed.cs?ref=0123456789012345678901234567890123456789' }
+    }
+}
+
+Describe 'Invoke-PrReReviewSizeGate.ps1' {
+    BeforeEach {
+        $script:PreviousGateEnvironment = @{}
+        foreach ($envName in 'GITHUB_REPOSITORY', 'GITHUB_EVENT_NAME', 'GITHUB_OUTPUT', 'GITHUB_STEP_SUMMARY', 'PR_NUMBER', 'PR_HEAD_SHA', 'PR_BASE_SHA', 'REVIEW_INPUT_DIR', 'REVIEW_INPUT_MARKERS') {
+            $script:PreviousGateEnvironment[$envName] = [Environment]::GetEnvironmentVariable($envName)
+        }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
+            $patch = (1..400 | ForEach-Object { "+    public string Property$_ { get; set; }" }) -join "`n"
+            "[[$(ConvertTo-Json -Compress -InputObject ([ordered]@{ filename = 'src/Long.cs'; status = 'modified'; additions = 1; deletions = 1; patch = $patch }))]]"
+        }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/pulls/1' } {
+            '{"changed_files":1,"head":{"sha":"abc1234"},"base":{"sha":"base"}}'
+        }
+        $env:GITHUB_REPOSITORY = 'Azure/azure-sdk-for-net'
+        $env:GITHUB_EVENT_NAME = 'pull_request'
+        $env:PR_NUMBER = '1'
+        $env:PR_HEAD_SHA = 'abc1234'
+        $env:PR_BASE_SHA = 'base'
+        $env:GITHUB_OUTPUT = Join-Path $TestDrive "output-$([guid]::NewGuid())"
+        $env:GITHUB_STEP_SUMMARY = Join-Path $TestDrive "summary-$([guid]::NewGuid())"
+    }
+
+    AfterEach {
+        foreach ($envName in $script:PreviousGateEnvironment.Keys) {
+            [Environment]::SetEnvironmentVariable($envName, $script:PreviousGateEnvironment[$envName])
+        }
+    }
+
+    It 'starts the agent only when the read set the exporter writes fits the limit (<Label>)' -ForEach @(
+        @{ Label = 'exactly at the limit'; Margin = 0; WithinCap = 'true' }
+        @{ Label = 'one character over'; Margin = -1; WithinCap = 'false' }
+    ) {
+        $patch = (1..400 | ForEach-Object { "+    public string Property$_ { get; set; }" }) -join "`n"
+        $characters = ((Invoke-Export @(New-ChangedFile 'src/Long.cs' -Patch $patch)).ListText | ConvertFrom-Json).readSet.characters
+        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewSizeGate.ps1') -MaxCharacters ($characters + $Margin)
+        Get-Content $env:GITHUB_OUTPUT | Should -Be @("characters=$characters", "within_cap=$WithinCap")
     }
 }

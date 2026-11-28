@@ -1,5 +1,5 @@
 ---
-run-name: "Re-review PR #${{ github.event.pull_request.number }} at ${{ github.event.pull_request.head.sha }}"
+run-name: "${{ inputs.pull_request && 'Replay' || 'Re-review' }} PR #${{ github.event.pull_request.number || inputs.pull_request }} at ${{ github.event.pull_request.head.sha || inputs.head_sha }}"
 on:
   pull_request:
     types: [synchronize]
@@ -14,7 +14,27 @@ on:
   # default [admin, maintainer, write] role check even though they're trusted automation —
   # e.g. azure-sdk-automation[bot] pushing a synchronize commit to a PR branch.
   bots: ["azure-sdk", "azure-sdk-automation[bot]"]
-if: github.event.pull_request.draft == false && (github.event_name == 'pull_request' || github.event.pull_request.head.repo.id != github.repository_id)
+  # Replays an earlier re-review against the commits and review history it saw, to measure a change
+  # to this workflow before it ships. A replay never publishes; see pr-re-review/README.md.
+  workflow_dispatch:
+    inputs:
+      pull_request:
+        description: "Pull request whose re-review to replay"
+        required: true
+        type: number
+      head_sha:
+        description: "Full SHA of the head commit that re-review analyzed"
+        required: true
+        type: string
+      base_sha:
+        description: "Full SHA of the base commit in that run's event"
+        required: true
+        type: string
+      history_cutoff:
+        description: "ISO 8601 time the original agent first read the review history; later history is hidden"
+        required: true
+        type: string
+if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.draft == false && (github.event_name == 'pull_request' || github.event.pull_request.head.repo.id != github.repository_id))
 description: "Verify prior review threads and catch missed issues after each new commit, using the shared code-review rules"
 imports:
   - shared/copilot-cli-version-probe-guard.md
@@ -28,6 +48,7 @@ checkout:
     .github
 # gh-aw restores .github from github.event.pull_request.base.sha, which GitHub does not move on later
 # pushes, so the helpers come from the base branch's current tip instead. A pull request cannot change them.
+# A replay has no pull request, so the empty ref checks out the dispatched commit.
 pre-agent-steps:
   - name: Checkout trusted re-review helpers
     uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -45,6 +66,10 @@ pre-agent-steps:
       PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
       REVIEW_INPUT_DIR: /tmp/gh-aw/pr-review-input
       REVIEW_INPUT_MARKERS: ${{ runner.temp }}/pr-re-review-input/markers.json
+      REPLAY_PULL_REQUEST: ${{ inputs.pull_request }}
+      REPLAY_HEAD_SHA: ${{ inputs.head_sha }}
+      REPLAY_BASE_SHA: ${{ inputs.base_sha }}
+      REPLAY_HISTORY_CUTOFF: ${{ inputs.history_cutoff }}
     run: |
       $exporter = './.pr-re-review-helpers/.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1'
       if (!(Test-Path -PathType Leaf $exporter)) {
@@ -65,6 +90,49 @@ pre-agent-steps:
   # Each marker should reach the agent only by reading its patch, never all at once from this file.
   - name: Remove exported-patch markers from the runner
     run: rm -rf "${RUNNER_TEMP}/pr-re-review-input"
+# Skips the agent, before it spends any AI credits, when the read set is too large for one run; see pr-re-review/README.md.
+jobs:
+  size_gate:
+    needs: pre_activation
+    if: needs.pre_activation.outputs.activated == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+    outputs:
+      within_cap: ${{ steps.measure.outputs.within_cap }}
+    steps:
+      - name: Checkout trusted re-review helpers
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+          path: .pr-re-review-helpers
+          persist-credentials: false
+          sparse-checkout: .github/workflows/pr-re-review
+      - name: Measure the re-review read set
+        id: measure
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          REPLAY_PULL_REQUEST: ${{ inputs.pull_request }}
+          REPLAY_HEAD_SHA: ${{ inputs.head_sha }}
+          REPLAY_BASE_SHA: ${{ inputs.base_sha }}
+          REPLAY_HISTORY_CUTOFF: ${{ inputs.history_cutoff }}
+        run: |
+          $gate = './.pr-re-review-helpers/.github/workflows/pr-re-review/Invoke-PrReReviewSizeGate.ps1'
+          if (Test-Path -PathType Leaf $gate) {
+            & $gate
+          } else {
+            Write-Host '::notice::The base branch predates the re-review size gate, so the re-review runs without a size limit.'
+            Add-Content -LiteralPath $env:GITHUB_OUTPUT -Value 'within_cap=true'
+          }
+  agent:
+    needs: [size_gate]
+    if: needs.size_gate.outputs.within_cap == 'true'
 inlined-imports: true
 permissions:
   copilot-requests: write
@@ -73,9 +141,11 @@ permissions:
   issues: read
 engine:
   id: copilot
-  version: "1.0.80"
+  version: "1.0.103"
+  # Without this, 1.0.103 sends medium effort, and agents that stopped early blamed their effort budget.
+  args: ["--reasoning-effort", "high"]
   concurrency:
-    group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.pull_request.number }}"
+    group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}"
     queue: max
 network:
   allowed:
@@ -86,6 +156,8 @@ network:
 safe-outputs:
   runs-on: ubuntu-latest
   report-failure-as-issue: false
+  # A replay previews its safe outputs instead of publishing them.
+  staged: ${{ github.event_name == 'workflow_dispatch' }}
   create-pull-request-review-comment:
     max: 100
   reply-to-pull-request-review-comment:
@@ -118,7 +190,28 @@ safe-outputs:
         if ($LASTEXITCODE -ne 0 -or $exported -cnotmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$' -or $current -cne $exported) {
           throw "The re-review helpers changed between export ($exported) and publication ($current); refusing to publish."
         }
+    # A replay records how the re-review would have fared, then lets the staged Process Safe Outputs preview
+    # it. This step stops the job if the compiled workflow does not stage that step for a replay.
+    - name: Evaluate the replayed re-review
+      if: github.event_name == 'workflow_dispatch'
+      shell: pwsh
+      env:
+        AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
+        AGENT_SESSION_LOG: /tmp/gh-aw/agent-session.jsonl
+        REVIEW_INPUT_MARKERS: ${{ runner.temp }}/pr-re-review-input/markers.json
+        REVIEW_REPLAY: ${{ runner.temp }}/pr-re-review-input/replay.json
+        REVIEW_REPLAY_RESULT: ${{ runner.temp }}/pr-re-review-replay/replay-result.json
+        REVIEW_WORKFLOW_LOCK: ${{ github.workspace }}/.github/workflows/pr-re-review.lock.yml
+      run: ./.github/workflows/pr-re-review/Invoke-PrReReviewReplayGuard.ps1
+    - name: Upload replay result
+      if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: pr-re-review-replay
+        path: ${{ runner.temp }}/pr-re-review-replay
+        if-no-files-found: warn
     - name: Require complete re-review coverage before publishing
+      if: github.event_name != 'workflow_dispatch'
       shell: pwsh
       env:
         AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
@@ -137,7 +230,8 @@ safe-outputs:
       description: "Reopen a review thread the agent concluded was resolved without adequate justification"
       runs-on: ubuntu-latest
       needs: safe_outputs
-      if: needs.agent.result == 'success' && needs.safe_outputs.result == 'success'
+      # This job's script does not check staged mode, so a replay must never reach it.
+      if: github.event_name != 'workflow_dispatch' && needs.agent.result == 'success' && needs.safe_outputs.result == 'success'
       # Matches resolve-pull-request-review-thread's max below; without this, gh-aw's
       # ingestion collector defaults custom safe-jobs to a cardinality of 1 and truncates
       # a multi-thread reopen run.
@@ -342,7 +436,7 @@ tools:
 timeout-minutes: 25
 concurrency:
   # Every push fires both events; keying by event keeps the skipped twin from queuing behind the real run.
-  group: pr-re-review-${{ github.event_name }}-${{ github.event.pull_request.number }}
+  group: pr-re-review-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
   queue: max
   job-discriminator: ${{ github.event.pull_request.number || github.run_id }}
 ---
@@ -353,7 +447,9 @@ concurrency:
 
 You are the automated re-review follow-up for `${{ github.repository }}`, running after every new commit pushed to a pull request. GitHub's native Copilot code review (configured via `.github/skills/code-review/SKILL.md`) already performs the first-pass review on this PR. Your job is different: verify what happened since the last review and catch anything that was missed. Do not treat this as a generic from-scratch review — it is a follow-up pass layered on top of the existing review history.
 
-Target pull request number: `${{ github.event.pull_request.number }}`. Target head commit: `${{ github.event.pull_request.head.sha }}`.
+Target pull request number: `${{ github.event.pull_request.number || github.event.inputs.pull_request }}`. Target head commit: `${{ github.event.pull_request.head.sha || github.event.inputs.head_sha }}`.
+
+${{ github.event.inputs.pull_request && '**Replay.** This run replays an earlier re-review to measure a change to this workflow, and nothing it submits is published. The pull request has changed since then, so `/tmp/gh-aw/pr-review-input/history/` holds its history as it stood at that time. Read `pull-request.json` instead of calling `get`, `review-threads.json` instead of every `get_review_comments` page, and `reviews.json` instead of every `get_reviews` page. If a step asks for the conversation comments, read `issue-comments.json` instead of calling `issue_read`. Do not read the pull request, its history, or its branches from GitHub in any other way. Read file contents only at the target head commit or at the `base.sha` in `pull-request.json`, and call no other GitHub tools. A run that reads anything else is discarded. Pass the target pull request number as `pull_request_number` whenever you call `reply_to_pull_request_review_comment`. Otherwise, follow Steps 1 to 4 exactly as written.' || '' }}
 
 ## Security: Prompt Injection Defense
 
@@ -380,7 +476,7 @@ The gh-aw runtime provides additional defenses including the XPIA system prompt,
 5. Do not modify PR state: do not mark ready for review, merge, close, or convert from draft.
 6. The shared rules files are the only source of review criteria. Do not invent additional rules, and do not restate or duplicate their text in your output — cite them by name/section instead.
 7. Avoid duplicate feedback. Never post a new finding that is already covered by an existing open thread or another reviewer's comment.
-8. The run stops after 25 minutes. Work through Steps 1 to 4 in order without pausing to judge whether the pull request is too large to finish. Step 4 lists the only reasons to stop early.
+8. The run stops after 25 minutes. Work through Steps 1 to 4 in order without pausing to judge whether the pull request is too large to finish. Step 4 lists the only reasons to stop early; the size of the read set and your effort or token budget are not among them, and are not reasons to break Step 3's reading rules either. If your context fills, earlier output is summarized and the run continues.
 
 ## Step 0 - Apply the shared rules
 
@@ -396,7 +492,7 @@ on top of that shared foundation.
 
 ## Step 1 - Gather review history
 
-Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and patch file under `patches/`; where GitHub omitted a patch, the input contains a diff computed from the merge-base and head content, the full text of an added or removed file, or a note for binary content or an unchanged rename. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
+Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and the files under `patches/` that hold its patch; where GitHub omitted a patch, the input contains a diff computed from the merge-base and head content, the full text of an added or removed file, or a note for binary content or an unchanged rename. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
 
 Read GitHub data with the GitHub MCP `pull_request_read` tool. Page every list to its end; a first page is not the full history.
 
@@ -428,7 +524,7 @@ For each thread that **is resolved**:
 
 Independently review every changed file listed in `files.json`, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). This overrides the shared skill's guidance to focus a re-review on commits since the previous review: every changed file is in scope, whether or not it changed since then.
 
-A file counts as reviewed only when you have read every file in its `readFiles` array in full, in order, as plain text with no line numbers or filtering. Read them with plain `cat`, at most four parts per command, and never pipe them through `grep`, `cut`, `tail`, or any other filter, including for generated files such as compiled `*.lock.yml` workflows. Never truncate a read (no character or line limits, slicing, or `head`) and never skip a file by name, path, or type. Large patches are split into bounded parts; `patchFile` also contains the complete patch for context. If a tool saves a response to a file, reread each affected part individually so its complete text appears in a single successful tool result. If you cannot obtain the complete part in a single successful tool result, call `report_incomplete` rather than submitting a review.
+A file counts as reviewed only when you have read every file in its `readFiles` array in full, in order, as plain text with no line numbers or filtering. Read them with plain `cat`, at most four parts per command, and never pipe them through `grep`, `cut`, `tail`, or any other filter, including for generated files such as compiled `*.lock.yml` workflows. Never truncate a read (no character or line limits, slicing, or `head`) and never skip a file by name, path, or type. Large patches are split into bounded parts. If a tool saves a response to a file, reread each affected part individually so its complete text appears in a single successful tool result. If you cannot obtain the complete part in a single successful tool result, call `report_incomplete` rather than submitting a review.
 
 Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
 
