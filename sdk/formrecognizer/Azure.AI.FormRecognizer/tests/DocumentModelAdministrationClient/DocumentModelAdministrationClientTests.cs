@@ -80,21 +80,33 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.Throws<ArgumentNullException>(() => new DocumentModelAdministrationClient(endpoint, default(AzureKeyCredential), new DocumentAnalysisClientOptions()));
         }
 
-        [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
-        public async Task ClientThrowsWithNonExistingResourceEndpoint()
+        [TestCase(0)]
+        [TestCase(502)]
+        public void ClientThrowsOnRequestFailure(int status)
         {
-            var client = CreateInstrumentedClient();
+            var transport = new MockTransport(_ => status == 0
+                ? throw new RequestFailedException(0, "Connection failed.")
+                : new MockResponse(status))
+            {
+                ExpectSyncPipeline = !IsAsync
+            };
+            var client = InstrumentClient(CreateInstrumentedClient(new DocumentAnalysisClientOptions
+            {
+                Transport = transport,
+                Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
+            }));
 
-            try
+            if (status == 0)
             {
-                await client.GetResourceDetailsAsync();
+                var exception = Assert.ThrowsAsync<AggregateException>(() => client.GetResourceDetailsAsync());
+                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(4));
+                Assert.That(exception.InnerExceptions.All(ex => ex is RequestFailedException { Status: 0 }), Is.True);
             }
-            catch (AggregateException ex)
+            else
             {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+                Assert.That(Assert.ThrowsAsync<RequestFailedException>(() => client.GetResourceDetailsAsync()).Status, Is.EqualTo(status));
             }
+            Assert.That(transport.Requests, Has.Count.EqualTo(4));
         }
 
         [Test]
