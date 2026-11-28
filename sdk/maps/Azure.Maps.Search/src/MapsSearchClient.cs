@@ -160,8 +160,8 @@ namespace Azure.Maps.Search
                 {
                     coordinates = coordinates = new[]
                     {
-                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat)
                     };
                 }
 
@@ -202,8 +202,8 @@ namespace Azure.Maps.Search
                 {
                     coordinates = coordinates =
                     [
-                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat)
                     ];
                 }
 
@@ -280,8 +280,8 @@ namespace Azure.Maps.Search
                 {
                     coordinates = coordinates = new[]
                     {
-                        Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                        Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                        Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat)
                     };
                 }
                 var boundaryInternal = await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
